@@ -1,0 +1,124 @@
+{
+  "lesson_id": "INTRO-LESSON-001",
+  "title": "Understanding the Assignment and Choosing a Position",
+  "intended_stage": "INTRODUCTION",
+  "source_framework": [
+    {
+      "name": "IES Teaching Secondary Students to Write Effectively",
+      "recommendation": "Recommendation 1: Explicitly teach appropriate writing strategies using a Model-Practice-Reflect instructional cycle.",
+      "evidence_rating": "Strong Evidence",
+      "url": "https://ies.ed.gov/ncee/wwc/PracticeGuide/22",
+      "use_in_this_lesson": "Informs the sequence of a short model, supported practice, and reflection. It does not validate EssayScaff's NLP rules or this specific lesson's learning outcomes."
+    },
+    {
+      "name": "Self-Regulated Strategy Development (SRSD)",
+      "citation": "Harris, K. R., & Graham, S. (2016). Self-Regulated Strategy Development in Writing: Policy Implications of an Evidence-Based Practice. Policy Insights from the Behavioral and Brain Sciences, 3(1), 77-84.",
+      "url": "https://doi.org/10.1177/2372732215624216",
+      "additional_description": "https://srsdonline.org/what-is-srsd/",
+      "principles_used": [
+        "Explicitly explain a writing strategy.",
+        "Model the strategy with a worked example.",
+        "Give the learner supported practice and explanatory feedback.",
+        "Invite self-monitoring and reflection on the learner's own writing.",
+        "Let the learner return to independent writing without an automated quality judgment."
+      ],
+      "use_in_this_lesson": "These principles inform instructional design only. This single activity is not a full SRSD implementation and has not been evaluated as an SRSD intervention."
+    }
+  ],
+  "authorship_and_provenance": {
+    "instructional_content": "Original EssayScaff lesson content written for this module; it is not copied from IES, an SRSD training provider, AcaWriter, or the Research Writing Tutor.",
+    "example": "Original teacher-style example written for EssayScaff and available for teacher review or adaptation.",
+    "algorithm_status": "The practice answers assess understanding of the examples in this lesson only. They are not NLP predictions, essay-quality scores, or proof of writing mastery."
+  },
+  "learning_objectives": [
+    "Identify the subject an essay assignment asks you to think about.",
+    "Distinguish a topic description from a position that answers the assignment.",
+    "Explain how a clear Introduction direction helps readers follow the essay."
+  ],
+  "associated_rule_ids": [
+    "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+    "INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED",
+    "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+  ],
+  "model": {
+    "heading": "Learn from an example",
+    "instruction": [
+      "Read the assignment once to find its subject. Then ask what question or decision you are being asked to consider.",
+      "A topic names what the writing is about. A position answers the assignment with a point of view another reader could discuss or disagree with.",
+      "A reason tells readers why you hold that position. An Introduction gives readers a direction; your own wording and the number of sentences can vary.",
+      "Use these questions as a planning aid, not a required sentence formula."
+    ],
+    "teacher_authored_example": {
+      "assignment": "Should our school offer one outdoor lunch day each week?",
+      "topic": "A weekly outdoor lunch day at school.",
+      "topic_explanation": "This names the subject, but it does not answer whether the school should offer it.",
+      "description_sentence": "Outdoor lunch is a time when students eat outside.",
+      "description_explanation": "This explains the topic but does not take a position on the assignment question.",
+      "position_sentence": "Our school should offer one outdoor lunch day each week because it could give students a relaxing break and a chance to connect with classmates.",
+      "position_explanation": "This answers the question with a position and gives a reason the writer could explain in the Body.",
+      "direction_explanation": "A reader can tell what the writer thinks and what reason the essay may explain. The writer can still revise this position or choose a different one."
+    }
+  },
+  "practice": {
+    "heading": "Try it yourself",
+    "instructions": "Choose an answer for each question. Read the explanation, then continue when your answer is correct. You can retry a question at any time.",
+    "questions": [
+      {
+        "question_id": "identify-topic",
+        "prompt": "For the assignment “Should our school offer one outdoor lunch day each week?”, which choice names the topic rather than answering the question?",
+        "correct_option_id": "topic",
+        "options": [
+          {"option_id": "topic", "text": "A weekly outdoor lunch day at school.", "feedback": "Correct. This names the subject of the assignment without saying what the school should do."},
+          {"option_id": "position", "text": "Our school should offer an outdoor lunch day each week.", "feedback": "This is a position because it answers the assignment with what the school should do. The topic is the weekly outdoor lunch day."},
+          {"option_id": "reason", "text": "Students could use a relaxing break during the school day.", "feedback": "This is a possible reason for a position. The topic is the weekly outdoor lunch day at school."}
+        ],
+        "correct_explanation": "A topic names the subject. A position answers the assignment question about that subject."
+      },
+      {
+        "question_id": "identify-position",
+        "prompt": "Which sentence takes a position on the same assignment?",
+        "correct_option_id": "position",
+        "options": [
+          {"option_id": "definition", "text": "Outdoor lunch is a meal students eat outside.", "feedback": "This describes the topic but does not answer whether the school should offer outdoor lunch."},
+          {"option_id": "fact", "text": "Students eat lunch at school each weekday.", "feedback": "This gives information about lunch, but it does not take a position on the assignment question."},
+          {"option_id": "position", "text": "Our school should offer an outdoor lunch day each week because it may give students a relaxing break.", "feedback": "Correct. The sentence answers the question with a position and gives a reason."}
+        ],
+        "correct_explanation": "A position answers the question. A reason can point toward what the writer will explain, but it does not have to use this exact wording."
+      }
+    ]
+  },
+  "reflect": {
+    "heading": "Check your writing",
+    "instructions": "Return to your Introduction in the editor. Read the assignment and your own writing. Choose the response that best describes your review; neither choice is scored by EssayScaff.",
+    "questions": [
+      {
+        "question_id": "assignment-review",
+        "prompt": "Does my Introduction discuss the assignment question?",
+        "options": [
+          {"value": "reviewed_yes", "label": "Yes, I have checked that it discusses the question."},
+          {"value": "review_again", "label": "I want to review or revise it."}
+        ]
+      },
+      {
+        "question_id": "position-review",
+        "prompt": "Can readers identify my position?",
+        "options": [
+          {"value": "reviewed_yes", "label": "Yes, I have checked that readers can find my position."},
+          {"value": "review_again", "label": "I want to review or revise it."}
+        ]
+      }
+    ],
+    "privacy_note": "Your selection is a student self-check, not a machine-detected result. It stays in this browser session; EssayScaff does not detect or judge your answer."
+  },
+  "completion_conditions": [
+    "The student has viewed the Model step.",
+    "The student has answered each Practice question correctly; incorrect answers show an explanation and require retry before progressing.",
+    "The student has selected a response for both Reflect questions.",
+    "Completion means the student finished this lesson activity. It does not establish writing mastery and does not control access to Body or any other stage."
+  ],
+  "lesson_limitations": [
+    "The sample assignment and example are fictional teaching examples written for this lesson.",
+    "The lesson is a brief introduction, not a full SRSD intervention or a substitute for teacher guidance.",
+    "Practice correctness refers only to recognizing the lesson's example topic and position; it says nothing about the student's essay quality."
+  ]
+}

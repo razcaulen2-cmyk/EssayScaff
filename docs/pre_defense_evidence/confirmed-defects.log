@@ -1,0 +1,49 @@
+Pre-defense reproduction record — actual observed failures before their repairs
+2026-10-23, isolated temporary databases / test accounts only.
+
+Command:
+  .venv\Scripts\python.exe -B -m pytest -q -p no:cacheprovider --tb=short tests\test_pre_defense_repairs.py
+
+Observed:
+- URL/JSON identifier 2**80:
+  OverflowError: Python int too large to convert to SQLite INTEGER
+  Reproduced in assignment workspace, classroom assignments, student submission,
+  revision lookup, teacher edit/submission routes, draft/revision save and analysis.
+- Oversized stored session identity: same OverflowError in require_account/get_user.
+- Reason-source record: actual class '' / unresolved
+  services.introduction_rules.ConclusionRuleBase._rule_events.
+- Assignment switch: "opening an assignment must load that session's revision history"
+  assertion failed; no GET /api/revisions for newly opened session.
+- In-flight clean save: actual assignment_id 101; expected null until save settled.
+- Teacher edit initial storage lookup: uncaught sqlite3.OperationalError injected
+  in isolated get_teacher_assignment_for_edit failure test.
+
+Additional focused reproductions:
+- Complete-route HEAD probe: edit_assignment HEAD did not return safe HTML headers
+  (old code treated every non-GET method as an update; actual 302).
+- Missing assignment submission: uncaught services.draft_store.AssignmentNotFoundError.
+- Late revision: revision-preview.hidden became false after changing assignment;
+  expected true (old preview must not appear under new assignment).
+- No rel="icon" in existing templates; Chrome previously requested absent favicon.
+
+Real Chrome reproductions:
+- Teacher dashboard at requested 390x844: layout viewport/document 516px.
+  Initial workflow failure artifacts:
+  C:\Users\MYPC~1\AppData\Local\Temp\opencode\essayscaff-pre-defense-s8brr34_
+- Inspector at requested 390x844: viewport/document 528px. Overflow diagnostics
+  show research-explanation grid items at right 528.109375 / width 498.109375.
+  Before image and JSON:
+  C:\Users\MYPC~1\AppData\Local\Temp\opencode\essayscaff-pre-defense-25p1tasz
+- Delayed Inspector analysis delivered after editing sample:
+  assertion "late inspector response rejected" failed (state.response was not null).
+  C:\Users\MYPC~1\AppData\Local\Temp\opencode\essayscaff-pre-defense-dw7iarvw
+
+Final results:
+- Focused repairs and affected integration checks passed.
+- Full Python suite: 572 passed.
+- Full Chrome transparency regression: PASS; javascriptErrors [].
+- Final isolated route/workflow browser audit: PASS; errors []; explicit negative
+  HTTP statuses classified separately in browser.log / workflow-browser.json.
+- Original databases and research JSON checksums unchanged.
+
+No passwords, session cookies, CSRF secrets or real student text are recorded here.

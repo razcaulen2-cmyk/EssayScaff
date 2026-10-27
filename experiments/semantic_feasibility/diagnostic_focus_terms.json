@@ -1,0 +1,11 @@
+{
+  "provenance": "developer-authored fixed diagnostic terms; not teacher-submitted assignment data",
+  "topic_focus_terms": {
+    "social_media_attention": ["social media", "students", "sleep", "fatigue", "attention", "concentration", "classroom"],
+    "school_uniforms": ["school uniforms", "students", "costs", "equality", "identity", "benefits", "disadvantages"],
+    "environmental_pollution": ["pollution", "air pollution", "community", "health", "emissions", "lungs", "particulate matter"],
+    "reading_habits": ["reading habits", "students", "reading", "books", "libraries", "literacy"],
+    "renewable_energy": ["renewable energy", "solar", "wind power", "electricity", "storage", "fossil fuels"],
+    "healthy_lifestyles": ["healthy lifestyle", "sleep", "exercise", "nutrition", "health", "stress", "routine"]
+  }
+}

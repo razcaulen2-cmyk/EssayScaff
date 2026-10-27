@@ -1,0 +1,108 @@
+{
+  "empty": {
+    "Current Goal": "Focus each Body paragraph on one idea, add the details readers need, and show how the paragraphs connect.",
+    "Primary Feedback": "The Body has no words yet. Write your first paragraph in your own words.",
+    "What's Working": [
+      "Some Body words also appear in the Introduction. Check that the Body develops the point you introduced."
+    ],
+    "Needs Attention": [
+      "These checks record structure and wording only; they cannot tell whether ideas are true or make sense together."
+    ],
+    "Next Step": "Write your first Body paragraph in your own words. Explain one idea from your assignment."
+  },
+  "list": {
+    "Current Goal": "Focus each Body paragraph on one idea, add the details readers need, and show how the paragraphs connect.",
+    "Primary Feedback": "Paragraph 2 contains assignment words as a list of ideas, and no recorded sentence connects them into one thought. Choose one idea and explain it in a sentence of your own.",
+    "What's Working": [
+      "Paragraph 1 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 1 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Paragraph 2 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 3 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 3 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Some Body words also appear in the Introduction. Check that the Body develops the point you introduced."
+    ],
+    "Needs Attention": [
+      "Paragraph 2 has no recorded sentence connecting its words. Choose one idea and explain it in your own words.",
+      "Paragraph 2 has no recorded sentence parts that add detail. Add a reason or example if readers need one.",
+      "These checks record structure and wording only; they cannot tell whether ideas are true or make sense together."
+    ],
+    "Next Step": "Choose one recorded idea from these words and explain it in a sentence of your own."
+  },
+  "unlinked": {
+    "Current Goal": "Focus each Body paragraph on one idea, add the details readers need, and show how the paragraphs connect.",
+    "Primary Feedback": "Paragraphs 1 and 2 have no recorded shared words or linking phrase between them. Read the two together and add a link if a reader might not see how the ideas connect.",
+    "What's Working": [
+      "Paragraph 1 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 1 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Paragraph 2 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 2 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Paragraph 3 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 3 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Some Body words also appear in the Introduction. Check that the Body develops the point you introduced."
+    ],
+    "Needs Attention": [
+      "Some neighboring paragraphs have no recorded shared words between them. Read them together and add a link if needed.",
+      "These checks record structure and wording only; they cannot tell whether ideas are true or make sense together."
+    ],
+    "Next Step": "Read the two paragraphs together. Add one connecting sentence if readers need it."
+  },
+  "limited": {
+    "Current Goal": "Focus each Body paragraph on one idea, add the details readers need, and show how the paragraphs connect.",
+    "Primary Feedback": "The checks found no additional sentence parts developing the idea in Paragraph 2. Add a reason, example, or explanation if readers need one.",
+    "What's Working": [
+      "Paragraph 1 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 1 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Paragraph 2 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 3 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 3 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Some Body words also appear in the Introduction. Check that the Body develops the point you introduced."
+    ],
+    "Needs Attention": [
+      "Paragraph 2 has no recorded sentence parts that add detail. Add a reason or example if readers need one.",
+      "These checks record structure and wording only; they cannot tell whether ideas are true or make sense together."
+    ],
+    "Next Step": "Choose the paragraph that needs support and add one reason or example readers can follow."
+  },
+  "repeated": {
+    "Current Goal": "Focus each Body paragraph on one idea, add the details readers need, and show how the paragraphs connect.",
+    "Primary Feedback": "More than one sentence in Paragraph 2 begins with 'readers learn'. Change one beginning only if the repetition sounds awkward.",
+    "What's Working": [
+      "Paragraph 1 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 1 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Paragraph 2 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 2 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Paragraph 3 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 3 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Some Body words also appear in the Introduction. Check that the Body develops the point you introduced."
+    ],
+    "Needs Attention": [
+      "These checks record structure and wording only; they cannot tell whether ideas are true or make sense together."
+    ],
+    "Next Step": "Read the repeated sentence beginnings aloud. Change one if the repetition sounds awkward."
+  },
+  "no_introduction": {
+    "Current Goal": "Focus each Body paragraph on one idea, add the details readers need, and show how the paragraphs connect.",
+    "Primary Feedback": "The checks recorded sentences and word matches across your Body paragraphs. Read each paragraph and check that it develops your point.",
+    "What's Working": [
+      "Paragraph 1 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 1 has sentences that may add detail. Check that they explain or support the paragraph's idea."
+    ],
+    "Needs Attention": [
+      "These checks record structure and wording only; they cannot tell whether ideas are true or make sense together."
+    ],
+    "Next Step": "Compare each Body paragraph with the assignment. Check that each one explains an idea you want readers to understand."
+  },
+  "general": {
+    "Current Goal": "Focus each Body paragraph on one idea, add the details readers need, and show how the paragraphs connect.",
+    "Primary Feedback": "The checks recorded sentences and word matches across your Body paragraphs. Read each paragraph and check that it develops your point.",
+    "What's Working": [
+      "Paragraph 1 uses assignment words such as: reading. Check that they support the paragraph's idea.",
+      "Paragraph 1 has sentences that may add detail. Check that they explain or support the paragraph's idea.",
+      "Some Body words also appear in the Introduction. Check that the Body develops the point you introduced."
+    ],
+    "Needs Attention": [
+      "These checks record structure and wording only; they cannot tell whether ideas are true or make sense together."
+    ],
+    "Next Step": "Read each paragraph. Check that it explains one idea and connects to the next paragraph."
+  }
+}

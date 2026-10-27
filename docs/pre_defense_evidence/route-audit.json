@@ -1,0 +1,2785 @@
+{
+  "routes": [
+    {
+      "url": "/static/<path:filename>",
+      "endpoint": "static",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "Flask.__init__.<locals>.<lambda>",
+      "source_line": 278,
+      "permission": "public",
+      "expected": "asset",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/assets/essayscaff-logo.png",
+      "endpoint": "brand_logo",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.brand_logo",
+      "source_line": 218,
+      "permission": "public",
+      "expected": "asset",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/register",
+      "endpoint": "register",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.register",
+      "source_line": 223,
+      "permission": "public",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/register",
+      "endpoint": "create_account",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.create_account",
+      "source_line": 229,
+      "permission": "public",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "POST",
+          "status": 302,
+          "redirect": "/",
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/login",
+      "endpoint": "login",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.login",
+      "source_line": 263,
+      "permission": "public",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/login",
+      "endpoint": "authenticate_student",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.authenticate_student",
+      "source_line": 269,
+      "permission": "public",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "POST",
+          "status": 302,
+          "redirect": "/",
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/logout",
+      "endpoint": "logout",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.logout",
+      "source_line": 287,
+      "permission": "authenticated STUDENT/TEACHER",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "POST",
+          "status": 302,
+          "redirect": "/login",
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 302,
+          "classification": "EXPECTED DENIAL"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/account",
+      "endpoint": "account_settings",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.account_settings",
+      "source_line": 292,
+      "permission": "authenticated STUDENT/TEACHER",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/account/delete",
+      "endpoint": "delete_account",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.delete_account",
+      "source_line": 302,
+      "permission": "authenticated STUDENT/TEACHER",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "POST",
+          "status": 302,
+          "redirect": "/login",
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 302,
+          "classification": "EXPECTED DENIAL"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/",
+      "endpoint": "homepage",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.homepage",
+      "source_line": 341,
+      "permission": "authenticated STUDENT/TEACHER",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/teacher",
+      "endpoint": "teacher_dashboard",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.teacher_dashboard",
+      "source_line": 356,
+      "permission": "TEACHER + ownership",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/teacher/research-inspector",
+      "endpoint": "research_inspector",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.research_inspector",
+      "source_line": 448,
+      "permission": "TEACHER + ownership",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/research-inspector/metadata",
+      "endpoint": "research_inspector_metadata",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.research_inspector_metadata",
+      "source_line": 456,
+      "permission": "TEACHER + ownership",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/teacher/classrooms",
+      "endpoint": "create_classroom",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.create_classroom",
+      "source_line": 473,
+      "permission": "TEACHER + ownership",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "POST",
+          "status": 302,
+          "redirect": "/teacher",
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/teacher/assignments",
+      "endpoint": "create_assignment",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.create_assignment",
+      "source_line": 496,
+      "permission": "TEACHER + ownership",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "POST",
+          "status": 302,
+          "redirect": "/teacher",
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/teacher/assignments/<int:assignment_id>/edit",
+      "endpoint": "edit_assignment",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.edit_assignment",
+      "source_line": 531,
+      "permission": "TEACHER + ownership",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "POST",
+          "status": 302,
+          "redirect": "/teacher",
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/teacher/assignments/<int:assignment_id>/delete",
+      "endpoint": "delete_assignment",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.delete_assignment",
+      "source_line": 604,
+      "permission": "TEACHER + ownership",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "POST",
+          "status": 302,
+          "redirect": "/teacher",
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/teacher/assignments/<int:assignment_id>/classroom",
+      "endpoint": "assign_legacy_assignment",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.assign_legacy_assignment",
+      "source_line": 685,
+      "permission": "TEACHER + ownership",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "POST",
+          "status": 302,
+          "redirect": "/teacher",
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/assignments",
+      "endpoint": "available_assignments",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.available_assignments",
+      "source_line": 701,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/archived-assignments",
+      "endpoint": "student_archived_assignments",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.student_archived_assignments",
+      "source_line": 710,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/classrooms",
+      "endpoint": "student_classrooms",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.student_classrooms",
+      "source_line": 721,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/classroom-enrollments",
+      "endpoint": "enroll_student",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.enroll_student",
+      "source_line": 730,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "POST",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/classrooms/<int:classroom_id>/assignments",
+      "endpoint": "classroom_assignments",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.classroom_assignments",
+      "source_line": 755,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/assignments/<int:assignment_id>/workspace",
+      "endpoint": "assignment_workspace",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.assignment_workspace",
+      "source_line": 768,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/submissions",
+      "endpoint": "submit_assignment",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.submit_assignment",
+      "source_line": 812,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "POST",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/submissions/<int:assignment_id>",
+      "endpoint": "student_submission",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.student_submission",
+      "source_line": 855,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/teacher/assignments/<int:assignment_id>/submissions",
+      "endpoint": "teacher_assignment_submissions",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.teacher_assignment_submissions",
+      "source_line": 868,
+      "permission": "TEACHER + ownership",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/teacher/submissions/<int:submission_id>",
+      "endpoint": "teacher_submission_view",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.teacher_submission_view",
+      "source_line": 893,
+      "permission": "TEACHER + ownership",
+      "expected": "HTML page or successful form redirect",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/analyze-introduction",
+      "endpoint": "analyze_introduction",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.analyze_introduction",
+      "source_line": 911,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "POST",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/analyze-stage",
+      "endpoint": "analyze_stage",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.analyze_stage",
+      "source_line": 920,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "POST",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/research-inspector/analyze",
+      "endpoint": "analyze_research_inspector",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.analyze_research_inspector",
+      "source_line": 937,
+      "permission": "TEACHER + ownership",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "POST",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/drafts",
+      "endpoint": "save_draft",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.save_draft",
+      "source_line": 951,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "POST",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/drafts",
+      "endpoint": "restore_draft",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.restore_draft",
+      "source_line": 1011,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/revisions",
+      "endpoint": "save_revision",
+      "methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "function": "create_app.<locals>.save_revision",
+      "source_line": 1027,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "POST",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/revisions",
+      "endpoint": "list_revisions",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.list_revisions",
+      "source_line": 1090,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    },
+    {
+      "url": "/api/revisions/<revision_id>",
+      "endpoint": "view_revision",
+      "methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "function": "create_app.<locals>.view_revision",
+      "source_line": 1106,
+      "permission": "STUDENT + ownership/enrollment",
+      "expected": "JSON object",
+      "results": [
+        {
+          "method": "GET",
+          "status": 200,
+          "redirect": null,
+          "classification": "PASS"
+        },
+        {
+          "method": "HEAD",
+          "status": 200,
+          "classification": "PASS"
+        },
+        {
+          "method": "OPTIONS",
+          "status": 200,
+          "classification": "PASS"
+        }
+      ],
+      "classification": "PASS"
+    }
+  ],
+  "denials": [
+    {
+      "endpoint": "static",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "brand_logo",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "register",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_account",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_account",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "login",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "authenticate_student",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "authenticate_student",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "logout",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "logout",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "logout",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "account_settings",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "account_settings",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "delete_account",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "delete_account",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "delete_account",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "homepage",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "homepage",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "teacher_dashboard",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "teacher_dashboard",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "teacher_dashboard",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "research_inspector",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "research_inspector",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "research_inspector",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "research_inspector_metadata",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "research_inspector_metadata",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "research_inspector_metadata",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_classroom",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_classroom",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_classroom",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_classroom",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_assignment",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_assignment",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_assignment",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "create_assignment",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "edit_assignment",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "edit_assignment",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "edit_assignment",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "edit_assignment",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "delete_assignment",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "delete_assignment",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "delete_assignment",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "delete_assignment",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "assign_legacy_assignment",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "assign_legacy_assignment",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "assign_legacy_assignment",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "assign_legacy_assignment",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "available_assignments",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "available_assignments",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "available_assignments",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "student_archived_assignments",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "student_archived_assignments",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "student_archived_assignments",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "student_classrooms",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "student_classrooms",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "student_classrooms",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "enroll_student",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "enroll_student",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "enroll_student",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "enroll_student",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "classroom_assignments",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "classroom_assignments",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "classroom_assignments",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "assignment_workspace",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "assignment_workspace",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "assignment_workspace",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "submit_assignment",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "submit_assignment",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "submit_assignment",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "submit_assignment",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "student_submission",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "student_submission",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "student_submission",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "teacher_assignment_submissions",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "teacher_assignment_submissions",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "teacher_assignment_submissions",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "teacher_submission_view",
+      "case": "anonymous",
+      "status": 302,
+      "redirect": "/login",
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "teacher_submission_view",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "teacher_submission_view",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_introduction",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_introduction",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_introduction",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_introduction",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_stage",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_stage",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_stage",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_stage",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_research_inspector",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_research_inspector",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_research_inspector",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_research_inspector",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_draft",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_draft",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_draft",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_draft",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "restore_draft",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "restore_draft",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "restore_draft",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_revision",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_revision",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_revision",
+      "case": "missing CSRF",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_revision",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "list_revisions",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "list_revisions",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "list_revisions",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "view_revision",
+      "case": "anonymous",
+      "status": 401,
+      "redirect": null,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "view_revision",
+      "case": "wrong role",
+      "status": 403,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "view_revision",
+      "case": "unsupported PUT",
+      "status": 405,
+      "classification": "EXPECTED DENIAL"
+    }
+  ],
+  "negative_inputs": [
+    {
+      "endpoint": "enroll_student",
+      "case": "array/null/string/number JSON",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "submit_assignment",
+      "case": "array/null/string/number JSON",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_introduction",
+      "case": "array/null/string/number JSON",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_stage",
+      "case": "array/null/string/number JSON",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "analyze_research_inspector",
+      "case": "array/null/string/number JSON",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_draft",
+      "case": "array/null/string/number JSON",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "endpoint": "save_revision",
+      "case": "array/null/string/number JSON",
+      "status": 400,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "url": "/teacher/assignments/5/edit",
+      "case": "foreign ownership/enrollment",
+      "status": 404,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "url": "/teacher/assignments/5/submissions",
+      "case": "foreign ownership/enrollment",
+      "status": 404,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "url": "/teacher/submissions/1",
+      "case": "foreign ownership/enrollment",
+      "status": 404,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "url": "/api/assignments/1/workspace",
+      "case": "foreign ownership/enrollment",
+      "status": 404,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "url": "/api/drafts?session_id=5b568dd639a0484cb8a7d4f0d2220844",
+      "case": "foreign ownership/enrollment",
+      "status": 404,
+      "classification": "EXPECTED DENIAL"
+    },
+    {
+      "url": "/api/revisions/1?session_id=5b568dd639a0484cb8a7d4f0d2220844",
+      "case": "foreign ownership/enrollment",
+      "status": 404,
+      "classification": "EXPECTED DENIAL"
+    }
+  ],
+  "links": [
+    {
+      "page": "/register",
+      "target": "/static/style.css",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/register",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/register",
+      "target": "/register",
+      "method": "GET",
+      "endpoint": "register",
+      "classification": "PASS"
+    },
+    {
+      "page": "/register",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/register",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/register",
+      "target": "/register",
+      "method": "POST",
+      "endpoint": "create_account",
+      "classification": "PASS"
+    },
+    {
+      "page": "/register",
+      "target": "/login",
+      "method": "GET",
+      "endpoint": "login",
+      "classification": "PASS"
+    },
+    {
+      "page": "/login",
+      "target": "/static/style.css",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/login",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/login",
+      "target": "/login",
+      "method": "GET",
+      "endpoint": "login",
+      "classification": "PASS"
+    },
+    {
+      "page": "/login",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/login",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/login",
+      "target": "/login",
+      "method": "POST",
+      "endpoint": "authenticate_student",
+      "classification": "PASS"
+    },
+    {
+      "page": "/login",
+      "target": "/register",
+      "method": "GET",
+      "endpoint": "register",
+      "classification": "PASS"
+    },
+    {
+      "page": "/account",
+      "target": "/static/style.css",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/account",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/account",
+      "target": "/",
+      "method": "GET",
+      "endpoint": "homepage",
+      "classification": "PASS"
+    },
+    {
+      "page": "/account",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/account",
+      "target": "/logout",
+      "method": "POST",
+      "endpoint": "logout",
+      "classification": "PASS"
+    },
+    {
+      "page": "/account",
+      "target": "/",
+      "method": "GET",
+      "endpoint": "homepage",
+      "classification": "PASS"
+    },
+    {
+      "page": "/account",
+      "target": "/account/delete",
+      "method": "POST",
+      "endpoint": "delete_account",
+      "classification": "PASS"
+    },
+    {
+      "page": "/",
+      "target": "/static/style.css",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/",
+      "target": "/static/app.js",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/",
+      "target": "#dashboard",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/",
+      "target": "/account",
+      "method": "GET",
+      "endpoint": "account_settings",
+      "classification": "PASS"
+    },
+    {
+      "page": "/",
+      "target": "/logout",
+      "method": "POST",
+      "endpoint": "logout",
+      "classification": "PASS"
+    },
+    {
+      "page": "/",
+      "target": "#dashboard",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/",
+      "target": "#classrooms",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/",
+      "target": "#assignments",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/",
+      "target": "#workspace",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/",
+      "target": "#classrooms",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/",
+      "target": "#assignments",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/",
+      "target": "#workspace",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "/static/style.css",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/static/teacher.js",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "#dashboard",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/account",
+      "method": "GET",
+      "endpoint": "account_settings",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/logout",
+      "method": "POST",
+      "endpoint": "logout",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "#dashboard",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "#classrooms",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "#assignments",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "#progress",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/research-inspector",
+      "method": "GET",
+      "endpoint": "research_inspector",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "#classrooms",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "#assignments",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "#progress",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/classrooms",
+      "method": "POST",
+      "endpoint": "create_classroom",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "#assignments",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "#assignments",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "#assignments",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "#assignments",
+      "classification": "PASS",
+      "reason": "frontend hash view; actual activation checked by Chrome"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments",
+      "method": "POST",
+      "endpoint": "create_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/4/edit",
+      "method": "GET",
+      "endpoint": "edit_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/4/delete",
+      "method": "POST",
+      "endpoint": "delete_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/4/submissions",
+      "method": "GET",
+      "endpoint": "teacher_assignment_submissions",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/3/edit",
+      "method": "GET",
+      "endpoint": "edit_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/3/delete",
+      "method": "POST",
+      "endpoint": "delete_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/3/submissions",
+      "method": "GET",
+      "endpoint": "teacher_assignment_submissions",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/2/edit",
+      "method": "GET",
+      "endpoint": "edit_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/2/delete",
+      "method": "POST",
+      "endpoint": "delete_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/2/submissions",
+      "method": "GET",
+      "endpoint": "teacher_assignment_submissions",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/1/edit",
+      "method": "GET",
+      "endpoint": "edit_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/1/delete",
+      "method": "POST",
+      "endpoint": "delete_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/1/submissions",
+      "method": "GET",
+      "endpoint": "teacher_assignment_submissions",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/7/edit",
+      "method": "GET",
+      "endpoint": "edit_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/7/delete",
+      "method": "POST",
+      "endpoint": "delete_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/6/edit",
+      "method": "GET",
+      "endpoint": "edit_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/6/delete",
+      "method": "POST",
+      "endpoint": "delete_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/7/classroom",
+      "method": "POST",
+      "endpoint": "assign_legacy_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/7/edit",
+      "method": "GET",
+      "endpoint": "edit_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/7/delete",
+      "method": "POST",
+      "endpoint": "delete_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/6/classroom",
+      "method": "POST",
+      "endpoint": "assign_legacy_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/6/edit",
+      "method": "GET",
+      "endpoint": "edit_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/assignments/6/delete",
+      "method": "POST",
+      "endpoint": "delete_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher",
+      "target": "/teacher/submissions/1",
+      "method": "GET",
+      "endpoint": "teacher_submission_view",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/research-inspector",
+      "target": "/static/style.css",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/research-inspector",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/research-inspector",
+      "target": "/static/research_inspector.js",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/research-inspector",
+      "target": "/teacher",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/research-inspector",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/research-inspector",
+      "target": "/teacher",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/research-inspector",
+      "target": "/logout",
+      "method": "POST",
+      "endpoint": "logout",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/3/edit",
+      "target": "/static/style.css",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/3/edit",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/3/edit",
+      "target": "/teacher",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/3/edit",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/3/edit",
+      "target": "/logout",
+      "method": "POST",
+      "endpoint": "logout",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/3/edit",
+      "target": "/teacher",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/3/edit",
+      "target": "/teacher#classrooms",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/3/edit",
+      "target": "/teacher/assignments/3/edit",
+      "method": "POST",
+      "endpoint": "edit_assignment",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/3/edit",
+      "target": "/teacher",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/static/style.css",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/teacher",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/logout",
+      "method": "POST",
+      "endpoint": "logout",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/teacher",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/teacher#classrooms",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/teacher#assignments",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/teacher#progress",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/assignments/2/submissions",
+      "target": "/teacher/submissions/1",
+      "method": "GET",
+      "endpoint": "teacher_submission_view",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/submissions/1",
+      "target": "/static/style.css",
+      "method": "GET",
+      "endpoint": "static",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/submissions/1",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/submissions/1",
+      "target": "/teacher",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/submissions/1",
+      "target": "/assets/essayscaff-logo.png",
+      "method": "GET",
+      "endpoint": "brand_logo",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/submissions/1",
+      "target": "/logout",
+      "method": "POST",
+      "endpoint": "logout",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/submissions/1",
+      "target": "/teacher",
+      "method": "GET",
+      "endpoint": "teacher_dashboard",
+      "classification": "PASS"
+    },
+    {
+      "page": "/teacher/submissions/1",
+      "target": "/teacher/assignments/2/submissions",
+      "method": "GET",
+      "endpoint": "teacher_assignment_submissions",
+      "classification": "PASS"
+    }
+  ],
+  "javascript_urls": [
+    {
+      "file": "app.js",
+      "target": "/api/classrooms",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/archived-assignments",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/assignments",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/assignments",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/classrooms/${encodeURIComponent(classroomId)}/assignments",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/assignments/${encodeURIComponent(assignmentId)}/workspace",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/drafts?session_id=${encodeURIComponent(sessionId)}",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "POST"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/classroom-enrollments",
+      "route_methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/assignments/${encodeURIComponent(activeAssignmentId)}/workspace",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/drafts?session_id=${encodeURIComponent(practiceSessionId)}",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "POST"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/drafts",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "POST"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/submissions",
+      "route_methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/revisions",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "POST"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/revisions?session_id=${encodeURIComponent(sessionId)}",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "POST"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/revisions/${encodeURIComponent(revisionId)}?session_id=${encodeURIComponent(sessionId)}",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "app.js",
+      "target": "/api/analyze-stage",
+      "route_methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "research_inspector.js",
+      "target": "/api/research-inspector/analyze",
+      "route_methods": [
+        "OPTIONS",
+        "POST"
+      ],
+      "classification": "PASS"
+    },
+    {
+      "file": "research_inspector.js",
+      "target": "/api/research-inspector/metadata",
+      "route_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "classification": "PASS"
+    }
+  ],
+  "blueprint_count": 0,
+  "sqlite_integrity": "ok",
+  "foreign_key_violations": 0
+}

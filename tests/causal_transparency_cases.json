@@ -1,0 +1,19 @@
+{
+  "assignment_topic": "Should students use smartphones in the classroom?",
+  "focus_terms": ["smartphones", "students", "classroom", "teacher"],
+  "cases": {
+    "intro_presence": {"stage_id": "INTRODUCTION", "introduction_text": "Students use smartphones in the classroom."},
+    "intro_incomplete": {"stage_id": "INTRODUCTION", "introduction_text": "Although students can find useful information using smartphones."},
+    "intro_list": {"stage_id": "INTRODUCTION", "introduction_text": "Smartphones and classroom learning. Digital dictionaries and educational videos. Students and mobile devices."},
+    "intro_before": {"stage_id": "INTRODUCTION", "introduction_text": "Local workers arrange vegetables, rice, and fruit before the doors open."},
+    "body_mixed": {"stage_id": "BODY", "introduction_text": "Students use smartphones in the classroom to support learning.", "body_text": "Students use smartphones in the classroom. Smartphones provide dictionaries. Teachers explain lessons. Classroom lessons help students learn.\n\nSecond, smartphones support learning."},
+    "body_wordnet": {"stage_id": "BODY", "introduction_text": "A pupil asks the teacher questions in the schoolroom.", "body_text": "A student asks the instructor questions in the classroom. The student studies lessons."},
+    "conclusion_rewording": {"stage_id": "CONCLUSION", "introduction_text": "A pupil asks the teacher questions in the schoolroom.", "body_text": "Students ask instructors questions in the classroom. Teachers explain lessons.", "conclusion_text": "In conclusion, pupils ask a teacher questions in the schoolroom."},
+    "conclusion_new": {"stage_id": "CONCLUSION", "introduction_text": "Students use smartphones in the classroom.", "body_text": "Students read lessons on smartphones. Teachers explain classroom lessons.", "conclusion_text": "In conclusion, a telescope reveals distant galaxies."},
+    "body_generic": {"stage_id": "BODY", "introduction_text": "Students use smartphones in the classroom to support learning.", "body_text": "First, smartphones help students during classroom activities. For example, a teacher can ask students to look up a difficult word in an online dictionary. Students can read the meaning and explain it to their classmates. This gives them information they can use during the lesson.\n\nSecond, smartphones can help students practice lessons."},
+    "punctuation": {"stage_id": "INTRODUCTION", "introduction_text": "!!! ... ???"},
+    "missing_context": {"stage_id": "CONCLUSION", "conclusion_text": "Students use smartphones in the classroom."},
+    "unicode_crlf": {"stage_id": "BODY", "body_text": "  Café students read 📚—quietly.\r\n\r\n第二段: smartphones support learning.  \r\n"},
+    "unicode_lf": {"stage_id": "BODY", "body_text": "  Café students read 📚—quietly.\n\n第二段: smartphones support learning.  \n"}
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "configuration_version": "1.0",
+  "provenance": "developer_curated",
+  "description": "Small reviewable lexical associations, not WordNet synonyms or validated semantic relationships.",
+  "relationships": [
+    {"id": "environment.river.v1", "focus_concept": "environment", "related_concept": "river", "surface_forms": ["river", "rivers"], "relationship_type": "natural_environmental_feature", "relationship_label": "Natural environmental feature"},
+    {"id": "environment.animal.v1", "focus_concept": "environment", "related_concept": "animal", "surface_forms": ["animal", "animals"], "relationship_type": "living_organism", "relationship_label": "Living organism in the environment"},
+    {"id": "environment.forest.v1", "focus_concept": "environment", "related_concept": "forest", "surface_forms": ["forest", "forests"], "relationship_type": "natural_environmental_feature", "relationship_label": "Natural environmental feature"},
+    {"id": "environment.habitat.v1", "focus_concept": "environment", "related_concept": "habitat", "surface_forms": ["habitat", "habitats"], "relationship_type": "environmental_habitat", "relationship_label": "Environmental habitat"},
+    {"id": "environment.ecosystem.v1", "focus_concept": "environment", "related_concept": "ecosystem", "surface_forms": ["ecosystem", "ecosystems"], "relationship_type": "ecological_system", "relationship_label": "Ecological system"},
+    {"id": "environment.pollution.v1", "focus_concept": "environment", "related_concept": "pollution", "surface_forms": ["pollution", "pollutions"], "relationship_type": "environmental_problem", "relationship_label": "Environmental problem"}
+  ]
+}

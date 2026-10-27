@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f9fe">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>NLP Research Inspector — EssayScaff V2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('brand_logo') }}" type="image/png">
+  <script src="{{ url_for('static', filename='research_inspector.js') }}" defer></script>
+</head>
+<body class="teacher-app research-inspector-app">
+  <header class="app-header">
+    <a class="brand" href="{{ url_for('teacher_dashboard') }}" aria-label="EssayScaff Teacher Workspace">
+      <img class="brand-logo" src="{{ url_for('brand_logo') }}" alt="">
+      <span class="brand-wordmark">EssayScaff <span>V2</span></span>
+    </a>
+    <div class="header-context"><span class="role-chip teacher-role-chip">Research Workspace</span><span class="header-page-label">NLP Research Inspector</span></div>
+    <div class="account-tools">
+      <span>Signed in as <strong>{{ username }}</strong></span>
+      <a class="account-settings-link" href="{{ url_for('teacher_dashboard') }}">Teacher Workspace</a>
+      <form action="{{ url_for('logout') }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button class="logout-button" type="submit">Log out</button>
+      </form>
+    </div>
+  </header>
+
+  <div class="app-layout teacher-layout research-layout">
+    <aside class="app-sidebar research-sidebar">
+      <p class="sidebar-label">PROCESS NAVIGATION</p>
+      <nav id="research-process-nav" class="app-navigation research-process-nav" aria-label="Research Inspector processes"></nav>
+      <div class="sidebar-note"><span class="sidebar-note-mark" aria-hidden="true">i</span><p>Only the entered sample and its analysis trace are shown. Research samples are not saved to student records.</p></div>
+    </aside>
+
+    <main class="app-main teacher-main research-main" id="research-main">
+      <div class="research-title-row">
+        <div>
+          <p class="eyebrow">ESSAYSCAFF V2 / RESEARCH WORKSPACE</p>
+          <h1>NLP Research Inspector</h1>
+          <p class="research-lead">Trace actual production processing from submitted text to stage feedback. Storage and offline evaluation are shown separately.</p>
+        </div>
+        <span id="research-analysis-status" class="status-chip">No sample analyzed</span>
+      </div>
+
+      <section class="surface-card research-input-card" aria-labelledby="research-input-title">
+        <div class="section-title-row">
+          <div><p class="eyebrow">CURRENT SAMPLE</p><h2 id="research-input-title">Analysis input</h2></div>
+          <button id="load-regression-sample" class="button-secondary compact-button" type="button">Load Technology in Education sample</button>
+        </div>
+        <form id="research-sample-form">
+          <div class="research-input-grid">
+            <div>
+              <label for="research-stage">Writing stage</label>
+              <select id="research-stage" name="stage_id">
+                <option value="INTRODUCTION">Introduction</option>
+                <option value="BODY">Body</option>
+                <option value="CONCLUSION">Conclusion</option>
+              </select>
+            </div>
+            <div>
+              <label for="research-topic">Assignment topic</label>
+              <input id="research-topic" name="assignment_topic" maxlength="500" required>
+            </div>
+            <div class="research-wide-field">
+              <label for="research-focus-terms">Focus terms <span class="optional">comma-separated</span></label>
+              <input id="research-focus-terms" name="focus_terms" maxlength="2400" placeholder="Optional; leave empty to inspect topic-derived candidates">
+            </div>
+            <div class="research-wide-field">
+              <label for="research-introduction">Introduction <span class="optional">prior context for Body / Conclusion</span></label>
+              <textarea id="research-introduction" name="introduction_text" maxlength="12000" rows="4"></textarea>
+            </div>
+            <div class="research-wide-field">
+              <label for="research-body">Body <span class="optional">prior context for Conclusion</span></label>
+              <textarea id="research-body" name="body_text" maxlength="30000" rows="5"></textarea>
+            </div>
+            <div class="research-wide-field">
+              <label for="research-conclusion">Conclusion</label>
+              <textarea id="research-conclusion" name="conclusion_text" maxlength="12000" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="research-form-actions">
+            <button id="run-research-analysis" type="submit" disabled>Loading Inspector metadata…</button>
+            <span id="research-request-status" role="status" aria-live="polite">Analysis is on demand and is not persisted.</span>
+          </div>
+          <p id="research-error" class="error-message" role="alert" hidden></p>
+        </form>
+      </section>
+
+      <section class="research-sample-summary" aria-label="Selected sample and runtime summary">
+        <div class="research-summary-card"><span>Stage</span><strong id="summary-stage">—</strong></div>
+        <div class="research-summary-card"><span>Analysis status</span><strong id="summary-status">Not analyzed</strong></div>
+        <div class="research-summary-card"><span>Topic</span><strong id="summary-topic">—</strong></div>
+        <div class="research-summary-card"><span>Sample</span><strong id="summary-sample">Custom sample</strong></div>
+        <div class="research-summary-card"><span>Runtime</span><strong id="summary-runtime">Load an analysis</strong></div>
+      </section>
+
+      <section id="research-metrics" class="research-metrics" aria-label="Observed analysis metrics"></section>
+
+      <section class="surface-card research-detail-card" aria-labelledby="research-detail-title">
+        <div class="research-detail-header">
+          <div><p id="research-detail-number" class="eyebrow">00 — COMPLETE PIPELINE</p><h2 id="research-detail-title">Select a process</h2></div>
+          <div class="research-detail-actions">
+            <button id="previous-process" class="button-secondary compact-button" type="button">Previous Process</button>
+            <button id="next-process" class="button-secondary compact-button" type="button">Next Process</button>
+          </div>
+        </div>
+        <div id="research-process-status" class="research-process-status" aria-live="polite"></div>
+        <div id="research-process-content" class="research-process-content">
+          <p class="empty-state">Load or enter a sample and select Analyze Sample. Switching process sections will reuse the returned trace; it will not rerun NLP.</p>
+        </div>
+      </section>
+
+      <section class="surface-card research-raw-card" aria-labelledby="research-raw-heading">
+        <div class="section-title-row"><div><p class="eyebrow">CURRENT RESPONSE ONLY</p><h2 id="research-raw-heading">Raw Analysis Trace</h2></div>
+          <div class="research-detail-actions"><button id="copy-research-json" class="button-secondary compact-button" type="button" disabled>Copy JSON</button><button id="download-research-json" class="button-secondary compact-button" type="button" disabled>Export JSON</button></div>
+        </div>
+        <p class="field-help">The trace contains this teacher-entered sample and its analysis evidence. It does not include session cookies, credentials, database records, or other students’ writing.</p>
+        <details id="raw-trace-details"><summary>Expand complete available response</summary><pre id="research-raw-json" class="research-raw-json">No trace available.</pre></details>
+      </section>
+      <footer class="app-footer">Research observations are implementation evidence, not validated semantic judgments or essay-quality decisions.</footer>
+    </main>
+  </div>
+</body>
+</html>

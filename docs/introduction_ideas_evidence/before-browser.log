@@ -1,0 +1,20 @@
+{
+  "mode": "before",
+  "cases": 13,
+  "branches": {
+    "T01": "intro_ideas_main_point",
+    "T02": "intro_ideas_point_and_reason",
+    "T03": "intro_ideas_point_and_reason",
+    "T04": "intro_ideas_check_your_reason",
+    "T05": "intro_ideas_point_and_reason",
+    "T06": "intro_sentence_fluency_complete_sentence",
+    "T07": "intro_ideas_point_and_reason",
+    "T08": "intro_sentence_fluency_complete_sentence",
+    "T09": "intro_ideas_point_and_reason",
+    "T10": "intro_ideas_point_and_reason",
+    "T11": "intro_ideas_review_topic_connection",
+    "T12": "intro_ideas_main_point",
+    "T13": "intro_ideas_point_and_reason"
+  },
+  "javascriptErrors": []
+}

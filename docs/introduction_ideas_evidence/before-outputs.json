@@ -1,0 +1,350 @@
+{
+  "records": {
+    "T01": {
+      "text": "Schools should allow smartphones during class.",
+      "branch": "intro_ideas_main_point",
+      "trait": "Ideas",
+      "skill": "State Your Main Point",
+      "lesson": "HELP-INTRO-MAIN-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded sentence patterns for your opening but did not confirm a clear main point. Read it as a new reader would and check that your point is easy to find.",
+        "Look at your writing": "Schools should allow smartphones during class.",
+        "Why it matters": "Introducing the topic tells readers what you are discussing. Your main point gives your answer to the assignment question and gives the rest of the essay direction.",
+        "How to improve": "Compare your opening with the assignment question. Decide whether it only names the situation or also states your answer. Clarify your point in your own words if a reader would need it, and check that a new reader can find it easily."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 1,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T02": {
+      "text": "Schools should allow smartphones during class because students can research information for their lessons.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Explain Your Point",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded sentence patterns that may show a main point with a supporting reason.",
+        "Look at your writing": "Schools should allow smartphones during class because students can research information for their lessons.",
+        "Why it matters": "A point states what you believe; a reason explains why you believe it. Readers may understand each one separately and still need the connection explained.",
+        "How to improve": "Read your point and reason together. Explain their connection in your own words if a reader might miss it, then check that the reason clearly supports your point."
+      },
+      "reason_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T03": {
+      "text": "Students should be allowed to use smartphones in class. They can search for difficult words. This may help them understand their lessons.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Explain Your Point",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded sentence patterns that may show a main point with a supporting reason.",
+        "Look at your writing": "They can search for difficult words.\nThis may help them understand their lessons.",
+        "Why it matters": "A point states what you believe; a reason explains why you believe it. Readers may understand each one separately and still need the connection explained.",
+        "How to improve": "Read your point and reason together. Explain their connection in your own words if a reader might miss it, then check that the reason clearly supports your point."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 2,
+      "development_count": 3,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T04": {
+      "text": "Schools should allow smartphones during class because these devices provide quick access to online dictionaries.",
+      "branch": "intro_ideas_check_your_reason",
+      "trait": "Ideas",
+      "skill": "Check Your Reason",
+      "lesson": "HELP-INTRO-CHECK-REASON",
+      "guidance": {
+        "What I noticed": "Your reason may not clearly connect to the assignment topic.",
+        "Look at your writing": "Schools should allow smartphones during class because these devices provide quick access to online dictionaries.",
+        "Why it matters": "A reason should help explain your main point.",
+        "How to improve": "Read your point and reason together. Do they make sense together? If not, improve your reason using your own words."
+      },
+      "reason_status": "BECAUSE_CLAUSE_NO_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T05": {
+      "text": "Schools should allow smartphones during class because smartphones provide quick access to online dictionaries.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Explain Your Point",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded sentence patterns that may show a main point with a supporting reason.",
+        "Look at your writing": "Schools should allow smartphones during class because smartphones provide quick access to online dictionaries.",
+        "Why it matters": "A point states what you believe; a reason explains why you believe it. Readers may understand each one separately and still need the connection explained.",
+        "How to improve": "Read your point and reason together. Explain their connection in your own words if a reader might miss it, then check that the reason clearly supports your point."
+      },
+      "reason_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T06": {
+      "text": "Because students can use smartphones during class.",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "trait": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "lesson": "HELP-INTRO-COMPLETE-SENTENCE",
+      "guidance": {
+        "What I noticed": "The sentence containing 'Because' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+        "Look at your writing": "Because students can use smartphones during class.",
+        "Why it matters": "'Because' introduces a reason. Your reader expects a main statement that gives the result or claim.",
+        "How to improve": "Ask yourself: Because students can use smartphones during class, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 0,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+        "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T07": {
+      "text": "Because students can use smartphones for learning, schools should allow them during class.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Explain Your Point",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded sentence patterns that may show a main point with a supporting reason.",
+        "Look at your writing": "Because students can use smartphones for learning, schools should allow them during class.",
+        "Why it matters": "A point states what you believe; a reason explains why you believe it. Readers may understand each one separately and still need the connection explained.",
+        "How to improve": "Read your point and reason together. Explain their connection in your own words if a reader might miss it, then check that the reason clearly supports your point."
+      },
+      "reason_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T08": {
+      "text": "Although smartphones can distract students.",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "trait": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "lesson": "HELP-INTRO-COMPLETE-SENTENCE",
+      "guidance": {
+        "What I noticed": "The sentence containing 'Although' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+        "Look at your writing": "Although smartphones can distract students.",
+        "Why it matters": "'Although' introduces a contrasting idea. Your reader expects another statement explaining what happens despite that idea.",
+        "How to improve": "Ask yourself: Although smartphones can distract students, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 0,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+        "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T09": {
+      "text": "Although smartphones can distract students, teachers can use them for learning.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Explain Your Point",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded sentence patterns that may show a main point with a supporting reason.",
+        "Look at your writing": "Although smartphones can distract students, teachers can use them for learning.",
+        "Why it matters": "A point states what you believe; a reason explains why you believe it. Readers may understand each one separately and still need the connection explained.",
+        "How to improve": "Read your point and reason together. Explain their connection in your own words if a reader might miss it, then check that the reason clearly supports your point."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T10": {
+      "text": "Smartphones are useful classroom tools. Students can read educational articles. These activities give them more ways to learn.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Explain Your Point",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded sentence patterns that may show a main point with a supporting reason.",
+        "Look at your writing": "Smartphones are useful classroom tools.\nStudents can read educational articles.\nThese activities give them more ways to learn.",
+        "Why it matters": "A point states what you believe; a reason explains why you believe it. Readers may understand each one separately and still need the connection explained.",
+        "How to improve": "Read your point and reason together. Explain their connection in your own words if a reader might miss it, then check that the reason clearly supports your point."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 3,
+      "development_count": 3,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T11": {
+      "text": "Schools should allow smartphones during class. We had a slumber party at my aunt's house.",
+      "branch": "intro_ideas_review_topic_connection",
+      "trait": "Ideas",
+      "skill": "Review Topic Connection",
+      "lesson": "HELP-INTRO-TOPIC-CONNECTION",
+      "guidance": {
+        "What I noticed": "This sentence may not clearly connect to your topic.",
+        "Look at your writing": "We had a slumber party at my aunt's house.",
+        "Why it matters": "Each sentence should help explain your main idea.",
+        "How to improve": "Read this sentence together with the others. Does it help explain your point about the assignment topic? If the connection is hard to see, explain it in your own words or leave this idea for another piece of writing."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 2,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+        "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW"
+      ],
+      "instructional_feedback": null
+    },
+    "T12": {
+      "text": "Students can communicate with invisible dragons during class.",
+      "branch": "intro_ideas_main_point",
+      "trait": "Ideas",
+      "skill": "State Your Main Point",
+      "lesson": "HELP-INTRO-MAIN-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded sentence patterns for your opening but did not confirm a clear main point. Read it as a new reader would and check that your point is easy to find.",
+        "Look at your writing": "Students can communicate with invisible dragons during class.",
+        "Why it matters": "Introducing the topic tells readers what you are discussing. Your main point gives your answer to the assignment question and gives the rest of the essay direction.",
+        "How to improve": "Compare your opening with the assignment question. Decide whether it only names the situation or also states your answer. Clarify your point in your own words if a reader would need it, and check that a new reader can find it easily."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 1,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    },
+    "T13": {
+      "text": "Schools should allow smartphones during class because smartphones control invisible dragons on Mars.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Explain Your Point",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded sentence patterns that may show a main point with a supporting reason.",
+        "Look at your writing": "Schools should allow smartphones during class because smartphones control invisible dragons on Mars.",
+        "Why it matters": "A point states what you believe; a reason explains why you believe it. Readers may understand each one separately and still need the connection explained.",
+        "How to improve": "Read your point and reason together. Explain their connection in your own words if a reader might miss it, then check that the reason clearly supports your point."
+      },
+      "reason_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": null
+    }
+  },
+  "javascriptErrors": []
+}

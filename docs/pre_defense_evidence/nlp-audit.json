@@ -1,0 +1,676 @@
+[
+  {
+    "stage": "INTRODUCTION",
+    "case": "empty",
+    "input": {
+      "introduction_text": ""
+    },
+    "availability": "SUPPLIED_EMPTY",
+    "events": [
+      "INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.EMPTY_OR_NONALPHABETIC",
+      "INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED"
+    ],
+    "branch": "intro_neutral_empty",
+    "primary_feedback": "Your Introduction is empty. Start with one sentence about the topic in your own words.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "topic-only",
+    "input": {
+      "introduction_text": "Smartphones."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.FRAGMENT_CANDIDATE",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+    ],
+    "branch": "intro_ideas_main_point",
+    "primary_feedback": "Your assignment words appear in one recorded sentence, but the checks could not spot a main-point sentence there. Read it aloud and check that your point comes across clearly.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "main-statement",
+    "input": {
+      "introduction_text": "Schools should allow smartphones for learning."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+    ],
+    "branch": "intro_ideas_main_point",
+    "primary_feedback": "The checks recorded one main-point sentence and no additional sentence parts. Read your opening as a new reader would and check that your point is easy to find.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "explanation",
+    "input": {
+      "introduction_text": "Schools should allow smartphones because students can use educational apps during class."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+    ],
+    "branch": "intro_ideas_point_and_reason",
+    "primary_feedback": "The checks recorded sentence patterns that may show a main point with a supporting reason. Read them together and check that the reason explains the point you want readers to accept.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "because-incomplete",
+    "input": {
+      "introduction_text": "Because students can use smartphones for learning."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+    ],
+    "branch": "intro_sentence_fluency_complete_sentence",
+    "primary_feedback": "The words after 'Because' may leave the thought unfinished. Add the missing part of your idea so the sentence tells readers your point.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "because-complete",
+    "input": {
+      "introduction_text": "Teachers use smartphones because students can use educational apps during class."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+    ],
+    "branch": "intro_ideas_point_and_reason",
+    "primary_feedback": "The checks recorded sentence patterns that may show a main point with a supporting reason. Read them together and check that the reason explains the point you want readers to accept.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "although-incomplete",
+    "input": {
+      "introduction_text": "Although smartphones can interrupt lessons."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+    ],
+    "branch": "intro_sentence_fluency_complete_sentence",
+    "primary_feedback": "The words after 'Although' may leave the thought unfinished. Add the missing part of your idea so the sentence tells readers your point.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "although-complete",
+    "input": {
+      "introduction_text": "Although smartphones can distract students, teachers can use them for learning."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+    ],
+    "branch": "intro_ideas_point_and_reason",
+    "primary_feedback": "The checks recorded sentence patterns that may show a main point with a supporting reason. Read them together and check that the reason explains the point you want readers to accept.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "unrelated-sentence",
+    "input": {
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities. We had a slumber party at my aunt's house."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+      "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW"
+    ],
+    "branch": "intro_ideas_review_topic_connection",
+    "primary_feedback": "This sentence may not clearly connect to your topic. Read it with the sentences beside it and check how it helps explain your point.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "pronoun-context",
+    "input": {
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities. She helped me understand the lesson better."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+    ],
+    "branch": "intro_ideas_point_and_reason",
+    "primary_feedback": "The checks recorded sentence patterns that may show a main point with a supporting reason. Read them together and check that the reason explains the point you want readers to accept.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "keyword-rich-unrelated",
+    "input": {
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities. Students can communicate with invisible dragons during class."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+    ],
+    "branch": "intro_ideas_point_and_reason",
+    "primary_feedback": "The checks recorded sentence patterns that may show a main point with a supporting reason. Read them together and check that the reason explains the point you want readers to accept.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "INTRODUCTION",
+    "case": "simultaneous-concerns",
+    "input": {
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities. Although smartphones can interrupt lessons. And have slumber party at my aunt house"
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+      "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+      "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+      "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+      "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+      "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "INTRO.TEXT.PRESENT",
+      "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+      "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW"
+    ],
+    "branch": "intro_sentence_fluency_complete_sentence",
+    "primary_feedback": "The words after 'Although' may leave the thought unfinished. Add the missing part of your idea so the sentence tells readers your point.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "BODY",
+    "case": "one-paragraph",
+    "input": {
+      "body_text": "Students use smartphones for learning.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "BODY.GOAL.DEVELOP_BODY_IDEAS",
+      "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+      "BODY.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P1.PARAGRAPH.SEGMENTED",
+      "BODY.P1.SUPPORTING_DETAIL.NOT_OBSERVED",
+      "BODY.P1.TOPIC_SENTENCE.CANDIDATE"
+    ],
+    "branch": "body_ideas_develop_point",
+    "primary_feedback": "The checks found no additional sentence parts developing the idea in Paragraph 1. Add a reason, example, or explanation if readers need one.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "BODY",
+    "case": "multiple-paragraphs",
+    "input": {
+      "body_text": "Students use smartphones for reading. For example, students look up difficult words.\n\nTeachers guide classroom learning and explain new words.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON",
+      "BODY.GOAL.DEVELOP_BODY_IDEAS",
+      "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+      "BODY.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "BODY.P1.EXAMPLE_OR_EXPLANATION_MARKER",
+      "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P1.PARAGRAPH.SEGMENTED",
+      "BODY.P1.REPETITION.REPEATED_NORMALIZED_CONTENT_TERMS",
+      "BODY.P1.REPETITION.REPEATED_SURFACE_CONTENT_WORDS",
+      "BODY.P1.SUPPORTING_DETAIL.CANDIDATE",
+      "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+      "BODY.P1.UNITY.SENTENCE_PAIR_1_2",
+      "BODY.P2.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P2.PARAGRAPH.SEGMENTED",
+      "BODY.P2.SUPPORTING_DETAIL.NOT_OBSERVED",
+      "BODY.P2.TOPIC_SENTENCE.CANDIDATE"
+    ],
+    "branch": "body_ideas_develop_point",
+    "primary_feedback": "The checks found no additional sentence parts developing the idea in Paragraph 2. Add a reason, example, or explanation if readers need one.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "BODY",
+    "case": "no-detail-candidate",
+    "input": {
+      "body_text": "Students use smartphones.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "BODY.GOAL.DEVELOP_BODY_IDEAS",
+      "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+      "BODY.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P1.PARAGRAPH.SEGMENTED",
+      "BODY.P1.SUPPORTING_DETAIL.NOT_OBSERVED",
+      "BODY.P1.TOPIC_SENTENCE.CANDIDATE"
+    ],
+    "branch": "body_ideas_develop_point",
+    "primary_feedback": "The checks found no additional sentence parts developing the idea in Paragraph 1. Add a reason, example, or explanation if readers need one.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "BODY",
+    "case": "example",
+    "input": {
+      "body_text": "Students use smartphones for learning. For example, they read educational articles.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "BODY.GOAL.DEVELOP_BODY_IDEAS",
+      "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+      "BODY.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "BODY.P1.EXAMPLE_OR_EXPLANATION_MARKER",
+      "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P1.PARAGRAPH.SEGMENTED",
+      "BODY.P1.SUPPORTING_DETAIL.CANDIDATE",
+      "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+      "BODY.P1.UNITY.SENTENCE_PAIR_1_2"
+    ],
+    "branch": "body_neutral_observable",
+    "primary_feedback": "The checks recorded sentences and word matches across your Body paragraphs. Read each paragraph and check that it develops your point.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "BODY",
+    "case": "unrelated-example",
+    "input": {
+      "body_text": "Students use smartphones. For example, invisible dragons visit Mars.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "BODY.GOAL.DEVELOP_BODY_IDEAS",
+      "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+      "BODY.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "BODY.P1.EXAMPLE_OR_EXPLANATION_MARKER",
+      "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P1.PARAGRAPH.SEGMENTED",
+      "BODY.P1.SUPPORTING_DETAIL.CANDIDATE",
+      "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+      "BODY.P1.UNITY.SENTENCE_PAIR_1_2"
+    ],
+    "branch": "body_neutral_observable",
+    "primary_feedback": "The checks recorded sentences and word matches across your Body paragraphs. Read each paragraph and check that it develops your point.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "BODY",
+    "case": "repeated-openings",
+    "input": {
+      "body_text": "Students read books daily. Students read books at home.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "BODY.GOAL.DEVELOP_BODY_IDEAS",
+      "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+      "BODY.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P1.PARAGRAPH.SEGMENTED",
+      "BODY.P1.REPETITION.REPEATED_NORMALIZED_CONTENT_TERMS",
+      "BODY.P1.REPETITION.REPEATED_SENTENCE_OPENINGS",
+      "BODY.P1.REPETITION.REPEATED_SURFACE_CONTENT_WORDS",
+      "BODY.P1.SUPPORTING_DETAIL.CANDIDATE",
+      "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+      "BODY.P1.UNITY.SENTENCE_PAIR_1_2"
+    ],
+    "branch": "body_sentence_fluency_sentence_beginnings",
+    "primary_feedback": "More than one sentence in Paragraph 1 begins with 'students read'. Change one beginning only if the repetition sounds awkward.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "BODY",
+    "case": "disconnected",
+    "input": {
+      "body_text": "Students use smartphones.\n\nOrchestras perform symphonies.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON",
+      "BODY.GOAL.DEVELOP_BODY_IDEAS",
+      "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+      "BODY.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P1.PARAGRAPH.SEGMENTED",
+      "BODY.P1.SUPPORTING_DETAIL.NOT_OBSERVED",
+      "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+      "BODY.P2.PARAGRAPH.FOCUS_TERMS_NOT_OBSERVED",
+      "BODY.P2.PARAGRAPH.SEGMENTED",
+      "BODY.P2.SUPPORTING_DETAIL.NOT_OBSERVED",
+      "BODY.P2.TOPIC_SENTENCE.NO_CANDIDATE"
+    ],
+    "branch": "body_organization_paragraph_link",
+    "primary_feedback": "Paragraphs 1 and 2 have no recorded shared words or linking phrase between them. Read the two together and add a link if a reader might not see how the ideas connect.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "BODY",
+    "case": "developed",
+    "input": {
+      "body_text": "Students use smartphones for reading. For example, students look up difficult words.\n\nTeachers guide classroom learning and explain new words.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON",
+      "BODY.GOAL.DEVELOP_BODY_IDEAS",
+      "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+      "BODY.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "BODY.P1.EXAMPLE_OR_EXPLANATION_MARKER",
+      "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P1.PARAGRAPH.SEGMENTED",
+      "BODY.P1.REPETITION.REPEATED_NORMALIZED_CONTENT_TERMS",
+      "BODY.P1.REPETITION.REPEATED_SURFACE_CONTENT_WORDS",
+      "BODY.P1.SUPPORTING_DETAIL.CANDIDATE",
+      "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+      "BODY.P1.UNITY.SENTENCE_PAIR_1_2",
+      "BODY.P2.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P2.PARAGRAPH.SEGMENTED",
+      "BODY.P2.SUPPORTING_DETAIL.NOT_OBSERVED",
+      "BODY.P2.TOPIC_SENTENCE.CANDIDATE"
+    ],
+    "branch": "body_ideas_develop_point",
+    "primary_feedback": "The checks found no additional sentence parts developing the idea in Paragraph 2. Add a reason, example, or explanation if readers need one.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "BODY",
+    "case": "missing-introduction",
+    "input": {
+      "body_text": "Students use smartphones for reading. For example, students look up difficult words.\n\nTeachers guide classroom learning and explain new words."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON",
+      "BODY.GOAL.DEVELOP_BODY_IDEAS",
+      "BODY.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "BODY.P1.EXAMPLE_OR_EXPLANATION_MARKER",
+      "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P1.PARAGRAPH.SEGMENTED",
+      "BODY.P1.REPETITION.REPEATED_NORMALIZED_CONTENT_TERMS",
+      "BODY.P1.REPETITION.REPEATED_SURFACE_CONTENT_WORDS",
+      "BODY.P1.SUPPORTING_DETAIL.CANDIDATE",
+      "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+      "BODY.P1.UNITY.SENTENCE_PAIR_1_2",
+      "BODY.P2.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+      "BODY.P2.PARAGRAPH.SEGMENTED",
+      "BODY.P2.SUPPORTING_DETAIL.NOT_OBSERVED",
+      "BODY.P2.TOPIC_SENTENCE.CANDIDATE"
+    ],
+    "branch": "body_ideas_develop_point",
+    "primary_feedback": "The checks found no additional sentence parts developing the idea in Paragraph 2. Add a reason, example, or explanation if readers need one.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "CONCLUSION",
+    "case": "valid-ending",
+    "input": {
+      "conclusion_text": "Overall, students should use smartphones for guided classroom learning.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities.",
+      "body_text": "Students use smartphones for reading. For example, students look up difficult words.\n\nTeachers guide classroom learning and explain new words."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "CONCLUSION.CLOSURE.MODAL_OR_RECOMMENDATION_CUE",
+      "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE",
+      "CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON",
+      "CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON",
+      "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS",
+      "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS",
+      "CONCLUSION.STRUCTURE.CLAUSE_CANDIDATE",
+      "CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE",
+      "CONCLUSION.TEXT.PRESENT",
+      "CONCLUSION.TOPIC.FOCUS_MATCHES"
+    ],
+    "branch": "conclusion_ideas_new_words",
+    "primary_feedback": "These idea words (guide classroom learning) do not appear in the earlier sections you provided. Decide whether readers need that idea explained earlier; the checks may miss reworded ideas.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "CONCLUSION",
+    "case": "empty",
+    "input": {
+      "conclusion_text": "",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities.",
+      "body_text": "Students use smartphones for reading. For example, students look up difficult words.\n\nTeachers guide classroom learning and explain new words."
+    },
+    "availability": "SUPPLIED_EMPTY",
+    "events": [
+      "CONCLUSION.CLOSURE.NO_CANDIDATE",
+      "CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON",
+      "CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON",
+      "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS",
+      "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "CONCLUSION.STRUCTURE.NO_CLAUSE_CANDIDATE",
+      "CONCLUSION.SYNTHESIS.NO_CANDIDATE",
+      "CONCLUSION.TEXT.EMPTY_OR_NONALPHABETIC",
+      "CONCLUSION.TOPIC.NO_FOCUS_MATCH"
+    ],
+    "branch": "conclusion_neutral_empty",
+    "primary_feedback": "Your Conclusion is empty. Write one closing sentence about your main idea in your own words.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "CONCLUSION",
+    "case": "no-closing-statement",
+    "input": {
+      "conclusion_text": "Smartphones.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities.",
+      "body_text": "Students use smartphones for reading. For example, students look up difficult words.\n\nTeachers guide classroom learning and explain new words."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "CONCLUSION.CLOSURE.NO_CANDIDATE",
+      "CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON",
+      "CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON",
+      "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS",
+      "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "CONCLUSION.STRUCTURE.NO_CLAUSE_CANDIDATE",
+      "CONCLUSION.SYNTHESIS.NO_CANDIDATE",
+      "CONCLUSION.TEXT.PRESENT",
+      "CONCLUSION.TOPIC.FOCUS_MATCHES"
+    ],
+    "branch": "conclusion_neutral_review",
+    "primary_feedback": "The checks could not spot a complete closing sentence. Read your ending aloud and add any missing part.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "CONCLUSION",
+    "case": "repeated-main-idea",
+    "input": {
+      "conclusion_text": "Schools should allow smartphones for learning.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities.",
+      "body_text": "Students use smartphones for reading. For example, students look up difficult words.\n\nTeachers guide classroom learning and explain new words."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "CONCLUSION.CLOSURE.MODAL_OR_RECOMMENDATION_CUE",
+      "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE",
+      "CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON",
+      "CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON",
+      "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS",
+      "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS",
+      "CONCLUSION.STRUCTURE.CLAUSE_CANDIDATE",
+      "CONCLUSION.SYNTHESIS.NO_CANDIDATE",
+      "CONCLUSION.TEXT.PRESENT",
+      "CONCLUSION.TOPIC.FOCUS_MATCHES"
+    ],
+    "branch": "conclusion_ideas_new_words",
+    "primary_feedback": "These idea words (school) do not appear in the earlier sections you provided. Decide whether readers need that idea explained earlier; the checks may miss reworded ideas.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "CONCLUSION",
+    "case": "new-topic",
+    "input": {
+      "conclusion_text": "Overall, students should use smartphones. Satellites explore distant galaxies.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities.",
+      "body_text": "Students use smartphones for reading. For example, students look up difficult words.\n\nTeachers guide classroom learning and explain new words."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE",
+      "CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON",
+      "CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON",
+      "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS",
+      "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS",
+      "CONCLUSION.STRUCTURE.CLAUSE_CANDIDATE",
+      "CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE",
+      "CONCLUSION.TEXT.PRESENT",
+      "CONCLUSION.TOPIC.FOCUS_MATCHES"
+    ],
+    "branch": "conclusion_ideas_new_words",
+    "primary_feedback": "These idea words (satellite, distant galaxy) do not appear in the earlier sections you provided. Decide whether readers need that idea explained earlier; the checks may miss reworded ideas.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "CONCLUSION",
+    "case": "paraphrase",
+    "input": {
+      "conclusion_text": "Teachers can guide learners as they read and look up new words.",
+      "introduction_text": "Smartphones help students learn. Teachers guide students during classroom activities.",
+      "body_text": "Students use smartphones for reading. For example, students look up difficult words.\n\nTeachers guide classroom learning and explain new words."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE",
+      "CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON",
+      "CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON",
+      "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS",
+      "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS",
+      "CONCLUSION.STRUCTURE.CLAUSE_CANDIDATE",
+      "CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE",
+      "CONCLUSION.TEXT.PRESENT",
+      "CONCLUSION.TOPIC.NO_FOCUS_MATCH"
+    ],
+    "branch": "conclusion_ideas_new_words",
+    "primary_feedback": "These idea words (learner) do not appear in the earlier sections you provided. Decide whether readers need that idea explained earlier; the checks may miss reworded ideas.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  },
+  {
+    "stage": "CONCLUSION",
+    "case": "missing-earlier-context",
+    "input": {
+      "conclusion_text": "Overall, students should use smartphones carefully."
+    },
+    "availability": "ANALYZED",
+    "events": [
+      "CONCLUSION.CLOSURE.MODAL_OR_RECOMMENDATION_CUE",
+      "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE",
+      "CONCLUSION.CONTINUITY.BODY_UNAVAILABLE",
+      "CONCLUSION.CONTINUITY.INTRODUCTION_UNAVAILABLE",
+      "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS",
+      "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+      "CONCLUSION.STRUCTURE.CLAUSE_CANDIDATE",
+      "CONCLUSION.SYNTHESIS.UNAVAILABLE",
+      "CONCLUSION.TEXT.PRESENT",
+      "CONCLUSION.TOPIC.FOCUS_MATCHES"
+    ],
+    "branch": "conclusion_organization_clear_ending",
+    "primary_feedback": "Your ending has a final sentence or closing phrase. Read it with the whole essay and decide whether it leaves the point you want.",
+    "classification": "PASS",
+    "limitation": "Observational regression only; no semantic accuracy claim."
+  }
+]

@@ -1,0 +1,416 @@
+"""Conclusion-stage evidence and feedback tests across six assignments."""
+
+import json
+from unittest.mock import Mock
+
+import pytest
+
+from services.conclusion_rules import ConclusionRuleBase
+from services.feedback_service import FeedbackService
+from services.nlp_service import NLPService
+from services.topic_service import TopicService
+
+
+@pytest.fixture(scope="module")
+def nlp_service() -> NLPService:
+    return NLPService()
+
+
+@pytest.fixture(scope="module")
+def conclusion_rules(nlp_service: NLPService) -> ConclusionRuleBase:
+    return ConclusionRuleBase(TopicService(nlp_service))
+
+
+@pytest.fixture(scope="module")
+def feedback() -> FeedbackService:
+    return FeedbackService()
+
+
+CASES = [
+    {
+        "name": "social media",
+        "topic": "Effects of late-night social media use on classroom attention",
+        "focus": ["social media", "students", "sleep", "fatigue", "attention", "concentration", "classroom"],
+        "intro": "The essay considers how late-night social media use may affect students' classroom attention.",
+        "body": "Students use social media at night. This can reduce sleep, increase fatigue, and make classroom concentration difficult.",
+        "developed": "Overall, late-night social media use may affect students' classroom attention by reducing their sleep. Managing screen time could help students maintain concentration during lessons.",
+        "keywords": "Social media. Students. Sleep. Fatigue. Classroom attention.",
+        "short": "Late-night screen use may affect attention.",
+        "gibberish": "Social media folds students' sleep into invisible classrooms while attention drinks digital clocks. Therefore, concentration teaches fatigue to become tomorrow's shadow.",
+        "figurative": "Reducing midnight notifications may give students a quieter mind and a clearer start to the school day.",
+        "unrelated": "The town library extended its opening hours because residents requested more reading spaces.",
+        "limited": "Healthier nighttime routines may help learners focus in the morning.",
+        "new_terms": "Ultimately, algorithmic feed curation may alter how learners allocate attention.",
+        "repeated": "Students need rest. Students need classroom focus.",
+        "incomplete": "Overall, social media and sleep because students.",
+        "qualified": "Social media does not affect every student in the same way.",
+    },
+    {
+        "name": "school uniforms",
+        "topic": "Benefits and disadvantages of school uniforms",
+        "focus": ["school uniforms", "students", "costs", "equality", "identity", "benefits", "disadvantages"],
+        "intro": "This essay examines possible benefits and disadvantages of school uniforms.",
+        "body": "Uniform rules can reduce clothing pressure. They may also limit students' self-expression.",
+        "developed": "Overall, uniforms may reduce clothing costs, although they can limit student self-expression. Schools should consider both effects when reviewing uniform rules.",
+        "keywords": "Uniforms. Students. Costs. Equality. Identity.",
+        "short": "Uniforms may affect student identity.",
+        "gibberish": "Uniforms fold equality into silent buttons while student identity drinks invisible fabric. Therefore, school rules teach sleeves to become tomorrow.",
+        "figurative": "Uniforms can be a shared canvas where students still bring different colors.",
+        "unrelated": "A community garden gives neighbors a place to meet.",
+        "limited": "Shared clothing may reduce pressure, while self-expression still matters.",
+        "new_terms": "Ultimately, sartorial autonomy remains part of the debate.",
+        "repeated": "Uniforms may influence identity. Uniforms may shape school identity.",
+        "incomplete": "In summary, uniforms are important because students.",
+        "qualified": "Uniforms do not affect all students in the same way.",
+    },
+    {
+        "name": "environmental pollution",
+        "topic": "Effects of environmental pollution on community health",
+        "focus": ["pollution", "air pollution", "community", "health", "emissions", "lungs"],
+        "intro": "The essay discusses how environmental pollution can affect community health.",
+        "body": "Air pollution can worsen respiratory symptoms. Residents near busy roads may experience more exposure.",
+        "developed": "Overall, reducing air pollution may help protect community health, especially for people with respiratory conditions. Local monitoring can help identify areas for further attention.",
+        "keywords": "Pollution. Community. Health. Emissions. Lungs.",
+        "short": "Cleaner air may support community health.",
+        "gibberish": "Pollution pours blue traffic into lungs while public health swallows a backward chimney. Thus, emissions teach neighborhoods to become invisible clocks.",
+        "figurative": "Cleaner air can give a neighborhood room to breathe.",
+        "unrelated": "Students who read regularly learn to follow longer arguments.",
+        "limited": "Cleaner neighborhoods may help people feel better.",
+        "new_terms": "Ultimately, environmental exposure may alter respiratory morbidity patterns.",
+        "repeated": "Pollution affects health. Pollution changes health.",
+        "incomplete": "Overall, pollution affects health because communities.",
+        "qualified": "Pollution does not affect every resident equally.",
+    },
+    {
+        "name": "reading habits",
+        "topic": "Importance of reading habits among students",
+        "focus": ["reading habits", "students", "reading", "books", "libraries", "literacy"],
+        "intro": "This essay considers why regular reading habits can matter for students.",
+        "body": "Regular reading gives students practice with unfamiliar words. Libraries can provide access to books.",
+        "developed": "Overall, regular reading can help students work with unfamiliar words and longer ideas. Access to books and personal interest may shape how students develop reading habits.",
+        "keywords": "Reading habits. Students. Books. Libraries. Literacy.",
+        "short": "Reading helps students learn.",
+        "gibberish": "Reading habits fold literacy into purple pages while books drink silent libraries. In summary, students teach paragraphs to become shadows.",
+        "figurative": "Books can be windows through which students visit unfamiliar ideas.",
+        "unrelated": "Solar and wind power provide electricity without burning fuel during operation.",
+        "limited": "Regular reading may help learners over time.",
+        "new_terms": "Ultimately, habitual reading can scaffold lexical acquisition and inferential fluency.",
+        "repeated": "Reading supports students. Reading supports students.",
+        "incomplete": "To summarize, reading habits matter because students.",
+        "qualified": "Reading does not help every student in the same way.",
+    },
+    {
+        "name": "renewable energy",
+        "topic": "Benefits and challenges of renewable energy",
+        "focus": ["renewable energy", "solar", "wind power", "electricity", "storage", "fossil fuels"],
+        "intro": "The essay considers benefits and challenges associated with renewable energy.",
+        "body": "Solar and wind power generate electricity. Storage can help balance changes in supply.",
+        "developed": "Taken together, solar and wind power can reduce reliance on fossil fuels, while storage may help manage variable output. Their usefulness depends on local needs and infrastructure.",
+        "keywords": "Solar panels. Wind power. Storage. Electricity. Fossil fuels.",
+        "short": "Renewable energy can reduce fuel use.",
+        "gibberish": "Renewable energy folds electricity into mountain shadows while storage drinks a silent turbine. Therefore, solar power teaches batteries to become tomorrow.",
+        "figurative": "Wind power turns a turbine into a patient clock waiting for weather to wind its hands.",
+        "unrelated": "School uniforms may reduce pressure to buy fashionable clothing.",
+        "limited": "Cleaner energy may help in the future.",
+        "new_terms": "Ultimately, dispatchable generation and grid balancing remain important considerations.",
+        "repeated": "Solar power provides electricity. Solar power provides electricity.",
+        "incomplete": "Overall, renewable energy helps because storage.",
+        "qualified": "Renewable energy does not remove every supply challenge.",
+    },
+    {
+        "name": "healthy lifestyles",
+        "topic": "Factors that support a healthy lifestyle",
+        "focus": ["healthy lifestyle", "sleep", "exercise", "nutrition", "health", "stress", "routine"],
+        "intro": "This essay considers factors that can support a healthy lifestyle.",
+        "body": "Regular sleep and enjoyable activity can support health. Individual needs and routines differ.",
+        "developed": "Overall, regular sleep, enjoyable activity, and nutritious food can support health, although individual needs differ. Students can consider routines that fit their circumstances.",
+        "keywords": "Exercise. Nutrition. Sleep. Stress. Health. Routine.",
+        "short": "Healthy routines can support wellbeing.",
+        "gibberish": "Healthy habits fold sleep into invisible nutrition while stress drinks a purple routine. Thus, exercise teaches tomorrow to swallow a silent week.",
+        "figurative": "Rest can give a tired week a quiet place to land.",
+        "unrelated": "The library extended its weekend opening hours for residents.",
+        "limited": "Small routines may help people feel more balanced.",
+        "new_terms": "Ultimately, sustainable habits depend on individual circumstances and resources.",
+        "repeated": "Rest supports health. Rest supports health.",
+        "incomplete": "In summary, healthy routines matter because people.",
+        "qualified": "Exercise does not remove every source of stress.",
+    },
+]
+
+
+@pytest.mark.parametrize("case", CASES, ids=lambda case: case["name"])
+def test_conclusion_diagnostics_generalize_across_topics(
+    conclusion_rules: ConclusionRuleBase, case: dict
+) -> None:
+    developed = conclusion_rules.analyze(
+        case["developed"], case["topic"], case["focus"], case["intro"], case["body"]
+    )
+    assert developed["text_presence"]["status"] == "SENTENCE_STRUCTURE_OBSERVED"
+    assert developed["clause_candidates"]
+    assert developed["closure_candidates"]["candidates"]
+    assert developed["introduction_to_conclusion_continuity"]["status"] == "LEXICAL_COMPARISON_AVAILABLE"
+    assert developed["body_to_conclusion_continuity"]["status"] == "LEXICAL_COMPARISON_AVAILABLE"
+    assert "readiness_decision" not in developed
+    if case["name"] == "social media":
+        assert any(
+            item["normalized_form"] == "their sleep"
+            for item in developed["new_material_observations"]["phrase_combinations_of_observed_concepts"]
+        )
+        assert all(
+            item["normalized_form"] != "their sleep"
+            for item in developed["new_material_observations"]["unobserved_concept_candidates"]
+        )
+
+    keyword_list = conclusion_rules.analyze(
+        case["keywords"], case["topic"], case["focus"], case["intro"], case["body"]
+    )
+    assert keyword_list["text_presence"]["keyword_list_candidate"]
+    assert keyword_list["clause_candidates"] == []
+
+    short = conclusion_rules.analyze(case["short"], case["topic"], case["focus"])
+    assert short["text_presence"]["sentence_count"] >= 1
+
+    gibberish = conclusion_rules.analyze(case["gibberish"], case["topic"], case["focus"], case["intro"], case["body"])
+    assert gibberish["clause_candidates"]
+    assert gibberish["lexical_topic_evidence"]["observed_focus_terms"]
+    assert "semantic_intelligibility_label" not in gibberish
+    assert "semantic intelligibility" in " ".join(gibberish["uncertainty"])
+
+    figurative = conclusion_rules.analyze(case["figurative"], case["topic"], case["focus"])
+    assert figurative["clause_candidates"]
+    assert "semantic_intelligibility_label" not in figurative
+
+    unrelated = conclusion_rules.analyze(case["unrelated"], case["topic"], case["focus"])
+    assert unrelated["clause_candidates"]
+    assert "semantic_intelligibility_label" not in unrelated
+
+    limited = conclusion_rules.analyze(case["limited"], case["topic"], case["focus"])
+    assert limited["clause_candidates"]
+    assert len(limited["lexical_topic_evidence"]["observed_focus_terms"]) < len(case["focus"])
+
+    new_terms = conclusion_rules.analyze(case["new_terms"], case["topic"], case["focus"], case["intro"], case["body"])
+    assert new_terms["new_material_observations"]["status"] == "COMPARISON_WITH_BOTH_PRIOR_SECTIONS"
+    assert new_terms["new_material_observations"]["unobserved_concept_candidates"]
+
+    repeated = conclusion_rules.analyze(case["repeated"], case["topic"], case["focus"])
+    assert repeated["repetition_observations"]["repeated_normalized_content_terms"]
+
+    incomplete = conclusion_rules.analyze(case["incomplete"], case["topic"], case["focus"])
+    assert incomplete["text_presence"]["alphabetic_word_count"] > 0
+
+    qualified = conclusion_rules.analyze(case["qualified"], case["topic"], case["focus"])
+    assert any(token["text"].casefold() == "not" for token in qualified["linguistic_observations"]["tokens"])
+
+
+def test_prior_context_availability_combinations_and_source_offsets(
+    conclusion_rules: ConclusionRuleBase,
+) -> None:
+    conclusion = "Overall, students may benefit from regular reading."
+    topic = "Importance of reading habits among students"
+    focus = ["students", "reading", "books"]
+    neither = conclusion_rules.analyze(conclusion, topic, focus)
+    intro_only = conclusion_rules.analyze(conclusion, topic, focus, introduction_text="Students read books.")
+    body_only = conclusion_rules.analyze(conclusion, topic, focus, body_text="Students discuss books.")
+    both = conclusion_rules.analyze(
+        conclusion, topic, focus, "Students read books.", "Students discuss books."
+    )
+    assert neither["introduction_to_conclusion_continuity"]["status"] == "NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED"
+    assert neither["body_to_conclusion_continuity"]["status"] == "NOT_AVAILABLE_NO_BODY_SUPPLIED"
+    assert neither["synthesis_structure_candidates"]["status"] == "NOT_AVAILABLE_NO_PRIOR_SECTIONS_SUPPLIED"
+    assert intro_only["body_to_conclusion_continuity"]["status"] == "NOT_AVAILABLE_NO_BODY_SUPPLIED"
+    assert body_only["introduction_to_conclusion_continuity"]["status"] == "NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED"
+    assert both["introduction_to_conclusion_continuity"]["status"] == "LEXICAL_COMPARISON_AVAILABLE"
+    assert both["body_to_conclusion_continuity"]["status"] == "LEXICAL_COMPARISON_AVAILABLE"
+    for report in (intro_only, body_only, both):
+        for comparison_key in ("introduction_to_conclusion_continuity", "body_to_conclusion_continuity"):
+            comparison = report[comparison_key]
+            for bucket in ("direct_lexical_continuity", "lemma_normalized_continuity"):
+                for match in comparison[bucket]:
+                    for pair in match["matching_occurrences"]:
+                        for source_name, occurrence in pair.items():
+                            assert source_name in {"introduction", "body", "conclusion"}
+                            assert occurrence["source_section"] == source_name
+                            assert occurrence["start"] < occurrence["end"]
+
+
+def test_conclusion_missing_prior_context_does_not_invent_context(conclusion_rules: ConclusionRuleBase) -> None:
+    result = conclusion_rules.analyze("Overall, reading helps students.", "Reading habits")
+    assert result["new_material_observations"]["status"] == "NOT_AVAILABLE_NO_PRIOR_SECTIONS_SUPPLIED"
+    assert result["new_material_observations"]["unobserved_concept_candidates"] == []
+    assert result["introduction_to_conclusion_continuity"]["direct_lexical_continuity"] == []
+    assert result["body_to_conclusion_continuity"]["direct_lexical_continuity"] == []
+
+
+def test_closing_expression_is_not_reported_as_unobserved_conclusion_concept(
+    conclusion_rules: ConclusionRuleBase, feedback: FeedbackService,
+) -> None:
+    result = conclusion_rules.analyze(
+        "In conclusion, regular reading helps students learn.",
+        "Importance of reading habits among students",
+        ["reading", "students"],
+        introduction_text="Regular reading helps students develop skills.",
+        body_text="Students practice reading every week.",
+    )
+
+    assert result["closure_candidates"]["status"] == "CLOSURE_STRUCTURE_CANDIDATE"
+    assert result["new_material_observations"]["unobserved_concept_candidates"] == []
+    assert "unobserved concepts (conclusion)" not in feedback.generate_conclusion(result)["Primary Feedback"].casefold()
+
+
+def test_conclusion_continuity_separates_direct_and_lemma_matches(
+    conclusion_rules: ConclusionRuleBase,
+) -> None:
+    result = conclusion_rules.analyze(
+        "Students read books.",
+        "Reading habits among students",
+        ["students", "reading", "books"],
+        introduction_text="One student reads.",
+        body_text="Students write books.",
+    )
+    intro_lemmas = result["introduction_to_conclusion_continuity"]["lemma_normalized_continuity"]
+    body_direct = result["body_to_conclusion_continuity"]["direct_lexical_continuity"]
+    assert any(item["normalized_form"] == "student" for item in intro_lemmas)
+    assert any(item["normalized_form"] == "student" for item in body_direct)
+
+
+def test_wordnet_stage_relationship_remains_an_uncertain_candidate(
+    conclusion_rules: ConclusionRuleBase,
+) -> None:
+    result = conclusion_rules.analyze(
+        "An automobile can help a driver travel.",
+        "Vehicle use",
+        ["vehicle"],
+        introduction_text="A car can help a driver travel.",
+    )
+    suggestions = result["introduction_to_conclusion_continuity"]["wordnet_relationship_candidates"]["suggestions"]
+    candidate = next(item for item in suggestions if item["synset_id"] == "car.n.01")
+    assert candidate["relationship_type"] == "shared_synset_candidate"
+    assert candidate["introduction"]["occurrences"]
+    assert candidate["conclusion"]["occurrences"]
+    assert "Candidate only" in candidate["limitation"]
+
+
+def test_conclusion_rule_and_feedback_provenance_use_actual_spans(
+    conclusion_rules: ConclusionRuleBase, feedback: FeedbackService
+) -> None:
+    text = "Overall, social media may affect students' sleep."
+    analysis = conclusion_rules.analyze(
+        text,
+        "Effects of social media use on sleep",
+        ["social media", "students", "sleep"],
+        introduction_text="Social media use can affect students' sleep.",
+        body_text="Students use social media late at night.",
+    )
+    generated = feedback.generate_conclusion(analysis)
+    events = {event["rule_id"]: event for event in analysis["rule_evidence"]}
+    assert set(generated) >= {
+        "Current Goal", "Primary Feedback", "What's Working", "Needs Attention", "Next Step", "Feedback Provenance"
+    }
+    assert generated["Feedback Provenance"]
+    for item in generated["Feedback Provenance"]:
+        event = events[item["rule_id"]]
+        assert item["actual_evidence"] == event["actual_evidence"]
+        assert item["source_sections"] == event["source_sections"]
+        assert item["triggering_condition"] == event["triggering_condition"]
+    assert "readiness_decision" not in analysis
+
+
+def test_all_cross_stage_spans_name_their_source_section(
+    conclusion_rules: ConclusionRuleBase,
+) -> None:
+    conclusion = "Overall, students read books at school."
+    introduction = "A student reads books at home."
+    body = "Students discuss books in class."
+    result = conclusion_rules.analyze(
+        conclusion,
+        "Reading habits among students",
+        ["students", "reading", "books"],
+        introduction,
+        body,
+    )
+    for match in result["lexical_topic_evidence"]["matches"]:
+        assert match["source_section"] == "conclusion"
+        assert conclusion[match["start"] : match["end"]] == match["observed_text"]
+    for key, sources in (
+        ("introduction_to_conclusion_continuity", {"introduction": introduction, "conclusion": conclusion}),
+        ("body_to_conclusion_continuity", {"body": body, "conclusion": conclusion}),
+    ):
+        for field in ("direct_lexical_continuity", "lemma_normalized_continuity"):
+            for match in result[key][field]:
+                for pair in match["matching_occurrences"]:
+                    for section, evidence in pair.items():
+                        assert section in sources
+                        assert evidence["source_section"] == section
+                        assert sources[section][evidence["start"] : evidence["end"]] == evidence["text"]
+
+
+def test_conclusion_handles_empty_keyword_gibberish_and_figurative_examples(
+    conclusion_rules: ConclusionRuleBase, feedback: FeedbackService
+) -> None:
+    topic = "Effects of late-night social media use on classroom attention"
+    focus = ["social media", "students", "sleep", "fatigue", "attention", "concentration", "classroom"]
+    examples = [
+        ("", "EMPTY"),
+        ("   \r\n", "WHITESPACE_ONLY"),
+        ("?!...", "PUNCTUATION_ONLY"),
+    ]
+    for text, expected in examples:
+        assert conclusion_rules.analyze(text, topic, focus)["text_presence"]["status"] == expected
+
+    list_result = conclusion_rules.analyze(
+        "Social media. Students. Sleep. Fatigue. Classroom attention.", topic, focus
+    )
+    assert list_result["keyword_list_candidate"]["candidate"]
+    assert "closing sentence" in feedback.generate_conclusion(list_result)["Primary Feedback"]
+
+    figurative = conclusion_rules.analyze(
+        "Reducing midnight notifications may give students a quieter mind and a clearer start to the school day.",
+        topic,
+        focus,
+    )
+    assert figurative["clause_candidates"]
+    assert "semantic_intelligibility_label" not in figurative
+
+
+def test_conclusion_list_feedback_does_not_assert_topic_match_without_evidence(
+    conclusion_rules: ConclusionRuleBase, feedback: FeedbackService,
+) -> None:
+    result = conclusion_rules.analyze(
+        "Pencils. Rivers. Models. Lanterns.",
+        "Artificial intelligence in education",
+        ["artificial intelligence"],
+    )
+    generated = feedback.generate_conclusion(result)
+
+    assert "no assignment words" in generated["Primary Feedback"].casefold()
+    assert "contains topic terms" not in generated["Primary Feedback"].casefold()
+
+
+def test_conclusion_parse_count_tracks_distinct_supplied_sections(
+    nlp_service: NLPService,
+) -> None:
+    parse = Mock(wraps=nlp_service.parse)
+    nlp_service.parse = parse
+    rules = ConclusionRuleBase(TopicService(nlp_service))
+    conclusion = "Overall, reading can help students."
+    introduction = "Students read books at school."
+    body = "Students discuss books and ideas."
+    try:
+        rules.analyze(conclusion, "Reading", ["students"], introduction, body)
+        assert parse.call_count == 3
+        assert {call.args[0] for call in parse.call_args_list} == {conclusion, introduction, body}
+    finally:
+        nlp_service.parse = parse._mock_wraps
+
+
+def test_conclusion_results_are_deterministic_and_preserve_old_feedback_methods(
+    conclusion_rules: ConclusionRuleBase, feedback: FeedbackService,
+) -> None:
+    text = "Overall, reading can help students."
+    result = conclusion_rules.analyze(text, "Reading", ["reading", "students"])
+    assert result == conclusion_rules.analyze(text, "Reading", ["reading", "students"])
+    json.dumps(result, ensure_ascii=False)
+    assert "Feedback Provenance" in feedback.generate_conclusion(result)
+    assert callable(feedback.generate)
+    assert callable(feedback.generate_body)
+    assert "readiness_decision" not in result

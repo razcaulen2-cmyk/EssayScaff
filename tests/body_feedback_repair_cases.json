@@ -1,0 +1,20 @@
+{
+  "assignment_topic": "Should schools have a vegetable garden?",
+  "focus_terms": ["school", "vegetable garden", "students", "science", "responsibility", "vegetables"],
+  "introduction": "Schools should have vegetable gardens because students can learn science and responsibility through practical activities.",
+  "keyword_introduction": "Schools, playgrounds, vegetable gardens, students, learning.",
+  "cases": {
+    "B01": "A vegetable garden can help students understand science through real activities. They can observe how seeds grow, measure plant growth, and record changes in leaves. These experiences give students opportunities to apply what they learn during lessons.\n\nA school garden can also teach responsibility. Students can take turns watering the vegetables and removing weeds. Taking care of plants regularly can help them develop patience and teamwork.",
+    "B02": "A school garden can teach responsibility.",
+    "B03": "A vegetable garden can help students understand science through real activities. They can observe how seeds grow, measure plant growth, and record changes in leaves. These experiences give students opportunities to apply what they learn during lessons.\n\nA school garden can teach responsibility.",
+    "B04": "Garden, seeds, vegetables, teamwork, students.",
+    "B05": "Students can plant vegetables. Students can water vegetables. Students can remove weeds.",
+    "B06": "A school garden can teach responsibility. Students can take turns watering vegetables and removing weeds. Caring for plants regularly can help them practice patience.",
+    "B07": "A vegetable garden can help students learn science. Students can observe plant growth. Purple elephants are secretly running the school.",
+    "B08": "A school garden can teach responsibility. Students can take turns watering vegetables and removing weeds. Caring for plants regularly can help them practice patience.",
+    "B09": "Students can plant vegetables. They can observe plant growth.\n\nAn orchestra performs symphonies. Musicians practice their instruments.",
+    "B10": "A school garden helps students practice responsibility.",
+    "B11": "Students can observe invisible vegetables. These vegetables control purple elephants at school.",
+    "B12": "  🌱 Students can plant vegetables.\r\nStudents can water vegetables.\r\nStudents can remove weeds.  "
+  }
+}

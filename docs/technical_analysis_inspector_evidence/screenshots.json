@@ -1,0 +1,89 @@
+{
+  "origin": "Isolated Chrome runs on 2026-10-26",
+  "screenshots": [
+    {
+      "file": "01-six-stage-navigation-desktop.png",
+      "source_artifact": "Explorer run after-INTRODUCTION-desktop.png",
+      "caption": "Introduction; 1440x1000",
+      "bytes": 178202,
+      "sha256": "dfb49c6d1bca15f4f25feaaa600ac66d580b39da5f301f06e80f1d52d4eb4c75"
+    },
+    {
+      "file": "02-tokenization-process-desktop.png",
+      "source_artifact": "Transparency run process-explorer-desktop.png",
+      "caption": "Introduction; 1440x1000",
+      "bytes": 155996,
+      "sha256": "968762aa57b581734a3b84d967a5fc8f807514776d5f372dd140896210f5b115"
+    },
+    {
+      "file": "03-process-navigation-mobile.png",
+      "source_artifact": "Transparency run process-explorer-mobile.png",
+      "caption": "Introduction; 390x844",
+      "bytes": 80952,
+      "sha256": "121a856511f30dff5995ae1176bdcdfa95095fed3ef9009745df6ed1bc74a8c4"
+    },
+    {
+      "file": "04-wordnet-skipped-desktop.png",
+      "source_artifact": "Explorer run after-INTRODUCTION-wordnet-skipped-desktop.png",
+      "caption": "Introduction; 1440x1000",
+      "bytes": 126870,
+      "sha256": "1a32cf64b3a242e42b3ffc3a978398def2868cb60bf183eed704de445414aa2b"
+    },
+    {
+      "file": "05-dependency-tree-developer-evidence.png",
+      "source_artifact": "Explorer run after-INTRODUCTION-developer-evidence-desktop.png",
+      "caption": "Introduction; 1440x1000",
+      "bytes": 188709,
+      "sha256": "f5ed595ce184c348e98ddf223c4b03fdec029a23857f0ff4b8a307440af5ebe1"
+    },
+    {
+      "file": "06-highlight-evidence-offsets.png",
+      "source_artifact": "Explorer run after-INTRODUCTION-highlight-offsets-desktop.png",
+      "caption": "Introduction; 1440x1000",
+      "bytes": 161520,
+      "sha256": "aba34a6a1f668ffe978a8e3787c8e6bb97adbe92737f1cf8223b5e331746febf"
+    },
+    {
+      "file": "07-body-neutral-mapping.png",
+      "source_artifact": "Explorer run after-BODY-neutral-mapping-desktop.png",
+      "caption": "Body; 1440x1000",
+      "bytes": 164950,
+      "sha256": "36c0aebb8816745d388e6a77e8f1105e5a711f95068d2e6a714d6a26e680b748"
+    },
+    {
+      "file": "08-conclusion-comparisons.png",
+      "source_artifact": "Explorer run after-CONCLUSION-comparisons-desktop.png",
+      "caption": "Conclusion; 1440x1000",
+      "bytes": 160209,
+      "sha256": "172e80ffdfbf83fe1f0640b2a7282ed2bca6b15079e4328d02f9bf28b585ebbf"
+    },
+    {
+      "file": "09-rule-evaluation-trace.png",
+      "source_artifact": "Transparency run desktop-rule-trace.png",
+      "caption": "Introduction; 1440x1000",
+      "bytes": 162267,
+      "sha256": "42f089892c39e12993510183b7870de0ebf1d9279d9ed983e10bdc7d6e8fd960"
+    },
+    {
+      "file": "10-feedback-decision-flow.png",
+      "source_artifact": "Transparency run feedback-flow-intro-desktop.png",
+      "caption": "Introduction; 1440x1000",
+      "bytes": 283203,
+      "sha256": "49cef1562403ec471ef0af443248d10f70a5b2c0f209fce706966a5aba4e6660"
+    },
+    {
+      "file": "11-introduction-neutral-mapping.png",
+      "source_artifact": "Explorer run after-INTRODUCTION-neutral-mapping-desktop.png",
+      "caption": "Introduction; 1440x1000",
+      "bytes": 162186,
+      "sha256": "e240055d29ef8156c70c5f16555591cfe4346235738328fec9115f68f0798cc7"
+    },
+    {
+      "file": "12-stage-colors-and-normal-width.png",
+      "source_artifact": "Transparency follow-up run transparency-focus-desktop.png",
+      "caption": "Feedback Decisions full-screen; 1440x1000; six stage accent colors; normal content width",
+      "bytes": 171433,
+      "sha256": "668d1b510faa4d166d23d968a8cd31fedb04e3ce8e5229f128608862f1f5de58"
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+"""Process 06 uses unmodified HTTP evidence and cannot create causal links."""
+import pytest
+
+from app import create_app
+from services.essay_analysis_service import EssayAnalysisService
+from tests.auth_helpers import register_student
+from tests.test_causal_transparency import causal_responses
+from tests.test_workspace_frontend import NODE, _run_workspace_frontend
+
+INTRO = (
+    "Smartphones are common in many classrooms, and students often use them to find information. "
+    "Teachers can use smartphones for learning activities, such as looking up difficult words and reading educational materials. "
+    "However, notifications and games can cause distractions during class. "
+    "Although smartphones can also interrupt lessons. "
+    "Schools should allow smartphones during teacher-guided activities because clear rules can help students focus on learning."
+)
+
+
+@pytest.fixture(scope="module")
+def rule_tree_responses(tmp_path_factory, causal_responses):
+    app = create_app(EssayAnalysisService(), secret_key="rule-tree-regression")
+    app.config.update(TESTING=True, DRAFT_DATABASE_PATH=str(tmp_path_factory.mktemp("rule-tree") / "isolated.sqlite3"))
+    client = app.test_client()
+    assert register_student(client, "rule_tree_student").status_code == 302
+    response = client.post("/api/analyze-stage", json={
+        "stage_id": "INTRODUCTION", "introduction_text": INTRO,
+        "assignment_topic": "Should students be allowed to use smartphones during class?",
+        "focus_terms": ["smartphones", "students", "classroom", "learning", "distractions"],
+        "include_transparency_trace": True,
+    })
+    assert response.status_code == 200
+    marker = client.post("/api/analyze-stage", json={
+        "stage_id": "INTRODUCTION", "introduction_text": "Although smartphones can also interrupt lessons.",
+        "assignment_topic": "Should students be allowed to use smartphones during class?",
+        "focus_terms": ["smartphones", "students", "classroom", "learning", "distractions"],
+        "include_transparency_trace": True,
+    })
+    assert marker.status_code == 200
+    return {"exact_intro": response.get_json(), "standalone_marker": marker.get_json(), **causal_responses}
+
+
+def test_required_intro_outcomes_are_real(rule_tree_responses):
+    response = rule_tree_responses["exact_intro"]
+    rows = {r["rule_id"]: r for r in response["analysis"]["rule_evaluation_trace"]}
+    for suffix in ["TEXT.PRESENT", "CLAUSE.SUBJECT_PREDICATE_CANDIDATE", "CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR", "DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"]:
+        assert rows["INTRO." + suffix]["status"] == "TRIGGERED"
+    for suffix in ["TEXT.KEYWORD_LIST_CANDIDATE", "TOPIC.NO_FOCUS_MATCH_OBSERVED"]:
+        assert rows["INTRO." + suffix]["status"] == "EVALUATED_NOT_TRIGGERED"
+
+
+@pytest.mark.skipif(NODE is None, reason="Node required for real frontend")
+def test_rule_tree_models_selection_spans_and_provenance(tmp_path, rule_tree_responses):
+    scenario = r'''
+(async () => {
+  let calls=0;
+  const page=makeWorkspace((...args)=>{calls++;return fetch(...args);},new Map());
+  await waitForRestoration(page);
+  const walk=n=>[n,...n.children.flatMap(walk)], text=n=>walk(n).map(x=>x.textContent).join("\n");
+  for(const [name,r] of Object.entries(actualStageResponses.RULE_TREE_CASES)) {
+    page.context.currentResponse=r;
+    const before=JSON.stringify(r), beforeCalls=calls, beforeState=value(page,"JSON.stringify(state)");
+    value(page,"renderNlpTransparency(currentResponse)");
+    const host=page.elements["nlp-transparency-content"];
+    assert.equal(walk(host).filter(n=>n.dataset.subPanel).length,45);
+    const explorer=walk(host).find(n=>n.dataset.ruleExplorer);
+    assert.ok(explorer);
+    const select=walk(explorer).find(n=>n.tagName==="SELECT");
+    assert.deepEqual(select.children.map(n=>n.value),r.analysis.rule_evaluation_trace.map(x=>x.rule_id));
+    for(const row of r.analysis.rule_evaluation_trace) {
+      page.context.currentRow=row;
+      const m=value(page,"buildRuleDecisionTree(currentRow,currentResponse)");
+      assert.equal(m.status,row.status);
+      const event=r.analysis.rule_evidence.find(e=>e.rule_id===row.rule_id);
+      assert.equal(m.emitted,Boolean(event&&event.triggered!==false&&event.fired!==false));
+      assert.equal(m.nodes.length,6);
+      assert.equal(new Set(m.nodes.map(n=>n.key)).size,6);
+      for(const edge of m.edges) {
+        assert.ok(m.nodes.some(n=>n.key===edge.from));assert.ok(m.nodes.some(n=>n.key===edge.to));assert.ok(edge.source);
+      }
+      assert.equal(m.edges.some(e=>e.to==="feedback"),m.emitted&&m.links.length>0);
+      for(const link of m.links) {
+        assert.ok((r.feedback["Feedback Provenance"]||[]).some(p=>p.rule_id===m.id&&p.feedback_field===link.field)
+          || r.research_trace.stages[r.stage_id].feedback_decisions.fields[link.field]?.rule_ids.includes(m.id));
+      }
+      const source=value(page,"transparencyTextSources(transparencyData(currentResponse)).text");
+      for(const span of m.spans) assert.equal(Array.from(source).slice(span.start,span.end).join(""),span.text);
+      if(m.crossStage) assert.equal(m.spans.length,0,"mixed source offsets must not be merged");
+      select.value=row.rule_id;await dispatch(select,"change");
+      assert.equal(explorer.dataset.selectedRule,row.rule_id);
+      const nodes=walk(explorer).filter(n=>n.dataset.ruleNode);
+      assert.equal(nodes.length,6);
+      for(const node of nodes) {
+        await click(node);assert.equal(node.attributes["aria-pressed"],"true");
+        assert.equal(nodes.filter(n=>n.attributes["aria-pressed"]==="true").length,1);
+      }
+      if(row.rule_id.includes("WORDNET")) assert.ok(!m.edges.some(e=>e.to==="feedback"));
+      if(row.status==="EVALUATED_NOT_TRIGGERED") assert.match(m.output,/No Rule Event was emitted/);
+      if(name==="exact_intro"&&row.rule_id==="INTRO.TEXT.PRESENT") {
+        assert.ok(m.checks[0].value>0);assert.equal(m.checks[0].required,"count > 0");
+        assert.ok(!m.links.some(l=>l.field==="Primary Feedback"));
+        assert.equal(m.contexts[0].text,source);
+      }
+      if(name==="exact_intro"&&row.rule_id.endsWith("POSSIBLE_INCOMPLETE_SUBORDINATOR")) {
+        assert.ok(m.spans.some(s=>s.text==="Although"));
+        assert.equal(m.contexts.length,1);
+        assert.equal(m.contexts[0].text,"Although smartphones can also interrupt lessons.");
+        assert.ok(m.links.some(l=>l.branch==="intro_sentence_fluency_complete_sentence"));
+      }
+    }
+    // All three entry points route to the same component without replacing tables.
+    for(const key of ["triggered","not-triggered","trace"]) {
+      const panel=walk(host).find(n=>n.dataset.subPanel===`rules:${key}`);
+      const disclosure=walk(panel).find(n=>n.tagName==="DETAILS"&&n.children[0]?.textContent==="Explore these rules in the Visual Decision Tree");
+      disclosure.open=true;await dispatch(disclosure,"toggle");
+      const openRule=walk(disclosure).find(n=>n.dataset.openRule);
+      if(openRule) {await click(openRule);assert.equal(explorer.dataset.selectedRule,openRule.dataset.openRule);}
+      assert.equal(walk(host).filter(n=>n.dataset.ruleExplorer).length,1);
+    }
+    const stagePanel=walk(host).find(n=>n.dataset.subPanel==="rules:stage");
+    for(const wording of [...(r.analysis.uncertainty||[]),...(r.analysis.prohibited_conclusions||[])]) {
+      const path=walk(stagePanel).find(n=>n.tagName==="DETAILS"&&["uncertainty: "+wording,"prohibited_conclusions: "+wording].includes(n.children[0]?.textContent));
+      assert.ok(path);path.open=true;await dispatch(path,"toggle");
+      const buttons=walk(path).filter(n=>n.tagName==="BUTTON");assert.equal(buttons.length,4);
+      await click(buttons[0]);assert.match(text(path),/STATIC EXPLANATION/);assert.match(text(path),/No uncertainty-detection execution is claimed/);
+    }
+    assert.equal(JSON.stringify(r),before);assert.equal(calls,beforeCalls);assert.equal(value(page,"JSON.stringify(state)"),beforeState);
+  }
+  // Deliberately incomplete cache probes, not altered real outcomes.
+  page.context.partial={stage_id:"BODY",analysis:{},feedback:{}};
+  for(const status of ["NOT_APPLICABLE","NOT_RECORDED","FAILED","FUTURE_STATUS"]) {
+    page.context.partialRow={rule_id:"BODY.UNKNOWN.DETECTOR",status};
+    const m=value(page,"buildRuleDecisionTree(partialRow,partial)");
+    assert.equal(m.status,status);assert.equal(m.emitted,false);assert.equal(m.checks.length,0);
+    assert.equal(m.spans.length,0);assert.equal(m.contexts.length,0);assert.match(m.output,/NOT RECORDED/);
+    assert.ok(!m.edges.some(e=>e.to==="feedback"));
+  }
+  page.context.partial={stage_id:"BODY",analysis:{rule_evidence:[{rule_id:"BODY.UNKNOWN",triggered:false}]},feedback:{"Feedback Provenance":[{rule_id:"BODY.UNKNOWN",feedback_field:"Primary Feedback"}]}};
+  page.context.partialRow={rule_id:"BODY.UNKNOWN",status:"TRIGGERED"};
+  assert.equal(value(page,"buildRuleDecisionTree(partialRow,partial).edges.some(e=>e.to==='feedback')"),false);
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error=>{console.error(error);process.exitCode=1;});
+'''
+    _run_workspace_frontend(tmp_path, scenario, {"RULE_TREE_CASES": rule_tree_responses})
+
+
+@pytest.mark.skipif(NODE is None, reason="Node required for real frontend")
+def test_rule_tree_clarity_roles_compact_evidence_and_missing_links(tmp_path, rule_tree_responses):
+    scenario = r'''
+(async () => {
+  let calls=0;
+  const page=makeWorkspace((...args)=>{calls++;return fetch(...args);},new Map());
+  await waitForRestoration(page);
+  const walk=n=>[n,...n.children.flatMap(walk)], text=n=>walk(n).map(x=>x.textContent).join("\n");
+  const cases=actualStageResponses.RULE_TREE_CASES;
+  const model=(r,id)=>{
+    page.context.currentResponse=r;page.context.currentRow=r.analysis.rule_evaluation_trace.find(x=>x.rule_id===id);
+    assert.ok(page.context.currentRow,id);
+    return value(page,"buildRuleDecisionTree(currentRow,currentResponse)");
+  };
+  const r=cases.exact_intro, id="INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE";
+  assert.equal(r.analysis.observable_structure.central_direction_candidates.length,5);
+  assert.ok(r.analysis.observable_structure.central_direction_candidates.every(c=>c.is_root_clause&&c.subject_evidence.length));
+  let m=model(r,id);
+  assert.equal(m.status,"EVALUATED_NOT_TRIGGERED");
+  assert.match(m.comparison.required,/No central-direction candidates/);
+  assert.match(m.comparison.observed,/5 central-direction candidates/);
+  assert.match(m.decisionSummary,/absence condition was not satisfied/);
+  assert.match(m.evidenceRole,/evidence against.*missing-structure condition/);
+  assert.match(m.evidenceRole,/not detected writing mistakes/);
+  assert.match(m.feedbackMessage,/did not trigger.*no emitted event/);
+  assert.ok(!m.edges.some(e=>e.to==="feedback"));
+  assert.ok(m.highlightSpans.length<m.spans.length);
+  assert.ok(m.highlightSpans.every(s=>/subject_evidence|predicate_evidence/.test(s.source)));
+  const original=JSON.stringify(r), report=value(page,"buildFullAnalysisReport(currentResponse)"), beforeCalls=calls;
+  value(page,"renderNlpTransparency(currentResponse)");
+  const host=page.elements["nlp-transparency-content"], explorer=walk(host).find(n=>n.dataset.ruleExplorer);
+  const select=walk(explorer).find(n=>n.tagName==="SELECT");select.value=id;await dispatch(select,"change");
+  let details=walk(explorer).find(n=>n.className==="rule-tree-details");
+  assert.equal(walk(details).filter(n=>n.className==="rule-tree-writing").length,2);
+  assert.ok(walk(details).filter(n=>n.tagName==="MARK").length<=6);
+  const more=walk(details).find(n=>n.tagName==="DETAILS"&&n.children[0]?.textContent==="Show all relevant verified evidence");
+  assert.ok(more);more.open=true;await dispatch(more,"toggle");
+  assert.equal(walk(more).filter(n=>n.className==="rule-tree-writing").length,m.contexts.length);
+  const highlighted=walk(more).filter(n=>n.tagName==="MARK").map(n=>n.textContent);
+  for(const span of m.highlightSpans) assert.ok(highlighted.includes(span.text));
+  assert.match(text(explorer),/Why did this rule produce this result\?/);
+  assert.doesNotMatch(text(explorer),/No supported connector/);
+  assert.equal(JSON.stringify(r),original);assert.equal(value(page,"buildFullAnalysisReport(currentResponse)"),report);assert.equal(calls,beforeCalls);
+  m=model(cases.standalone_marker,"INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR");
+  assert.equal(m.status,"TRIGGERED");assert.match(m.comparison.reason,/Although.*SCONJ\/mark.*interrupt/);
+  assert.match(m.comparison.reason,/only qualifying main-clause predicate/);
+  assert.match(m.evidenceRole,/possible incomplete sentence/);
+  assert.ok(m.highlightSpans.some(s=>s.text==="Although"));
+  assert.match(m.feedbackMessage,/supports the selected feedback/);
+  assert.ok(m.links.some(l=>l.branch==="intro_sentence_fluency_complete_sentence"));
+  m=model(r,"INTRO.TEXT.PRESENT");
+  assert.match(m.comparison.required,/At least 1 alphabetic tokens/);
+  assert.ok(m.comparison.observed.startsWith(String(r.analysis.text_presence.alphabetic_word_count)));
+  assert.match(m.comparison.reason,/recorded count meets/);
+  m=model(r,"INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED");
+  assert.ok(m.comparison.observed.startsWith(String(r.analysis.lexical_topic_evidence.matches.length)));
+  assert.match(m.comparison.required,/No direct or lemma focus-match occurrences/);
+  assert.match(m.evidenceRole,/contradicting an absence condition/);
+  m=model(cases.body_mixed,"BODY.P1.SUPPORTING_DETAIL.CANDIDATE");
+  assert.equal(m.status,"TRIGGERED");assert.match(m.comparison.required,/At least 2 subject-linked clause candidates in this paragraph/);
+  assert.ok(m.comparison.observed.startsWith(String(cases.body_mixed.analysis.paragraphs[0].clause_structure_candidates.length)));
+  assert.equal(m.contexts[0].text,cases.body_mixed.analysis.paragraphs[0].text);
+  m=model(cases.conclusion_rewording,"CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE");
+  assert.equal(m.status,"TRIGGERED");assert.match(m.comparison.required,/At least 1 closing-structure candidates/);
+  assert.ok(m.comparison.observed.startsWith(String(cases.conclusion_rewording.analysis.closure_candidates.candidates.length)));
+  m=model(cases.body_wordnet,"BODY.INTRO_CONTINUITY.WORDNET_CANDIDATES");
+  assert.equal(m.emitted,true);assert.match(m.feedbackMessage,/recorded, but the selected feedback does not cite/);
+  m=model(cases.missing_context,"CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON");
+  assert.equal(m.status,"NOT_APPLICABLE");assert.match(m.comparison.reason,/not applicable.*not an evaluated-false/);
+  const partial=JSON.parse(JSON.stringify(r));
+  delete partial.feedback["Feedback Provenance"];delete partial.research_trace.stages.INTRODUCTION.feedback_decisions;
+  m=model(partial,"INTRO.TEXT.PRESENT");assert.match(m.feedbackMessage,/available analysis does not record a feedback connection/);
+  assert.ok(!m.edges.some(e=>e.to==="feedback"));
+  delete partial.analysis.observable_structure.central_direction_candidates;
+  m=model(partial,id);assert.match(m.comparison.observed,/NOT RECORDED/);assert.match(m.comparison.reason,/cannot be explained/);
+  assert.equal(m.comparison.known,false);
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error=>{console.error(error);process.exitCode=1;});
+'''
+    _run_workspace_frontend(tmp_path, scenario, {"RULE_TREE_CASES": rule_tree_responses})

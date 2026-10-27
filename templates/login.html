@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>Log in — EssayScaff V2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('brand_logo') }}" type="image/png">
+</head>
+<body class="auth-page">
+  <header class="page-header">
+    <div class="header-inner">
+      <a class="brand" href="{{ url_for('login') }}"><img class="brand-logo" src="{{ url_for('brand_logo') }}" alt=""><span class="brand-wordmark">EssayScaff <span>V2</span></span></a>
+      <p class="header-note">Student writing workspace</p>
+    </div>
+  </header>
+  <main class="auth-card">
+    <img class="auth-logo" src="{{ url_for('brand_logo') }}" alt="EssayScaff logo">
+    <span class="step-label">STUDENT ACCOUNT</span>
+    <h1>Log in</h1>
+    <p class="auth-description">Log in to continue to your saved writing.</p>
+    {% for category, message in get_flashed_messages(with_categories=true) %}<p class="flash-message flash-{{ category }}" role="status">{{ message }}</p>{% endfor %}
+    {% if error %}<p class="auth-error" role="alert">{{ error }}</p>{% endif %}
+    <form action="{{ url_for('authenticate_student') }}" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" minlength="3" maxlength="32" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit">Log in</button>
+    </form>
+    <p class="auth-switch">New student? <a href="{{ url_for('register') }}">Create an account</a></p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>Account Settings — EssayScaff V2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('brand_logo') }}" type="image/png">
+</head>
+<body class="account-page">
+  <header class="app-header">
+    <a class="brand" href="{{ url_for('homepage') }}" aria-label="EssayScaff home">
+      <img class="brand-logo" src="{{ url_for('brand_logo') }}" alt="">
+      <span class="brand-wordmark">EssayScaff <span>V2</span></span>
+    </a>
+    <div class="header-context"><span class="role-chip">{{ role|title }}</span><span>Account settings</span></div>
+    <div class="account-tools">
+      <span>Signed in as <strong>{{ username }}</strong></span>
+      <form action="{{ url_for('logout') }}" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="logout-button" type="submit">Log out</button></form>
+    </div>
+  </header>
+  <main class="account-settings-shell">
+    <a class="text-link account-back-link" href="{{ url_for('homepage') }}">← Back to EssayScaff</a>
+    <div class="page-heading"><p class="eyebrow">ACCOUNT</p><h1>Account settings</h1><p>Manage your account and understand how deleting it affects saved information.</p></div>
+    <section class="surface-card account-summary" aria-labelledby="account-summary-heading">
+      <p class="eyebrow">PROFILE</p><h2 id="account-summary-heading">{{ username }}</h2><span class="role-chip">{{ role|title }} account</span>
+    </section>
+    <section class="account-danger-zone" aria-labelledby="delete-account-heading">
+      <div class="account-danger-copy"><p class="eyebrow">PERMANENT ACTION</p><h2 id="delete-account-heading">Delete account</h2>
+        {% if role == "STUDENT" %}
+          <p>Deleting your account permanently removes your classroom enrollments, drafts, revision history, and essay submissions.</p>
+        {% else %}
+          <p>Deleting your account permanently removes your classrooms and assignments, including student enrollments, drafts, revisions, and submissions linked to those assignments.</p>
+        {% endif %}
+        <p>This cannot be undone. Your current password and an additional confirmation are required.</p>
+      </div>
+      {% if error %}<p class="auth-error" role="alert">{{ error }}</p>{% endif %}
+      <form action="{{ url_for('delete_account') }}" method="post" class="delete-account-form"
+            onsubmit="return confirm('Permanently delete this account and its associated records? This action cannot be undone.')">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label for="delete-account-password">Current password</label>
+        <input id="delete-account-password" name="password" type="password" autocomplete="current-password" required>
+        <label class="account-confirm-label"><input type="checkbox" name="confirm_delete" value="yes" required>
+          <span>I understand this permanently deletes my account and the records described above.</span></label>
+        <button class="delete-account-button" type="submit">Permanently delete account</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

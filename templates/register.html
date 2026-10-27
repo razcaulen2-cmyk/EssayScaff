@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>Register — EssayScaff V2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('brand_logo') }}" type="image/png">
+</head>
+<body class="auth-page">
+  <header class="page-header">
+    <div class="header-inner">
+      <a class="brand" href="{{ url_for('register') }}"><img class="brand-logo" src="{{ url_for('brand_logo') }}" alt=""><span class="brand-wordmark">EssayScaff <span>V2</span></span></a>
+      <p class="header-note">Student and teacher writing workspace</p>
+    </div>
+  </header>
+  <main class="auth-card">
+    <img class="auth-logo" src="{{ url_for('brand_logo') }}" alt="EssayScaff logo">
+    <span class="step-label">ACCOUNT TYPE</span>
+    <h1>Create an account</h1>
+    <p class="auth-description">Choose the account type that matches how you will use EssayScaff V2.</p>
+    {% if error %}<p class="auth-error" role="alert">{{ error }}</p>{% endif %}
+    <form action="{{ url_for('create_account') }}" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label for="account-role">I am registering as</label>
+      <select id="account-role" name="role" required>
+        <option value="STUDENT" selected>Student</option>
+        <option value="TEACHER">Teacher</option>
+      </select>
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" minlength="3" maxlength="32"
+             pattern="[A-Za-z0-9_]{3,32}" autocomplete="username" required>
+      <p class="field-help">3–32 letters, numbers, or underscores.</p>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" minlength="8" maxlength="128"
+             autocomplete="new-password" required>
+      <label for="confirm-password">Confirm password</label>
+      <input id="confirm-password" name="confirm_password" type="password" minlength="8" maxlength="128"
+             autocomplete="new-password" required>
+      <button type="submit">Create account</button>
+    </form>
+    <p class="auth-switch">Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+  </main>
+</body>
+</html>

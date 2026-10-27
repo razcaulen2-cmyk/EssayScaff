@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f9fe">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>EssayScaff V2 — Student Workspace</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('brand_logo') }}" type="image/png">
+  <script src="{{ url_for('static', filename='nlp_process_explorer.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='writing_activity.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body class="student-app" data-initial-view="dashboard">
+  <header class="app-header">
+    <a class="brand" href="#dashboard" data-app-link="dashboard" aria-label="EssayScaff Student Dashboard">
+      <img class="brand-logo" src="{{ url_for('brand_logo') }}" alt="">
+      <span class="brand-wordmark">EssayScaff <span>V2</span></span>
+    </a>
+    <div class="header-context"><span class="role-chip">Student</span><span class="header-page-label">Writing workspace</span></div>
+    <div class="account-tools">
+      <span>Signed in as <strong>{{ username }}</strong></span>
+      <a class="account-settings-link" href="{{ url_for('account_settings') }}">Account</a>
+      <form action="{{ url_for('logout') }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button class="logout-button" type="submit">Log out</button>
+      </form>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="app-sidebar">
+      <p class="sidebar-label">STUDENT SPACE</p>
+      <nav class="app-navigation" aria-label="Student navigation">
+        <a href="#dashboard" data-app-link="dashboard"><span class="nav-icon" aria-hidden="true">⌂</span>Dashboard</a>
+        <a href="#classrooms" data-app-link="classrooms"><span class="nav-icon" aria-hidden="true">▦</span>My Classrooms</a>
+        <a href="#assignments" data-app-link="assignments"><span class="nav-icon" aria-hidden="true">☷</span>My Assignments</a>
+        <a href="#workspace" data-app-link="workspace"><span class="nav-icon" aria-hidden="true">✎</span>Writing Workspace</a>
+      </nav>
+      <div class="sidebar-note"><span class="sidebar-note-mark" aria-hidden="true">✦</span><p>Your ideas stay yours. EssayScaff helps you review your writing without rewriting it.</p></div>
+    </aside>
+
+    <main class="app-main" id="student-app-main">
+      <div id="assignment-message" class="app-notice" role="status" aria-live="polite"></div>
+
+      <section class="app-view" data-app-view="dashboard" aria-labelledby="dashboard-heading">
+        <div class="page-heading">
+          <p class="eyebrow">YOUR WRITING SPACE</p>
+          <h1 id="dashboard-heading">Welcome back, {{ username }}.</h1>
+          <p>Pick up where you left off or explore your classrooms and assignments.</p>
+        </div>
+        <div class="dashboard-grid">
+          <section class="surface-card dashboard-classrooms-card" aria-labelledby="dashboard-classrooms-heading">
+            <div class="section-title-row"><div><p class="eyebrow">LEARNING COMMUNITIES</p><h2 id="dashboard-classrooms-heading">Your classrooms</h2></div>
+              <a class="text-link" href="#classrooms" data-app-link="classrooms">View all</a></div>
+            <p id="my-classrooms-empty" class="empty-state" hidden>You have not joined a classroom yet.</p>
+            <ul id="my-classroom-list" class="classroom-list"></ul>
+            <button class="button-secondary compact-button" type="button" data-app-link="classrooms">Explore classrooms</button>
+          </section>
+          <section class="surface-card dashboard-assignments-card" aria-labelledby="dashboard-assignments-heading">
+            <div class="section-title-row"><div><p class="eyebrow">KEEP MAKING PROGRESS</p><h2 id="dashboard-assignments-heading">Your assignments</h2></div>
+              <a class="text-link" href="#assignments" data-app-link="assignments">View all</a></div>
+            <p id="dashboard-assignments-empty" class="empty-state" hidden>Assignments from your classrooms will appear here.</p>
+            <ul id="dashboard-assignment-list" class="dashboard-assignment-list"></ul>
+          </section>
+        </div>
+        <section class="welcome-strip">
+          <span class="welcome-icon" aria-hidden="true">✦</span>
+          <div><h2>Writing grows one step at a time</h2><p>Draft a section, review the observations, and decide what you want to improve.</p></div>
+          <a class="button-primary" href="#workspace" data-app-link="workspace">Open workspace</a>
+        </section>
+      </section>
+
+      <section class="app-view" data-app-view="classrooms" aria-labelledby="classrooms-heading" hidden>
+        <div class="page-heading page-heading-actions">
+          <div><p class="eyebrow">YOUR LEARNING COMMUNITIES</p><h1 id="classrooms-heading">My Classrooms</h1><p>Find your class and see the assignments shared by your teacher.</p></div>
+          <details class="join-classroom-panel">
+            <summary class="button-primary">Join a classroom</summary>
+            <form id="join-classroom-form" class="join-classroom-form">
+              <label for="enrollment-code">Class enrollment code</label>
+              <p class="field-help">Enter the code provided by your teacher.</p>
+              <div class="join-form-row"><input id="enrollment-code" name="enrollment_code" type="text" maxlength="32" placeholder="e.g. A7K4P2Q9" autocomplete="off" required>
+                <button type="submit">Join classroom</button></div>
+            </form>
+          </details>
+        </div>
+        <p id="classrooms-page-empty" class="empty-state" hidden>You have not joined a classroom yet. Use the button above to enter an enrollment code.</p>
+        <ul id="classrooms-page-list" class="classrooms-grid"></ul>
+      </section>
+
+      <section class="app-view" data-app-view="assignments" aria-labelledby="assignments-heading" hidden>
+        <div class="page-heading">
+          <p class="eyebrow">YOUR NEXT STEPS</p><h1 id="assignments-heading">My Assignments</h1>
+          <p>Review your teacher’s instructions, then open the writing workspace when you are ready.</p>
+        </div>
+        <section id="selected-classroom" class="selected-classroom-banner" hidden>
+          <div><p class="eyebrow">FILTERED BY CLASSROOM</p><h2 id="selected-classroom-name"></h2><p id="selected-classroom-subtitle"></p></div>
+          <button class="button-secondary compact-button" id="show-all-assignments" type="button">Show all assignments</button>
+        </section>
+        <section id="assignment-detail-view" class="surface-card assignment-detail-view" aria-labelledby="assignment-detail-title" hidden>
+          <div class="section-title-row"><div><p class="eyebrow" id="assignment-detail-classroom"></p><h2 id="assignment-detail-title"></h2></div><span id="assignment-detail-progress" class="status-chip"></span></div>
+          <p id="assignment-detail-topic" class="assignment-detail-topic"></p>
+          <div class="assignment-detail-instructions"><h3>Teacher instructions</h3><p id="assignment-detail-instructions"></p></div>
+          <p id="assignment-detail-focus" class="field-help"></p>
+          <button id="open-assignment-workspace" class="button-primary" type="button">Start Writing</button>
+        </section>
+        <p id="assignments-empty" class="empty-state" hidden>No active assignments are available. Check back with your teacher.</p>
+        <ul id="available-assignment-list" class="assignment-grid"></ul>
+        <section id="student-history" class="student-history surface-card" hidden>
+          <div class="section-title-row"><div><p class="eyebrow">YOUR SAVED RECORDS</p><h2>Student history</h2></div><span class="status-chip">Read only</span></div>
+          <p class="field-help">Submitted and deleted assignments remain available for review.</p>
+          <ul id="student-history-list" class="assignment-grid student-history-list"></ul>
+        </section>
+      </section>
+
+      <section class="app-view workspace-view" data-app-view="workspace" aria-labelledby="workspace-page-heading" hidden>
+        <div class="page-heading workspace-page-heading">
+          <div><p class="eyebrow">YOUR DRAFT, YOUR PROCESS</p><h1 id="workspace-page-heading">Writing Workspace</h1><p>Work through your essay one section at a time.</p></div>
+          <button id="practice-mode-button" class="button-secondary" type="button">Free Writing / Practice</button>
+        </div>
+        <section id="workspace-assignment-context" class="workspace-context surface-card" aria-label="Assignment context">
+          <div id="selected-assignment-details" class="selected-assignment-details" hidden>
+            <div class="selected-assignment-heading"><div><p class="eyebrow">CURRENT ASSIGNMENT</p><h2 id="selected-assignment-title"></h2></div><p id="assignment-submitted-status" class="submission-status" hidden></p></div>
+            <p id="selected-assignment-topic" class="assignment-topic-context"></p>
+            <details class="assignment-instructions-panel"><summary>Teacher instructions and focus terms</summary><p id="selected-assignment-instructions"></p><p id="selected-assignment-focus-terms" class="field-help"></p></details>
+          </div>
+          <details id="practice-setup" class="practice-setup" open>
+            <summary>Free Writing / Practice setup</summary>
+            <div class="practice-fields">
+              <div><label for="assignment-topic">Writing topic</label><input id="assignment-topic" name="assignment_topic" type="text" maxlength="500" placeholder="What would you like to write about?" autocomplete="off" required></div>
+              <div><label for="focus-terms">Focus terms <span class="optional">Optional</span></label><input id="focus-terms" name="focus_terms" type="text" maxlength="2400" placeholder="Separate terms with commas" autocomplete="off"><p class="field-help">Use focus terms as a reference while drafting.</p></div>
+            </div>
+          </details>
+        </section>
+        <nav class="stage-navigation" aria-label="Essay stages">
+          <button class="stage-tab active" type="button" data-stage="INTRODUCTION" aria-pressed="true">Introduction</button>
+          <button class="stage-tab" type="button" data-stage="BODY" aria-pressed="false">Body</button>
+          <button class="stage-tab" type="button" data-stage="CONCLUSION" aria-pressed="false">Conclusion</button>
+          <button class="stage-tab" type="button" data-stage="ESSAY_REVIEW" aria-pressed="false">Essay Review</button>
+        </nav>
+        <div id="work-area" class="work-area">
+          <section class="editor-card surface-card" aria-labelledby="stage-heading">
+            <div class="card-heading editor-heading">
+              <div><span class="step-label">STEP 1 OF 3</span><h2 id="stage-heading">Write Your Introduction</h2></div>
+              <span class="draft-label">Your draft</span>
+            </div>
+            <label class="visually-hidden" for="stage-text">Write the selected essay stage</label>
+            <div class="writing-editor">
+              <div id="editor-backdrop" class="editor-backdrop" aria-hidden="true"><div id="editor-mirror" class="editor-mirror"></div></div>
+              <textarea id="stage-text" name="stage_text" maxlength="12000" placeholder="Write your Introduction here…" required></textarea>
+            </div>
+            <div class="editor-footer"><span id="word-count" class="word-count" aria-live="polite">0 words</span><span class="field-help">Your writing will not be rewritten.</span></div>
+            <div class="editor-actions workspace-actions">
+              <button id="analyze-button" type="button">Analyze Now</button>
+              <button id="save-button" class="button-secondary" type="button">Save Draft</button>
+              <button id="save-revision-button" class="button-quiet" type="button">Save Revision</button>
+            </div>
+            <p id="save-status" class="save-status" role="status" aria-live="polite">Not saved</p>
+            <p id="revision-save-status" class="save-status" role="status" aria-live="polite"></p>
+            <p id="analysis-status" class="analysis-status" role="status" aria-live="polite">Feedback updates after a short pause. Analyze Now checks immediately. Analysis does not save your draft.</p>
+            <p id="error-message" class="error-message" role="alert" hidden></p>
+            <p class="draft-warning">Select Save Draft to store changes to your account. Unsaved changes are protected when you navigate within the app.</p>
+          </section>
+          <aside class="feedback-card surface-card" aria-labelledby="feedback-heading" aria-live="polite">
+            <div class="card-heading feedback-heading"><div><span class="step-label">YOUR REVIEW</span><h2 id="feedback-heading">Writing Tutor</h2></div><span id="feedback-status" class="status-pill">Not analyzed</span></div>
+            <div id="feedback-placeholder" class="tutor-state" role="status" aria-live="polite">
+              <p id="tutor-state-title" class="tutor-state-title"></p>
+              <p id="tutor-state-lead" class="tutor-state-lead"></p>
+              <p id="tutor-state-detail" class="tutor-state-detail"></p>
+              <span id="tutor-typing-dots" class="tutor-typing-dots" hidden aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div id="feedback-content" hidden>
+              <p id="feedback-writing-focus" class="feedback-writing-focus" aria-label="Instructional writing focus, not an assessed score" hidden></p>
+              <div id="tutor-tabs" class="tutor-tabs" role="tablist" aria-label="Writing feedback topics"></div>
+              <section class="feedback-section tutor-section"><h3>What I noticed</h3><p id="tutor-noticed"></p></section>
+              <section id="tutor-evidence-section" class="feedback-section tutor-section tutor-evidence-section"><h3>Look at your writing</h3><div id="tutor-evidence" class="tutor-evidence"></div></section>
+              <section id="tutor-working-section" class="feedback-section tutor-section" hidden><h3>What's working</h3><p id="tutor-working"></p></section>
+              <section id="tutor-why-section" class="feedback-section tutor-section"><h3>Why it matters</h3><p id="tutor-why"></p></section>
+              <section id="tutor-task-section" class="feedback-section tutor-section"><h3>How to improve</h3><p id="tutor-task"></p></section>
+              <p id="tutor-limitation" class="interpretation-limit"></p>
+              <details id="feedback-details" class="feedback-details" hidden>
+                <summary>Show more feedback</summary>
+                <div class="feedback-details-content">
+                  <section class="feedback-section"><h3>What’s Working</h3><ul id="whats-working"></ul></section>
+                  <section class="feedback-section"><h3>Needs Attention</h3><ul id="needs-attention"></ul></section>
+                </div>
+              </details>
+              <p id="interpretation-limit" class="interpretation-limit" hidden></p>
+            </div>
+            <section id="stage-progress" class="stage-progress" aria-labelledby="stage-progress-title">
+              <div class="stage-progress-heading">
+                <div><p class="eyebrow">STAGE PROGRESS</p><h3 id="stage-progress-title">Ready to Review Your Writing?</h3></div>
+                <span id="stage-progress-badge" class="stage-progress-badge" data-state="NOT_ANALYZED">Before Body</span>
+              </div>
+              <p id="stage-progress-lead" class="stage-progress-lead" role="status" aria-live="polite">Click Analyze Now to receive feedback, or continue when you are ready.</p>
+              <p id="stage-progress-detail" class="stage-progress-detail" hidden><strong id="stage-progress-focus"></strong> <span id="stage-progress-noticed"></span></p>
+              <p id="stage-progress-task" class="stage-progress-task" hidden></p>
+              <div class="stage-progress-actions">
+                <button id="stage-progress-continue" type="button">Continue to Body</button>
+                <button id="stage-progress-review" class="button-secondary" type="button" hidden>Review Writing</button>
+              </div>
+              <p class="stage-progress-note">Feedback is guidance, not a requirement. You decide when to continue.</p>
+            </section>
+          </aside>
+        </div>
+        <section id="essay-review-panel" class="essay-review-card surface-card" aria-labelledby="essay-review-heading" hidden>
+          <div class="card-heading review-heading">
+            <div>
+              <p class="eyebrow">YOUR WRITING DASHBOARD</p>
+              <h2 id="essay-review-heading">Essay Review</h2>
+              <p class="review-lead">Review the writing you have completed before you submit. Your words are shown exactly as you wrote them.</p>
+            </div>
+            <span id="review-submission-badge" class="status-pill">Not submitted</span>
+          </div>
+          <div class="review-topic"><span class="review-topic-label">Assignment topic</span><p id="review-assignment-topic"></p></div>
+          <p id="review-unsaved-note" class="review-unsaved-note" hidden>This preview includes unsaved changes from this browser. The draft saved on your account may be different. Save the draft from an editing stage to store these changes.</p>
+
+          <section class="review-summary" aria-labelledby="review-summary-heading">
+            <h3 id="review-summary-heading">Overall writing summary</h3>
+            <dl class="review-stat-grid">
+              <div><dt>Total words</dt><dd id="review-summary-total-words">0</dd></div>
+              <div><dt>Sections with writing</dt><dd id="review-summary-sections">0 of 3</dd></div>
+              <div><dt>Saved revisions</dt><dd><span id="review-summary-revisions">0</span><small id="review-revisions-note">Explicit snapshots saved with Save Revision.</small></dd></div>
+              <div><dt>Recorded active writing time</dt><dd><span id="review-summary-active-time">Not recorded</span><small id="review-active-time-note">No active writing time has been recorded yet.</small></dd></div>
+              <div><dt>Estimated time remaining</dt><dd><span id="review-summary-remaining-time">Unavailable</span><small id="review-remaining-note">No word target is set for this assignment.</small></dd></div>
+            </dl>
+            <p class="field-help">“Drafted” means text is present. It does not judge quality or completeness. Word counts use whitespace-separated words.</p>
+          </section>
+
+          <section class="review-progress" aria-labelledby="review-progress-heading">
+            <h3 id="review-progress-heading">Writing progress by stage</h3>
+            <div class="review-table-wrap">
+              <table class="review-progress-table">
+                <thead><tr><th scope="col">Stage</th><th scope="col">Words</th><th scope="col">Status</th><th scope="col"><span class="visually-hidden">Edit stage</span></th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Introduction</th><td id="review-progress-introduction-words">0</td><td id="review-progress-introduction-status">Not started</td><td><button id="review-edit-introduction" class="button-quiet review-edit-button" type="button" data-review-edit="INTRODUCTION" aria-label="Edit Introduction">Edit <span class="review-edit-stage">Introduction</span></button></td></tr>
+                  <tr><th scope="row">Body</th><td id="review-progress-body-words">0</td><td id="review-progress-body-status">Not started</td><td><button id="review-edit-body" class="button-quiet review-edit-button" type="button" data-review-edit="BODY" aria-label="Edit Body">Edit <span class="review-edit-stage">Body</span></button></td></tr>
+                  <tr><th scope="row">Conclusion</th><td id="review-progress-conclusion-words">0</td><td id="review-progress-conclusion-status">Not started</td><td><button id="review-edit-conclusion" class="button-quiet review-edit-button" type="button" data-review-edit="CONCLUSION" aria-label="Edit Conclusion">Edit <span class="review-edit-stage">Conclusion</span></button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="review-essay" aria-labelledby="review-essay-heading">
+            <h3 id="review-essay-heading">Your essay in order</h3>
+            <p class="field-help">Your original wording and paragraph breaks are preserved. EssayScaff does not rewrite or correct this preview.</p>
+            <div class="essay-sections">
+              <section class="essay-section"><h3>Introduction</h3><pre id="review-introduction"></pre></section>
+              <section class="essay-section"><h3>Body</h3><pre id="review-body"></pre></section>
+              <section class="essay-section"><h3>Conclusion</h3><pre id="review-conclusion"></pre></section>
+            </div>
+          </section>
+
+          <section class="review-submission" aria-labelledby="review-submission-heading">
+            <h3 id="review-submission-heading">Submit your essay</h3>
+            <p id="review-submission-note" class="field-help"></p>
+            <div id="submission-controls" class="submission-controls" hidden><button id="submit-essay-button" type="button">Submit Essay</button><p id="submission-status" class="submission-status" role="status" aria-live="polite"></p><p id="submission-error" class="error-message" role="alert" hidden></p></div>
+          </section>
+
+          <section class="review-technical-access" aria-labelledby="review-technical-heading">
+            <h3 id="review-technical-heading">Technical analysis</h3>
+            <p class="field-help">The NLP Process Explorer shows the recorded evidence behind the feedback. It is separate from this writing overview.</p>
+            <button id="review-toggle-technical" class="button-quiet" type="button" aria-expanded="false" aria-controls="nlp-transparency">Show technical analysis (NLP Process Explorer)</button>
+          </section>
+        </section>
+        <section id="introduction-tutoring" class="introduction-tutoring" aria-labelledby="introduction-tutoring-launcher-heading" hidden>
+          <div class="introduction-tutoring-launcher">
+            <div>
+              <p class="eyebrow">OPTIONAL LESSON</p>
+              <h2 id="introduction-tutoring-launcher-heading">Need help with your Introduction?</h2>
+              <p id="introduction-lesson-suggestion" class="introduction-lesson-suggestion" role="status" aria-live="polite" hidden></p>
+            </div>
+            <button id="open-introduction-lesson" class="button-secondary" type="button">Learn how to write your Introduction</button>
+          </div>
+          <section id="introduction-lesson-panel" class="introduction-lesson-panel surface-card" aria-labelledby="introduction-lesson-title" hidden>
+            <div class="introduction-lesson-heading">
+              <div><p class="eyebrow" id="introduction-lesson-step-label">WRITING GUIDE</p><h2 id="introduction-lesson-title"></h2></div>
+              <span id="introduction-lesson-progress" class="lesson-progress" aria-live="polite"></span>
+            </div>
+            <div id="introduction-lesson-content" class="introduction-lesson-content" tabindex="-1"></div>
+            <p id="introduction-lesson-feedback" class="introduction-lesson-feedback" role="status" aria-live="polite"></p>
+            <div class="introduction-lesson-actions">
+              <button id="introduction-lesson-return" class="button-secondary" type="button">Return to Writing</button>
+            </div>
+          </section>
+        </section>
+        <script id="introduction-lesson-definition" type="application/json">{{ introduction_lesson|tojson }}</script>
+        <script id="scaffolding-guidance-definition" type="application/json">{{ feedback_help|tojson }}</script>
+        <section id="nlp-transparency" class="analysis-export surface-card" aria-labelledby="analysis-export-heading">
+          <div class="transparency-dashboard-heading">
+            <div>
+              <p class="eyebrow">TECHNICAL TRANSPARENCY</p>
+              <h2 id="analysis-export-heading">NLP Process Explorer</h2>
+              <p class="transparency-lead">Select a process. Inspect its actual recorded evidence.</p>
+            </div>
+            <div class="transparency-export-controls">
+              <button id="transparency-focus-toggle" class="button-quiet" type="button" aria-pressed="false" hidden>Full-screen explorer</button>
+              <button id="copy-full-analysis" class="button-secondary" type="button" aria-describedby="analysis-copy-status analysis-copy-notice" disabled>Copy Full Analysis</button>
+              <p id="analysis-copy-status" class="analysis-copy-status" role="status" aria-live="polite">Analyze the current draft first to copy its full analysis.</p>
+              <p id="analysis-copy-notice" class="field-help">The copied report includes your writing and may contain assignment information.</p>
+            </div>
+          </div>
+          <div id="analysis-copy-fallback" class="analysis-copy-fallback" hidden>
+            <label for="full-analysis-report">Full analysis — manual copy</label>
+            <p id="analysis-copy-instructions" class="field-help">Select the report below and press Ctrl+C (Windows) or Command+C (Mac), or use your device’s Copy command.</p>
+            <textarea id="full-analysis-report" readonly spellcheck="false" aria-describedby="analysis-copy-instructions"></textarea>
+          </div>
+          <div id="nlp-transparency-content"><p>Analyze your current writing first to see how EssayScaff processed it. Analyzing does not save your draft.</p></div>
+        </section>
+        <details id="revision-card" class="revision-card surface-card">
+          <summary class="revision-summary"><span><span class="eyebrow">WRITING RECORD</span><strong>Revision History</strong></span><span id="revision-empty" class="field-help">Save a revision to begin your history.</span></summary>
+          <ol id="revision-list" class="revision-list" hidden></ol>
+          <section id="revision-preview" class="revision-preview" aria-live="polite" hidden>
+            <h3 id="revision-preview-title">Viewing revision</h3>
+            <div class="preview-stage"><h4>Introduction</h4><pre id="preview-introduction"></pre></div>
+            <div class="preview-stage"><h4>Body</h4><pre id="preview-body"></pre></div>
+            <div class="preview-stage"><h4>Conclusion</h4><pre id="preview-conclusion"></pre></div>
+          </section>
+        </details>
+      </section>
+      <footer class="app-footer">EssayScaff offers observations to support your writing process. Your ideas and decisions remain yours.</footer>
+    </main>
+  </div>
+</body>
+</html>

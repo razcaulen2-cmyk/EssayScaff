@@ -1,0 +1,70 @@
+[
+  {
+    "file": "before-BODY-desktop.png",
+    "sha256": "a6da4e7c82448188db898becda1c3df5b6478dae34512a53846fc5ce79b427fd"
+  },
+  {
+    "file": "before-BODY-mobile.png",
+    "sha256": "1a9f8adad23b51e23f0bf2d8bea8f642c44f66fed8387813019a1f562f584338"
+  },
+  {
+    "file": "before-CONCLUSION-desktop.png",
+    "sha256": "18b6a66851e0cf8337c2601946c12f9db16d4dc78b17e6ae204deeb979420318"
+  },
+  {
+    "file": "before-CONCLUSION-mobile.png",
+    "sha256": "1a5d9551fd2f0d63e6dc799c8b277aba1e6837c5c9c7d0d61bff2cd29e326aba"
+  },
+  {
+    "file": "before-INTRODUCTION-desktop.png",
+    "sha256": "e1092360649cbd2360bf5caebcdab0fde1ad02f7a2bc200a7c38a957c2a0f864"
+  },
+  {
+    "file": "before-INTRODUCTION-mobile.png",
+    "sha256": "ad96a2d725c1e5b899256a8288fbd99ee5d51401aa42bfa24050536f80c7315b"
+  },
+  {
+    "file": "after-BODY-desktop.png",
+    "sha256": "2bf2b33543a2a3662377217c3484b7799b8ae94ef22ac3bf9363858194c49d45"
+  },
+  {
+    "file": "after-BODY-mobile.png",
+    "sha256": "22b42a210374fcdeba2bcc1a845f58fa42750d6c12d21727f2dc5bd95be36438"
+  },
+  {
+    "file": "after-BODY-neutral-mapping-desktop.png",
+    "sha256": "9bc26d9bc94a49b5d682618c7344396d1820549fa2812e21ca3e22125b6ec162"
+  },
+  {
+    "file": "after-CONCLUSION-comparisons-desktop.png",
+    "sha256": "d8b336ee5ff240484f3ab1f17ea75fbf068337b5c247842f17001007cc105d80"
+  },
+  {
+    "file": "after-CONCLUSION-desktop.png",
+    "sha256": "456a0ec3699852bd3b48ce5eade91a5a1b87a463f537bef7a39c21fe96bb3ce8"
+  },
+  {
+    "file": "after-CONCLUSION-mobile.png",
+    "sha256": "5992843ede2e4898130ea5344808f7be38c63135861c52acb81fccff706ed244"
+  },
+  {
+    "file": "after-INTRODUCTION-desktop.png",
+    "sha256": "f9659a3f932177d30f55e33997a6d635a961bc4b0679c50e84422aafccd50cde"
+  },
+  {
+    "file": "after-INTRODUCTION-developer-evidence-desktop.png",
+    "sha256": "bf6b12c5e3a8ad08dc497cac0f9a8e45d65143b4a28bfaf28dfd6ca468c8beeb"
+  },
+  {
+    "file": "after-INTRODUCTION-highlight-offsets-desktop.png",
+    "sha256": "2d3e7b54f3253f01ae0d10c67e80f26ce27456050538e1a4fe1191213e7770cd"
+  },
+  {
+    "file": "after-INTRODUCTION-mobile.png",
+    "sha256": "b940d197b44af2341de5b7cbe76ac7577dc3eb36e75791088613d274c335822b"
+  },
+  {
+    "file": "after-INTRODUCTION-wordnet-skipped-desktop.png",
+    "sha256": "7904dd83ae4b80e3740fa3baed2ff1cf125518c3c3e63449600c5109c8345556"
+  }
+]

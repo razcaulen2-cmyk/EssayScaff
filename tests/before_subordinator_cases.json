@@ -1,0 +1,22 @@
+{
+  "assignment_topic": "Should students be allowed to use smartphones during class?",
+  "focus_terms": ["smartphones", "students", "classroom", "learning", "distractions"],
+  "cases": {
+    "A": "Local workers arrange vegetables, rice, and fruit before the doors open.",
+    "B": "Although the cooks prepare healthy meals every morning.",
+    "C": "Although students can find useful information using smartphones.",
+    "D": "Although the library was closed, we studied at home.",
+    "E": "Before the doors open, local workers arrange the tables.",
+    "F": "Before the doors open.",
+    "G": "Because plastic waste harms rivers, communities should reduce their use of it.",
+    "H": "The town cafeteria opens early each morning and prepares fresh meals for visitors. Local workers arrange vegetables, rice, and fruit before the doors open. Families gather near the counter, and the cooks explain the daily menu.\n\nAlthough the cooks prepare healthy meals every morning.\n\nDuring busy weekends, customers wait outside the building."
+  },
+  "complete_variations": [
+    "Cooks prepare lunch before the doors open.",
+    "Local workers arrange the tables before the gates open.",
+    "Visitors read menus before the cafeteria opens.",
+    "Local workers arranged the tables before the doors opened.",
+    "Visitors wait outside. Local workers arrange vegetables, rice, and fruit before the doors open.",
+    "🌍 Local workers arrange vegetables, rice, and fruit before the doors open."
+  ]
+}

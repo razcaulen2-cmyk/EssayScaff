@@ -1,0 +1,45 @@
+{
+  "mode": "after",
+  "browser_exit_code": 0,
+  "protected_data_sha256": {
+    "instance\\essay_scaff_drafts.sqlite3": "48d2704ca8af656a32ba9507b9616419ae7b282127c17c763510f37a834a3f06",
+    "instance\\essay_scaff_drafts_pre_assignment_management.sqlite3": "452c8d651bc73bef2a1777d882054d5b1a5115eb30513232a4acab34a39f6b9f",
+    "instance\\essay_scaff_drafts_pre_phase6a.sqlite3": "aedaa6a0132fc5622d7063e04b0879c59fdf0d7fcfc78ee2ee8fdcf0064a12be",
+    "instance\\essay_scaff_drafts_pre_phase6b.sqlite3": "044eb7a741a81e36ce796609667b578f4c4a348043d31415177863242a0b26a5",
+    "instance\\essay_scaff_drafts_pre_phase6b1.sqlite3": "4c065f976a492060120c7c8dccb35f43bdbdc333a1a76c31c08d16b68c8dce64",
+    "instance\\essay_scaff_drafts_pre_phase6c.sqlite3": "114f0b9f8ada789ffda025c6ee0a1b550c77382fad675eb21df672ed5f5d5324",
+    "experiments\\semantic_feasibility\\ai_diagnostic_annotations.json": "153cc7422fb1ad113123f17eafcdfd232cdf9ae320051466f2ef24f5d3a70aa1",
+    "experiments\\semantic_feasibility\\diagnostic_analysis.json": "0aad0872b6fedd2466eb355ecb04684f9bc5776e24461ca662a99f5e0aaa22d5",
+    "experiments\\semantic_feasibility\\diagnostic_focus_terms.json": "78518c5ea8a4b32a3a330d3c609c6c1172e9799be787ac75eaf8a3a921a7514e",
+    "experiments\\semantic_feasibility\\encoder_results.json": "13492c4d9a3f612c0b84395bfb99c7abc443090fd4c72c3f75a50caf3db29349",
+    "experiments\\semantic_feasibility\\samples.json": "1bf00e86f9a23dd7f67f8df85a6b4d964ab3be65bf30d05e7ac836cb25678937"
+  },
+  "backend_sha256": {
+    "app.py": "5c216d15af93c68f0bf7cf48c682bff0d20fc69cb24cc98dfc81cb78c5cab7e2",
+    "requirements.txt": "0d78f4db79c06a678a0413c6335b7bfaf8ee802b110edd1243966ef97b0f39da",
+    "services\\__init__.py": "b6e9add808705a06ead4630786dbd97dda221f975e6f122413774a53ecd8ea8e",
+    "services\\body_rules.py": "b6f563775ce1a676070a69c982bfdee45226049c2086fc2b1b8157ec22e8bbba",
+    "services\\conclusion_rules.py": "288c0dc4ab7556d6b13d24e2dea45a0057413e4f728e00c386525a15ba14d6f2",
+    "services\\draft_store.py": "7e8a6482f0954c91f5c2e009f573d885a0bfdc6c56a89f5b717f27f21da34e41",
+    "services\\essay_analysis_service.py": "4c88899876a972cacc5e43e7ec30a34a80eb9a0d29279f47ca1d060f2e46ecda",
+    "services\\feedback_service.py": "7f56d6e3154428aa7e1762c4ebfdbed343487f4ddd241d8ae888c54e68d3c587",
+    "services\\introduction_rules.py": "47e1bfb83b9b3e72022b9b7851b76dd9fcd79e6188d5b4164c02baa55c344fd0",
+    "services\\introduction_sentence_evidence.py": "2f02e3699811c673532bc3be1c7654dd3fe498c45f68bb14f583a1a70941cfce",
+    "services\\nlp_service.py": "f83cd7a62d94cc53f2c67c1de20c04b730548d0ca0ac8eb9d56c0737e5b0a8a1",
+    "services\\related_topic_concept_service.py": "f7a6fea34a3fc321a8db269a96217934118802a523f030c408d474a1de5a9746",
+    "services\\research_inspector.py": "ef68943164584589b37f97c0357474c08e6f8d3fba0d41926efc0c604fc3e7fa",
+    "services\\stage_evidence.py": "6f3e5ad54667435bff566f278a8c7c774d503a4c32a572c31c25235d75731e30",
+    "services\\topic_service.py": "6dc4fecc9751abdd9593c62e5048d7fb238df115e7211684b9b5058f3db51bf6",
+    "services\\tutoring_lessons.py": "5fbcfb05cb3e1dba63d5735a67b39fa9df71f7b6c72cb471cb419b385b029d0e",
+    "content\\lessons\\feedback_help.json": "f5b9a67c17d9cc67fa0e5bc72ca6a940ce41e88d4d2f776805ee512028f23f4b",
+    "content\\lessons\\intro_lesson_001.json": "a6b972fa5ca1767d94fa663ec6276e62eb6d74795bef8ff112f610adde4b07cf",
+    "content\\topic_concept_relations.json": "eb1f66701e6f8e9d72f3af54974cf370a43581f42f3b5b48c14f6041d6db1e33"
+  },
+  "isolated_counts": {
+    "writing_sessions": 3,
+    "writing_revisions": 0,
+    "submissions": 0
+  },
+  "integrity": "ok",
+  "foreign_key_violations": 0
+}

@@ -1,0 +1,442 @@
+{
+  "startup": {
+    "classification": "PASS",
+    "command": ".venv\\Scripts\\python.exe -B app.py",
+    "status": "running; real HTTP /login 200; terminated only audit child after check",
+    "debug": false
+  },
+  "route_rules": 36,
+  "route_method_results": 94,
+  "role_csrf_method_denials": 108,
+  "negative_input_groups": 13,
+  "links_checked": 112,
+  "python_files_parsed": 65,
+  "javascript_fetch_urls_checked": 18,
+  "nlp_real_analysis_cases": 28,
+  "templates_compiled": 9,
+  "protected_files_unchanged": [
+    "experiments\\semantic_feasibility\\ai_diagnostic_annotations.json",
+    "experiments\\semantic_feasibility\\diagnostic_analysis.json",
+    "experiments\\semantic_feasibility\\diagnostic_focus_terms.json",
+    "experiments\\semantic_feasibility\\encoder_results.json",
+    "experiments\\semantic_feasibility\\samples.json",
+    "instance\\essay_scaff_drafts.sqlite3",
+    "instance\\essay_scaff_drafts_pre_assignment_management.sqlite3",
+    "instance\\essay_scaff_drafts_pre_phase6a.sqlite3",
+    "instance\\essay_scaff_drafts_pre_phase6b.sqlite3",
+    "instance\\essay_scaff_drafts_pre_phase6b1.sqlite3",
+    "instance\\essay_scaff_drafts_pre_phase6c.sqlite3"
+  ],
+  "original_databases": [
+    {
+      "file": "essay_scaff_drafts.sqlite3",
+      "mode": "read-only",
+      "schema": [
+        {
+          "table": "writing_sessions",
+          "columns": [
+            "session_id",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at",
+            "updated_at",
+            "user_id",
+            "assignment_id"
+          ]
+        },
+        {
+          "table": "users",
+          "columns": [
+            "user_id",
+            "username",
+            "password_hash",
+            "role",
+            "created_at"
+          ]
+        },
+        {
+          "table": "writing_revisions",
+          "columns": [
+            "revision_id",
+            "session_id",
+            "revision_number",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at"
+          ]
+        },
+        {
+          "table": "assignments",
+          "columns": [
+            "assignment_id",
+            "teacher_user_id",
+            "title",
+            "topic",
+            "instructions",
+            "focus_terms",
+            "created_at",
+            "classroom_id",
+            "deleted_at"
+          ]
+        },
+        {
+          "table": "classrooms",
+          "columns": [
+            "classroom_id",
+            "teacher_user_id",
+            "classroom_name",
+            "subject",
+            "section",
+            "enrollment_code",
+            "created_at"
+          ]
+        },
+        {
+          "table": "classroom_enrollments",
+          "columns": [
+            "classroom_id",
+            "student_user_id",
+            "enrolled_at"
+          ]
+        },
+        {
+          "table": "submissions",
+          "columns": [
+            "submission_id",
+            "student_user_id",
+            "assignment_id",
+            "session_id",
+            "introduction_snapshot",
+            "body_snapshot",
+            "conclusion_snapshot",
+            "submitted_at"
+          ]
+        }
+      ],
+      "integrity": "ok",
+      "foreign_key_violations": 0
+    },
+    {
+      "file": "essay_scaff_drafts_pre_assignment_management.sqlite3",
+      "mode": "read-only",
+      "schema": [
+        {
+          "table": "writing_sessions",
+          "columns": [
+            "session_id",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at",
+            "updated_at",
+            "user_id",
+            "assignment_id"
+          ]
+        },
+        {
+          "table": "users",
+          "columns": [
+            "user_id",
+            "username",
+            "password_hash",
+            "role",
+            "created_at"
+          ]
+        },
+        {
+          "table": "writing_revisions",
+          "columns": [
+            "revision_id",
+            "session_id",
+            "revision_number",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at"
+          ]
+        },
+        {
+          "table": "assignments",
+          "columns": [
+            "assignment_id",
+            "teacher_user_id",
+            "title",
+            "topic",
+            "instructions",
+            "focus_terms",
+            "created_at",
+            "classroom_id"
+          ]
+        },
+        {
+          "table": "classrooms",
+          "columns": [
+            "classroom_id",
+            "teacher_user_id",
+            "classroom_name",
+            "subject",
+            "section",
+            "enrollment_code",
+            "created_at"
+          ]
+        },
+        {
+          "table": "classroom_enrollments",
+          "columns": [
+            "classroom_id",
+            "student_user_id",
+            "enrolled_at"
+          ]
+        },
+        {
+          "table": "submissions",
+          "columns": [
+            "submission_id",
+            "student_user_id",
+            "assignment_id",
+            "session_id",
+            "introduction_snapshot",
+            "body_snapshot",
+            "conclusion_snapshot",
+            "submitted_at"
+          ]
+        }
+      ],
+      "integrity": "ok",
+      "foreign_key_violations": 0
+    },
+    {
+      "file": "essay_scaff_drafts_pre_phase6a.sqlite3",
+      "mode": "read-only",
+      "schema": [
+        {
+          "table": "writing_sessions",
+          "columns": [
+            "session_id",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at",
+            "updated_at"
+          ]
+        }
+      ],
+      "integrity": "ok",
+      "foreign_key_violations": 0
+    },
+    {
+      "file": "essay_scaff_drafts_pre_phase6b.sqlite3",
+      "mode": "read-only",
+      "schema": [
+        {
+          "table": "writing_sessions",
+          "columns": [
+            "session_id",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at",
+            "updated_at",
+            "user_id"
+          ]
+        },
+        {
+          "table": "users",
+          "columns": [
+            "user_id",
+            "username",
+            "password_hash",
+            "role",
+            "created_at"
+          ]
+        },
+        {
+          "table": "writing_revisions",
+          "columns": [
+            "revision_id",
+            "session_id",
+            "revision_number",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at"
+          ]
+        }
+      ],
+      "integrity": "ok",
+      "foreign_key_violations": 0
+    },
+    {
+      "file": "essay_scaff_drafts_pre_phase6b1.sqlite3",
+      "mode": "read-only",
+      "schema": [
+        {
+          "table": "writing_sessions",
+          "columns": [
+            "session_id",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at",
+            "updated_at",
+            "user_id",
+            "assignment_id"
+          ]
+        },
+        {
+          "table": "users",
+          "columns": [
+            "user_id",
+            "username",
+            "password_hash",
+            "role",
+            "created_at"
+          ]
+        },
+        {
+          "table": "writing_revisions",
+          "columns": [
+            "revision_id",
+            "session_id",
+            "revision_number",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at"
+          ]
+        },
+        {
+          "table": "assignments",
+          "columns": [
+            "assignment_id",
+            "teacher_user_id",
+            "title",
+            "topic",
+            "instructions",
+            "focus_terms",
+            "created_at"
+          ]
+        }
+      ],
+      "integrity": "ok",
+      "foreign_key_violations": 0
+    },
+    {
+      "file": "essay_scaff_drafts_pre_phase6c.sqlite3",
+      "mode": "read-only",
+      "schema": [
+        {
+          "table": "writing_sessions",
+          "columns": [
+            "session_id",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at",
+            "updated_at",
+            "user_id",
+            "assignment_id"
+          ]
+        },
+        {
+          "table": "users",
+          "columns": [
+            "user_id",
+            "username",
+            "password_hash",
+            "role",
+            "created_at"
+          ]
+        },
+        {
+          "table": "writing_revisions",
+          "columns": [
+            "revision_id",
+            "session_id",
+            "revision_number",
+            "assignment_topic",
+            "focus_terms",
+            "introduction_text",
+            "body_text",
+            "conclusion_text",
+            "created_at"
+          ]
+        },
+        {
+          "table": "assignments",
+          "columns": [
+            "assignment_id",
+            "teacher_user_id",
+            "title",
+            "topic",
+            "instructions",
+            "focus_terms",
+            "created_at",
+            "classroom_id"
+          ]
+        },
+        {
+          "table": "classrooms",
+          "columns": [
+            "classroom_id",
+            "teacher_user_id",
+            "classroom_name",
+            "subject",
+            "section",
+            "enrollment_code",
+            "created_at"
+          ]
+        },
+        {
+          "table": "classroom_enrollments",
+          "columns": [
+            "classroom_id",
+            "student_user_id",
+            "enrolled_at"
+          ]
+        },
+        {
+          "table": "submissions",
+          "columns": [
+            "submission_id",
+            "student_user_id",
+            "assignment_id",
+            "session_id",
+            "introduction_snapshot",
+            "body_snapshot",
+            "conclusion_snapshot",
+            "submitted_at"
+          ]
+        }
+      ],
+      "integrity": "ok",
+      "foreign_key_violations": 0
+    }
+  ],
+  "isolated_database_integrity": "ok",
+  "isolated_foreign_key_violations": 0,
+  "browser_status": "PASS",
+  "artifacts": "C:\\Users\\MYPC~1\\AppData\\Local\\Temp\\opencode\\essayscaff-pre-defense-sulkolzy"
+}

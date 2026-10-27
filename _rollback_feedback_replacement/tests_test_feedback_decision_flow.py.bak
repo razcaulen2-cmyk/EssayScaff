@@ -1,0 +1,346 @@
+"""Process 07 renders a read-only feedback decision flow from cached responses.
+
+Real API responses drive every assertion. The flow may never create an
+analysis call, rewrite a feedback field, invent a branch, or claim a
+per-branch runtime evaluation the response did not retain.
+"""
+import pytest
+
+from tests.test_causal_transparency import causal_responses  # noqa: F401 — fixture dependency of rule_tree_responses
+from tests.test_rule_decision_tree import rule_tree_responses  # noqa: F401 — module fixture: exact Introduction + causal corpus
+from tests.test_workspace_frontend import NODE, _run_workspace_frontend
+
+FIELDS = ["Current Goal", "Primary Feedback", "What's Working", "Needs Attention", "Next Step"]
+
+
+def test_feedback_flow_field_records_exist_in_real_responses(rule_tree_responses):
+    for name, response in rule_tree_responses.items():
+        decisions = response["research_trace"]["stages"][response["stage_id"]]["feedback_decisions"]["fields"]
+        assert set(FIELDS) <= set(decisions), name
+        for field in FIELDS:
+            assert field in response["feedback"], (name, field)
+            assert decisions[field]["selection_branch"], (name, field)
+            value = response["feedback"][field]
+            if isinstance(value, list):
+                assert decisions[field].get("selected_message_count") == len(value), (name, field)
+
+
+@pytest.mark.skipif(NODE is None, reason="Node required for real frontend")
+def test_feedback_flow_model_states_nodes_and_read_only(tmp_path, rule_tree_responses):
+    scenario = r'''
+(async () => {
+  let calls=0;
+  const page=makeWorkspace((...args)=>{calls++;return fetch(...args);},new Map());
+  await waitForRestoration(page);
+  const walk=n=>[n,...n.children.flatMap(walk)], text=n=>walk(n).map(x=>x.textContent).join("\n");
+  const FIELDS=["Current Goal","Primary Feedback","What's Working","Needs Attention","Next Step"];
+  const cases=actualStageResponses.RULE_TREE_CASES;
+  let sawAvailable=false, sawUnavailable=false;
+  for(const [name,r] of Object.entries(cases)) {
+    page.context.currentResponse=r;
+    const before=JSON.stringify(r), beforeCalls=calls, beforeState=value(page,"JSON.stringify(state)");
+    value(page,"renderNlpTransparency(currentResponse)");
+    const host=page.elements["nlp-transparency-content"];
+    assert.equal(walk(host).filter(n=>n.dataset.subPanel).length,45,`${name}: 45 transparency sub-tabs`);
+    assert.equal(walk(host).filter(n=>n.dataset.feedbackFlow).length,1,`${name}: one feedback flow explorer`);
+    assert.equal(walk(host).filter(n=>n.dataset.ruleExplorer).length,1,`${name}: rule explorer unchanged`);
+    const explorer=walk(host).find(n=>n.dataset.feedbackFlow);
+    assert.match(text(explorer),/Explore Feedback — Visual Decision Flow/);
+    assert.match(text(explorer),/Why was this feedback selected\?/);
+    assert.doesNotMatch(text(explorer),/rejected at runtime|checked and rejected/i);
+    const fieldSelect=walk(explorer).find(n=>n.className==="feedback-flow-selector");
+    assert.deepEqual(fieldSelect.children.map(n=>n.value),FIELDS);
+    assert.equal(explorer.dataset.feedbackField,"Primary Feedback");
+    const models={};
+    for(const field of FIELDS) {
+      page.context.currentField=field;
+      const m=value(page,"buildFeedbackDecisionFlow(currentField,currentResponse)");
+      models[field]=m;
+      assert.equal(m.field,field,`${name}/${field}`);
+      assert.equal(m.nodes.length,5,`${name}/${field}`);
+      assert.deepEqual([...m.nodes].map(n=>n.key),["events","conditions","branch","output","tutor"]);
+      for(const edge of m.edges) {
+        assert.ok(m.nodes.some(n=>n.key===edge.from)&&m.nodes.some(n=>n.key===edge.to),`${name}/${field} edge endpoints`);
+        assert.ok(edge.label&&edge.source,`${name}/${field} edge metadata`);
+      }
+      assert.equal(m.branch,r.research_trace.stages[r.stage_id].feedback_decisions.fields[field].selection_branch,`${name}/${field} branch`);
+      page.context.currentBranch=m.branch;
+      assert.ok(value(page,"FEEDBACK_FLOW_BRANCH_PURPOSES[currentBranch]"),`${name}/${field} branch purpose table`);
+      const expected=r.feedback[field];
+      assert.equal(JSON.stringify(m.value),JSON.stringify(expected),`${name}/${field} exact value`);
+      if(Array.isArray(expected)) assert.equal(JSON.stringify(m.messages),JSON.stringify(expected));
+      else if(expected!==undefined&&expected!==null) assert.equal(JSON.stringify(m.messages),JSON.stringify([expected]));
+      const emitted=m.emitted||[];
+      assert.equal(m.cited.length+m.uncited.length+m.unknown.length,emitted.length,`${name}/${field} citation partition`);
+      const complete=Boolean(m.decisionIds&&m.provenanceField);
+      for(const row of m.cited) {
+        assert.equal(row.state,"CITED");
+        assert.ok((m.decisionIds&&m.decisionIds.includes(row.rule_id))||(m.provenanceField&&m.provenanceField.some(p=>p.rule_id===row.rule_id)));
+        if(row.discrepancy) assert.match(row.discrepancy,/neither value has been overwritten/);
+      }
+      for(const row of m.uncited) { assert.equal(row.state,"NOT_CITED"); assert.ok(complete,`${name}/${field} NOT_CITED requires both records`); }
+      for(const row of m.unknown) assert.equal(row.state,"UNKNOWN");
+      if(complete) assert.equal(m.unknown.length,0,`${name}/${field} complete records leave nothing unknown`);
+      else assert.equal(m.uncited.length,0,`${name}/${field} incomplete records claim no NOT_CITED`);
+      if(field==="Current Goal") assert.match(m.prioritySentence,/stage constant/);
+      else assert.equal(m.prioritySentence,"The selected feedback branch is recorded, but individual evaluations of other possible branches were not retained.");
+      for(const note of m.discrepancies) assert.match(note,/neither value has been overwritten/);
+      for(const node of m.nodes) {
+        page.context.currentModel=m; page.context.currentNodeKey=node.key;
+        const questions=value(page,"feedbackFlowExplanation(currentModel,currentNodeKey)");
+        assert.equal(questions.length,6,`${name}/${field}/${node.key}`);
+        assert.deepEqual([...questions].map(row=>row[0]),["What is this?","Why does it matter?","What did EssayScaff record?","How was it used?","Where did it come from?","What are its limitations?"]);
+        for(const row of questions) assert.ok(row[1]&&row[2],`${name}/${field}/${node.key} question content`);
+      }
+      page.context.currentResponse=r;
+      const presentation=value(page,"studentFeedbackPresentation(currentResponse)");
+      if(field==="Current Goal") assert.equal(m.tutor.status,"NOT_MAPPED");
+      if(field==="What's Working") assert.equal(m.tutor.status,"LIST_DISPLAY_ONLY");
+      if(field==="Next Step") assert.equal(m.tutor.status,"NEXT_STEP_DISPLAY");
+      if(field==="Primary Feedback") {
+        const role=(presentation.tutor_items[0]||{}).role;
+        const expectedStatus=presentation.status==="PREPARED_INLINE_GUIDANCE"&&role==="PREPARED"?"PREPARED_LESSON":role==="NEUTRAL_REVIEW"?"NEUTRAL_REVIEW":"GENERAL_REVIEW";
+        assert.equal(m.tutor.status,expectedStatus,`${name} primary tutor status`);
+      }
+      if(field==="Needs Attention") {
+        const cites=new Set(m.cited.map(row=>row.rule_id));
+        const supported=presentation.tutor_items.slice(1).some(item=>(item.rule_ids||[]).some(id=>cites.has(id)));
+        assert.equal(m.tutor.status,supported?"SECONDARY_LESSONS":"NO_SECONDARY_LESSON",`${name} attention tutor status`);
+      }
+      if(!Array.isArray(expected)) {
+        assert.equal(m.itemAlignment.available,false);
+        assert.match(m.itemAlignment.reason,/single message/);
+      } else {
+        const fieldProvenance=(r.feedback["Feedback Provenance"]||[]).filter(p=>p.feedback_field===field);
+        if(m.itemAlignment.available) {
+          sawAvailable=true;
+          assert.ok(expected.length>0&&expected.length===fieldProvenance.length,`${name}/${field} aligned counts`);
+          if(m.decision&&m.decision.selected_message_count!==undefined) assert.equal(m.decision.selected_message_count,expected.length);
+          assert.equal(m.decisionIds.length,fieldProvenance.length);
+          for(let i=0;i<fieldProvenance.length;i++) assert.equal(m.decisionIds[i],fieldProvenance[i].rule_id,`${name}/${field} item ${i}`);
+        } else {
+          sawUnavailable=true;
+          assert.ok(m.itemAlignment.reason,`${name}/${field} unavailable reason`);
+        }
+      }
+    }
+    const nodes=walk(explorer).filter(n=>n.dataset.flowNode);
+    assert.equal(nodes.length,5,`${name}: five flow nodes`);
+    assert.deepEqual(nodes.map(n=>n.dataset.flowNode),["events","conditions","branch","output","tutor"]);
+    assert.equal(nodes.filter(n=>n.attributes["aria-pressed"]==="true").length,1);
+    assert.equal(nodes.find(n=>n.attributes["aria-pressed"]==="true").dataset.flowNode,"events");
+    const connectors=walk(explorer).filter(n=>n.className==="feedback-flow-connector");
+    assert.equal(connectors.length,4);
+    assert.equal(connectors.filter(n=>n.dataset.flowFrom).length,models["Primary Feedback"].edges.length);
+    const summaryBody=()=>walk(explorer).find(n=>n.className==="feedback-flow-summary-body");
+    const detailsOf=()=>walk(explorer).find(n=>n.className==="feedback-flow-details");
+    assert.ok(text(summaryBody()).includes(models["Primary Feedback"].prioritySentence));
+    const itemSelect=walk(explorer).find(n=>n.className==="feedback-flow-item-selector");
+    const itemLabel=walk(explorer).find(n=>n.tagName==="LABEL"&&n.children.includes(itemSelect));
+    assert.equal(itemLabel.hidden,true,"single-message default hides the item selector");
+    for(const field of FIELDS) {
+      fieldSelect.value=field; await dispatch(fieldSelect,"change");
+      assert.equal(explorer.dataset.feedbackField,field,`${name}/${field} selection`);
+      assert.ok(text(summaryBody()).includes(models[field].prioritySentence),`${name}/${field} priority sentence`);
+      const fieldNodes=walk(explorer).filter(n=>n.dataset.flowNode);
+      assert.equal(fieldNodes.length,5);
+      assert.equal(fieldNodes.filter(n=>n.attributes["aria-pressed"]==="true").length,1);
+      assert.equal(walk(explorer).filter(n=>n.className==="feedback-flow-connector").filter(n=>n.dataset.flowFrom).length,models[field].edges.length,`${name}/${field} connectors`);
+      for(const node of fieldNodes) {
+        await click(node);
+        assert.equal(node.attributes["aria-pressed"],"true");
+        assert.equal(fieldNodes.filter(n=>n.attributes["aria-pressed"]==="true").length,1,`${name}/${field} single pressed node`);
+        const details=detailsOf();
+        const title=walk(details).find(n=>n.className==="feedback-flow-detail-title");
+        assert.equal(title.textContent,node.children[0].textContent,`${name}/${field}/${node.dataset.flowNode} detail title`);
+        assert.match(text(details),/What is this\?/);
+        assert.match(text(details),/What are its limitations\?/);
+        assert.match(text(details),/Source:/);
+        if(node.dataset.flowNode==="output") {
+          const items=Array.isArray(r.feedback[field])?r.feedback[field]:[r.feedback[field]];
+          for(const item of items) if(item) assert.ok(text(details).includes(item),`${name}/${field} exact output text`);
+        }
+      }
+      const mm=models[field];
+      if(mm.itemAlignment.available) {
+        assert.equal(explorer.dataset.itemAlignment,"available",`${name}/${field}`);
+        assert.equal(itemLabel.hidden,false);
+        assert.equal(itemSelect.children.length,mm.messages.length+1,`${name}/${field} item options`);
+        if(mm.messages.length) {
+          itemSelect.value="1"; await dispatch(itemSelect,"change");
+          assert.match(text(explorer),/Item 1 of/);
+          await click(walk(explorer).find(n=>n.dataset.flowNode==="output"));
+          assert.match(text(detailsOf()),/Aligned Rule ID/);
+          assert.match(text(detailsOf()),/SOURCE-VERIFIED DERIVATION/);
+          assert.match(text(detailsOf()),/not a runtime per-item log/);
+        }
+      } else if(mm.isList) {
+        assert.equal(explorer.dataset.itemAlignment,"unavailable",`${name}/${field}`);
+        assert.equal(itemLabel.hidden,true);
+        assert.ok(text(explorer).includes(mm.itemAlignment.reason),`${name}/${field} reason shown`);
+      } else assert.equal(explorer.dataset.itemAlignment,"not-applicable",`${name}/${field}`);
+    }
+    for(const [sub,expectedField] of [["goal","Current Goal"],["primary","Primary Feedback"],["working","What's Working"],["attention","Needs Attention"],["next","Next Step"],["provenance","Primary Feedback"]]) {
+      const panel=walk(host).find(n=>n.dataset.subPanel===`engine:${sub}`);
+      assert.ok(panel,`${name}/${sub} panel`);
+      const disclosure=walk(panel).find(n=>n.tagName==="DETAILS"&&String(n.children[0]?.textContent||"").includes("Visual Decision Flow"));
+      assert.ok(disclosure,`${name}/${sub} cross-link disclosure`);
+      disclosure.open=true; await dispatch(disclosure,"toggle");
+      const buttons=walk(disclosure).filter(n=>n.dataset.openField);
+      const button=buttons.find(n=>n.dataset.openField===expectedField);
+      assert.ok(button,`${name}/${sub} link button`);
+      await click(button);
+      assert.equal(explorer.dataset.feedbackField,expectedField,`${name}/${sub} link target`);
+      const visible=walk(host).filter(n=>n.dataset.subPanel&&!n.hidden);
+      assert.equal(visible.length,1);
+      assert.equal(visible[0].dataset.subPanel,"engine:overview");
+    }
+    assert.equal(walk(host).filter(n=>n.dataset.openField).length,10,`${name}: five field links plus provenance links`);
+    assert.equal(JSON.stringify(r),before,`${name}: response unchanged`);
+    assert.equal(calls,beforeCalls,`${name}: no new request`);
+    assert.equal(value(page,"JSON.stringify(state)"),beforeState,`${name}: state unchanged`);
+  }
+  assert.ok(sawAvailable,"at least one list field with count-checked item alignment");
+  assert.ok(sawUnavailable,"at least one field without item alignment");
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error=>{console.error(error);process.exitCode=1;});
+'''
+    _run_workspace_frontend(tmp_path, scenario, {"RULE_TREE_CASES": rule_tree_responses})
+
+
+@pytest.mark.skipif(NODE is None, reason="Node required for real frontend")
+def test_feedback_flow_branch_contrasts_tutor_honesty_and_missing_records(tmp_path, rule_tree_responses):
+    scenario = r'''
+(async () => {
+  let calls=0;
+  const page=makeWorkspace((...args)=>{calls++;return fetch(...args);},new Map());
+  await waitForRestoration(page);
+  const bootCalls=calls, bootAnalyses=analysisRequests.length;
+  const walk=n=>[n,...n.children.flatMap(walk)], text=n=>walk(n).map(x=>x.textContent).join("\n");
+  const FIELDS=["Current Goal","Primary Feedback","What's Working","Needs Attention","Next Step"];
+  const cases=actualStageResponses.RULE_TREE_CASES;
+  const model=(r,field)=>{page.context.currentResponse=r;page.context.currentField=field;return value(page,"buildFeedbackDecisionFlow(currentField,currentResponse)");};
+  const decisionsOf=r=>r.research_trace.stages[r.stage_id].feedback_decisions.fields;
+  for(const [name,r] of Object.entries(cases)) {
+    for(const field of FIELDS) {
+      const m=model(r,field);
+      assert.equal(m.branch,decisionsOf(r)[field].selection_branch,`${name}/${field} recorded branch`);
+      page.context.currentBranch=m.branch;
+      assert.doesNotMatch(value(page,"feedbackFlowBranchPurpose(currentBranch)"),/not in the source-derived purpose table/,`${name}/${field} purpose`);
+    }
+  }
+  assert.equal(model(cases.body_generic,"Primary Feedback").branch,"general_observable_body_evidence");
+  assert.equal(model(cases.body_mixed,"Primary Feedback").branch,"first_paragraph_without_additional_clause_candidate");
+  assert.equal(model(cases.intro_incomplete,"Primary Feedback").branch,"possible_incomplete_subordinator");
+  assert.ok(model(cases.intro_incomplete,"Primary Feedback").cited.some(row=>row.rule_id==="INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR"));
+  assert.equal(model(cases.conclusion_rewording,"Primary Feedback").branch,"synthesis_structure_candidate");
+  assert.equal(model(cases.conclusion_new,"Primary Feedback").branch,"unobserved_prior_concepts");
+  const wordnetEvent=(cases.body_wordnet.analysis.rule_evidence||[]).find(event=>event.rule_id.includes("WORDNET"));
+  assert.ok(wordnetEvent,"body_wordnet emits an informational WordNet event");
+  for(const field of FIELDS) {
+    const m=model(cases.body_wordnet,field);
+    const row=[...m.cited,...m.uncited,...m.unknown].find(candidate=>candidate.rule_id===wordnetEvent.rule_id);
+    assert.ok(row,`${field} lists the WordNet event`);
+    assert.notEqual(row.state,"CITED",`${field} never cites an informational WordNet event`);
+  }
+  page.context.currentResponse=cases.body_generic;
+  value(page,"renderNlpTransparency(currentResponse)");
+  const host=page.elements["nlp-transparency-content"];
+  let explorer=walk(host).find(n=>n.dataset.feedbackFlow);
+  let fieldSelect=walk(explorer).find(n=>n.className==="feedback-flow-selector");
+  fieldSelect.value="Primary Feedback"; await dispatch(fieldSelect,"change");
+  let details=walk(explorer).find(n=>n.className==="feedback-flow-details");
+  await click(walk(explorer).find(n=>n.dataset.flowNode==="conditions"));
+  const table=walk(details).find(n=>n.tagName==="TABLE");
+  assert.ok(table,"§7 priority comparison table");
+  assert.deepEqual(walk(table).find(n=>n.tagName==="THEAD").children[0].children.map(n=>n.textContent),
+    ["Branch / check","Required condition","Actually recorded","Result","Source-defined explanation"]);
+  assert.ok(walk(table).find(n=>n.tagName==="TBODY").children.length>0);
+  assert.match(text(details),/Selected branch \(recorded\)/);
+  await click(walk(explorer).find(n=>n.dataset.flowNode==="branch"));
+  assert.match(text(details),/general_observable_body_evidence/);
+  assert.match(text(details),/Fallback: recorded Body observations exist/);
+  await click(walk(explorer).find(n=>n.dataset.flowNode==="output"));
+  assert.ok(text(details).includes(cases.body_generic.feedback["Primary Feedback"]));
+  await click(walk(explorer).find(n=>n.dataset.flowNode==="tutor"));
+  assert.match(text(details),/neutral paragraph review/);
+  assert.match(text(details),/NEUTRAL_REVIEW/);
+  assert.match(text(details),/No highlight is shown for this field/);
+  await click(walk(explorer).find(n=>n.dataset.flowNode==="events"));
+  const generic=model(cases.body_generic,"Primary Feedback");
+  assert.ok(generic.cited.some(row=>row.rule_id==="BODY.P1.PARAGRAPH.SEGMENTED"));
+  assert.ok(generic.uncited.length>0,"recorded but uncited events exist for §7");
+  assert.match(text(explorer),/individual evaluations of other possible branches were not retained/);
+  page.context.currentResponse=cases.body_mixed;
+  value(page,"renderNlpTransparency(currentResponse)");
+  explorer=walk(page.elements["nlp-transparency-content"]).find(n=>n.dataset.feedbackFlow);
+  fieldSelect=walk(explorer).find(n=>n.className==="feedback-flow-selector");
+  fieldSelect.value="Primary Feedback"; await dispatch(fieldSelect,"change");
+  details=walk(explorer).find(n=>n.className==="feedback-flow-details");
+  await click(walk(explorer).find(n=>n.dataset.flowNode==="conditions"));
+  assert.match(text(details),/SKIPPED by source priority after the selected branch/);
+  assert.match(text(explorer),/individual evaluations of other possible branches were not retained/);
+  const base=cases.exact_intro;
+  const noDecisions=JSON.parse(JSON.stringify(base));
+  delete noDecisions.research_trace.stages[base.stage_id].feedback_decisions;
+  page.context.probe=noDecisions;
+  let probe=value(page,"buildFeedbackDecisionFlow('Primary Feedback',probe)");
+  assert.equal(probe.branch,null,"no decision record means no branch");
+  assert.match(probe.prioritySentence,/No selection branch is recorded/);
+  assert.ok(probe.cited.length>0,"provenance alone still cites events");
+  assert.ok(probe.cited.every(row=>row.inDecision===null&&row.inProvenance===true));
+  assert.equal(probe.uncited.length,0,"NOT_CITED requires both records");
+  if(probe.emitted) assert.ok(probe.unknown.length>0,"remaining events are UNKNOWN without a decision");
+  const noProv=JSON.parse(JSON.stringify(base));
+  delete noProv.feedback["Feedback Provenance"];
+  page.context.probe=noProv;
+  probe=value(page,"buildFeedbackDecisionFlow('Primary Feedback',probe)");
+  assert.ok(probe.decisionIds&&probe.decisionIds.length,"decision rule IDs retained without provenance");
+  assert.ok(probe.cited.length>0&&probe.cited.every(row=>row.inDecision===true&&row.inProvenance===null));
+  assert.equal(probe.uncited.length,0);
+  page.context.probeField="What's Working";
+  probe=value(page,"buildFeedbackDecisionFlow(probeField,probe)");
+  if(Array.isArray(probe.messages)&&probe.messages.length) {
+    assert.equal(probe.itemAlignment.available,false);
+    assert.match(probe.itemAlignment.reason,/no feedback provenance/);
+  }
+  const shortProv=JSON.parse(JSON.stringify(base));
+  const workingRecords=shortProv.feedback["Feedback Provenance"].filter(p=>p.feedback_field==="What's Working");
+  if(workingRecords.length) {
+    const drop=workingRecords[workingRecords.length-1];
+    shortProv.feedback["Feedback Provenance"]=shortProv.feedback["Feedback Provenance"].filter(p=>p!==drop);
+    page.context.probe=shortProv;
+    probe=value(page,"buildFeedbackDecisionFlow(probeField,probe)");
+    if(Array.isArray(probe.messages)&&probe.messages.length) {
+      assert.equal(probe.itemAlignment.available,false);
+      assert.match(probe.itemAlignment.reason,/counts do not match/);
+    }
+  }
+  const flipped=JSON.parse(JSON.stringify(base));
+  const flippedDecision=flipped.research_trace.stages[base.stage_id].feedback_decisions.fields["What's Working"];
+  const flippedList=flipped.feedback["What's Working"];
+  if(Array.isArray(flippedDecision.rule_ids)&&flippedDecision.rule_ids.length>=2&&Array.isArray(flippedList)&&flippedList.length>=2) {
+    flippedDecision.rule_ids=[...flippedDecision.rule_ids].reverse();
+    page.context.probe=flipped;
+    probe=value(page,"buildFeedbackDecisionFlow(probeField,probe)");
+    assert.equal(probe.itemAlignment.available,false);
+    assert.match(probe.itemAlignment.reason,/order/);
+  }
+  page.context.probe={stage_id:"BODY",availability:"ANALYZED",analysis:{},feedback:{}};
+  probe=value(page,"buildFeedbackDecisionFlow('Primary Feedback',probe)");
+  assert.equal(probe.eventsKnown,false);
+  assert.match(probe.eventsSummary,/NOT RECORDED/);
+  assert.equal(probe.branch,null);
+  assert.match(probe.outputSummary,/absent from the response/);
+  assert.equal(probe.tutor.status,"GENERAL_REVIEW");
+  page.context.probeField="What's Working";
+  const emptyListProbe=value(page,"buildFeedbackDecisionFlow(probeField,probe)");
+  assert.equal(emptyListProbe.comparisons.length,0,"no invented comparisons without retained findings");
+  assert.equal(emptyListProbe.itemAlignment.available,false);
+  assert.equal(emptyListProbe.tutor.status,"LIST_DISPLAY_ONLY");
+  assert.equal(calls,bootCalls,"no request during model and DOM inspection");
+  assert.equal(analysisRequests.length,bootAnalyses,"no analysis request during model and DOM inspection");
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error=>{console.error(error);process.exitCode=1;});
+'''
+    _run_workspace_frontend(tmp_path, scenario, {"RULE_TREE_CASES": rule_tree_responses})

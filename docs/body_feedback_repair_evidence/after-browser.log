@@ -1,0 +1,27 @@
+{
+  "mode": "after",
+  "cases": 12,
+  "contextChecks": [
+    "saved keyword-list Introduction compared exactly",
+    "unsaved Introduction edit compared exactly; old Body invalidated",
+    "reload without saving restores the saved keyword-list Introduction",
+    "save then reload uses corrected Introduction",
+    "A → B → A assignment switching uses each saved Introduction; no prior Body survives"
+  ],
+  "analysisOnlyPersistenceCalls": 0,
+  "branches": {
+    "B01": "body_neutral_observable",
+    "B02": "body_ideas_develop_point",
+    "B03": "body_ideas_develop_point",
+    "B04": "body_organization_paragraph_shape",
+    "B05": "body_sentence_fluency_sentence_beginnings",
+    "B06": "body_neutral_observable",
+    "B07": "body_neutral_observable",
+    "B08": "body_neutral_observable",
+    "B09": "body_organization_paragraph_link",
+    "B10": "body_neutral_observable",
+    "B11": "body_neutral_observable",
+    "B12": "body_sentence_fluency_sentence_beginnings"
+  },
+  "javascriptErrors": []
+}

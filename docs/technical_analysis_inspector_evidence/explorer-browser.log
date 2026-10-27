@@ -1,0 +1,394 @@
+{
+  "mode": "after",
+  "stages": [
+    "INTRODUCTION",
+    "BODY",
+    "CONCLUSION"
+  ],
+  "checks": [
+    {
+      "stage": "INTRODUCTION",
+      "processes": [
+        {
+          "id": "focus-preparation",
+          "title": "Teacher Focus-Term Preparation",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "focus-normalization",
+          "title": "Focus-Term Normalization",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "tokens",
+          "title": "Tokenization",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "pos",
+          "title": "Part-of-Speech Tagging",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "dependencies",
+          "title": "Dependency Parsing",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "lemmas",
+          "title": "Lemmatization",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "sentences",
+          "title": "Sentence and Paragraph Detection",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "noun-phrases",
+          "title": "Noun Phrase Extraction",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "concepts",
+          "title": "Concept Candidate Extraction",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "topic-matching",
+          "title": "Teacher Focus-Term Matching",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "wordnet",
+          "title": "WordNet Processing",
+          "status": "SKIPPED"
+        },
+        {
+          "id": "related-concepts",
+          "title": "Related-Word Resource Evidence",
+          "status": "NOT_APPLICABLE"
+        },
+        {
+          "id": "cross-stage",
+          "title": "Earlier-Section Comparisons",
+          "status": "NOT_APPLICABLE"
+        },
+        {
+          "id": "stage-patterns",
+          "title": "Introduction Sentence and Clause Checks",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "sentence-connection",
+          "title": "Sentence Topic-Connection Review",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "rule-events",
+          "title": "Rule Events and Evaluation Evidence",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "feedback-decision",
+          "title": "Feedback Branch Selection",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "feedback-explanation",
+          "title": "Feedback Explanation",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "feedback-fields",
+          "title": "Five Feedback Fields",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "trait-mapping",
+          "title": "6+1 Trait and Lesson Mapping",
+          "status": "NOT_APPLICABLE"
+        },
+        {
+          "id": "highlight-evidence",
+          "title": "Highlight Evidence Selection",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "api-rendering",
+          "title": "API Response and Browser Rendering",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "technical-trace",
+          "title": "Complete Technical Trace",
+          "status": "EXECUTED"
+        }
+      ]
+    },
+    {
+      "stage": "BODY",
+      "processes": [
+        {
+          "id": "focus-preparation",
+          "title": "Teacher Focus-Term Preparation",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "focus-normalization",
+          "title": "Focus-Term Normalization",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "tokens",
+          "title": "Tokenization",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "pos",
+          "title": "Part-of-Speech Tagging",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "dependencies",
+          "title": "Dependency Parsing",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "lemmas",
+          "title": "Lemmatization",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "sentences",
+          "title": "Sentence and Paragraph Detection",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "noun-phrases",
+          "title": "Noun Phrase Extraction",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "concepts",
+          "title": "Concept Candidate Extraction",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "topic-matching",
+          "title": "Teacher Focus-Term Matching",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "wordnet",
+          "title": "WordNet Processing",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "related-concepts",
+          "title": "Related-Word Resource Evidence",
+          "status": "NOT_APPLICABLE"
+        },
+        {
+          "id": "cross-stage",
+          "title": "Introduction–Body Lexical Comparison",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "stage-patterns",
+          "title": "Paragraph and List Pattern Checks",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "topic-sentences",
+          "title": "Topic Sentence Checks",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "supporting-details",
+          "title": "Supporting Detail Checks",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "repetition",
+          "title": "Repeated Wording and Sentence Openings",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "rule-events",
+          "title": "Rule Events and Evaluation Evidence",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "feedback-decision",
+          "title": "Feedback Branch Selection",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "feedback-explanation",
+          "title": "Feedback Explanation",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "feedback-fields",
+          "title": "Five Feedback Fields",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "trait-mapping",
+          "title": "6+1 Trait and Lesson Mapping",
+          "status": "NOT_APPLICABLE"
+        },
+        {
+          "id": "highlight-evidence",
+          "title": "Highlight Evidence Selection",
+          "status": "NOT_APPLICABLE"
+        },
+        {
+          "id": "api-rendering",
+          "title": "API Response and Browser Rendering",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "technical-trace",
+          "title": "Complete Technical Trace",
+          "status": "EXECUTED"
+        }
+      ]
+    },
+    {
+      "stage": "CONCLUSION",
+      "processes": [
+        {
+          "id": "focus-preparation",
+          "title": "Teacher Focus-Term Preparation",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "focus-normalization",
+          "title": "Focus-Term Normalization",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "tokens",
+          "title": "Tokenization",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "pos",
+          "title": "Part-of-Speech Tagging",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "dependencies",
+          "title": "Dependency Parsing",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "lemmas",
+          "title": "Lemmatization",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "sentences",
+          "title": "Sentence and Paragraph Detection",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "noun-phrases",
+          "title": "Noun Phrase Extraction",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "concepts",
+          "title": "Concept Candidate Extraction",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "topic-matching",
+          "title": "Teacher Focus-Term Matching",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "wordnet",
+          "title": "WordNet Processing",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "related-concepts",
+          "title": "Related-Word Resource Evidence",
+          "status": "NOT_APPLICABLE"
+        },
+        {
+          "id": "cross-stage",
+          "title": "Earlier-Section–Conclusion Comparisons",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "stage-patterns",
+          "title": "Conclusion Structure and Closure Checks",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "synthesis",
+          "title": "Earlier-Idea Combination Checks",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "new-material",
+          "title": "New-Material Wording Checks",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "repetition",
+          "title": "Conclusion Repetition Observations",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "rule-events",
+          "title": "Rule Events and Evaluation Evidence",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "feedback-decision",
+          "title": "Feedback Branch Selection",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "feedback-explanation",
+          "title": "Feedback Explanation",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "feedback-fields",
+          "title": "Five Feedback Fields",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "trait-mapping",
+          "title": "6+1 Trait and Lesson Mapping",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "highlight-evidence",
+          "title": "Highlight Evidence Selection",
+          "status": "UNAVAILABLE"
+        },
+        {
+          "id": "api-rendering",
+          "title": "API Response and Browser Rendering",
+          "status": "EXECUTED"
+        },
+        {
+          "id": "technical-trace",
+          "title": "Complete Technical Trace",
+          "status": "EXECUTED"
+        }
+      ]
+    },
+    {
+      "snapshotAndAssignmentSwitches": "PASS"
+    }
+  ],
+  "javascriptErrors": []
+}

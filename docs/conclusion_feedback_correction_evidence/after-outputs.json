@@ -1,0 +1,159 @@
+{
+  "javascriptErrors": [],
+  "records": {
+    "EXACT": {
+      "branch": "conclusion_ideas_bring_together",
+      "trait": "Ideas",
+      "skill": "Bring Ideas Together",
+      "rule_ids": [
+        "CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE"
+      ],
+      "lesson": "HELP-CONCLUSION-BRING-TOGETHER",
+      "status": "NEUTRAL_OBSERVATION",
+      "dimension": null,
+      "skill_display": null,
+      "task_text": "Read the ending with the earlier sections. Check that it connects those ideas as you intend, and adjust the wording in your own words if the connection is unclear.",
+      "excerpt": null,
+      "feedback": "One sentence combines ideas from more than one earlier section. Read it with those sections and check that it brings the ideas together as you intend.",
+      "dom": {
+        "tutorFocus": "No specific writing issue detected",
+        "tutorFocusHidden": false,
+        "evidenceHidden": true,
+        "whyHidden": true,
+        "taskHidden": true,
+        "workingHidden": false,
+        "workingText": "One sentence combines ideas from more than one earlier section. Check whether it brings those ideas together.",
+        "evidenceMarks": [],
+        "editorMarks": [],
+        "feedbackText": "\n              No specific writing issue detected\n              \n              What I noticedOne sentence combines words from more than one earlier section. The comparison does not prove the sentence brings the ideas together.\n              Look at your writing\n              What's workingOne sentence combines ideas from more than one earlier section. Check whether it brings those ideas together.\n              Why it mattersAn ending works when readers see what your points add up to. Combining ideas from earlier sections is one way to show that.\n              How to improveRead the ending with the earlier sections. Check that it connects those ideas as you intend, and adjust the wording in your own words if the connection is unclear.\n              This check compares wording between sections. It cannot judge whether the combined meaning works.\n              \n                Show more feedback\n                \n                  What’s WorkingThese assignment words also appear in your Conclusion: schools, playgrounds, vegetable gardens, students, learning. Check that they return to your main idea.Some Conclusion words also appear in the Introduction. Check whether your ending returns to its main idea.Some Conclusion words also appear in the Body. Check whether your ending brings those points together.One sentence combines ideas from more than one earlier section. Check whether it brings those ideas together.Your ending has a final sentence or a closing phrase. Check whether it leaves the point you want.This phrase uses words that appeared earlier, though the full phrase is new here.\n                  Needs AttentionThese checks record structure and wording only; they cannot tell whether an idea is true or whether the ending works well.\n                \n              \n              This check compares wording between sections. It cannot judge whether the combined meaning works.\n            ",
+        "stageTitle": "No Specific Writing Issue Detected",
+        "stageBadge": "NO_ISSUE",
+        "stageReviewHidden": true,
+        "stageNoticed": "Review your ideas before continuing.",
+        "stageContinue": "Continue to Essay Review",
+        "feedbackHidden": false
+      },
+      "inspector_has_rule": true
+    },
+    "KEYWORD": {
+      "branch": "conclusion_organization_bring_together",
+      "trait": "Organization",
+      "skill": "Bring Ideas Together",
+      "rule_ids": [
+        "CONCLUSION.TEXT.KEYWORD_LIST_CANDIDATE"
+      ],
+      "lesson": "HELP-CONCLUSION-LIST-ENDING",
+      "status": "PREPARED_INLINE_GUIDANCE",
+      "dimension": "Organization",
+      "skill_display": "Bring Ideas Together",
+      "task_text": "Choose your main closing idea and write one closing sentence about it in your own words. Then read your ending and check that it tells readers what to take away.",
+      "excerpt": {
+        "source": "schools, playgrounds, vegetable gardens, students, learning",
+        "contexts": [
+          {
+            "start": 0,
+            "end": 59,
+            "marks": [
+              [
+                0,
+                59
+              ]
+            ]
+          }
+        ]
+      },
+      "feedback": "Your matched assignment words appear as a list, and no recorded sentence gathers them into one ending. Choose your main closing idea and write a closing sentence about it.",
+      "dom": {
+        "tutorFocus": "Organization · Bring Ideas Together",
+        "tutorFocusHidden": false,
+        "evidenceHidden": false,
+        "whyHidden": false,
+        "taskHidden": false,
+        "workingHidden": true,
+        "workingText": "",
+        "evidenceMarks": [
+          "schools, playgrounds, vegetable gardens, students, learning"
+        ],
+        "editorMarks": [
+          "schools, playgrounds, vegetable gardens, students, learning"
+        ],
+        "feedbackText": "\n              Organization · Bring Ideas Together\n              \n              What I noticedThe Conclusion reads as a list of words, and no recorded sentence gathers them into one ending.\n              Look at your writingschools, playgrounds, vegetable gardens, students, learning\n              What's working\n              Why it mattersAn ending works when it leaves readers with one clear point. Listing words keeps readers waiting for that point.\n              How to improveChoose your main closing idea and write one closing sentence about it in your own words. Then read your ending and check that it tells readers what to take away.\n              This is a recorded sentence-shape check. The checks do not judge meaning or quality.\n              \n                Show more feedback\n                \n                  What’s WorkingThese assignment words also appear in your Conclusion: schools, playgrounds, vegetable gardens, students, learning. Check that they return to your main idea.Some Conclusion words also appear in the Introduction. Check whether your ending returns to its main idea.Some Conclusion words also appear in the Body. Check whether your ending brings those points together.\n                  Needs AttentionNo recorded sentence gathers these words into one ending. Choose your main closing idea and write a sentence about it.The checks could not spot a complete closing sentence. Read your ending aloud; this check can miss unusual writing styles.The checks did not find a sentence using ideas from two earlier sections. They may miss reworded ideas; read the sections together.The checks did not find a final closing sentence or phrase. You do not need to use a fixed phrase.These checks record structure and wording only; they cannot tell whether an idea is true or whether the ending works well.\n                \n              \n              Writing focus, not a score. A list-like sentence pattern is a recorded structure check, not a judgment of meaning.\n            ",
+        "stageTitle": "Review Suggested",
+        "stageBadge": "REVIEW_SUGGESTED",
+        "stageReviewHidden": false,
+        "stageNoticed": "The Conclusion reads as a list of words, and no recorded sentence gathers them into one ending.",
+        "stageContinue": "Continue to Essay Review",
+        "feedbackHidden": false
+      },
+      "inspector_has_rule": true
+    },
+    "NEW_WORDS": {
+      "branch": "conclusion_ideas_new_words",
+      "trait": "Ideas",
+      "skill": "Explain New Words",
+      "rule_ids": [
+        "CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS"
+      ],
+      "lesson": "HELP-CONCLUSION-EXPLAIN-NEW-WORDS",
+      "status": "PREPARED_INLINE_GUIDANCE",
+      "dimension": "Ideas",
+      "skill_display": "Explain New Words",
+      "task_text": "Decide whether readers need those ideas explained earlier. If so, add or expand an explanation in your own words, then check that the Conclusion now connects to what came before.",
+      "excerpt": null,
+      "feedback": "These idea words (new book) do not appear in the earlier sections you provided. Decide whether readers need that idea explained earlier; the checks may miss reworded ideas.",
+      "dom": {
+        "tutorFocus": "Ideas · Explain New Words",
+        "tutorFocusHidden": false,
+        "evidenceHidden": false,
+        "whyHidden": false,
+        "taskHidden": false,
+        "workingHidden": true,
+        "workingText": "",
+        "evidenceMarks": [],
+        "editorMarks": [],
+        "feedbackText": "\n              Ideas · Explain New Words\n              \n              What I noticedSome idea words in your Conclusion do not appear in the earlier sections you supplied. Reworded ideas can be missed by the comparison.\n              Look at your writingYour Conclusion has no specific passage to mark for a wording comparison. Decide whether earlier sections need to explain these ideas.\n              What's working\n              Why it mattersReaders follow a Conclusion better when its idea words have been explained earlier. New wording may simply be a different phrasing of an earlier idea.\n              How to improveDecide whether readers need those ideas explained earlier. If so, add or expand an explanation in your own words, then check that the Conclusion now connects to what came before.\n              The word comparison uses recorded forms of words; missed reworded ideas are possible.\n              \n                Show more feedback\n                \n                  What’s WorkingThese assignment words also appear in your Conclusion: students. Check that they return to your main idea.Some Conclusion words also appear in the Introduction. Check whether your ending returns to its main idea.Some Conclusion words also appear in the Body. Check whether your ending brings those points together.One sentence combines ideas from more than one earlier section. Check whether it brings those ideas together.Your ending has a final sentence or a closing phrase. Check whether it leaves the point you want.\n                  Needs AttentionSome idea words were not found in the earlier sections. Decide whether readers need more explanation earlier.These checks record structure and wording only; they cannot tell whether an idea is true or whether the ending works well.\n                \n              \n              Writing focus, not a score. The comparison can miss reworded ideas; only you can decide what readers need.\n            ",
+        "stageTitle": "Review Suggested",
+        "stageBadge": "REVIEW_SUGGESTED",
+        "stageReviewHidden": false,
+        "stageNoticed": "Some idea words in your Conclusion do not appear in the earlier sections you supplied. Reworded ideas can be missed by the comparison.",
+        "stageContinue": "Continue to Essay Review",
+        "feedbackHidden": false
+      },
+      "inspector_has_rule": true
+    },
+    "SECONDARY": {
+      "branch": "conclusion_ideas_new_words",
+      "trait": "Ideas",
+      "skill": "Explain New Words",
+      "rule_ids": [
+        "CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS"
+      ],
+      "lesson": "HELP-CONCLUSION-BRING-TOGETHER",
+      "status": "PREPARED_INLINE_GUIDANCE",
+      "dimension": "Ideas",
+      "skill_display": "Explain New Words",
+      "task_text": "Read the ending with the earlier sections. Check that it connects those ideas as you intend, and adjust the wording in your own words if the connection is unclear.",
+      "excerpt": null,
+      "feedback": "These idea words (new book) do not appear in the earlier sections you provided. Decide whether readers need that idea explained earlier; the checks may miss reworded ideas.",
+      "dom": {
+        "tutorFocus": "Ideas · Explain New Words",
+        "tutorFocusHidden": true,
+        "evidenceHidden": false,
+        "whyHidden": false,
+        "taskHidden": false,
+        "workingHidden": true,
+        "workingText": "",
+        "evidenceMarks": [],
+        "editorMarks": [],
+        "feedbackText": "\n              Ideas · Explain New Words\n              Ideas · Explain New WordsIdeas · Bring Ideas Together\n              What I noticedSome idea words in your Conclusion do not appear in the earlier sections you supplied. Reworded ideas can be missed by the comparison.\n              Look at your writingYour Conclusion has no specific passage to mark for a wording comparison. Decide whether earlier sections need to explain these ideas.\n              What's working\n              Why it mattersReaders follow a Conclusion better when its idea words have been explained earlier. New wording may simply be a different phrasing of an earlier idea.\n              How to improveDecide whether readers need those ideas explained earlier. If so, add or expand an explanation in your own words, then check that the Conclusion now connects to what came before.\n              The word comparison uses recorded forms of words; missed reworded ideas are possible.\n              \n                Show more feedback\n                \n                  What’s WorkingThese assignment words also appear in your Conclusion: students. Check that they return to your main idea.Some Conclusion words also appear in the Body. Check whether your ending brings those points together.One sentence combines ideas from more than one earlier section. Check whether it brings those ideas together.Your ending has a final sentence or a closing phrase. Check whether it leaves the point you want.This phrase uses words that appeared earlier, though the full phrase is new here.\n                  Needs AttentionNo shared key words were found with the Introduction. Reworded ideas may be missed, so compare the sections yourself.Some idea words were not found in the earlier sections. Decide whether readers need more explanation earlier.These checks record structure and wording only; they cannot tell whether an idea is true or whether the ending works well.\n                \n              \n              Writing focus, not a score. The comparison can miss reworded ideas; only you can decide what readers need.\n            ",
+        "stageTitle": "Review Suggested",
+        "stageBadge": "REVIEW_SUGGESTED",
+        "stageReviewHidden": false,
+        "stageNoticed": "Some idea words in your Conclusion do not appear in the earlier sections you supplied. Reworded ideas can be missed by the comparison.",
+        "stageContinue": "Continue to Essay Review",
+        "feedbackHidden": false
+      },
+      "inspector_has_rule": true
+    }
+  }
+}

@@ -1,0 +1,587 @@
+{
+  "checks": [
+    {
+      "check": "login desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1440,
+      "width": 480,
+      "height": 552.6875,
+      "images": true
+    },
+    {
+      "check": "login laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1366,
+      "width": 480,
+      "height": 552.6875,
+      "images": true
+    },
+    {
+      "check": "login mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 358,
+      "height": 536.6875,
+      "images": true
+    },
+    {
+      "check": "register desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1440,
+      "width": 480,
+      "height": 760.25,
+      "images": true
+    },
+    {
+      "check": "register laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 480,
+      "height": 760.25,
+      "images": true
+    },
+    {
+      "check": "register mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 358,
+      "height": 744.25,
+      "images": true
+    },
+    {
+      "check": "teacher-dashboard desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 1103,
+      "height": 930.5625,
+      "images": true
+    },
+    {
+      "check": "teacher-dashboard laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 1029,
+      "height": 930.5625,
+      "images": true
+    },
+    {
+      "check": "teacher-dashboard mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 362,
+      "height": 1364.53125,
+      "images": true
+    },
+    {
+      "check": "teacher-classrooms desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 1103,
+      "height": 738.71875,
+      "images": true
+    },
+    {
+      "check": "teacher-classrooms laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 1029,
+      "height": 738.71875,
+      "images": true
+    },
+    {
+      "check": "teacher-classrooms mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 362,
+      "height": 1100.5,
+      "images": true
+    },
+    {
+      "check": "teacher-assignments desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 1103,
+      "height": 1254.265625,
+      "images": true
+    },
+    {
+      "check": "teacher-assignments laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 1029,
+      "height": 1254.265625,
+      "images": true
+    },
+    {
+      "check": "teacher-assignments mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 362,
+      "height": 1967.0625,
+      "images": true
+    },
+    {
+      "check": "teacher-edit desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1440,
+      "width": 1120,
+      "height": 675.5,
+      "images": true
+    },
+    {
+      "check": "teacher-edit laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1366,
+      "width": 1120,
+      "height": 675.5,
+      "images": true
+    },
+    {
+      "check": "teacher-edit mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 354,
+      "height": 651.5,
+      "images": true
+    },
+    {
+      "check": "teacher-account desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1440,
+      "width": 760,
+      "height": 641.546875,
+      "images": true
+    },
+    {
+      "check": "teacher-account laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 760,
+      "height": 641.546875,
+      "images": true
+    },
+    {
+      "check": "teacher-account mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 358,
+      "height": 731.765625,
+      "images": true
+    },
+    {
+      "check": "student-dashboard desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 1103,
+      "height": 432.65625,
+      "images": true
+    },
+    {
+      "check": "student-dashboard laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 1029,
+      "height": 432.65625,
+      "images": true
+    },
+    {
+      "check": "student-dashboard mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 362,
+      "height": 702.484375,
+      "images": true
+    },
+    {
+      "check": "student-assignments desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 1103,
+      "height": 462.53125,
+      "images": true
+    },
+    {
+      "check": "student-assignments laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 1029,
+      "height": 462.53125,
+      "images": true
+    },
+    {
+      "check": "student-assignments mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 362,
+      "height": 658.0625,
+      "images": true
+    },
+    {
+      "check": "student-classrooms desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 1103,
+      "height": 317.890625,
+      "images": true
+    },
+    {
+      "check": "student-classrooms laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 1029,
+      "height": 317.890625,
+      "images": true
+    },
+    {
+      "check": "student-classrooms mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 362,
+      "height": 394.3125,
+      "images": true
+    },
+    {
+      "check": "student-feedback desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 402.59375,
+      "height": 774.609375,
+      "images": true
+    },
+    {
+      "check": "student-feedback laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 375.1875,
+      "height": 818.640625,
+      "images": true
+    },
+    {
+      "check": "student-feedback mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 362,
+      "height": 878.6875,
+      "images": true
+    },
+    {
+      "check": "essay-review desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 1103,
+      "height": 1981.578125,
+      "images": true
+    },
+    {
+      "check": "essay-review laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 1029,
+      "height": 1981.578125,
+      "images": true
+    },
+    {
+      "check": "essay-review mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 362,
+      "height": 2720.03125,
+      "images": true
+    },
+    {
+      "check": "submitted-read-only desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 640.40625,
+      "height": 522,
+      "images": true
+    },
+    {
+      "check": "submitted-read-only laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 593.8125,
+      "height": 445.4375,
+      "images": true
+    },
+    {
+      "check": "submitted-read-only mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 328,
+      "height": 330,
+      "images": true
+    },
+    {
+      "check": "teacher-submissions desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1440,
+      "width": 1120,
+      "height": 394.5625,
+      "images": true
+    },
+    {
+      "check": "teacher-submissions laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1366,
+      "width": 1120,
+      "height": 394.5625,
+      "images": true
+    },
+    {
+      "check": "teacher-submissions mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 354,
+      "height": 469.703125,
+      "images": true
+    },
+    {
+      "check": "teacher-essay desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1440,
+      "width": 1120,
+      "height": 670.875,
+      "images": true
+    },
+    {
+      "check": "teacher-essay laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1366,
+      "width": 1120,
+      "height": 670.875,
+      "images": true
+    },
+    {
+      "check": "teacher-essay mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 354,
+      "height": 735.859375,
+      "images": true
+    },
+    {
+      "check": "archived-read-only desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 640.40625,
+      "height": 522,
+      "images": true
+    },
+    {
+      "check": "archived-read-only laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 593.8125,
+      "height": 445.4375,
+      "images": true
+    },
+    {
+      "check": "archived-read-only mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 328,
+      "height": 330,
+      "images": true
+    },
+    {
+      "check": "research-inspector desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 1092,
+      "height": 5901.765625,
+      "images": true
+    },
+    {
+      "check": "research-inspector laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 1018,
+      "height": 5944.84375,
+      "images": true
+    },
+    {
+      "check": "research-inspector mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 362,
+      "height": 8759.390625,
+      "images": true
+    },
+    {
+      "check": "inspector-repaired-source desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1425,
+      "width": 1018,
+      "height": 353.859375,
+      "images": true
+    },
+    {
+      "check": "inspector-repaired-source laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 944,
+      "height": 417.84375,
+      "images": true
+    },
+    {
+      "check": "inspector-repaired-source mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 298,
+      "height": 802.75,
+      "images": true
+    },
+    {
+      "check": "student-account desktop",
+      "classification": "PASS",
+      "viewport": 1440,
+      "document": 1440,
+      "width": 760,
+      "height": 641.546875,
+      "images": true
+    },
+    {
+      "check": "student-account laptop",
+      "classification": "PASS",
+      "viewport": 1366,
+      "document": 1351,
+      "width": 760,
+      "height": 641.546875,
+      "images": true
+    },
+    {
+      "check": "student-account mobile",
+      "classification": "PASS",
+      "viewport": 390,
+      "document": 390,
+      "width": 358,
+      "height": 709.953125,
+      "images": true
+    },
+    {
+      "check": "Student/teacher workflow controls, real save/revision/restore, ownership, duplicate prevention, busy-save and revision-switch repairs, inspector copy/download/staleness",
+      "classification": "PASS",
+      "submissionId": 3
+    }
+  ],
+  "errors": [],
+  "httpErrors": [
+    {
+      "status": 401,
+      "url": "/login"
+    },
+    {
+      "status": 404,
+      "url": "/api/classroom-enrollments"
+    },
+    {
+      "status": 403,
+      "url": "/api/research-inspector/metadata"
+    },
+    {
+      "status": 409,
+      "url": "/api/submissions"
+    },
+    {
+      "status": 404,
+      "url": "/api/assignments/9/workspace"
+    },
+    {
+      "status": 404,
+      "url": "/api/drafts"
+    },
+    {
+      "status": 404,
+      "url": "/api/assignments/10/workspace"
+    },
+    {
+      "status": 404,
+      "url": "/api/drafts"
+    }
+  ],
+  "expectedHttp": [
+    {
+      "status": 401,
+      "url": "/login"
+    },
+    {
+      "status": 404,
+      "url": "/api/classroom-enrollments"
+    },
+    {
+      "status": 403,
+      "url": "/api/research-inspector/metadata"
+    },
+    {
+      "status": 409,
+      "url": "/api/submissions"
+    },
+    {
+      "status": 404,
+      "url": "/api/assignments/9/workspace"
+    },
+    {
+      "status": 404,
+      "url": "/api/drafts"
+    },
+    {
+      "status": 404,
+      "url": "/api/assignments/10/workspace"
+    }
+  ]
+}

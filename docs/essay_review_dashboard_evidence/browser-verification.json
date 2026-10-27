@@ -1,0 +1,169 @@
+{
+  "desktop": {
+    "view": "workspace",
+    "reviewVisible": true,
+    "inspectorHidden": true,
+    "totalWords": "79",
+    "sectionsWithWriting": "3 of 3",
+    "savedRevisions": "1",
+    "activeTime": "2 min 5 sec",
+    "activeTimeNote": "Recorded only while this assignment was open and actively edited. Idle periods are excluded.",
+    "remainingTime": "Unavailable",
+    "remainingNote": "No word target is set for this assignment, so EssayScaff does not estimate remaining time.",
+    "submissionBadge": "Not submitted",
+    "submissionHidden": false,
+    "unsavedNoteHidden": true,
+    "stageRows": [
+      {
+        "stage": "introduction",
+        "words": "19",
+        "status": "Drafted"
+      },
+      {
+        "stage": "body",
+        "words": "42",
+        "status": "Drafted"
+      },
+      {
+        "stage": "conclusion",
+        "words": "18",
+        "status": "Drafted"
+      }
+    ],
+    "editButtonsDisabled": [
+      false,
+      false,
+      false
+    ],
+    "previewBodyPreservesParagraphs": true,
+    "duplicateCountsRemoved": true
+  },
+  "empty": {
+    "view": "workspace",
+    "reviewVisible": true,
+    "inspectorHidden": true,
+    "totalWords": "0",
+    "sectionsWithWriting": "0 of 3",
+    "savedRevisions": "0",
+    "activeTime": "Not recorded",
+    "activeTimeNote": "No active writing time has been recorded for this assignment yet.",
+    "remainingTime": "Unavailable",
+    "remainingNote": "No word target is set for this assignment, so EssayScaff does not estimate remaining time.",
+    "submissionBadge": "Not submitted",
+    "submissionHidden": false,
+    "unsavedNoteHidden": true,
+    "stageRows": [
+      {
+        "stage": "introduction",
+        "words": "0",
+        "status": "Not started"
+      },
+      {
+        "stage": "body",
+        "words": "0",
+        "status": "Not started"
+      },
+      {
+        "stage": "conclusion",
+        "words": "0",
+        "status": "Not started"
+      }
+    ],
+    "editButtonsDisabled": [
+      false,
+      false,
+      false
+    ],
+    "previewBodyPreservesParagraphs": false,
+    "duplicateCountsRemoved": true
+  },
+  "unsavedEdit": {
+    "returnedToBody": true,
+    "totalWordsAfterEdit": "85",
+    "unsavedNoteHidden": false,
+    "savedRevisions": "1"
+  },
+  "submission": {
+    "view": "workspace",
+    "reviewVisible": true,
+    "inspectorHidden": true,
+    "totalWords": "27",
+    "sectionsWithWriting": "3 of 3",
+    "savedRevisions": "0",
+    "activeTime": "Not recorded",
+    "activeTimeNote": "No active writing time has been recorded for this assignment yet.",
+    "remainingTime": "Unavailable",
+    "remainingNote": "No word target is set for this assignment, so EssayScaff does not estimate remaining time.",
+    "submissionBadge": "Submitted",
+    "submissionHidden": true,
+    "unsavedNoteHidden": true,
+    "stageRows": [
+      {
+        "stage": "introduction",
+        "words": "6",
+        "status": "Drafted"
+      },
+      {
+        "stage": "body",
+        "words": "14",
+        "status": "Drafted"
+      },
+      {
+        "stage": "conclusion",
+        "words": "7",
+        "status": "Drafted"
+      }
+    ],
+    "editButtonsDisabled": [
+      true,
+      true,
+      true
+    ],
+    "previewBodyPreservesParagraphs": true,
+    "duplicateCountsRemoved": true
+  },
+  "mobile": {
+    "view": "workspace",
+    "reviewVisible": true,
+    "inspectorHidden": true,
+    "totalWords": "79",
+    "sectionsWithWriting": "3 of 3",
+    "savedRevisions": "1",
+    "activeTime": "2 min 5 sec",
+    "activeTimeNote": "Recorded only while this assignment was open and actively edited. Idle periods are excluded.",
+    "remainingTime": "Unavailable",
+    "remainingNote": "No word target is set for this assignment, so EssayScaff does not estimate remaining time.",
+    "submissionBadge": "Not submitted",
+    "submissionHidden": false,
+    "unsavedNoteHidden": true,
+    "stageRows": [
+      {
+        "stage": "introduction",
+        "words": "19",
+        "status": "Drafted"
+      },
+      {
+        "stage": "body",
+        "words": "42",
+        "status": "Drafted"
+      },
+      {
+        "stage": "conclusion",
+        "words": "18",
+        "status": "Drafted"
+      }
+    ],
+    "editButtonsDisabled": [
+      false,
+      false,
+      false
+    ],
+    "previewBodyPreservesParagraphs": true,
+    "duplicateCountsRemoved": true
+  },
+  "inspector": {
+    "inspectorHidden": false,
+    "expanded": "true",
+    "toggleLabel": "Hide technical analysis (NLP Process Explorer)"
+  }
+}

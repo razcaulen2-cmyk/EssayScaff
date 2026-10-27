@@ -1,0 +1,67 @@
+[
+  {
+    "file": "screenshots/introduction-ideas/before-T01-desktop.png",
+    "sha256": "993d73877df84381f702712d16ce40df2a6e4e640becaacf965301a6ed3b097e",
+    "mode": "before"
+  },
+  {
+    "file": "screenshots/introduction-ideas/before-T03-desktop.png",
+    "sha256": "07a98888705de48ca5f770de9728f863280277448f120a6ce76c628b936ec1b4",
+    "mode": "before"
+  },
+  {
+    "file": "screenshots/introduction-ideas/before-T04-desktop.png",
+    "sha256": "fd9991793c205aca6a6646397f0a7e4e07902712c8139d7eefe9222939ba2573",
+    "mode": "before"
+  },
+  {
+    "file": "screenshots/introduction-ideas/before-T05-desktop.png",
+    "sha256": "9e8148303cf9f75152eecca806377e3e0fdee0e85636d3ff773cffaa7bf4bd46",
+    "mode": "before"
+  },
+  {
+    "file": "screenshots/introduction-ideas/before-T04-mobile.png",
+    "sha256": "86eee740aa0b4cc7d99c86661ab94f8e7a3243f3f91e2b515147f6f5135b1e46",
+    "mode": "before"
+  },
+  {
+    "file": "screenshots/introduction-ideas/after-T01-desktop.png",
+    "sha256": "5eadf2a72504943cb5b6d8b17149288cdc6a142352e9ac8dbb9c1e7d9af76b36",
+    "mode": "after"
+  },
+  {
+    "file": "screenshots/introduction-ideas/after-T03-desktop.png",
+    "sha256": "f28e728a294647560754e8042169bdd8bc3c3ef29e594f05ab4fb97a0d52100e",
+    "mode": "after"
+  },
+  {
+    "file": "screenshots/introduction-ideas/after-T04-desktop.png",
+    "sha256": "447e89354db66b6fcfac034ac30e23eba22910d80d72b52a5209e8a8343abe99",
+    "mode": "after"
+  },
+  {
+    "file": "screenshots/introduction-ideas/after-T05-desktop.png",
+    "sha256": "4f26a44cc0a14922f196c0ba30232c1f32139552b63386c5c8cf081b4ca44941",
+    "mode": "after"
+  },
+  {
+    "file": "screenshots/introduction-ideas/after-T04-mobile.png",
+    "sha256": "47ad8ac978346889aa4942acc08cd7b6805e5626deacf8400d16259a0c5037f8",
+    "mode": "after"
+  },
+  {
+    "file": "screenshots/introduction-ideas/after-student-framework-trace.png",
+    "sha256": "b5d3f4afb354a072f66bce3ac9a0fc4a319064cff479a44b6fc56aff40f25915",
+    "mode": "after"
+  },
+  {
+    "file": "screenshots/introduction-ideas/after-professor-framework-trace.png",
+    "sha256": "1200bb3561c4f5a19cd5e795a59f2ea6a14d77d2aa391b719cedbeccdc976f00",
+    "mode": "after"
+  },
+  {
+    "file": "screenshots/introduction-ideas/after-professor-evidence-detail.png",
+    "sha256": "3020110e5b622c7d762d768d3be61bfa69336e51986549cde5bbc637747bc41a",
+    "mode": "after"
+  }
+]

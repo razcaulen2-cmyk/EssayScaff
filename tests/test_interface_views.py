@@ -1,0 +1,169 @@
+"""Student and teacher view shells render actual account-specific dashboard data."""
+
+import re
+from html.parser import HTMLParser
+from xml.etree.ElementTree import TreeBuilder
+
+from app import create_app
+from services.draft_store import DraftStore
+from tests.auth_helpers import login_student, register_student
+from werkzeug.security import generate_password_hash
+
+
+def test_student_and_teacher_views_show_role_specific_navigation_and_live_stats(tmp_path):
+    app = create_app(secret_key="interface-views-test")
+    app.config.update(TESTING=True, DRAFT_DATABASE_PATH=str(tmp_path / "interface-views.sqlite3"))
+    store = DraftStore(app.config["DRAFT_DATABASE_PATH"])
+    teacher_user = store.create_teacher_user("view_teacher", generate_password_hash("teacher-password-1"))
+    classroom = store.create_classroom(teacher_user["user_id"], "Writing 101", "Writing", "Section A")
+    assignment = store.create_assignment(
+        teacher_user["user_id"], classroom["classroom_id"],
+        "Reading Essay", "Daily reading", "Write a three-part essay.", "reading",
+    )
+
+    teacher = app.test_client()
+    assert login_student(teacher, "view_teacher", "teacher-password-1").status_code == 302
+    student = app.test_client()
+    assert register_student(student, "view_student").status_code == 302
+    assert student.post(
+        "/api/classroom-enrollments", json={"enrollment_code": classroom["enrollment_code"]}
+    ).status_code == 200
+
+    dashboard = student.get("/")
+    student_html = dashboard.get_data(as_text=True)
+    assert dashboard.status_code == 200
+    assert 'data-initial-view="dashboard"' in student_html
+    assert all(f'data-app-view="{view}"' in student_html for view in ("dashboard", "classrooms", "assignments", "workspace"))
+    assert re.search(r'<section[^>]*data-app-view="dashboard"[^>]*>', student_html)
+    assert 'id="stage-text"' in student_html
+    assert "Free Writing / Practice setup" in student_html
+    active_assignment = student.get("/api/assignments").get_json()["assignments"]
+    assert active_assignment[0]["teacher_username"] == "view_teacher"
+    assert active_assignment[0]["progress"] == "Not Started"
+
+    workspace = student.get(f"/api/assignments/{assignment['assignment_id']}/workspace").get_json()
+    saved = student.post(
+        "/api/drafts",
+        json={
+            "assignment_id": assignment["assignment_id"],
+            "session_id": workspace["draft"]["session_id"],
+            "assignment_topic": assignment["topic"],
+            "focus_terms": assignment["focus_terms"],
+            "introduction_text": "Reading introduces new ideas.",
+            "body_text": "Students can practice and learn.",
+            "conclusion_text": "Daily reading supports learning.",
+        },
+    ).get_json()
+    submitted = student.post(
+        "/api/submissions",
+        json={
+            "assignment_id": assignment["assignment_id"],
+            "session_id": saved["session_id"],
+            "draft_version": saved["draft_version"],
+        },
+    )
+    assert submitted.status_code == 200
+
+    teacher_response = teacher.get("/teacher")
+    teacher_html = teacher_response.get_data(as_text=True)
+    assert teacher_response.status_code == 200
+    assert all(f'data-teacher-view="{view}"' in teacher_html for view in ("dashboard", "classrooms", "assignments", "progress"))
+    assert "Active assignments" in teacher_html
+    assert "Submitted essays" in teacher_html
+    assert "Reading Essay" in teacher_html
+    assert "view_student" in teacher_html
+    assert "Submitted" in teacher_html
+    assert "Create Assignment" in teacher_html
+    assert 'id="feedback-details"' not in teacher_html
+    assert 'id="copy-full-analysis"' not in teacher_html
+
+
+def test_student_feedback_hierarchy_keeps_unique_targets_and_native_disclosure(tmp_path):
+    app = create_app(secret_key="feedback-presentation-test")
+    app.config.update(TESTING=True, DRAFT_DATABASE_PATH=str(tmp_path / "feedback-presentation.sqlite3"))
+    student = app.test_client()
+    assert register_student(student, "feedback_student").status_code == 302
+    response = student.get("/")
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    panel = re.search(r'<aside class="feedback-card\b[^>]*>.*?</aside>', html, re.S)
+    assert panel is not None
+
+    class FeedbackParser(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.tree = TreeBuilder()
+
+        def handle_starttag(self, tag, attrs):
+            self.tree.start(tag, {key: value or "" for key, value in attrs})
+
+        def handle_endtag(self, tag):
+            self.tree.end(tag)
+
+        def handle_data(self, data):
+            self.tree.data(data)
+
+    parser = FeedbackParser()
+    parser.feed(panel.group())
+    parser.close()
+    root = parser.tree.close()
+    content = root.find("./div[@id='feedback-content']")
+    assert content is not None and "hidden" in content.attrib
+    sections = content.findall("./section")
+    assert [section.findtext("h3") for section in sections] == [
+        "What I noticed", "Look at your writing", "What's working", "Why it matters", "How to improve",
+    ]
+    assert [section.find("p").get("id") for section in [sections[0], sections[3], sections[4]]] == [
+        "tutor-noticed", "tutor-why", "tutor-task",
+    ]
+    assert sections[1].find("div").get("id") == "tutor-evidence"
+    assert sections[2].get("id") == "tutor-working-section" and "hidden" in sections[2].attrib
+    assert sections[2].find("p").get("id") == "tutor-working"
+    assert [node.tag for node in content] == [
+        "p", "div", "section", "section", "section", "section", "section", "p", "details", "p",
+    ]
+    focus = content.find("./p[@id='feedback-writing-focus']")
+    assert focus is not None and "hidden" in focus.attrib
+    assert focus.get("aria-label") == "Instructional writing focus, not an assessed score"
+    assert 'id="help-me-understand"' not in html and 'id="feedback-help-panel"' not in html
+    details = content.find("./details[@id='feedback-details']")
+    assert details is not None and "open" not in details.attrib
+    assert details[0].tag == "summary" and details[0].text == "Show more feedback"
+    assert "role" not in details[0].attrib and "tabindex" not in details[0].attrib
+    assert [node.text for node in details.findall(".//h3")] == ["What’s Working", "Needs Attention"]
+    assert [node.get("id") for node in details.findall(".//ul")] == ["whats-working", "needs-attention"]
+    assert content[-1].get("id") == "interpretation-limit"
+    placeholder = root.find("./div[@id='feedback-placeholder']")
+    assert placeholder is not None
+    assert [node.get("id") for node in placeholder] == [
+        "tutor-state-title", "tutor-state-lead", "tutor-state-detail", "tutor-typing-dots",
+    ]
+    for target in (
+        "feedback-content", "feedback-details", "tutor-noticed", "tutor-evidence",
+        "tutor-why", "tutor-task", "tutor-limitation", "whats-working", "tutor-working", "tutor-working-section",
+        "needs-attention", "interpretation-limit", "feedback-writing-focus",
+        "tutor-state-title", "tutor-state-lead", "tutor-state-detail", "tutor-typing-dots", "tutor-tabs",
+    ):
+        assert html.count(f'id="{target}"') == 1
+
+
+def test_student_full_analysis_copy_section_is_accessible_and_initially_disabled(tmp_path):
+    app = create_app(secret_key="analysis-export-interface-test")
+    app.config.update(TESTING=True, DRAFT_DATABASE_PATH=str(tmp_path / "analysis-export.sqlite3"))
+    student = app.test_client()
+    assert register_student(student, "analysis_export_student").status_code == 302
+    response = student.get("/")
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert html.count('id="copy-full-analysis"') == 1
+    assert re.search(r'<button id="copy-full-analysis"[^>]*type="button"[^>]*disabled>Copy Full Analysis</button>', html)
+    assert '<h2 id="analysis-export-heading">NLP Process Explorer</h2>' in html
+    assert 'aria-labelledby="analysis-export-heading"' in html
+    assert 'id="analysis-copy-status"' in html and 'role="status" aria-live="polite"' in html
+    assert re.search(r'<div id="analysis-copy-fallback"[^>]*hidden>', html)
+    assert re.search(r'<textarea id="full-analysis-report"[^>]*readonly[^>]*aria-describedby="analysis-copy-instructions"', html)
+    assert 'for="full-analysis-report"' in html
+    assert html.count('id="nlp-transparency-content"') == 1
+    assert "Analyze your current writing first" in html
+    assert html.count('role="tablist"') == 1
+    assert 'id="tutor-tabs"' in html and 'role="tablist"' in html

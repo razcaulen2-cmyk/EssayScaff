@@ -1,0 +1,298 @@
+{
+  "experiment_type": "descriptive_embedding_similarity_not_classification",
+  "generated_at_utc": "2026-10-15T10:47:36.218915+00:00",
+  "model": {
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "license": "Apache-2.0",
+    "dimensions": 384,
+    "maximum_sequence_length": 256,
+    "sentence_transformers_version": "5.1.0",
+    "transformers_version": "4.57.6",
+    "torch_version": "2.14.1+cpu",
+    "device": "cpu"
+  },
+  "measurement": {
+    "similarity": "cosine similarity between L2-normalized encoder embeddings",
+    "score_interpretation": "Descriptive geometric similarity only; not an intelligibility probability, semantic correctness score, relevance decision, or threshold.",
+    "sample_count": 31,
+    "embedding_count": 78,
+    "embedding_shape": [
+      78,
+      384
+    ],
+    "all_embedding_values_finite": true,
+    "model_load_seconds": 1.8248631999958889,
+    "encode_seconds": 0.4566921000005095,
+    "total_runtime_seconds": 2.2834073999983957
+  },
+  "sample_to_topic": [
+    {
+      "sample_id": "SM-01",
+      "topic_id": "social_media_attention",
+      "sample_text": "Late-night social media use can reduce students' sleep because they spend too much time online. As a result, students may experience fatigue and difficulty concentrating during classroom lessons.",
+      "assignment_topic": "Effects of late-night social media use on classroom attention",
+      "cosine_similarity": 0.8099616765975952
+    },
+    {
+      "sample_id": "SM-02",
+      "topic_id": "social_media_attention",
+      "sample_text": "Students use the social media too late and they is tired in class, so focusing become difficult.",
+      "assignment_topic": "Effects of late-night social media use on classroom attention",
+      "cosine_similarity": 0.6904204487800598
+    },
+    {
+      "sample_id": "SM-03",
+      "topic_id": "social_media_attention",
+      "sample_text": "Late-night social media. Students. Sleep. Fatigue. Attention. Classroom concentration.",
+      "assignment_topic": "Effects of late-night social media use on classroom attention",
+      "cosine_similarity": 0.7595113515853882
+    },
+    {
+      "sample_id": "SM-04",
+      "topic_id": "social_media_attention",
+      "sample_text": "Late-night social media use makes students' sleep dance inside classroom umbrellas. Fatigue teaches attention to swallow invisible notifications while concentration whispers to digital shadows.",
+      "assignment_topic": "Effects of late-night social media use on classroom attention",
+      "cosine_similarity": 0.7158535122871399
+    },
+    {
+      "sample_id": "SM-05",
+      "topic_id": "social_media_attention",
+      "sample_text": "At midnight, each notification is a tiny bell that keeps the student's attention awake long after the classroom lights have gone dark.",
+      "assignment_topic": "Effects of late-night social media use on classroom attention",
+      "cosine_similarity": 0.4983343780040741
+    },
+    {
+      "sample_id": "SM-06",
+      "topic_id": "social_media_attention",
+      "sample_text": "Social media does not always reduce sleep; a student who logs off early may sleep well and attend class alert.",
+      "assignment_topic": "Effects of late-night social media use on classroom attention",
+      "cosine_similarity": 0.6700938940048218
+    },
+    {
+      "sample_id": "SU-01",
+      "topic_id": "school_uniforms",
+      "sample_text": "School uniforms can reduce pressure to buy fashionable clothes, although strict uniform rules may limit students' self-expression.",
+      "assignment_topic": "Benefits and disadvantages of school uniforms",
+      "cosine_similarity": 0.7109725475311279
+    },
+    {
+      "sample_id": "SU-02",
+      "topic_id": "school_uniforms",
+      "sample_text": "Uniforms reduce differences. This is good for some reasons, but it can also be bad when the reason is not clear.",
+      "assignment_topic": "Benefits and disadvantages of school uniforms",
+      "cosine_similarity": 0.6524333357810974
+    },
+    {
+      "sample_id": "SU-03",
+      "topic_id": "school_uniforms",
+      "sample_text": "Uniforms, students, costs, equality, identity, school rules.",
+      "assignment_topic": "Benefits and disadvantages of school uniforms",
+      "cosine_similarity": 0.6865289211273193
+    },
+    {
+      "sample_id": "SU-04",
+      "topic_id": "school_uniforms",
+      "sample_text": "The uniform policy is a common ground where students meet, even when their different colors speak for them.",
+      "assignment_topic": "Benefits and disadvantages of school uniforms",
+      "cosine_similarity": 0.46880993247032166
+    },
+    {
+      "sample_id": "SU-05",
+      "topic_id": "school_uniforms",
+      "sample_text": "School uniforms always make every student equal, and uniforms never make students equal in any way.",
+      "assignment_topic": "Benefits and disadvantages of school uniforms",
+      "cosine_similarity": 0.5279862284660339
+    },
+    {
+      "sample_id": "EP-01",
+      "topic_id": "environmental_pollution",
+      "sample_text": "Air pollution can worsen respiratory symptoms in a community, especially for people who already have asthma.",
+      "assignment_topic": "Effects of environmental pollution on community health",
+      "cosine_similarity": 0.6213609576225281
+    },
+    {
+      "sample_id": "EP-02",
+      "topic_id": "environmental_pollution",
+      "sample_text": "Pollution cause breathing problem and the people near road have more cough because smoke stay there.",
+      "assignment_topic": "Effects of environmental pollution on community health",
+      "cosine_similarity": 0.5414541959762573
+    },
+    {
+      "sample_id": "EP-03",
+      "topic_id": "environmental_pollution",
+      "sample_text": "Particulate matter, community health, emissions, lungs, exposure, pollution.",
+      "assignment_topic": "Effects of environmental pollution on community health",
+      "cosine_similarity": 0.6386012434959412
+    },
+    {
+      "sample_id": "EP-04",
+      "topic_id": "environmental_pollution",
+      "sample_text": "Air pollution makes the neighborhood's lungs drink blue traffic while public health walks backward through the chimney.",
+      "assignment_topic": "Effects of environmental pollution on community health",
+      "cosine_similarity": 0.5488647818565369
+    },
+    {
+      "sample_id": "EP-05",
+      "topic_id": "environmental_pollution",
+      "sample_text": "A community garden can provide fresh vegetables and a place for neighbors to meet.",
+      "assignment_topic": "Effects of environmental pollution on community health",
+      "cosine_similarity": 0.3760007321834564
+    },
+    {
+      "sample_id": "RH-01",
+      "topic_id": "reading_habits",
+      "sample_text": "Regular reading gives students practice interpreting unfamiliar words and following longer arguments.",
+      "assignment_topic": "Importance of reading habits among students",
+      "cosine_similarity": 0.5808859467506409
+    },
+    {
+      "sample_id": "RH-02",
+      "topic_id": "reading_habits",
+      "sample_text": "Reading habits are important because students.",
+      "assignment_topic": "Importance of reading habits among students",
+      "cosine_similarity": 0.9198722243309021
+    },
+    {
+      "sample_id": "RH-03",
+      "topic_id": "reading_habits",
+      "sample_text": "Books are windows, and a student can travel through an idea without leaving a chair.",
+      "assignment_topic": "Importance of reading habits among students",
+      "cosine_similarity": 0.4116209149360657
+    },
+    {
+      "sample_id": "RH-04",
+      "topic_id": "reading_habits",
+      "sample_text": "Reading does not help every student in the same way; access, interest, and reading difficulty can change the experience.",
+      "assignment_topic": "Importance of reading habits among students",
+      "cosine_similarity": 0.603437066078186
+    },
+    {
+      "sample_id": "RH-05",
+      "topic_id": "reading_habits",
+      "sample_text": "Reading habits, students, books, libraries, literacy, pages.",
+      "assignment_topic": "Importance of reading habits among students",
+      "cosine_similarity": 0.6921484470367432
+    },
+    {
+      "sample_id": "RE-01",
+      "topic_id": "renewable_energy",
+      "sample_text": "Solar and wind power produce electricity without burning fossil fuels during operation, but their output varies with weather and time of day.",
+      "assignment_topic": "Benefits and challenges of renewable energy",
+      "cosine_similarity": 0.4476760923862457
+    },
+    {
+      "sample_id": "RE-02",
+      "topic_id": "renewable_energy",
+      "sample_text": "The panels makes energy when sun is shining, and storage help use it later.",
+      "assignment_topic": "Benefits and challenges of renewable energy",
+      "cosine_similarity": 0.5110815763473511
+    },
+    {
+      "sample_id": "RE-03",
+      "topic_id": "renewable_energy",
+      "sample_text": "Solar panels, wind turbines, storage, electricity, reliable supply.",
+      "assignment_topic": "Benefits and challenges of renewable energy",
+      "cosine_similarity": 0.5911617875099182
+    },
+    {
+      "sample_id": "RE-04",
+      "topic_id": "renewable_energy",
+      "sample_text": "Wind power turns the turbine into a patient clock that waits for weather to wind its hands.",
+      "assignment_topic": "Benefits and challenges of renewable energy",
+      "cosine_similarity": 0.27525678277015686
+    },
+    {
+      "sample_id": "RE-05",
+      "topic_id": "renewable_energy",
+      "sample_text": "A renewable battery stores the sunrise inside a transparent river of electricity that listens to the mountain.",
+      "assignment_topic": "Benefits and challenges of renewable energy",
+      "cosine_similarity": 0.43356114625930786
+    },
+    {
+      "sample_id": "HL-01",
+      "topic_id": "healthy_lifestyles",
+      "sample_text": "A regular sleep schedule, enjoyable physical activity, and access to nutritious food can support health, though individual needs differ.",
+      "assignment_topic": "Factors that support a healthy lifestyle",
+      "cosine_similarity": 0.641183078289032
+    },
+    {
+      "sample_id": "HL-02",
+      "topic_id": "healthy_lifestyles",
+      "sample_text": "Healthy habits always make every person healthy, no matter their situation or medical needs.",
+      "assignment_topic": "Factors that support a healthy lifestyle",
+      "cosine_similarity": 0.6222699880599976
+    },
+    {
+      "sample_id": "HL-03",
+      "topic_id": "healthy_lifestyles",
+      "sample_text": "Exercise, nutrition, sleep, stress, health, routine.",
+      "assignment_topic": "Factors that support a healthy lifestyle",
+      "cosine_similarity": 0.4951084852218628
+    },
+    {
+      "sample_id": "HL-04",
+      "topic_id": "healthy_lifestyles",
+      "sample_text": "Sleep put the tired week into a drawer, and exercise opened a window for tomorrow.",
+      "assignment_topic": "Factors that support a healthy lifestyle",
+      "cosine_similarity": 0.1841621994972229
+    },
+    {
+      "sample_id": "HL-05",
+      "topic_id": "healthy_lifestyles",
+      "sample_text": "The library extended its weekend hours so residents could borrow books after work.",
+      "assignment_topic": "Factors that support a healthy lifestyle",
+      "cosine_similarity": 0.05668332800269127
+    }
+  ],
+  "adjacent_statement_pairs": [
+    {
+      "sample_id": "SM-01",
+      "first_statement": "Late-night social media use can reduce students' sleep because they spend too much time online.",
+      "second_statement": "As a result, students may experience fatigue and difficulty concentrating during classroom lessons.",
+      "cosine_similarity": 0.3354700803756714
+    },
+    {
+      "sample_id": "SM-03",
+      "first_statement": "Late-night social media.",
+      "second_statement": "Students.",
+      "cosine_similarity": 0.26102763414382935
+    },
+    {
+      "sample_id": "SM-03",
+      "first_statement": "Students.",
+      "second_statement": "Sleep.",
+      "cosine_similarity": 0.1616412252187729
+    },
+    {
+      "sample_id": "SM-03",
+      "first_statement": "Sleep.",
+      "second_statement": "Fatigue.",
+      "cosine_similarity": 0.5609837770462036
+    },
+    {
+      "sample_id": "SM-03",
+      "first_statement": "Fatigue.",
+      "second_statement": "Attention.",
+      "cosine_similarity": 0.35942453145980835
+    },
+    {
+      "sample_id": "SM-03",
+      "first_statement": "Attention.",
+      "second_statement": "Classroom concentration.",
+      "cosine_similarity": 0.36166590452194214
+    },
+    {
+      "sample_id": "SM-04",
+      "first_statement": "Late-night social media use makes students' sleep dance inside classroom umbrellas.",
+      "second_statement": "Fatigue teaches attention to swallow invisible notifications while concentration whispers to digital shadows.",
+      "cosine_similarity": 0.2591082453727722
+    },
+    {
+      "sample_id": "SU-02",
+      "first_statement": "Uniforms reduce differences.",
+      "second_statement": "This is good for some reasons, but it can also be bad when the reason is not clear.",
+      "cosine_similarity": 0.06773553043603897
+    }
+  ]
+}

@@ -1,0 +1,1010 @@
+{
+  "checks": [
+    {
+      "check": "Actual browser",
+      "product": "Chrome/155.0.8059.85",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36"
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "INTRODUCTION",
+      "dimension": null,
+      "skill": null,
+      "branch": "intro_ideas_point_and_reason",
+      "words": 23,
+      "exactDisplayedGuidance": {
+        "What I noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+        "What's working": "The checks recorded a main-statement pattern and an explanation part."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "Process 01 Student Text inspector: sections A-F, exact retained text, provenance, stale snapshot, no rerun",
+      "sections": 6,
+      "characters": 158,
+      "staleLabel": "PREVIOUS",
+      "analysisRequests": 0,
+      "persistenceRequests": 0,
+      "mobile": {
+        "viewport": 390,
+        "document": 390
+      }
+    },
+    {
+      "check": "desktop-introduction layout",
+      "viewport": 1440,
+      "document": 1425,
+      "stageWidth": 1063,
+      "stageScroll": 1063,
+      "processWidth": 1039,
+      "processScroll": 1039,
+      "stageButtons": 6,
+      "legacyNavigation": 0
+    },
+    {
+      "check": "mobile-introduction layout",
+      "viewport": 390,
+      "document": 390,
+      "stageWidth": 322,
+      "stageScroll": 988,
+      "processWidth": 298,
+      "processScroll": 298,
+      "stageButtons": 6,
+      "legacyNavigation": 0
+    },
+    {
+      "check": "Process explorer: all 45 original technical sections, keyboard controls, Introduction evidence, clipboard equality, no rerun, complete export index",
+      "originalEvidenceSections": 45,
+      "tokens": 27,
+      "emittedEvents": 9,
+      "evaluationRecords": 19,
+      "matchedTerms": 3,
+      "matchOccurrences": 4,
+      "reportCharacters": 179377
+    },
+    {
+      "check": "NLP Process Explorer: six stage buttons, contextual process navigation, in-place stage/process switching without page movement, A–H evidence always visible, original 45 evidence sections, preserved visualizers, mobile layout, no rerun",
+      "processes": [
+        {
+          "id": "focus-preparation",
+          "title": "Teacher Focus-Term Preparation",
+          "status": "EXECUTED",
+          "group": "preparation"
+        },
+        {
+          "id": "focus-normalization",
+          "title": "Focus-Term Normalization",
+          "status": "EXECUTED",
+          "group": "preparation"
+        },
+        {
+          "id": "tokens",
+          "title": "Tokenization",
+          "status": "EXECUTED",
+          "group": "linguistic"
+        },
+        {
+          "id": "pos",
+          "title": "Part-of-Speech Tagging",
+          "status": "EXECUTED",
+          "group": "linguistic"
+        },
+        {
+          "id": "dependencies",
+          "title": "Dependency Parsing",
+          "status": "EXECUTED",
+          "group": "linguistic"
+        },
+        {
+          "id": "lemmas",
+          "title": "Lemmatization",
+          "status": "EXECUTED",
+          "group": "linguistic"
+        },
+        {
+          "id": "sentences",
+          "title": "Sentence and Paragraph Detection",
+          "status": "EXECUTED",
+          "group": "linguistic"
+        },
+        {
+          "id": "noun-phrases",
+          "title": "Noun Phrase Extraction",
+          "status": "EXECUTED",
+          "group": "linguistic"
+        },
+        {
+          "id": "concepts",
+          "title": "Concept Candidate Extraction",
+          "status": "EXECUTED",
+          "group": "topic"
+        },
+        {
+          "id": "topic-matching",
+          "title": "Teacher Focus-Term Matching",
+          "status": "EXECUTED",
+          "group": "topic"
+        },
+        {
+          "id": "wordnet",
+          "title": "WordNet Processing",
+          "status": "SKIPPED",
+          "group": "topic"
+        },
+        {
+          "id": "related-concepts",
+          "title": "Related-Word Resource Evidence",
+          "status": "EXECUTED",
+          "group": "topic"
+        },
+        {
+          "id": "cross-stage",
+          "title": "Earlier-Section Comparisons",
+          "status": "NOT_APPLICABLE",
+          "group": "topic"
+        },
+        {
+          "id": "stage-patterns",
+          "title": "Introduction Sentence and Clause Checks",
+          "status": "EXECUTED",
+          "group": "rules"
+        },
+        {
+          "id": "sentence-connection",
+          "title": "Sentence Topic-Connection Review",
+          "status": "EXECUTED",
+          "group": "rules"
+        },
+        {
+          "id": "rule-events",
+          "title": "Rule Events and Evaluation Evidence",
+          "status": "EXECUTED",
+          "group": "rules"
+        },
+        {
+          "id": "feedback-decision",
+          "title": "Feedback Branch Selection",
+          "status": "EXECUTED",
+          "group": "feedback"
+        },
+        {
+          "id": "feedback-explanation",
+          "title": "Feedback Explanation",
+          "status": "EXECUTED",
+          "group": "feedback"
+        },
+        {
+          "id": "feedback-fields",
+          "title": "Five Feedback Fields",
+          "status": "EXECUTED",
+          "group": "feedback"
+        },
+        {
+          "id": "trait-mapping",
+          "title": "6+1 Trait and Lesson Mapping",
+          "status": "NOT_APPLICABLE",
+          "group": "feedback"
+        },
+        {
+          "id": "highlight-evidence",
+          "title": "Highlight Evidence Selection",
+          "status": "EXECUTED",
+          "group": "feedback"
+        },
+        {
+          "id": "api-rendering",
+          "title": "API Response and Browser Rendering",
+          "status": "EXECUTED",
+          "group": "output"
+        },
+        {
+          "id": "technical-trace",
+          "title": "Complete Technical Trace",
+          "status": "EXECUTED",
+          "group": "output"
+        }
+      ],
+      "noTeleport": {
+        "desktop": true,
+        "mobile": true
+      },
+      "screenshots": [
+        "process-explorer-desktop",
+        "process-explorer-mobile"
+      ]
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "INTRODUCTION",
+      "dimension": "Ideas",
+      "skill": "Develop Your Main Point",
+      "branch": "intro_ideas_develop_main_point",
+      "words": 55,
+      "exactDisplayedGuidance": {
+        "What I noticed": "The checks recorded a possible main-point sentence, with no additional sentence parts under this check.",
+        "Look at your writing": "Communities should reduce single-use plastics.",
+        "Why it matters": "A reason, example, or explanation can help readers understand your point.",
+        "How to improve": "Choose a reason, example, or explanation a reader would need. Add it in your own words if needed; no fixed starting word is required."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "INTRODUCTION",
+      "dimension": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "words": 78,
+      "exactDisplayedGuidance": {
+        "What I noticed": "The sentence containing 'Because' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+        "Look at your writing": "Because it can effect rivers, animals, plants ect.",
+        "Why it matters": "'Because' introduces a reason. Your reader expects a main statement that gives the result or claim.",
+        "How to improve": "Ask yourself: Because it can effect rivers, animals, plants ect, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "INTRODUCTION",
+      "dimension": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "words": 72,
+      "exactDisplayedGuidance": {
+        "What I noticed": "The sentence containing 'Although' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+        "Look at your writing": "Although communities reduce single-use plastics.",
+        "Why it matters": "'Although' introduces a contrasting idea. Your reader expects another statement explaining what happens despite that idea.",
+        "How to improve": "Ask yourself: Although communities reduce single-use plastics, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "Related concepts: actual spans, separate counts, A/B/D/E/F/G difficult examples, no sentence approval from a list",
+      "relatedConcepts": 2,
+      "relatedOccurrences": 2,
+      "exactSpans": [
+        [
+          "rivers",
+          134,
+          140
+        ],
+        [
+          "animals",
+          150,
+          157
+        ]
+      ]
+    },
+    {
+      "check": "desktop-body layout",
+      "viewport": 1440,
+      "document": 1425,
+      "stageWidth": 1063,
+      "stageScroll": 1063,
+      "processWidth": 1039,
+      "processScroll": 1039,
+      "stageButtons": 6,
+      "legacyNavigation": 0
+    },
+    {
+      "check": "mobile-body layout",
+      "viewport": 390,
+      "document": 390,
+      "stageWidth": 322,
+      "stageScroll": 988,
+      "processWidth": 298,
+      "processScroll": 298,
+      "stageButtons": 6,
+      "legacyNavigation": 0
+    },
+    {
+      "check": "Body current analysis with Introduction context",
+      "paragraphs": 2,
+      "events": 18
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "BODY",
+      "dimension": "Ideas",
+      "skill": "Develop Your Supporting Details",
+      "branch": "body_ideas_develop_point",
+      "words": 55,
+      "exactDisplayedGuidance": {
+        "What I noticed": "Paragraph 1 has a possible main statement, but no additional sentence was recorded to develop it.",
+        "Look at your writing": "Communities reduce single-use plastics.",
+        "Why it matters": "Readers often need more explanation to understand the point of a Body paragraph.",
+        "How to improve": "Think of an activity, example, or explanation that could help readers understand Paragraph 1. Write it in your own words if needed."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "BODY",
+      "dimension": "Organization",
+      "skill": "Review Paragraph Connections",
+      "branch": "body_organization_paragraph_link",
+      "words": 101,
+      "exactDisplayedGuidance": {
+        "What I noticed": "The wording check found no shared content words or listed linking phrase between Paragraphs 1 and 2. Different wording can still express a connection.",
+        "Look at your writing": "This wording comparison does not identify a precise error span, so nothing is marked. Read the neighboring paragraphs together; different wording may still express a connection.",
+        "Why it matters": "Readers need to know why the next paragraph follows the previous one. Word matches and linking phrases are one way the checks look for that connection.",
+        "How to improve": "Read the neighboring paragraphs together. Explain their connection in your own words only if a reader would need it; no particular linking word is required."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "CONCLUSION",
+      "dimension": null,
+      "skill": null,
+      "branch": "conclusion_ideas_bring_together",
+      "words": 38,
+      "exactDisplayedGuidance": {
+        "What I noticed": "One sentence combines words from more than one earlier section. The comparison does not prove the sentence brings the ideas together.",
+        "What's working": "One sentence combines ideas from more than one earlier section. Check whether it brings those ideas together."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "desktop-conclusion layout",
+      "viewport": 1440,
+      "document": 1425,
+      "stageWidth": 1063,
+      "stageScroll": 1063,
+      "processWidth": 1039,
+      "processScroll": 1039,
+      "stageButtons": 6,
+      "legacyNavigation": 0
+    },
+    {
+      "check": "mobile-conclusion layout",
+      "viewport": 390,
+      "document": 390,
+      "stageWidth": 322,
+      "stageScroll": 988,
+      "processWidth": 298,
+      "processScroll": 298,
+      "stageButtons": 6,
+      "legacyNavigation": 0
+    },
+    {
+      "check": "Conclusion continuity, synthesis, closure, new material and diagram navigation",
+      "events": 9,
+      "persistenceRequests": 0
+    },
+    {
+      "check": "189-word substitute Introduction: editor highlight desktop",
+      "exactSentence": "Although students can find useful information using smartphones.",
+      "font": "16px / 28.8px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "mirrorFont": "16px / 28.8px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "padding": "17px",
+      "mirrorPadding": "17px",
+      "width": 638,
+      "mirrorWidth": 638,
+      "scroll": 0,
+      "transform": "translate(0px, 0px)",
+      "editorTop": 210.296875,
+      "editorBottom": 790.296875,
+      "markTop": 635.453125,
+      "markBottom": 684.25,
+      "background": "rgb(239, 229, 255)",
+      "caret": "rgb(23, 43, 77)",
+      "textColor": "rgb(36, 54, 75)",
+      "textareaBackground": "rgba(0, 0, 0, 0)",
+      "viewport": 1440,
+      "documentWidth": 1425
+    },
+    {
+      "check": "189-word substitute Introduction: editor highlight mobile",
+      "exactSentence": "Although students can find useful information using smartphones.",
+      "font": "16px / 28.8px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "mirrorFont": "16px / 28.8px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "padding": "13px",
+      "mirrorPadding": "13px",
+      "width": 326,
+      "mirrorWidth": 326,
+      "scroll": 763,
+      "transform": "translate(0px, -763px)",
+      "editorTop": 257.296875,
+      "editorBottom": 587.296875,
+      "markTop": 405,
+      "markBottom": 482.59375,
+      "background": "rgb(239, 229, 255)",
+      "caret": "rgb(23, 43, 77)",
+      "textColor": "rgb(36, 54, 75)",
+      "textareaBackground": "rgba(0, 0, 0, 0)",
+      "viewport": 390,
+      "documentWidth": 390
+    },
+    {
+      "check": "189-word substitute Introduction: editor highlight resized",
+      "exactSentence": "Although students can find useful information using smartphones.",
+      "font": "16px / 28.8px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "mirrorFont": "16px / 28.8px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "padding": "17px",
+      "mirrorPadding": "17px",
+      "width": 371,
+      "mirrorWidth": 371,
+      "scroll": 436,
+      "transform": "translate(0px, -436px)",
+      "editorTop": 188.65625,
+      "editorBottom": 710.65625,
+      "markTop": 552.171875,
+      "markBottom": 629.765625,
+      "background": "rgb(239, 229, 255)",
+      "caret": "rgb(23, 43, 77)",
+      "textColor": "rgb(36, 54, 75)",
+      "textareaBackground": "rgba(0, 0, 0, 0)",
+      "viewport": 1024,
+      "documentWidth": 1009
+    },
+    {
+      "check": "Explanation-only tutor: real Although event, native undo/redo, debounced and manual reanalysis, independent concern switching",
+      "concerns": [
+        "Ideas · Develop Your Supporting Details",
+        "Sentence Fluency · Review Repeated Sentence Openings"
+      ],
+      "automaticRequests": 1
+    },
+    {
+      "check": "Introduction quality A-G: six-sentence real input, Main Feedback + one Also Check, exact editor/tutor spans at desktop/mobile, cautious context statuses, complex sentence safeguard, reason clause and Unicode regressions",
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.POSITION.RELEVANT_POSITION_OBSERVED",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+        "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW"
+      ],
+      "persistenceRequests": 0
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "INTRODUCTION",
+      "dimension": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "words": 78,
+      "exactDisplayedGuidance": {
+        "What I noticed": "The sentence containing 'Although' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+        "Look at your writing": "Although students can find useful information using smartphones.",
+        "Why it matters": "'Although' introduces a contrasting idea. Your reader expects another statement explaining what happens despite that idea.",
+        "How to improve": "Ask yourself: Although students can find useful information using smartphones, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "Manual Introduction presentation correction: long_although",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "label": "Sentence Fluency · Complete Your Sentence",
+      "marks": [
+        "Although students can find useful information using smartphones."
+      ],
+      "originalFeedbackPreserved": true
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "INTRODUCTION",
+      "dimension": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "words": 76,
+      "exactDisplayedGuidance": {
+        "What I noticed": "The sentence containing 'Although' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+        "Look at your writing": "Although the cafeteria offers several healthy meals.",
+        "Why it matters": "'Although' introduces a contrasting idea. Your reader expects another statement explaining what happens despite that idea.",
+        "How to improve": "Ask yourself: Although the cafeteria offers several healthy meals, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "Manual Introduction presentation correction: cafeteria_although",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "label": "Sentence Fluency · Complete Your Sentence",
+      "marks": [
+        "Although the cafeteria offers several healthy meals."
+      ],
+      "originalFeedbackPreserved": true
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "INTRODUCTION",
+      "dimension": "Organization",
+      "skill": "Introduce Your Topic",
+      "branch": "intro_organization_topic_intro",
+      "words": 100,
+      "exactDisplayedGuidance": {
+        "What I noticed": "The checks recorded your matched assignment words as a short list of ideas and found no sentence connecting them into one thought yet.",
+        "Look at your writing": "Smartphones and classroom learning.Digital dictionaries and educational videos.Students and mobile devices.Online information and school activities.Teacher supervision and classroom rules.Social media and distractions.Educational applications and student participation.",
+        "Why it matters": "An introduction works when it tells readers which subject you will explain. Listing related words leaves readers waiting for the idea behind them.",
+        "How to improve": "Choose one idea from your words and write one sentence about it in your own words. Then read your opening and check that it introduces that idea clearly."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "Manual Introduction presentation correction: keyword_list",
+      "branch": "intro_organization_topic_intro",
+      "label": "Organization · Introduce Your Topic",
+      "marks": [
+        "Smartphones and classroom learning.",
+        "Digital dictionaries and educational videos.",
+        "Students and mobile devices.",
+        "Online information and school activities.",
+        "Teacher supervision and classroom rules.",
+        "Social media and distractions.",
+        "Educational applications and student participation."
+      ],
+      "originalFeedbackPreserved": true
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "INTRODUCTION",
+      "dimension": "Ideas",
+      "skill": "State Your Position",
+      "branch": "intro_ideas_state_position",
+      "words": 52,
+      "exactDisplayedGuidance": {
+        "What I noticed": "Your introduction discusses the topic, but I could not identify a clear position on the question.",
+        "Look at your writing": "Students use smartphones in the classroom.",
+        "Why it matters": "When an assignment asks for your opinion, readers look for where you stand early in the introduction.",
+        "How to improve": "Consider stating whether you support or oppose the proposal, using your own words."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "Manual Introduction presentation correction: main_point",
+      "branch": "intro_ideas_state_position",
+      "label": "Ideas · State Your Position",
+      "marks": [
+        "Students use smartphones in the classroom."
+      ],
+      "originalFeedbackPreserved": true
+    },
+    {
+      "check": "S5.1 concise inline scaffolding",
+      "stage": "INTRODUCTION",
+      "dimension": "Ideas",
+      "skill": "Match Your Topic",
+      "branch": "intro_ideas_topic_match",
+      "words": 126,
+      "exactDisplayedGuidance": {
+        "What I noticed": "No assignment words were found in this section. Different wording may still express a relevant idea.",
+        "Look at your writing": "Whole Introduction: 0 of 5 configured focus terms observed (direct or lemma matches).\nTerms not observed: smartphones, students, classroom, learning, distractions.\nThis is a wording summary, not a judgment of relevance. No individual passage is highlighted for a whole-section absence.",
+        "Why it matters": "Assignment wording helps readers recognize the subject you are addressing. Missing word matches are a reason to compare your writing with the assignment, not proof that your ideas are off topic.",
+        "How to improve": "Read the assignment question and this section. Check that your writing addresses that question; add or adjust a word in your own words if a reader would need it. You do not need to insert every assignment word literally."
+      },
+      "independentWritingPreserved": true
+    },
+    {
+      "check": "Manual Introduction presentation correction: cafeteria_complete",
+      "branch": "intro_ideas_topic_match",
+      "label": "Ideas · Match Your Topic",
+      "marks": [],
+      "originalFeedbackPreserved": true
+    },
+    {
+      "check": "Before-only safeguard removes the confirmed false positive at its source",
+      "status": "CORRECTED",
+      "rule": "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR"
+    },
+    {
+      "check": "Case H corrected at source: only actual Although evidence, verified editor highlight and clipboard",
+      "evidence": [
+        {
+          "dependency": "mark",
+          "end": 237,
+          "evidence_type": "POS_and_dependency_heuristic",
+          "limitation": "Parser attachment can be wrong; a reviewer should inspect the clause.",
+          "pos": "SCONJ",
+          "predicate_starts_in_sentence": [
+            248
+          ],
+          "sentence_index": 3,
+          "start": 229,
+          "text": "Although"
+        }
+      ],
+      "selectedBranch": "intro_sentence_fluency_complete_sentence"
+    },
+    {
+      "check": "Automatic Body analysis A",
+      "counts": [
+        4,
+        1
+      ],
+      "branch": "body_neutral_observable",
+      "role": "NO_SUPPORTED_CONCERN_SELECTED",
+      "requests": 1
+    },
+    {
+      "check": "Automatic Body analysis B",
+      "counts": [
+        4,
+        1
+      ],
+      "branch": "body_neutral_observable",
+      "role": "NO_SUPPORTED_CONCERN_SELECTED",
+      "requests": 1
+    },
+    {
+      "check": "Automatic Body analysis C",
+      "counts": [
+        1
+      ],
+      "branch": "body_neutral_observable",
+      "role": "NO_SUPPORTED_CONCERN_SELECTED",
+      "requests": 1
+    },
+    {
+      "check": "Automatic Body analysis D",
+      "counts": [
+        4,
+        3
+      ],
+      "branch": "body_neutral_observable",
+      "role": "NO_SUPPORTED_CONCERN_SELECTED",
+      "requests": 1
+    },
+    {
+      "check": "Automatic Body analysis supported",
+      "counts": [
+        4,
+        1
+      ],
+      "branch": "body_ideas_develop_point",
+      "role": "PREPARED",
+      "requests": 1
+    },
+    {
+      "check": "Live analysis serialization, stale rejection, real latest-snapshot clipboard, network retry, duplicate suppression and empty draft",
+      "maxConcurrent": 1,
+      "persistenceRequests": 0
+    },
+    {
+      "check": "Causal walkthroughs: real API cases, 45 panels, source comparisons, informational events, read-only inspection, 16 desktop/mobile screenshots",
+      "cases": [
+        {
+          "name": "intro_presence",
+          "stage": "INTRODUCTION",
+          "primaryBranch": "intro_ideas_state_position",
+          "events": [
+            "INTRO.TEXT.PRESENT",
+            "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+            "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+            "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+            "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+            "INTRO.POSITION.NO_RELEVANT_POSITION_OBSERVED",
+            "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+            "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        },
+        {
+          "name": "intro_incomplete",
+          "stage": "INTRODUCTION",
+          "primaryBranch": "intro_sentence_fluency_complete_sentence",
+          "events": [
+            "INTRO.TEXT.PRESENT",
+            "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+            "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+            "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+            "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+            "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+            "INTRO.POSITION.NO_RELEVANT_POSITION_OBSERVED",
+            "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+            "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        },
+        {
+          "name": "intro_list",
+          "stage": "INTRODUCTION",
+          "primaryBranch": "intro_organization_topic_intro",
+          "events": [
+            "INTRO.TEXT.PRESENT",
+            "INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE",
+            "INTRO.TEXT.KEYWORD_LIST_CANDIDATE",
+            "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+            "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+            "INTRO.POSITION.CHECK_NOT_APPLICABLE",
+            "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+            "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        },
+        {
+          "name": "intro_before",
+          "stage": "INTRODUCTION",
+          "primaryBranch": "intro_ideas_topic_match",
+          "events": [
+            "INTRO.TEXT.PRESENT",
+            "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+            "INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED",
+            "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+            "INTRO.POSITION.CHECK_NOT_APPLICABLE",
+            "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+            "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        },
+        {
+          "name": "body_mixed",
+          "stage": "BODY",
+          "primaryBranch": "body_ideas_develop_point",
+          "events": [
+            "BODY.P1.PARAGRAPH.SEGMENTED",
+            "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+            "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+            "BODY.P1.SUPPORTING_DETAIL.CANDIDATE",
+            "BODY.P1.UNITY.SENTENCE_PAIR_1_2",
+            "BODY.P1.UNITY.SENTENCE_PAIR_2_3",
+            "BODY.P1.UNITY.SENTENCE_PAIR_3_4",
+            "BODY.P1.REPETITION.REPEATED_SURFACE_CONTENT_WORDS",
+            "BODY.P1.REPETITION.REPEATED_NORMALIZED_CONTENT_TERMS",
+            "BODY.P2.PARAGRAPH.SEGMENTED",
+            "BODY.P2.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+            "BODY.P2.TOPIC_SENTENCE.CANDIDATE",
+            "BODY.P2.SUPPORTING_DETAIL.NOT_OBSERVED",
+            "BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON",
+            "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+            "BODY.GOAL.DEVELOP_BODY_IDEAS",
+            "BODY.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        },
+        {
+          "name": "body_wordnet",
+          "stage": "BODY",
+          "primaryBranch": "body_ideas_develop_point",
+          "events": [
+            "BODY.P1.PARAGRAPH.SEGMENTED",
+            "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+            "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+            "BODY.P1.SUPPORTING_DETAIL.NOT_OBSERVED",
+            "BODY.P1.UNITY.SENTENCE_PAIR_1_2",
+            "BODY.P1.REPETITION.REPEATED_SURFACE_CONTENT_WORDS",
+            "BODY.P1.REPETITION.REPEATED_NORMALIZED_CONTENT_TERMS",
+            "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+            "BODY.INTRO_CONTINUITY.WORDNET_CANDIDATES",
+            "BODY.GOAL.DEVELOP_BODY_IDEAS",
+            "BODY.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        },
+        {
+          "name": "conclusion_rewording",
+          "stage": "CONCLUSION",
+          "primaryBranch": "conclusion_ideas_bring_together",
+          "events": [
+            "CONCLUSION.TEXT.PRESENT",
+            "CONCLUSION.STRUCTURE.CLAUSE_CANDIDATE",
+            "CONCLUSION.TOPIC.FOCUS_MATCHES",
+            "CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON",
+            "CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON",
+            "CONCLUSION.CONTINUITY.BODY_WORDNET_CANDIDATE",
+            "CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE",
+            "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE",
+            "CONCLUSION.NEW_MATERIAL.KNOWN_CONCEPT_COMBINATION",
+            "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+            "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS"
+          ]
+        },
+        {
+          "name": "conclusion_new",
+          "stage": "CONCLUSION",
+          "primaryBranch": "conclusion_ideas_new_words",
+          "events": [
+            "CONCLUSION.TEXT.PRESENT",
+            "CONCLUSION.STRUCTURE.CLAUSE_CANDIDATE",
+            "CONCLUSION.TOPIC.NO_FOCUS_MATCH",
+            "CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON",
+            "CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON",
+            "CONCLUSION.SYNTHESIS.NO_CANDIDATE",
+            "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE",
+            "CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS",
+            "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+            "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS"
+          ]
+        },
+        {
+          "name": "body_generic",
+          "stage": "BODY",
+          "primaryBranch": "body_neutral_observable",
+          "events": [
+            "BODY.P1.PARAGRAPH.SEGMENTED",
+            "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+            "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+            "BODY.P1.SUPPORTING_DETAIL.CANDIDATE",
+            "BODY.P1.EXAMPLE_OR_EXPLANATION_MARKER",
+            "BODY.P1.UNITY.SENTENCE_PAIR_1_2",
+            "BODY.P1.UNITY.SENTENCE_PAIR_2_3",
+            "BODY.P1.UNITY.SENTENCE_PAIR_3_4",
+            "BODY.P1.REPETITION.REPEATED_SURFACE_CONTENT_WORDS",
+            "BODY.P1.REPETITION.REPEATED_NORMALIZED_CONTENT_TERMS",
+            "BODY.P2.PARAGRAPH.SEGMENTED",
+            "BODY.P2.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+            "BODY.P2.TOPIC_SENTENCE.CANDIDATE",
+            "BODY.P2.SUPPORTING_DETAIL.CANDIDATE",
+            "BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON",
+            "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+            "BODY.GOAL.DEVELOP_BODY_IDEAS",
+            "BODY.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        },
+        {
+          "name": "punctuation",
+          "stage": "INTRODUCTION",
+          "primaryBranch": "intro_neutral_punctuation",
+          "events": [
+            "INTRO.TEXT.EMPTY_OR_NONALPHABETIC",
+            "INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE",
+            "INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED",
+            "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+            "INTRO.POSITION.CHECK_NOT_APPLICABLE",
+            "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+            "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        },
+        {
+          "name": "missing_context",
+          "stage": "CONCLUSION",
+          "primaryBranch": "conclusion_organization_clear_ending",
+          "events": [
+            "CONCLUSION.TEXT.PRESENT",
+            "CONCLUSION.STRUCTURE.CLAUSE_CANDIDATE",
+            "CONCLUSION.TOPIC.FOCUS_MATCHES",
+            "CONCLUSION.CONTINUITY.INTRODUCTION_UNAVAILABLE",
+            "CONCLUSION.CONTINUITY.BODY_UNAVAILABLE",
+            "CONCLUSION.SYNTHESIS.UNAVAILABLE",
+            "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE",
+            "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+            "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS"
+          ]
+        },
+        {
+          "name": "unicode_crlf",
+          "stage": "BODY",
+          "primaryBranch": "body_ideas_develop_point",
+          "events": [
+            "BODY.P1.PARAGRAPH.SEGMENTED",
+            "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+            "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+            "BODY.P1.SUPPORTING_DETAIL.NOT_OBSERVED",
+            "BODY.P2.PARAGRAPH.SEGMENTED",
+            "BODY.P2.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+            "BODY.P2.TOPIC_SENTENCE.CANDIDATE",
+            "BODY.P2.SUPPORTING_DETAIL.NOT_OBSERVED",
+            "BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON",
+            "BODY.GOAL.DEVELOP_BODY_IDEAS",
+            "BODY.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        },
+        {
+          "name": "unicode_lf",
+          "stage": "BODY",
+          "primaryBranch": "body_ideas_develop_point",
+          "events": [
+            "BODY.P1.PARAGRAPH.SEGMENTED",
+            "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+            "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+            "BODY.P1.SUPPORTING_DETAIL.NOT_OBSERVED",
+            "BODY.P2.PARAGRAPH.SEGMENTED",
+            "BODY.P2.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+            "BODY.P2.TOPIC_SENTENCE.CANDIDATE",
+            "BODY.P2.SUPPORTING_DETAIL.NOT_OBSERVED",
+            "BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON",
+            "BODY.GOAL.DEVELOP_BODY_IDEAS",
+            "BODY.LIMITATION.NO_SEMANTIC_VALIDATION"
+          ]
+        }
+      ],
+      "emptyInputStatus": 400
+    },
+    {
+      "check": "Rule Base decision trees: exact Introduction, dynamic Body/Conclusion, provenance edges, dependency tree, read-only selection, desktop/mobile screenshots",
+      "records": [
+        {
+          "stage": "INTRODUCTION",
+          "rules": 19
+        },
+        {
+          "stage": "BODY",
+          "rules": 20
+        },
+        {
+          "stage": "CONCLUSION",
+          "rules": 26
+        }
+      ]
+    },
+    {
+      "check": "Feedback decision flow: 45 panels, five fields with recorded branch parity, six questions per node, source-verified honesty, item alignment, cross-links, read-only inspection, desktop/mobile screenshots",
+      "records": [
+        {
+          "stage": "INTRODUCTION",
+          "primaryBranch": "intro_sentence_fluency_complete_sentence",
+          "itemAlignment": [
+            "not-applicable",
+            "not-applicable",
+            "available",
+            "unavailable",
+            "not-applicable"
+          ],
+          "screenshot": "feedback-flow-intro-desktop"
+        },
+        {
+          "stage": "BODY",
+          "primaryBranch": "body_ideas_develop_point",
+          "itemAlignment": [
+            "not-applicable",
+            "not-applicable",
+            "available",
+            "available",
+            "not-applicable"
+          ],
+          "screenshot": "feedback-flow-body-desktop"
+        },
+        {
+          "stage": "CONCLUSION",
+          "primaryBranch": "conclusion_ideas_new_words",
+          "itemAlignment": [
+            "not-applicable",
+            "not-applicable",
+            "available",
+            "available",
+            "not-applicable"
+          ],
+          "screenshot": "feedback-flow-conclusion-desktop"
+        }
+      ],
+      "itemAlignment": [
+        "not-applicable",
+        "available",
+        "unavailable"
+      ],
+      "uncitedBodyEvents": [
+        "BODY.P1.PARAGRAPH.SEGMENTED",
+        "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED",
+        "BODY.P1.TOPIC_SENTENCE.CANDIDATE",
+        "BODY.P1.UNITY.SENTENCE_PAIR_1_2",
+        "BODY.P1.REPETITION.REPEATED_SURFACE_CONTENT_WORDS",
+        "BODY.P1.REPETITION.REPEATED_NORMALIZED_CONTENT_TERMS",
+        "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON",
+        "BODY.INTRO_CONTINUITY.WORDNET_CANDIDATES",
+        "BODY.GOAL.DEVELOP_BODY_IDEAS",
+        "BODY.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ]
+    },
+    {
+      "check": "Feedback decision flow missing-provenance probe: UNKNOWN not NOT_CITED, written reasons, no requests",
+      "unknown": 9,
+      "cited": 1,
+      "uncited": 0,
+      "listAlignment": "unavailable"
+    },
+    {
+      "check": "Full-screen process explorer (desktop): manual toggle only, normal content width, fixed header and Student Space, one content scroller, toggle exit",
+      "paneHeight": 904,
+      "viewport": 1440,
+      "pageScrollsOnly": false,
+      "analysisCallsDuringFocus": 0
+    },
+    {
+      "check": "Immersive transparency focus (mobile): manual toggle only, header and Student Space fixed above, pane-only scrolling, toggle exit",
+      "viewport": 390,
+      "pageScrollsOnly": false,
+      "analysisCallsDuringFocus": 0
+    },
+    {
+      "check": "Teacher Research Inspector real analysis and process navigation",
+      "emittedEvents": 9,
+      "evaluationRecords": 19
+    },
+    {
+      "check": "Research Inspector reports corrected Case H execution",
+      "incompleteMarkers": [
+        "Although"
+      ]
+    }
+  ],
+  "javascriptErrors": []
+}

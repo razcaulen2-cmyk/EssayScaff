@@ -1,0 +1,39 @@
+{
+  "workflow": "PASS",
+  "responsiveChecks": 58,
+  "errors": [],
+  "expectedHttpStatuses": [
+    {
+      "status": 401,
+      "url": "/login"
+    },
+    {
+      "status": 404,
+      "url": "/api/classroom-enrollments"
+    },
+    {
+      "status": 403,
+      "url": "/api/research-inspector/metadata"
+    },
+    {
+      "status": 409,
+      "url": "/api/submissions"
+    },
+    {
+      "status": 404,
+      "url": "/api/assignments/9/workspace"
+    },
+    {
+      "status": 404,
+      "url": "/api/drafts"
+    },
+    {
+      "status": 404,
+      "url": "/api/assignments/10/workspace"
+    },
+    {
+      "status": 404,
+      "url": "/api/drafts"
+    }
+  ]
+}

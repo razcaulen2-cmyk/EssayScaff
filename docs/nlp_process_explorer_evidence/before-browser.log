@@ -1,0 +1,10 @@
+{
+  "mode": "before",
+  "stages": [
+    "INTRODUCTION",
+    "BODY",
+    "CONCLUSION"
+  ],
+  "checks": [],
+  "javascriptErrors": []
+}

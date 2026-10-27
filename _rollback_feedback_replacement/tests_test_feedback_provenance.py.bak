@@ -1,0 +1,504 @@
+"""Branch-specific provenance contracts, not rhetorical-quality assessments.
+
+Controlled records below exercise feedback selection independently of spaCy.
+Real-pipeline and authenticated API cases then verify the actual event contracts.
+"""
+
+from copy import deepcopy
+import hashlib
+import json
+
+import pytest
+
+from services.essay_analysis_service import EssayAnalysisService
+from services.feedback_service import FeedbackService
+
+
+FIELDS = ("Current Goal", "Primary Feedback", "What's Working", "Needs Attention", "Next Step")
+SPAN = {"text": "Readers", "start": 0, "end": 7}
+METHODS = {"INTRODUCTION": "generate", "BODY": "generate_body", "CONCLUSION": "generate_conclusion"}
+
+
+def event(rule_id):
+    """A controlled emitted record using the stage's existing schema and Rule ID."""
+    goal = ".GOAL." in rule_id
+    record = {
+        "rule_id": rule_id,
+        "triggering_condition": f"Recorded fixture condition: {rule_id}",
+        "evidence_type": "stage_scope_configuration" if goal else "controlled_test_evidence",
+    }
+    evidence = [] if goal else [deepcopy(SPAN)]
+    if rule_id.startswith("INTRO."):
+        record.update(triggered=True, evidence=evidence, limitation="Structure and wording only.")
+    else:
+        record.update(actual_evidence=evidence, limitations="Structure and wording only.")
+        if rule_id.startswith("BODY."):
+            record["triggered"] = True
+        else:
+            record.update(fired=True, source_sections=["conclusion"])
+    return record
+
+
+def intro_analysis(case):
+    central = case != "specific_without_root"
+    developed = case == "multiple_clauses"
+    return {
+        "text_presence": {"status": "SENTENCE_STRUCTURE_OBSERVED" if central else "FRAGMENTARY_OR_NONCLAUSAL_TEXT"},
+        "lexical_topic_evidence": {"observed_focus_terms": ["reading"]},
+        "observable_structure": {
+            "central_direction_candidates": [deepcopy(SPAN)] if central else [],
+            "list_or_fragment_candidate": {"keyword_list_candidate": False},
+            "incomplete_subordinator_candidates": [],
+            "introductory_context_candidates": [],
+        },
+        "development_evidence": {
+            "status": "STRUCTURAL_ELABORATION_CANDIDATE" if developed else "NO_ADDITIONAL_CLAUSE_ELABORATION_OBSERVED",
+        },
+        "linguistic_observations": {"counts": {"sentence_count": 1}},
+        "rule_evidence": [event(rule_id) for rule_id in (
+            "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+            "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+            "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE" if central else "INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE",
+            "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES" if developed else "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        )],
+    }
+
+
+def paragraph(index):
+    return {
+        "paragraph_index": index,
+        "substantive": True,
+        "counts": {"sentence_count": 2},
+        "fragment_or_list_candidate": {"keyword_list_candidate": False},
+        "observed_focus_terms": ["reading"],
+        "topic_sentence_candidates": [],
+        "supporting_detail_candidates": {"candidates": [deepcopy(SPAN), deepcopy(SPAN)]},
+        "repetition_observations": {
+            "repeated_surface_content_words": [],
+            "repeated_sentence_openings": [],
+        },
+    }
+
+
+def body_analysis(case):
+    paragraphs = [] if case == "empty" else [paragraph(1)]
+    if case in {"list", "unlinked", "limited", "repeated"}:
+        paragraphs.append(paragraph(2))
+        if case == "list":
+            paragraphs[1]["fragment_or_list_candidate"]["keyword_list_candidate"] = True
+            paragraphs[1]["supporting_detail_candidates"]["candidates"] = []
+        elif case == "limited":
+            paragraphs[1]["supporting_detail_candidates"]["candidates"] = []
+        elif case == "repeated":
+            paragraphs[1]["repetition_observations"]["repeated_sentence_openings"] = [{"opening": "readers learn"}]
+        # The selected issue must remain P2, even after later paragraphs are visited.
+        paragraphs.append(paragraph(3))
+    pairs = [{"status": "NO_EXPLICIT_LEXICAL_LINK_OBSERVED", "paragraph_pair": [1, 2]}] if case == "unlinked" else []
+    available = case != "no_introduction"
+    analysis = {
+        "paragraphs": paragraphs,
+        "cross_paragraph_continuity": {
+            "status": "PAIRWISE_OBSERVATIONS" if pairs else "NOT_APPLICABLE_SINGLE_PARAGRAPH",
+            "paragraph_pairs": pairs,
+        },
+        "introduction_to_body_continuity": {
+            "status": "LEXICAL_COMPARISON_AVAILABLE" if available else "NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED",
+            "direct_lexical_continuity": [deepcopy(SPAN)] if available else [],
+            "lemma_normalized_continuity": [],
+            "unobserved_introduction_concepts": [],
+        },
+    }
+    ids = ["BODY.GOAL.DEVELOP_BODY_IDEAS", "BODY.LIMITATION.NO_SEMANTIC_VALIDATION"]
+    if not paragraphs:
+        ids.append("BODY.TEXT.NO_SUBSTANTIVE_PARAGRAPH")
+    for item in paragraphs:
+        prefix = f"BODY.P{item['paragraph_index']}."
+        ids.extend([prefix + "PARAGRAPH.SEGMENTED", prefix + "PARAGRAPH.FOCUS_TERMS_OBSERVED"])
+        ids.append(prefix + ("SUPPORTING_DETAIL.CANDIDATE" if item["supporting_detail_candidates"]["candidates"] else "SUPPORTING_DETAIL.NOT_OBSERVED"))
+        if item["fragment_or_list_candidate"]["keyword_list_candidate"]:
+            ids.append(prefix + "PARAGRAPH.KEYWORD_LIST_CANDIDATE")
+        if item["repetition_observations"]["repeated_sentence_openings"]:
+            ids.append(prefix + "REPETITION.REPEATED_SENTENCE_OPENINGS")
+    if pairs:
+        ids.append("BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON")
+    if available:
+        ids.append("BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON")
+    analysis["rule_evidence"] = [event(rule_id) for rule_id in ids]
+    return analysis
+
+
+def conclusion_analysis(case):
+    empty = case == "empty"
+    listed = case == "list"
+    clause = case not in {"empty", "list", "novel", "no_closure", "closure"}
+    synthesis = case == "synthesis"
+    closed = case not in {"empty", "list", "no_closure"}
+    analysis = {
+        "text_presence": {"alphabetic_word_count": 0 if empty else 5, "keyword_list_candidate": listed},
+        "lexical_topic_evidence": {"observed_focus_terms": [] if empty else ["reading"]},
+        "clause_candidates": [deepcopy(SPAN)] if clause else [],
+        "introduction_to_conclusion_continuity": {
+            "status": "NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED",
+            "direct_lexical_continuity": [], "lemma_normalized_continuity": [],
+        },
+        "body_to_conclusion_continuity": {
+            "status": "NOT_AVAILABLE_NO_BODY_SUPPLIED",
+            "direct_lexical_continuity": [], "lemma_normalized_continuity": [],
+        },
+        "synthesis_structure_candidates": {
+            "status": "SYNTHESIS_STRUCTURE_CANDIDATE" if synthesis else "NOT_AVAILABLE_NO_PRIOR_SECTIONS_SUPPLIED",
+            "candidates": [deepcopy(SPAN)] if synthesis else [],
+        },
+        "closure_candidates": {
+            "status": "CLOSURE_STRUCTURE_CANDIDATE" if closed else "NO_CLOSURE_CANDIDATE_OBSERVED",
+            "candidates": [deepcopy(SPAN)] if closed else [],
+        },
+        "new_material_observations": {
+            "unobserved_concept_candidates": [{"normalized_form": "different concept"}] if case == "novel" else [],
+            "phrase_combinations_of_observed_concepts": [],
+        },
+    }
+    ids = [
+        "CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS",
+        "CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION",
+        "CONCLUSION.TEXT.EMPTY_OR_NONALPHABETIC" if empty else "CONCLUSION.TEXT.PRESENT",
+        "CONCLUSION.STRUCTURE.CLAUSE_CANDIDATE" if clause else "CONCLUSION.STRUCTURE.NO_CLAUSE_CANDIDATE",
+        "CONCLUSION.TOPIC.NO_FOCUS_MATCH" if empty else "CONCLUSION.TOPIC.FOCUS_MATCHES",
+        "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE" if closed else "CONCLUSION.CLOSURE.NO_CANDIDATE",
+    ]
+    if listed:
+        ids.append("CONCLUSION.TEXT.KEYWORD_LIST_CANDIDATE")
+    if synthesis or case == "novel":
+        analysis["introduction_to_conclusion_continuity"]["status"] = "LEXICAL_COMPARISON_AVAILABLE"
+        analysis["introduction_to_conclusion_continuity"]["direct_lexical_continuity"] = [deepcopy(SPAN)]
+        if not synthesis:
+            analysis["synthesis_structure_candidates"]["status"] = "NO_SYNTHESIS_STRUCTURE_CANDIDATE_OBSERVED"
+        ids.append("CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON")
+        ids.append("CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE" if synthesis else "CONCLUSION.SYNTHESIS.NO_CANDIDATE")
+    else:
+        ids.extend(["CONCLUSION.CONTINUITY.INTRODUCTION_UNAVAILABLE", "CONCLUSION.SYNTHESIS.UNAVAILABLE"])
+    ids.append("CONCLUSION.CONTINUITY.BODY_UNAVAILABLE")
+    if case == "novel":
+        ids.append("CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS")
+    analysis["rule_evidence"] = [event(rule_id) for rule_id in ids]
+    return analysis
+
+
+FACTORIES = {"INTRODUCTION": intro_analysis, "BODY": body_analysis, "CONCLUSION": conclusion_analysis}
+INTRO_CASES = [
+    ("single_clause", "central_clause_without_multiple_clause_candidate", ["INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE", "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE"]),
+    ("multiple_clauses", "central_clause_with_multiple_clause_candidates", ["INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE", "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"]),
+    ("specific_without_root", "one_sentence_specific_focus_without_root_candidate", ["INTRO.TOPIC.FOCUS_TERMS_OBSERVED", "INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE"]),
+]
+BODY_CASES = [
+    ("empty", "no_substantive_paragraph", ["BODY.TEXT.NO_SUBSTANTIVE_PARAGRAPH"]),
+    ("list", "first_list_like_paragraph", ["BODY.P2.PARAGRAPH.KEYWORD_LIST_CANDIDATE"]),
+    ("unlinked", "first_unlinked_adjacent_paragraph_pair", ["BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON"]),
+    ("limited", "first_paragraph_without_additional_clause_candidate", ["BODY.P2.SUPPORTING_DETAIL.NOT_OBSERVED"]),
+    ("repeated", "first_repeated_sentence_opening", ["BODY.P2.REPETITION.REPEATED_SENTENCE_OPENINGS"]),
+    ("no_introduction", "introduction_context_unavailable", []),
+    ("general", "general_body_review", ["BODY.GOAL.DEVELOP_BODY_IDEAS"]),
+]
+CONCLUSION_CASES = [
+    ("empty", "empty_or_nonalphabetic", ["CONCLUSION.TEXT.EMPTY_OR_NONALPHABETIC"]),
+    ("list", "keyword_list_candidate", ["CONCLUSION.TEXT.KEYWORD_LIST_CANDIDATE"]),
+    ("novel", "unobserved_prior_concepts", ["CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS"]),
+    ("synthesis", "synthesis_structure_candidate", ["CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE"]),
+    ("no_closure", "no_closure_candidate", ["CONCLUSION.CLOSURE.NO_CANDIDATE"]),
+    ("closure", "closure_candidate", ["CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE"]),
+    ("missing_prior", "closure_candidate", ["CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE"]),
+]
+CONTROLLED_CASES = [(stage, case) for stage, rows in (
+    ("INTRODUCTION", INTRO_CASES), ("BODY", BODY_CASES), ("CONCLUSION", CONCLUSION_CASES)
+) for case, _, _ in rows]
+
+# Captured from the pre-change FeedbackService, including all five fields/list order.
+BASELINE_FIELD_DIGESTS = {
+    "INTRODUCTION:single_clause": "aa45e975bd1cc83c9eab21ffb22af312078b12fc36a82bc3f4e7fac3f872d47a",
+    "INTRODUCTION:multiple_clauses": "02257d0cd40e798e912656ac74dcce4d9213f30eb706bf8e70b3e350c664850a",
+    "INTRODUCTION:specific_without_root": "57548384b532707e398f5cf6bae7129b0a8204f0ecaf1ed08b485ee974536f42",
+    "BODY:empty": "2ed4ff80acbc8c509187416fb1c06c0c33e0714bcaada62f0a3b72ea3e7e66d8",
+    "BODY:list": "fef7a8962d1723e0c70898c189350124b1b6d3404903a4b56828a556c25faff0",
+    "BODY:unlinked": "b600f5cdee354b7988a9a66a9845129d3d489802c671cd03a194429fd1ed9a4d",
+    "BODY:limited": "c6d2067bfe4df73ef64bcda6b60504c34c2d354843df1089f7523f2d963f2b56",
+    "BODY:repeated": "d916c6e7ea96859b73817d58fc65b1e8cc7960240c43aa25c09cb3946ad2b6fc",
+    "BODY:no_introduction": "3afa80306564f4a665dfc04248f2417b8dd5b5d8e63e4d7a82593671f7b4dbcd",
+    "BODY:general": "5e4718b8bd38f58329bbfeb64732d28a0069022abf110e3a4a54927531e317d5",
+    "CONCLUSION:empty": "aaf9c9f4f19e6ca6850a14dcffac319bc3680a585294851d02eca668b21efe4b",
+    "CONCLUSION:list": "999c9c5117ecdcc43e84e760a6375b140d2201f7110fa61e8f76ecfb8be20c4c",
+    "CONCLUSION:novel": "39d4ded96009078ccdcb3d09a8c0d54e07d356f0d9611e2c70b01cca5447ad37",
+    "CONCLUSION:synthesis": "6a7a82c2a310b79b76ccc32afaae1d2a85c0eb55c58527e28a032e99dd49d87a",
+    "CONCLUSION:no_closure": "a9a9aadf2284151c90b0198454f0fd7733fddfd2df34b7db285dfa6358d5cfba",
+    "CONCLUSION:closure": "9479ab94f81ebd42620ca5d38df6d3302b7d52179eb562dfc4ed7b04c6aa213f",
+    "CONCLUSION:missing_prior": "d7bc75d564f04a538c6a366b07c178de559b73e5ee9c7d960043308ad34fa42b",
+}
+
+
+def fields_digest(feedback):
+    data = json.dumps({field: feedback[field] for field in FIELDS}, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(data.encode("utf-8")).hexdigest()
+
+
+def field_rules(feedback, field):
+    return [item["rule_id"] for item in feedback["Feedback Provenance"] if item["feedback_field"] == field]
+
+
+def assert_event_contract(analysis, feedback):
+    events = {item["rule_id"]: item for item in analysis["rule_evidence"]}
+    for item in feedback["Feedback Provenance"]:
+        source = events[item["rule_id"]]
+        assert source.get("triggered", True) and source.get("fired", True)
+        assert item["triggering_condition"] == source["triggering_condition"]
+        assert item["actual_evidence"] == source.get("actual_evidence", source.get("evidence"))
+        assert item["evidence_type"] == source["evidence_type"]
+        assert item["limitations"] == source.get("limitations", source.get("limitation"))
+        if "source_sections" in source:
+            assert item["source_sections"] == source["source_sections"]
+    for field, decision in feedback["_Research Decision Trace"]["fields"].items():
+        assert decision["rule_ids"] == field_rules(feedback, field)
+    json.dumps(feedback)
+
+
+@pytest.mark.parametrize("case,branch,expected", INTRO_CASES)
+def test_intro_primary_links_emitted_evidence_without_changing_branch(case, branch, expected):
+    analysis = intro_analysis(case)
+    original = deepcopy(analysis)
+    feedback = FeedbackService().generate(analysis, include_trace=True)
+    assert field_rules(feedback, "Primary Feedback") == expected
+    choice = feedback["_Research Decision Trace"]["fields"]["Primary Feedback"]
+    assert choice["selection_branch"] == branch
+    if case == "specific_without_root":
+        assert "sentence_count <= 1" in choice["selection_condition"]
+    assert fields_digest(feedback) == BASELINE_FIELD_DIGESTS[f"INTRODUCTION:{case}"]
+    assert_event_contract(analysis, feedback)
+    assert analysis == original
+
+
+@pytest.mark.parametrize("case,branch,expected", BODY_CASES)
+def test_every_body_next_step_branch_has_its_own_basis(case, branch, expected):
+    analysis = body_analysis(case)
+    original = deepcopy(analysis)
+    feedback = FeedbackService().generate_body(analysis, include_trace=True)
+    assert field_rules(feedback, "Next Step") == expected
+    choice = feedback["_Research Decision Trace"]["fields"]["Next Step"]
+    assert choice["selection_branch"] == branch
+    if case == "no_introduction":
+        assert "NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED" in choice["selection_condition"]
+        assert not any("UNAVAILABLE" in item["rule_id"] for item in analysis["rule_evidence"])
+    if case == "general":
+        linked = next(item for item in feedback["Feedback Provenance"] if item["feedback_field"] == "Next Step")
+        assert linked["evidence_type"] == "stage_scope_configuration"
+    assert fields_digest(feedback) == BASELINE_FIELD_DIGESTS[f"BODY:{case}"]
+    assert_event_contract(analysis, feedback)
+    assert analysis == original
+
+
+@pytest.mark.parametrize("case,branch,expected", CONCLUSION_CASES)
+def test_every_conclusion_next_step_branch_has_its_own_basis(case, branch, expected):
+    analysis = conclusion_analysis(case)
+    original = deepcopy(analysis)
+    feedback = FeedbackService().generate_conclusion(analysis, include_trace=True)
+    choices = feedback["_Research Decision Trace"]["fields"]
+    assert choices["Next Step"]["selection_branch"] == branch
+    assert field_rules(feedback, "Next Step") == expected
+    if case in {"novel", "no_closure", "closure"}:
+        assert choices["Primary Feedback"]["selection_branch"] == "no_clause_candidate"
+        assert field_rules(feedback, "Primary Feedback") == ["CONCLUSION.STRUCTURE.NO_CLAUSE_CANDIDATE"]
+        assert field_rules(feedback, "Next Step") != field_rules(feedback, "Primary Feedback")
+    assert fields_digest(feedback) == BASELINE_FIELD_DIGESTS[f"CONCLUSION:{case}"]
+    assert_event_contract(analysis, feedback)
+    assert analysis == original
+
+
+@pytest.mark.parametrize("overlap", ["positive", "negative", "missing"])
+def test_body_overlap_is_associated_with_the_displayed_field(overlap):
+    analysis = body_analysis("no_introduction" if overlap == "missing" else "general")
+    if overlap == "negative":
+        links = analysis["introduction_to_body_continuity"]
+        links["direct_lexical_continuity"] = []
+        links["unobserved_introduction_concepts"] = ["unmatched"]
+        next(item for item in analysis["rule_evidence"] if item["rule_id"] == "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON")["actual_evidence"] = []
+    output = FeedbackService().generate_body(analysis, include_trace=True)
+    rule = "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON"
+    assert (rule in field_rules(output, "What's Working")) == (overlap == "positive")
+    assert (rule in field_rules(output, "Needs Attention")) == (overlap == "negative")
+    assert_event_contract(analysis, output)
+
+
+def test_positive_body_overlap_does_not_remove_a_separate_warning():
+    analysis = body_analysis("limited")
+    output = FeedbackService().generate_body(analysis, include_trace=True)
+    assert "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON" in field_rules(output, "What's Working")
+    assert "BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON" not in field_rules(output, "Needs Attention")
+    assert "BODY.P2.SUPPORTING_DETAIL.NOT_OBSERVED" in field_rules(output, "Needs Attention")
+    assert output["Needs Attention"][0] == "The checks did not find another sentence part that adds detail in Paragraph 2. Add a reason or example if readers need one."
+    assert fields_digest(output) == BASELINE_FIELD_DIGESTS["BODY:limited"]
+
+
+@pytest.mark.parametrize("stage,case", [
+    ("INTRODUCTION", "multiple_clauses"), ("BODY", "limited"), ("CONCLUSION", "closure"),
+])
+@pytest.mark.parametrize("state", ["absent", "triggered_false", "fired_false", "legacy_no_flags"])
+def test_missing_or_nonfired_events_do_not_get_invented_links(stage, case, state):
+    analysis = FACTORIES[stage](case)
+    method = getattr(FeedbackService(), METHODS[stage])
+    original_feedback = method(analysis, include_trace=True)
+    field = "Primary Feedback" if stage == "INTRODUCTION" else "Next Step"
+    rule_id = field_rules(original_feedback, field)[0]
+    record = next(item for item in analysis["rule_evidence"] if item["rule_id"] == rule_id)
+    if state == "absent":
+        analysis["rule_evidence"].remove(record)
+    elif state == "legacy_no_flags":
+        record.pop("triggered", None)
+        record.pop("fired", None)
+    else:
+        record[state.removesuffix("_false")] = False
+    before = deepcopy(analysis)
+    output = method(analysis, include_trace=True)
+    assert (rule_id in field_rules(output, field)) == (state == "legacy_no_flags")
+    assert {name: output[name] for name in FIELDS} == {name: original_feedback[name] for name in FIELDS}
+    assert output["_Research Decision Trace"]["fields"][field]["selection_branch"] == original_feedback["_Research Decision Trace"]["fields"][field]["selection_branch"]
+    assert output["_Research Decision Trace"]["fields"][field]["selection_condition"]
+    assert_event_contract(analysis, output)
+    assert analysis == before
+
+
+@pytest.mark.parametrize("stage,case", [
+    ("INTRODUCTION", "multiple_clauses"), ("BODY", "no_introduction"), ("CONCLUSION", "closure"),
+])
+def test_decision_conditions_remain_available_without_any_emitted_events(stage, case):
+    analysis = FACTORIES[stage](case)
+    method = getattr(FeedbackService(), METHODS[stage])
+    before = method(analysis, include_trace=True)
+    analysis["rule_evidence"] = []
+    after = method(analysis, include_trace=True)
+    assert after["Feedback Provenance"] == []
+    assert {field: after[field] for field in FIELDS} == {field: before[field] for field in FIELDS}
+    for field in ("Primary Feedback", "Next Step"):
+        decision = after["_Research Decision Trace"]["fields"][field]
+        assert decision["rule_ids"] == []
+        assert decision["selection_condition"]
+        assert decision["selection_branch"] == before["_Research Decision Trace"]["fields"][field]["selection_branch"]
+
+
+@pytest.fixture(scope="module")
+def coordinator():
+    return EssayAnalysisService()
+
+
+ENV_TOPIC = "Should communities reduce their use of single-use plastics?"
+ENV_FOCUS = ["single-use plastics", "communities", "reduce", "environment"]
+ENV_INTRO = "Communities should reduce their use of single-use plastics because plastic waste can harm local waterways."
+ENV_BODY = (
+    "Single-use plastics often become waste after only one use. For example, plastic bags and bottles can end up in rivers and drainage systems. This waste can harm animals living near the water.\n\n"
+    "In addition, communities can reduce plastic waste by using reusable bags and containers. Reusable products can be used many times, so fewer disposable items may be thrown away."
+)
+REAL_CONCLUSIONS = [
+    ("In conclusion.", True, "no_clause_candidate", "closure_candidate", "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE"),
+    ("Plastic waste remains.", True, "synthesis_structure_candidate", "synthesis_structure_candidate", "CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE"),
+    ("Single-use plastics should be reduced.", True, "no_clause_candidate", "no_closure_candidate", "CONCLUSION.CLOSURE.NO_CANDIDATE"),
+    ("Communities should reduce plastics through neighborhood refill stations.", True, "unobserved_prior_concepts", "unobserved_prior_concepts", "CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS"),
+    ("Communities can reduce plastic waste.", False, "closure_structure_candidate", "closure_candidate", "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE"),
+    ("", True, "empty_or_nonalphabetic", "empty_or_nonalphabetic", "CONCLUSION.TEXT.EMPTY_OR_NONALPHABETIC"),
+    ("Plastic. Waste. Rivers. Animals.", True, "keyword_list_candidate", "keyword_list_candidate", "CONCLUSION.TEXT.KEYWORD_LIST_CANDIDATE"),
+]
+
+
+@pytest.mark.parametrize("text,case", [
+    ("Communities reduce single-use plastics.", "single_clause"),
+    (ENV_INTRO, "multiple_clauses"),
+    ("Single-use plastics should be reduced.", "specific_without_root"),
+])
+def test_real_intro_primary_branches_use_only_their_existing_events(coordinator, text, case):
+    result = coordinator.analyze(ENV_TOPIC, ENV_FOCUS, introduction_text=text, include_research_trace=True)
+    stage = result["stages"]["INTRODUCTION"]
+    trace = result["research_trace"]["stages"]["INTRODUCTION"]["feedback_decisions"]
+    _, branch, expected = next(row for row in INTRO_CASES if row[0] == case)
+    assert trace["fields"]["Primary Feedback"]["selection_branch"] == branch
+    assert field_rules(stage["feedback"], "Primary Feedback") == expected
+    assert_event_contract(stage["analysis"], {**stage["feedback"], "_Research Decision Trace": trace})
+
+
+@pytest.mark.parametrize("text,introduction,case,paragraph_number", [
+    ("", None, "empty", None),
+    ("Plastics. Communities. Environment. Waste.", None, "list", 1),
+    ("Wind turbines generate electricity.\n\nReaders discuss books.", None, "unlinked", None),
+    ("Communities reduce plastics.", None, "limited", 1),
+    ("Students read books daily. Students read books at home.", None, "repeated", 1),
+    ("Communities reduce plastics. They protect waterways.", None, "no_introduction", None),
+    ("Libraries offer books. Readers discuss stories.", ENV_INTRO, "general", None),
+])
+def test_real_body_next_step_branches_reuse_evidence_without_reclassifying_writing(coordinator, text, introduction, case, paragraph_number):
+    result = coordinator.analyze(ENV_TOPIC, ENV_FOCUS, introduction_text=introduction, body_text=text, include_research_trace=True)
+    stage = result["stages"]["BODY"]
+    trace = result["research_trace"]["stages"]["BODY"]["feedback_decisions"]
+    _, branch, expected = next(row for row in BODY_CASES if row[0] == case)
+    if paragraph_number:
+        expected = [rule_id.replace("BODY.P2.", f"BODY.P{paragraph_number}.") for rule_id in expected]
+    assert trace["fields"]["Next Step"]["selection_branch"] == branch
+    assert field_rules(stage["feedback"], "Next Step") == expected
+    assert_event_contract(stage["analysis"], {**stage["feedback"], "_Research Decision Trace": trace})
+
+
+@pytest.mark.parametrize("text,context,primary,next_branch,rule", REAL_CONCLUSIONS)
+def test_real_conclusion_examples_keep_rules_and_link_the_selected_action(coordinator, text, context, primary, next_branch, rule):
+    result = coordinator.analyze(
+        ENV_TOPIC, ENV_FOCUS,
+        introduction_text=ENV_INTRO if context else None,
+        body_text=ENV_BODY if context else None,
+        conclusion_text=text, include_research_trace=True,
+    )
+    stage = result["stages"]["CONCLUSION"]
+    trace = result["research_trace"]["stages"]["CONCLUSION"]["feedback_decisions"]["fields"]
+    assert trace["Primary Feedback"]["selection_branch"] == primary
+    assert trace["Next Step"]["selection_branch"] == next_branch
+    assert field_rules(stage["feedback"], "Next Step") == [rule]
+    feedback = {**stage["feedback"], "_Research Decision Trace": {"fields": trace}}
+    assert_event_contract(stage["analysis"], feedback)
+
+
+@pytest.mark.parametrize("stage", ["INTRODUCTION", "BODY", "CONCLUSION"])
+def test_student_compact_and_teacher_full_provenance_resolve_same_events(tmp_path, coordinator, stage):
+    from werkzeug.security import generate_password_hash
+    from app import create_app
+    from services.draft_store import DraftStore
+    from tests.auth_helpers import login_student, register_student
+
+    app = create_app(analysis_service=coordinator, secret_key="provenance-test-secret")
+    app.config.update(TESTING=True, DRAFT_DATABASE_PATH=str(tmp_path / "provenance.sqlite3"))
+    store = DraftStore(app.config["DRAFT_DATABASE_PATH"])
+    store.create_teacher_user("provenance_teacher", generate_password_hash("teacher-password-1"))
+    payload = {
+        "stage_id": stage, "assignment_topic": ENV_TOPIC,
+        "focus_terms": ENV_FOCUS, "include_transparency_trace": True,
+    }
+    if stage == "INTRODUCTION":
+        payload["introduction_text"] = ENV_INTRO
+    elif stage == "BODY":
+        payload.update(introduction_text=ENV_INTRO, body_text=ENV_BODY)
+    else:
+        payload.update(introduction_text=ENV_INTRO, body_text=ENV_BODY, conclusion_text="In conclusion.")
+    student = app.test_client()
+    assert register_student(student, "provenance_student").status_code == 302
+    student_response = student.post("/api/analyze-stage", json=payload)
+    assert student_response.status_code == 200
+    compact = student_response.get_json()
+    teacher = app.test_client()
+    assert login_student(teacher, "provenance_teacher", "teacher-password-1").status_code == 302
+    teacher_response = teacher.post("/api/research-inspector/analyze", json=payload)
+    assert teacher_response.status_code == 200
+    full = teacher_response.get_json()
+    assert {field: compact["feedback"][field] for field in FIELDS} == {field: full["feedback"][field] for field in FIELDS}
+    links = compact["feedback"]["Feedback Provenance"]
+    assert links == [{key: item[key] for key in ("feedback_field", "rule_id")} for item in full["feedback"]["Feedback Provenance"]]
+    events = {item["rule_id"]: item for item in compact["analysis"]["rule_evidence"]}
+    for item, detailed in zip(links, full["feedback"]["Feedback Provenance"]):
+        assert set(item) == {"feedback_field", "rule_id"}
+        source = events[item["rule_id"]]
+        assert source.get("triggered", True) and source.get("fired", True)
+        assert detailed["actual_evidence"] == source.get("actual_evidence", source.get("evidence"))
+        assert detailed["triggering_condition"] == source["triggering_condition"]
+    assert_event_contract(full["analysis"], {
+        **full["feedback"],
+        "_Research Decision Trace": full["research_trace"]["stages"][stage]["feedback_decisions"],
+    })

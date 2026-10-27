@@ -1,0 +1,27 @@
+{
+  "capturedAt": "2026-10-26T01:11:21.002Z",
+  "captureScript": "tests/process_walkthrough_capture.cjs",
+  "launcher": "tests/process_walkthrough_capture.py",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "analysisCalls": 3,
+  "writeRequests": 0,
+  "screenshotCount": 34,
+  "javascriptErrors": [],
+  "isolatedPersistence": {
+    "writing_sessions": 0,
+    "writing_revisions": 0,
+    "submissions": 0
+  },
+  "database": "Temporary isolated SQLite database; the real application database was not opened.",
+  "sample": {
+    "topic": "Should communities reduce their use of single-use plastics?",
+    "focus_terms": "single-use plastics, communities, reduce, environment",
+    "introduction": "Single-use plastics are everywhere in our communities. Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+    "body": "Communities can reduce single-use plastics by carrying reusable bags. Reusable bags reduce waste in rivers.\n\nPlastic containers harm animals. Communities can protect animals by using reusable containers.",
+    "conclusion": "In conclusion, communities should reduce single-use plastics. Reusable bags and containers can protect rivers and animals."
+  },
+  "figuresInWalkthrough": 28
+}

@@ -1,0 +1,297 @@
+{
+  "provenance": {
+    "studentPhases": "bb1seq9td.output (headless Chrome over CDP, isolated DB)",
+    "teacherPhase": "teacher_verify.js against the same isolated DB",
+    "database": "phase3_verify.sqlite3",
+    "note": "All student phase values below are parsed verbatim from the recorded run log; teacher values come from the teacher verification run."
+  },
+  "quietStudentAfterOpen": {
+    "stages": {},
+    "rows": 0,
+    "distinct_buckets": 0
+  },
+  "afterActive": {
+    "stages": {
+      "INTRODUCTION": {
+        "seconds": 30,
+        "buckets": 6
+      }
+    },
+    "rows": 6,
+    "distinct_buckets": 6
+  },
+  "afterIdle": {
+    "stages": {
+      "INTRODUCTION": {
+        "seconds": 80,
+        "buckets": 16
+      }
+    },
+    "rows": 16,
+    "distinct_buckets": 16
+  },
+  "afterIdleExtra": {
+    "stages": {
+      "INTRODUCTION": {
+        "seconds": 80,
+        "buckets": 16
+      }
+    },
+    "rows": 16,
+    "distinct_buckets": 16
+  },
+  "afterResume": {
+    "stages": {
+      "INTRODUCTION": {
+        "seconds": 120,
+        "buckets": 24
+      }
+    },
+    "rows": 24,
+    "distinct_buckets": 24
+  },
+  "bodyBeforeEdit": {
+    "stages": {
+      "INTRODUCTION": {
+        "seconds": 120,
+        "buckets": 24
+      }
+    },
+    "rows": 24,
+    "distinct_buckets": 24
+  },
+  "bodyAfterEdit": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "INTRODUCTION": {
+        "seconds": 120,
+        "buckets": 24
+      }
+    },
+    "rows": 33,
+    "distinct_buckets": 33
+  },
+  "hiddenOne": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "CONCLUSION": {
+        "seconds": 5,
+        "buckets": 1
+      },
+      "INTRODUCTION": {
+        "seconds": 120,
+        "buckets": 24
+      }
+    },
+    "rows": 34,
+    "distinct_buckets": 34
+  },
+  "hiddenTwo": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "CONCLUSION": {
+        "seconds": 5,
+        "buckets": 1
+      },
+      "INTRODUCTION": {
+        "seconds": 120,
+        "buckets": 24
+      }
+    },
+    "rows": 34,
+    "distinct_buckets": 34
+  },
+  "conclusionResume": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "CONCLUSION": {
+        "seconds": 40,
+        "buckets": 8
+      },
+      "INTRODUCTION": {
+        "seconds": 120,
+        "buckets": 24
+      }
+    },
+    "rows": 41,
+    "distinct_buckets": 41
+  },
+  "refreshIdle": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "CONCLUSION": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "INTRODUCTION": {
+        "seconds": 120,
+        "buckets": 24
+      }
+    },
+    "rows": 42,
+    "distinct_buckets": 42
+  },
+  "afterRefreshEdit": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "CONCLUSION": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "INTRODUCTION": {
+        "seconds": 155,
+        "buckets": 31
+      }
+    },
+    "rows": 49,
+    "distinct_buckets": 49
+  },
+  "beforeTabs": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "CONCLUSION": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "INTRODUCTION": {
+        "seconds": 155,
+        "buckets": 31
+      }
+    },
+    "rows": 49,
+    "distinct_buckets": 49
+  },
+  "afterTabs": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "CONCLUSION": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "INTRODUCTION": {
+        "seconds": 180,
+        "buckets": 36
+      }
+    },
+    "rows": 54,
+    "distinct_buckets": 54
+  },
+  "afterReloginEdit": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "CONCLUSION": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "INTRODUCTION": {
+        "seconds": 220,
+        "buckets": 44
+      }
+    },
+    "rows": 62,
+    "distinct_buckets": 62
+  },
+  "finalStudent": {
+    "stages": {
+      "BODY": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "CONCLUSION": {
+        "seconds": 45,
+        "buckets": 9
+      },
+      "INTRODUCTION": {
+        "seconds": 220,
+        "buckets": 44
+      }
+    },
+    "rows": 62,
+    "distinct_buckets": 62
+  },
+  "graceWindowSeconds": 50,
+  "typingBursts": {
+    "intro-active": 7,
+    "intro-resume": 3,
+    "body-active": 4,
+    "conclusion-hidden": 2,
+    "conclusion-resume": 2,
+    "intro-refresh": 2,
+    "tab-one": 3,
+    "tab-two": 3,
+    "intro-relogin": 2
+  },
+  "teacherExcerpt": [
+    "EssayScaff V2",
+    "Teacher",
+    "Classroom workspace",
+    "Signed in as phase3_teacher",
+    "Account",
+    "Log out",
+    "TEACHER SPACE",
+    "⌂",
+    "Dashboard",
+    "▦",
+    "My Classrooms",
+    "☷",
+    "Assignments",
+    "▤",
+    "Student Progress",
+    "⌕",
+    "NLP Research Inspector",
+    "✦",
+    "Set clear writing tasks and review each student’s progress as they work.",
+    "CLASSROOM ACTIVITY",
+    "Student Progress",
+    "Review writing progress and open submitted essays. Status reflects saved student work only. Stage revisions count changes between saved revisions; the first saved text for a stage is its starting version. Estimated Active Writing Time comes from recorded editing activity; about 60 seconds without editing ends an activity period. “No recorded data” is not the same as measured zero time.",
+    "Student\tAssignment\tClassroom\tStatus\tSubmitted\tEssay",
+    "phase3_quiet_student\tActive Writing Time Check\tPhase 3 Verification\tNot Started\t—\t—",
+    "STAGE PROGRESS",
+    "Essay Stage\tStatus\tEstimated Active Writing Time\tSaved Revisions",
+    "Introduction\tNot Started",
+    "No recorded data",
+    "0",
+    "Body\tNot Started",
+    "No recorded data",
+    "0",
+    "Conclusion\tNot Started",
+    "No recorded data",
+    "0",
+    "phase3_student\tActive Writing Time Check\tPhase 3 Verification\tIn Progress\t—\t—",
+    "STAGE PROGRESS",
+    "Essay Stage\tStatus\tEstimated Active Writing Time\tSaved Revisions",
+    "Introduction\tIn Progress\t3.7 min\t0",
+    "Body\tIn Progress\t45 sec\t0",
+    "Conclusion\tIn Progress\t45 sec\t0",
+    "EssayScaff provides writing observations. It does not rate essay quality or readiness."
+  ],
+  "studentTeacherStatus": 403,
+  "otherTeacherSawStudent": false
+}

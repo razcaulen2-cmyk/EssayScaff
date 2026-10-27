@@ -1,0 +1,3729 @@
+{
+  "analysis": {
+    "assignment_topic": "Should communities reduce their use of single-use plastics?",
+    "central_direction_candidate": {
+      "candidates": [
+        {
+          "complement_evidence": [],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 23,
+            "pos": "AUX",
+            "start": 20,
+            "tag": "VBP",
+            "text": "are"
+          },
+          "sentence_end": 54,
+          "sentence_index": 0,
+          "sentence_start": 0,
+          "sentence_text": "Single-use plastics are everywhere in our communities.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 19,
+              "start": 11,
+              "text": "plastics"
+            }
+          ]
+        },
+        {
+          "complement_evidence": [
+            {
+              "dependency": "dobj",
+              "end": 90,
+              "start": 87,
+              "text": "use"
+            }
+          ],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 80,
+            "pos": "VERB",
+            "start": 74,
+            "tag": "VB",
+            "text": "reduce"
+          },
+          "sentence_end": 158,
+          "sentence_index": 1,
+          "sentence_start": 55,
+          "sentence_text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 66,
+              "start": 55,
+              "text": "Communities"
+            }
+          ]
+        }
+      ],
+      "limitation": "A parser-labeled clause is not a validated thesis, meaningful proposition, or readiness decision.",
+      "status": "CANDIDATE_FOUND"
+    },
+    "development_evidence": {
+      "evidence": [
+        {
+          "dependency": "ROOT",
+          "end": 23,
+          "pos": "AUX",
+          "start": 20,
+          "tag": "VBP",
+          "text": "are"
+        },
+        {
+          "dependency": "ROOT",
+          "end": 80,
+          "pos": "VERB",
+          "start": 74,
+          "tag": "VB",
+          "text": "reduce"
+        },
+        {
+          "dependency": "advcl",
+          "end": 133,
+          "pos": "VERB",
+          "start": 126,
+          "tag": "VB",
+          "text": "pollute"
+        }
+      ],
+      "evidence_type": "multiple_parser_labeled_clause_predicates",
+      "limitation": "Multiple clauses or sentences do not prove that the ideas are connected logically or soundly.",
+      "predicate_count": 3,
+      "status": "STRUCTURAL_ELABORATION_CANDIDATE"
+    },
+    "lexical_topic_evidence": {
+      "focus_source": "teacher_provided",
+      "focus_terms": [
+        "single-use plastics",
+        "communities",
+        "reduce",
+        "environment"
+      ],
+      "limitation": "Lexical overlap is not proof of topic understanding or meaningful explanation.",
+      "matches": [
+        {
+          "end": 19,
+          "evidence_source": "student_text_span",
+          "focus_term": "single-use plastics",
+          "match_method": "direct",
+          "normalized_form": "single use plastic",
+          "observed_text": "Single-use plastics",
+          "pos": [
+            "ADJ",
+            "NOUN",
+            "NOUN"
+          ],
+          "source_token_indices": [
+            0,
+            2,
+            3
+          ],
+          "start": 0
+        },
+        {
+          "end": 53,
+          "evidence_source": "student_text_span",
+          "focus_term": "communities",
+          "match_method": "direct",
+          "normalized_form": "community",
+          "observed_text": "communities",
+          "pos": [
+            "NOUN"
+          ],
+          "source_token_indices": [
+            8
+          ],
+          "start": 42
+        },
+        {
+          "end": 66,
+          "evidence_source": "student_text_span",
+          "focus_term": "communities",
+          "match_method": "direct",
+          "normalized_form": "community",
+          "observed_text": "Communities",
+          "pos": [
+            "NOUN"
+          ],
+          "source_token_indices": [
+            10
+          ],
+          "start": 55
+        },
+        {
+          "end": 80,
+          "evidence_source": "student_text_span",
+          "focus_term": "reduce",
+          "match_method": "direct",
+          "normalized_form": "reduce",
+          "observed_text": "reduce",
+          "pos": [
+            "VERB"
+          ],
+          "source_token_indices": [
+            12
+          ],
+          "start": 74
+        }
+      ],
+      "observed_focus_terms": [
+        "single-use plastics",
+        "communities",
+        "reduce"
+      ],
+      "observed_unique_focus_terms": 3,
+      "total_unique_focus_terms": 4,
+      "unobserved_focus_terms": [
+        "environment"
+      ]
+    },
+    "linguistic_observations": {
+      "counts": {
+        "alphabetic_word_count": 24,
+        "sentence_count": 2,
+        "token_count": 27
+      },
+      "noun_phrases": [
+        {
+          "end": 19,
+          "start": 0,
+          "text": "Single-use plastics"
+        },
+        {
+          "end": 53,
+          "start": 38,
+          "text": "our communities"
+        },
+        {
+          "end": 66,
+          "start": 55,
+          "text": "Communities"
+        },
+        {
+          "end": 90,
+          "start": 81,
+          "text": "their use"
+        },
+        {
+          "end": 108,
+          "start": 94,
+          "text": "these plastics"
+        },
+        {
+          "end": 121,
+          "start": 117,
+          "text": "they"
+        },
+        {
+          "end": 140,
+          "start": 134,
+          "text": "rivers"
+        },
+        {
+          "end": 157,
+          "start": 145,
+          "text": "harm animals"
+        }
+      ],
+      "sentences": [
+        {
+          "dependencies": [
+            {
+              "dependency": "amod",
+              "end": 6,
+              "head": "use",
+              "head_start": 7,
+              "start": 0,
+              "text": "Single"
+            },
+            {
+              "dependency": "punct",
+              "end": 7,
+              "head": "use",
+              "head_start": 7,
+              "start": 6,
+              "text": "-"
+            },
+            {
+              "dependency": "compound",
+              "end": 10,
+              "head": "plastics",
+              "head_start": 11,
+              "start": 7,
+              "text": "use"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 19,
+              "head": "are",
+              "head_start": 20,
+              "start": 11,
+              "text": "plastics"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 23,
+              "head": "are",
+              "head_start": 20,
+              "start": 20,
+              "text": "are"
+            },
+            {
+              "dependency": "advmod",
+              "end": 34,
+              "head": "are",
+              "head_start": 20,
+              "start": 24,
+              "text": "everywhere"
+            },
+            {
+              "dependency": "prep",
+              "end": 37,
+              "head": "everywhere",
+              "head_start": 24,
+              "start": 35,
+              "text": "in"
+            },
+            {
+              "dependency": "poss",
+              "end": 41,
+              "head": "communities",
+              "head_start": 42,
+              "start": 38,
+              "text": "our"
+            },
+            {
+              "dependency": "pobj",
+              "end": 53,
+              "head": "in",
+              "head_start": 35,
+              "start": 42,
+              "text": "communities"
+            },
+            {
+              "dependency": "punct",
+              "end": 54,
+              "head": "are",
+              "head_start": 20,
+              "start": 53,
+              "text": "."
+            }
+          ],
+          "end": 54,
+          "objects_or_complements": [
+            {
+              "dependency": "pobj",
+              "end": 53,
+              "head": "in",
+              "start": 42,
+              "text": "communities"
+            }
+          ],
+          "start": 0,
+          "subjects": [
+            {
+              "dependency": "nsubj",
+              "end": 19,
+              "head": "are",
+              "start": 11,
+              "text": "plastics"
+            }
+          ],
+          "text": "Single-use plastics are everywhere in our communities.",
+          "tokens": [
+            {
+              "dependency": "amod",
+              "end": 6,
+              "head": "use",
+              "index": 0,
+              "is_alpha": true,
+              "lemma": "single",
+              "pos": "ADJ",
+              "start": 0,
+              "tag": "JJ",
+              "text": "Single"
+            },
+            {
+              "dependency": "punct",
+              "end": 7,
+              "head": "use",
+              "index": 1,
+              "is_alpha": false,
+              "lemma": "-",
+              "pos": "PUNCT",
+              "start": 6,
+              "tag": "HYPH",
+              "text": "-"
+            },
+            {
+              "dependency": "compound",
+              "end": 10,
+              "head": "plastics",
+              "index": 2,
+              "is_alpha": true,
+              "lemma": "use",
+              "pos": "NOUN",
+              "start": 7,
+              "tag": "NN",
+              "text": "use"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 19,
+              "head": "are",
+              "index": 3,
+              "is_alpha": true,
+              "lemma": "plastic",
+              "pos": "NOUN",
+              "start": 11,
+              "tag": "NNS",
+              "text": "plastics"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 23,
+              "head": "are",
+              "index": 4,
+              "is_alpha": true,
+              "lemma": "be",
+              "pos": "AUX",
+              "start": 20,
+              "tag": "VBP",
+              "text": "are"
+            },
+            {
+              "dependency": "advmod",
+              "end": 34,
+              "head": "are",
+              "index": 5,
+              "is_alpha": true,
+              "lemma": "everywhere",
+              "pos": "ADV",
+              "start": 24,
+              "tag": "RB",
+              "text": "everywhere"
+            },
+            {
+              "dependency": "prep",
+              "end": 37,
+              "head": "everywhere",
+              "index": 6,
+              "is_alpha": true,
+              "lemma": "in",
+              "pos": "ADP",
+              "start": 35,
+              "tag": "IN",
+              "text": "in"
+            },
+            {
+              "dependency": "poss",
+              "end": 41,
+              "head": "communities",
+              "index": 7,
+              "is_alpha": true,
+              "lemma": "our",
+              "pos": "PRON",
+              "start": 38,
+              "tag": "PRP$",
+              "text": "our"
+            },
+            {
+              "dependency": "pobj",
+              "end": 53,
+              "head": "in",
+              "index": 8,
+              "is_alpha": true,
+              "lemma": "community",
+              "pos": "NOUN",
+              "start": 42,
+              "tag": "NNS",
+              "text": "communities"
+            },
+            {
+              "dependency": "punct",
+              "end": 54,
+              "head": "are",
+              "index": 9,
+              "is_alpha": false,
+              "lemma": ".",
+              "pos": "PUNCT",
+              "start": 53,
+              "tag": ".",
+              "text": "."
+            }
+          ]
+        },
+        {
+          "dependencies": [
+            {
+              "dependency": "nsubj",
+              "end": 66,
+              "head": "reduce",
+              "head_start": 74,
+              "start": 55,
+              "text": "Communities"
+            },
+            {
+              "dependency": "aux",
+              "end": 73,
+              "head": "reduce",
+              "head_start": 74,
+              "start": 67,
+              "text": "should"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 80,
+              "head": "reduce",
+              "head_start": 74,
+              "start": 74,
+              "text": "reduce"
+            },
+            {
+              "dependency": "poss",
+              "end": 86,
+              "head": "use",
+              "head_start": 87,
+              "start": 81,
+              "text": "their"
+            },
+            {
+              "dependency": "dobj",
+              "end": 90,
+              "head": "reduce",
+              "head_start": 74,
+              "start": 87,
+              "text": "use"
+            },
+            {
+              "dependency": "prep",
+              "end": 93,
+              "head": "use",
+              "head_start": 87,
+              "start": 91,
+              "text": "of"
+            },
+            {
+              "dependency": "det",
+              "end": 99,
+              "head": "plastics",
+              "head_start": 100,
+              "start": 94,
+              "text": "these"
+            },
+            {
+              "dependency": "pobj",
+              "end": 108,
+              "head": "of",
+              "head_start": 91,
+              "start": 100,
+              "text": "plastics"
+            },
+            {
+              "dependency": "mark",
+              "end": 116,
+              "head": "pollute",
+              "head_start": 126,
+              "start": 109,
+              "text": "because"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 121,
+              "head": "pollute",
+              "head_start": 126,
+              "start": 117,
+              "text": "they"
+            },
+            {
+              "dependency": "aux",
+              "end": 125,
+              "head": "pollute",
+              "head_start": 126,
+              "start": 122,
+              "text": "can"
+            },
+            {
+              "dependency": "advcl",
+              "end": 133,
+              "head": "reduce",
+              "head_start": 74,
+              "start": 126,
+              "text": "pollute"
+            },
+            {
+              "dependency": "dobj",
+              "end": 140,
+              "head": "pollute",
+              "head_start": 126,
+              "start": 134,
+              "text": "rivers"
+            },
+            {
+              "dependency": "cc",
+              "end": 144,
+              "head": "rivers",
+              "head_start": 134,
+              "start": 141,
+              "text": "and"
+            },
+            {
+              "dependency": "compound",
+              "end": 149,
+              "head": "animals",
+              "head_start": 150,
+              "start": 145,
+              "text": "harm"
+            },
+            {
+              "dependency": "conj",
+              "end": 157,
+              "head": "rivers",
+              "head_start": 134,
+              "start": 150,
+              "text": "animals"
+            },
+            {
+              "dependency": "punct",
+              "end": 158,
+              "head": "reduce",
+              "head_start": 74,
+              "start": 157,
+              "text": "."
+            }
+          ],
+          "end": 158,
+          "objects_or_complements": [
+            {
+              "dependency": "dobj",
+              "end": 90,
+              "head": "reduce",
+              "start": 87,
+              "text": "use"
+            },
+            {
+              "dependency": "pobj",
+              "end": 108,
+              "head": "of",
+              "start": 100,
+              "text": "plastics"
+            },
+            {
+              "dependency": "dobj",
+              "end": 140,
+              "head": "pollute",
+              "start": 134,
+              "text": "rivers"
+            }
+          ],
+          "start": 55,
+          "subjects": [
+            {
+              "dependency": "nsubj",
+              "end": 66,
+              "head": "reduce",
+              "start": 55,
+              "text": "Communities"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 121,
+              "head": "pollute",
+              "start": 117,
+              "text": "they"
+            }
+          ],
+          "text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+          "tokens": [
+            {
+              "dependency": "nsubj",
+              "end": 66,
+              "head": "reduce",
+              "index": 10,
+              "is_alpha": true,
+              "lemma": "community",
+              "pos": "NOUN",
+              "start": 55,
+              "tag": "NNS",
+              "text": "Communities"
+            },
+            {
+              "dependency": "aux",
+              "end": 73,
+              "head": "reduce",
+              "index": 11,
+              "is_alpha": true,
+              "lemma": "should",
+              "pos": "AUX",
+              "start": 67,
+              "tag": "MD",
+              "text": "should"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 80,
+              "head": "reduce",
+              "index": 12,
+              "is_alpha": true,
+              "lemma": "reduce",
+              "pos": "VERB",
+              "start": 74,
+              "tag": "VB",
+              "text": "reduce"
+            },
+            {
+              "dependency": "poss",
+              "end": 86,
+              "head": "use",
+              "index": 13,
+              "is_alpha": true,
+              "lemma": "their",
+              "pos": "PRON",
+              "start": 81,
+              "tag": "PRP$",
+              "text": "their"
+            },
+            {
+              "dependency": "dobj",
+              "end": 90,
+              "head": "reduce",
+              "index": 14,
+              "is_alpha": true,
+              "lemma": "use",
+              "pos": "NOUN",
+              "start": 87,
+              "tag": "NN",
+              "text": "use"
+            },
+            {
+              "dependency": "prep",
+              "end": 93,
+              "head": "use",
+              "index": 15,
+              "is_alpha": true,
+              "lemma": "of",
+              "pos": "ADP",
+              "start": 91,
+              "tag": "IN",
+              "text": "of"
+            },
+            {
+              "dependency": "det",
+              "end": 99,
+              "head": "plastics",
+              "index": 16,
+              "is_alpha": true,
+              "lemma": "these",
+              "pos": "DET",
+              "start": 94,
+              "tag": "DT",
+              "text": "these"
+            },
+            {
+              "dependency": "pobj",
+              "end": 108,
+              "head": "of",
+              "index": 17,
+              "is_alpha": true,
+              "lemma": "plastic",
+              "pos": "NOUN",
+              "start": 100,
+              "tag": "NNS",
+              "text": "plastics"
+            },
+            {
+              "dependency": "mark",
+              "end": 116,
+              "head": "pollute",
+              "index": 18,
+              "is_alpha": true,
+              "lemma": "because",
+              "pos": "SCONJ",
+              "start": 109,
+              "tag": "IN",
+              "text": "because"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 121,
+              "head": "pollute",
+              "index": 19,
+              "is_alpha": true,
+              "lemma": "they",
+              "pos": "PRON",
+              "start": 117,
+              "tag": "PRP",
+              "text": "they"
+            },
+            {
+              "dependency": "aux",
+              "end": 125,
+              "head": "pollute",
+              "index": 20,
+              "is_alpha": true,
+              "lemma": "can",
+              "pos": "AUX",
+              "start": 122,
+              "tag": "MD",
+              "text": "can"
+            },
+            {
+              "dependency": "advcl",
+              "end": 133,
+              "head": "reduce",
+              "index": 21,
+              "is_alpha": true,
+              "lemma": "pollute",
+              "pos": "VERB",
+              "start": 126,
+              "tag": "VB",
+              "text": "pollute"
+            },
+            {
+              "dependency": "dobj",
+              "end": 140,
+              "head": "pollute",
+              "index": 22,
+              "is_alpha": true,
+              "lemma": "river",
+              "pos": "NOUN",
+              "start": 134,
+              "tag": "NNS",
+              "text": "rivers"
+            },
+            {
+              "dependency": "cc",
+              "end": 144,
+              "head": "rivers",
+              "index": 23,
+              "is_alpha": true,
+              "lemma": "and",
+              "pos": "CCONJ",
+              "start": 141,
+              "tag": "CC",
+              "text": "and"
+            },
+            {
+              "dependency": "compound",
+              "end": 149,
+              "head": "animals",
+              "index": 24,
+              "is_alpha": true,
+              "lemma": "harm",
+              "pos": "NOUN",
+              "start": 145,
+              "tag": "NN",
+              "text": "harm"
+            },
+            {
+              "dependency": "conj",
+              "end": 157,
+              "head": "rivers",
+              "index": 25,
+              "is_alpha": true,
+              "lemma": "animal",
+              "pos": "NOUN",
+              "start": 150,
+              "tag": "NNS",
+              "text": "animals"
+            },
+            {
+              "dependency": "punct",
+              "end": 158,
+              "head": "reduce",
+              "index": 26,
+              "is_alpha": false,
+              "lemma": ".",
+              "pos": "PUNCT",
+              "start": 157,
+              "tag": ".",
+              "text": "."
+            }
+          ]
+        }
+      ],
+      "text": "Single-use plastics are everywhere in our communities. Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+      "tokens": [
+        {
+          "dependency": "amod",
+          "end": 6,
+          "head": "use",
+          "index": 0,
+          "is_alpha": true,
+          "lemma": "single",
+          "pos": "ADJ",
+          "start": 0,
+          "tag": "JJ",
+          "text": "Single"
+        },
+        {
+          "dependency": "punct",
+          "end": 7,
+          "head": "use",
+          "index": 1,
+          "is_alpha": false,
+          "lemma": "-",
+          "pos": "PUNCT",
+          "start": 6,
+          "tag": "HYPH",
+          "text": "-"
+        },
+        {
+          "dependency": "compound",
+          "end": 10,
+          "head": "plastics",
+          "index": 2,
+          "is_alpha": true,
+          "lemma": "use",
+          "pos": "NOUN",
+          "start": 7,
+          "tag": "NN",
+          "text": "use"
+        },
+        {
+          "dependency": "nsubj",
+          "end": 19,
+          "head": "are",
+          "index": 3,
+          "is_alpha": true,
+          "lemma": "plastic",
+          "pos": "NOUN",
+          "start": 11,
+          "tag": "NNS",
+          "text": "plastics"
+        },
+        {
+          "dependency": "ROOT",
+          "end": 23,
+          "head": "are",
+          "index": 4,
+          "is_alpha": true,
+          "lemma": "be",
+          "pos": "AUX",
+          "start": 20,
+          "tag": "VBP",
+          "text": "are"
+        },
+        {
+          "dependency": "advmod",
+          "end": 34,
+          "head": "are",
+          "index": 5,
+          "is_alpha": true,
+          "lemma": "everywhere",
+          "pos": "ADV",
+          "start": 24,
+          "tag": "RB",
+          "text": "everywhere"
+        },
+        {
+          "dependency": "prep",
+          "end": 37,
+          "head": "everywhere",
+          "index": 6,
+          "is_alpha": true,
+          "lemma": "in",
+          "pos": "ADP",
+          "start": 35,
+          "tag": "IN",
+          "text": "in"
+        },
+        {
+          "dependency": "poss",
+          "end": 41,
+          "head": "communities",
+          "index": 7,
+          "is_alpha": true,
+          "lemma": "our",
+          "pos": "PRON",
+          "start": 38,
+          "tag": "PRP$",
+          "text": "our"
+        },
+        {
+          "dependency": "pobj",
+          "end": 53,
+          "head": "in",
+          "index": 8,
+          "is_alpha": true,
+          "lemma": "community",
+          "pos": "NOUN",
+          "start": 42,
+          "tag": "NNS",
+          "text": "communities"
+        },
+        {
+          "dependency": "punct",
+          "end": 54,
+          "head": "are",
+          "index": 9,
+          "is_alpha": false,
+          "lemma": ".",
+          "pos": "PUNCT",
+          "start": 53,
+          "tag": ".",
+          "text": "."
+        },
+        {
+          "dependency": "nsubj",
+          "end": 66,
+          "head": "reduce",
+          "index": 10,
+          "is_alpha": true,
+          "lemma": "community",
+          "pos": "NOUN",
+          "start": 55,
+          "tag": "NNS",
+          "text": "Communities"
+        },
+        {
+          "dependency": "aux",
+          "end": 73,
+          "head": "reduce",
+          "index": 11,
+          "is_alpha": true,
+          "lemma": "should",
+          "pos": "AUX",
+          "start": 67,
+          "tag": "MD",
+          "text": "should"
+        },
+        {
+          "dependency": "ROOT",
+          "end": 80,
+          "head": "reduce",
+          "index": 12,
+          "is_alpha": true,
+          "lemma": "reduce",
+          "pos": "VERB",
+          "start": 74,
+          "tag": "VB",
+          "text": "reduce"
+        },
+        {
+          "dependency": "poss",
+          "end": 86,
+          "head": "use",
+          "index": 13,
+          "is_alpha": true,
+          "lemma": "their",
+          "pos": "PRON",
+          "start": 81,
+          "tag": "PRP$",
+          "text": "their"
+        },
+        {
+          "dependency": "dobj",
+          "end": 90,
+          "head": "reduce",
+          "index": 14,
+          "is_alpha": true,
+          "lemma": "use",
+          "pos": "NOUN",
+          "start": 87,
+          "tag": "NN",
+          "text": "use"
+        },
+        {
+          "dependency": "prep",
+          "end": 93,
+          "head": "use",
+          "index": 15,
+          "is_alpha": true,
+          "lemma": "of",
+          "pos": "ADP",
+          "start": 91,
+          "tag": "IN",
+          "text": "of"
+        },
+        {
+          "dependency": "det",
+          "end": 99,
+          "head": "plastics",
+          "index": 16,
+          "is_alpha": true,
+          "lemma": "these",
+          "pos": "DET",
+          "start": 94,
+          "tag": "DT",
+          "text": "these"
+        },
+        {
+          "dependency": "pobj",
+          "end": 108,
+          "head": "of",
+          "index": 17,
+          "is_alpha": true,
+          "lemma": "plastic",
+          "pos": "NOUN",
+          "start": 100,
+          "tag": "NNS",
+          "text": "plastics"
+        },
+        {
+          "dependency": "mark",
+          "end": 116,
+          "head": "pollute",
+          "index": 18,
+          "is_alpha": true,
+          "lemma": "because",
+          "pos": "SCONJ",
+          "start": 109,
+          "tag": "IN",
+          "text": "because"
+        },
+        {
+          "dependency": "nsubj",
+          "end": 121,
+          "head": "pollute",
+          "index": 19,
+          "is_alpha": true,
+          "lemma": "they",
+          "pos": "PRON",
+          "start": 117,
+          "tag": "PRP",
+          "text": "they"
+        },
+        {
+          "dependency": "aux",
+          "end": 125,
+          "head": "pollute",
+          "index": 20,
+          "is_alpha": true,
+          "lemma": "can",
+          "pos": "AUX",
+          "start": 122,
+          "tag": "MD",
+          "text": "can"
+        },
+        {
+          "dependency": "advcl",
+          "end": 133,
+          "head": "reduce",
+          "index": 21,
+          "is_alpha": true,
+          "lemma": "pollute",
+          "pos": "VERB",
+          "start": 126,
+          "tag": "VB",
+          "text": "pollute"
+        },
+        {
+          "dependency": "dobj",
+          "end": 140,
+          "head": "pollute",
+          "index": 22,
+          "is_alpha": true,
+          "lemma": "river",
+          "pos": "NOUN",
+          "start": 134,
+          "tag": "NNS",
+          "text": "rivers"
+        },
+        {
+          "dependency": "cc",
+          "end": 144,
+          "head": "rivers",
+          "index": 23,
+          "is_alpha": true,
+          "lemma": "and",
+          "pos": "CCONJ",
+          "start": 141,
+          "tag": "CC",
+          "text": "and"
+        },
+        {
+          "dependency": "compound",
+          "end": 149,
+          "head": "animals",
+          "index": 24,
+          "is_alpha": true,
+          "lemma": "harm",
+          "pos": "NOUN",
+          "start": 145,
+          "tag": "NN",
+          "text": "harm"
+        },
+        {
+          "dependency": "conj",
+          "end": 157,
+          "head": "rivers",
+          "index": 25,
+          "is_alpha": true,
+          "lemma": "animal",
+          "pos": "NOUN",
+          "start": 150,
+          "tag": "NNS",
+          "text": "animals"
+        },
+        {
+          "dependency": "punct",
+          "end": 158,
+          "head": "reduce",
+          "index": 26,
+          "is_alpha": false,
+          "lemma": ".",
+          "pos": "PUNCT",
+          "start": 157,
+          "tag": ".",
+          "text": "."
+        }
+      ]
+    },
+    "missing_observable_elements": [],
+    "observable_structure": {
+      "central_direction_candidates": [
+        {
+          "complement_evidence": [],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 23,
+            "pos": "AUX",
+            "start": 20,
+            "tag": "VBP",
+            "text": "are"
+          },
+          "sentence_end": 54,
+          "sentence_index": 0,
+          "sentence_start": 0,
+          "sentence_text": "Single-use plastics are everywhere in our communities.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 19,
+              "start": 11,
+              "text": "plastics"
+            }
+          ]
+        },
+        {
+          "complement_evidence": [
+            {
+              "dependency": "dobj",
+              "end": 90,
+              "start": 87,
+              "text": "use"
+            }
+          ],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 80,
+            "pos": "VERB",
+            "start": 74,
+            "tag": "VB",
+            "text": "reduce"
+          },
+          "sentence_end": 158,
+          "sentence_index": 1,
+          "sentence_start": 55,
+          "sentence_text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 66,
+              "start": 55,
+              "text": "Communities"
+            }
+          ]
+        }
+      ],
+      "incomplete_subordinator_candidates": [],
+      "introductory_context_candidates": [
+        {
+          "clause_candidate_evidence": {
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 23,
+              "pos": "AUX",
+              "start": 20,
+              "tag": "VBP",
+              "text": "are"
+            },
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 19,
+                "start": 11,
+                "text": "plastics"
+              }
+            ]
+          },
+          "end": 54,
+          "evidence_type": "lexical_match_plus_dependency_heuristic",
+          "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+          "sentence_text": "Single-use plastics are everywhere in our communities.",
+          "start": 0,
+          "topic_match_evidence": [
+            {
+              "end": 19,
+              "evidence_source": "student_text_span",
+              "focus_term": "single-use plastics",
+              "match_method": "direct",
+              "normalized_form": "single use plastic",
+              "observed_text": "Single-use plastics",
+              "pos": [
+                "ADJ",
+                "NOUN",
+                "NOUN"
+              ],
+              "source_token_indices": [
+                0,
+                2,
+                3
+              ],
+              "start": 0
+            },
+            {
+              "end": 53,
+              "evidence_source": "student_text_span",
+              "focus_term": "communities",
+              "match_method": "direct",
+              "normalized_form": "community",
+              "observed_text": "communities",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                8
+              ],
+              "start": 42
+            }
+          ]
+        },
+        {
+          "clause_candidate_evidence": {
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 80,
+              "pos": "VERB",
+              "start": 74,
+              "tag": "VB",
+              "text": "reduce"
+            },
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 66,
+                "start": 55,
+                "text": "Communities"
+              }
+            ]
+          },
+          "end": 158,
+          "evidence_type": "lexical_match_plus_dependency_heuristic",
+          "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+          "sentence_text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+          "start": 55,
+          "topic_match_evidence": [
+            {
+              "end": 66,
+              "evidence_source": "student_text_span",
+              "focus_term": "communities",
+              "match_method": "direct",
+              "normalized_form": "community",
+              "observed_text": "Communities",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                10
+              ],
+              "start": 55
+            },
+            {
+              "end": 80,
+              "evidence_source": "student_text_span",
+              "focus_term": "reduce",
+              "match_method": "direct",
+              "normalized_form": "reduce",
+              "observed_text": "reduce",
+              "pos": [
+                "VERB"
+              ],
+              "source_token_indices": [
+                12
+              ],
+              "start": 74
+            }
+          ]
+        }
+      ],
+      "list_or_fragment_candidate": {
+        "evidence": [],
+        "evidence_type": "heuristic_based_on_sentence_and_POS_evidence",
+        "fragmentary_text_candidate": false,
+        "keyword_list_candidate": false,
+        "limitation": "Fragments can be deliberate; a possible list is not a judgment of meaning or quality.",
+        "noun_or_proper_noun_count": 9,
+        "sentence_count_without_root_subject_predicate": 0,
+        "sentence_count_without_subject_linked_finite_clause": 0,
+        "trigger_condition": "No parser-labeled finite clause with linked subject, plus at least three sentence spans without such a clause or at least four noun/proper-noun tokens."
+      },
+      "sentence_spans": [
+        {
+          "end": 54,
+          "start": 0,
+          "text": "Single-use plastics are everywhere in our communities."
+        },
+        {
+          "end": 158,
+          "start": 55,
+          "text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals."
+        }
+      ],
+      "summary_status": "STRUCTURAL_CANDIDATE"
+    },
+    "position_statement_evidence": {
+      "assignment_argumentativeness": {
+        "basis": {
+          "cue_type": "modal_question",
+          "matched_cues": [
+            "should"
+          ]
+        },
+        "is_argumentative": true,
+        "limitation": "Argumentativeness is inferred from fixed assignment-wording cues only; an argumentative assignment described with other wording is not detected."
+      },
+      "evidence_type": "POS_and_dependency_plus_lexical_match_heuristic",
+      "limitation": "Position cues are fixed word and parse patterns: a modal or stance verb plus a specific assignment-word match in the same sentence. They do not verify that the position is argued, supported, or clearly expressed, and paraphrased positions without these cues are not detected.",
+      "position_statements": [
+        {
+          "cue_token": {
+            "dependency": "aux",
+            "end": 73,
+            "lemma": "should",
+            "pos": "AUX",
+            "start": 67,
+            "tag": "MD",
+            "text": "should"
+          },
+          "cue_type": "modal",
+          "evidence_type": "POS_and_dependency_plus_lexical_match_heuristic",
+          "limitation": "Position cues are fixed word and parse patterns: a modal or stance verb plus a specific assignment-word match in the same sentence. They do not verify that the position is argued, supported, or clearly expressed, and paraphrased positions without these cues are not detected.",
+          "sentence_end": 158,
+          "sentence_index": 1,
+          "sentence_start": 55,
+          "sentence_text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+          "stance": "MODAL_AFFIRMED",
+          "subject_evidence": {
+            "dependency": "nsubj",
+            "end": 66,
+            "start": 55,
+            "text": "Communities"
+          },
+          "topic_match_evidence": [
+            {
+              "end": 66,
+              "evidence_source": "student_text_span",
+              "focus_term": "communities",
+              "match_method": "direct",
+              "normalized_form": "community",
+              "observed_text": "Communities",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                10
+              ],
+              "start": 55
+            },
+            {
+              "end": 80,
+              "evidence_source": "student_text_span",
+              "focus_term": "reduce",
+              "match_method": "direct",
+              "normalized_form": "reduce",
+              "observed_text": "reduce",
+              "pos": [
+                "VERB"
+              ],
+              "source_token_indices": [
+                12
+              ],
+              "start": 74
+            }
+          ]
+        }
+      ],
+      "specific_focus_terms_observed": [
+        "single-use plastics",
+        "communities",
+        "reduce"
+      ],
+      "status": "RELEVANT_POSITION_OBSERVED",
+      "topic_discussion_matches": [
+        {
+          "end": 19,
+          "evidence_source": "student_text_span",
+          "focus_term": "single-use plastics",
+          "match_method": "direct",
+          "normalized_form": "single use plastic",
+          "observed_text": "Single-use plastics",
+          "pos": [
+            "ADJ",
+            "NOUN",
+            "NOUN"
+          ],
+          "source_token_indices": [
+            0,
+            2,
+            3
+          ],
+          "start": 0
+        },
+        {
+          "end": 53,
+          "evidence_source": "student_text_span",
+          "focus_term": "communities",
+          "match_method": "direct",
+          "normalized_form": "community",
+          "observed_text": "communities",
+          "pos": [
+            "NOUN"
+          ],
+          "source_token_indices": [
+            8
+          ],
+          "start": 42
+        },
+        {
+          "end": 66,
+          "evidence_source": "student_text_span",
+          "focus_term": "communities",
+          "match_method": "direct",
+          "normalized_form": "community",
+          "observed_text": "Communities",
+          "pos": [
+            "NOUN"
+          ],
+          "source_token_indices": [
+            10
+          ],
+          "start": 55
+        },
+        {
+          "end": 80,
+          "evidence_source": "student_text_span",
+          "focus_term": "reduce",
+          "match_method": "direct",
+          "normalized_form": "reduce",
+          "observed_text": "reduce",
+          "pos": [
+            "VERB"
+          ],
+          "source_token_indices": [
+            12
+          ],
+          "start": 74
+        }
+      ],
+      "trigger_condition": "The assignment wording contains a fixed argumentativeness cue, a specific assignment-word match and a subject-predicate candidate were observed, and no sentence pairs a topic modal or first-person stance verb with a specific match."
+    },
+    "prohibited_conclusions": [
+      "meaningful or nonsensical",
+      "academically good or poor",
+      "ready or not ready",
+      "stage unlocked"
+    ],
+    "reason_clause_evidence": {
+      "clauses": [
+        {
+          "advcl_predicate_end": 133,
+          "advcl_predicate_start": 126,
+          "advcl_predicate_text": "pollute",
+          "because_end": 116,
+          "because_start": 109,
+          "clause_end": 157,
+          "clause_start": 109,
+          "clause_token_count": 8,
+          "evidence_type": "spaCy_subtree_and_lexical_match_heuristic",
+          "limitation": "Topic-word overlap in the reason clause is not proof that the reason supports the point. Absence of overlap is not proof that it does not.",
+          "sentence_end": 158,
+          "sentence_index": 1,
+          "sentence_start": 55,
+          "sentence_text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+          "topic_matches_in_clause": [],
+          "topic_overlap_observed": false
+        }
+      ],
+      "limitation": "This check uses lexical overlap inside a parser-identified advcl subtree. Topic-word presence does not prove logical support; topic-word absence does not prove irrelevance. Pronouns, paraphrases, and synonyms are not detected.",
+      "status": "BECAUSE_CLAUSE_NO_TOPIC_OVERLAP"
+    },
+    "rule_evaluation_trace": [
+      {
+        "condition": "No finite root predicate with a parser-labeled subject was found.",
+        "configuration": "FINITE_TAGS={'VB','VBD','VBP','VBZ'}; Introduction also accepts a VBN/VBG predicate with a directly linked AUX tagged MD/VBD/VBP/VBZ and a linked subject. CLAUSE_DEPENDENCIES={'ROOT','conj','advcl','ccomp','xcomp','relcl'}; SUBJECT_DEPENDENCIES={'nsubj','nsubjpass','csubj','csubjpass'}. Development threshold: at least 2 supported clause candidates; not logical support.",
+        "decision_basis": "observable_structure.central_direction_candidates.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 488,
+          "file": "services\\introduction_rules.py",
+          "function": "_clause_candidates",
+          "start_line": 418
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No subject-predicate candidate",
+        "purpose": "No subject-predicate candidate",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "An SCONJ in the configured clause-subordinator list is flagged when any of: it is the sentence ROOT (unattached marker); it has a mark dependency but its head is not a parser-labeled clause predicate; it has a mark dependency and its head is the sentence's only finite ROOT clause predicate (suppressed when a separate finite subordinate-clause predicate with its own subject is also observed, indicating likely marker misattachment); it has a prep dependency with no pobj/obj complement; or it is 'because' attached as prep with only a nominal pobj and no later predicate.",
+        "configuration": "Gate: token POS is SCONJ and text in CLAUSE_SUBORDINATORS={'although','as','because','before','if','once','since','though','unless','until','when','whereas','while'}. Flag if any of five OR conditions: (1) dependency == 'ROOT'; (2) dependency == 'mark' and head_start not in predicate_starts (VERB/AUX with CLAUSE_DEPENDENCIES); (3) dependency == 'mark' and head_start is the sentence's only finite ROOT predicate (head_is_only_root_clause: VERB/AUX, tag in FINITE_TAGS={'VB','VBD','VBP','VBZ'}, dependency 'ROOT', sole such root); condition (3) is suppressed when the sentence also contains a separate finite subordinate-clause predicate (dependency in {'advcl','ccomp','xcomp'}, tag in FINITE_TAGS) with its own parser-labeled subject, indicating the marker's ROOT attachment is likely a parser misattachment and the two-clause structure is already observed; (4) dependency == 'prep' with no pobj/obj child and no prep child that itself has a pobj/obj; (5) marker == 'because', dependency == 'prep', pobj child (text != 'of') present, and no predicate starts after the marker's end. Parser attachment can be wrong; this is an observation, not proof.",
+        "decision_basis": "observable_structure.incomplete_subordinator_candidates.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 641,
+          "file": "services\\introduction_rules.py",
+          "function": "_incomplete_subordinator_evidence",
+          "start_line": 533
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Possible incomplete subordinator",
+        "purpose": "Possible incomplete subordinator",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "A finite root predicate has parser-labeled subject evidence attached to it.",
+        "configuration": "FINITE_TAGS={'VB','VBD','VBP','VBZ'}; Introduction also accepts a VBN/VBG predicate with a directly linked AUX tagged MD/VBD/VBP/VBZ and a linked subject. CLAUSE_DEPENDENCIES={'ROOT','conj','advcl','ccomp','xcomp','relcl'}; SUBJECT_DEPENDENCIES={'nsubj','nsubjpass','csubj','csubjpass'}. Development threshold: at least 2 supported clause candidates; not logical support.",
+        "decision_basis": "observable_structure.central_direction_candidates.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 488,
+          "file": "services\\introduction_rules.py",
+          "function": "_clause_candidates",
+          "start_line": 418
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Subject-linked finite root clause candidate",
+        "purpose": "Subject-linked finite root clause candidate",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "A central clause sentence span contains a focus-term match.",
+        "configuration": "A central root-clause sentence span must contain at least one direct or lemma-normalized configured focus match.",
+        "decision_basis": "observable_structure.introductory_context_candidates.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 733,
+          "file": "services\\introduction_rules.py",
+          "function": "_context_candidates",
+          "start_line": 703
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Topic and clause in one sentence",
+        "purpose": "Topic and clause in one sentence",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "At least two finite clause-predicate candidates remain after incomplete-subordinator sentence filtering.",
+        "configuration": "FINITE_TAGS={'VB','VBD','VBP','VBZ'}; Introduction also accepts a VBN/VBG predicate with a directly linked AUX tagged MD/VBD/VBP/VBZ and a linked subject. CLAUSE_DEPENDENCIES={'ROOT','conj','advcl','ccomp','xcomp','relcl'}; SUBJECT_DEPENDENCIES={'nsubj','nsubjpass','csubj','csubjpass'}. Development threshold: at least 2 supported clause candidates; not logical support.",
+        "decision_basis": "development_evidence.status and predicate_count.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 897,
+          "file": "services\\introduction_rules.py",
+          "function": "_development_finding",
+          "start_line": 866
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Multiple clause-predicate candidates",
+        "purpose": "Multiple clause-predicate candidates",
+        "reference_ids": [
+          "unc-paragraphs"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "Fewer than two supported finite clause-predicate candidates were observed.",
+        "configuration": "FINITE_TAGS={'VB','VBD','VBP','VBZ'}; Introduction also accepts a VBN/VBG predicate with a directly linked AUX tagged MD/VBD/VBP/VBZ and a linked subject. CLAUSE_DEPENDENCIES={'ROOT','conj','advcl','ccomp','xcomp','relcl'}; SUBJECT_DEPENDENCIES={'nsubj','nsubjpass','csubj','csubjpass'}. Development threshold: at least 2 supported clause candidates; not logical support.",
+        "decision_basis": "development_evidence.status and predicate_count.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 897,
+          "file": "services\\introduction_rules.py",
+          "function": "_development_finding",
+          "start_line": 866
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No additional clause candidate",
+        "purpose": "No additional clause candidate",
+        "reference_ids": [
+          "unc-paragraphs"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "Always emitted for Introduction stage scope.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "The current Rule Base emitted this event and its evidence.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 1109,
+          "file": "services\\introduction_rules.py",
+          "function": "_rule_events",
+          "start_line": 899
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Introduction guidance goal",
+        "purpose": "Introduction guidance goal",
+        "reference_ids": [
+          "hattie-timperley",
+          "knight-acawriter"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "Always emitted; meaning, logic, and facts are not validated.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "The current Rule Base emitted this event and its evidence.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 1109,
+          "file": "services\\introduction_rules.py",
+          "function": "_rule_events",
+          "start_line": 899
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No semantic validation limitation",
+        "purpose": "No semantic validation limitation",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "The check did not run: the assignment wording contains no argumentativeness cue, or no specific assignment-word match with a subject-predicate candidate was observed.",
+        "configuration": "Argumentativeness gate: the assignment topic contains a fixed phrase cue {'agree or disagree','take a position','take a stand','argue for or against','for or against','your opinion'} OR its first question word is in POSITION_MODAL_CUES={'should','must'}. Position cue: an AUX token tagged MD with lemma in {'should','must'} and a subject attached to the modal or its head verb, OR a VERB with lemma in FOR={'support','agree','favor','believe','think','recommend'} or AGAINST={'oppose','disagree','reject'} whose subject is I/we; the same sentence must contain a specific (non-broad) assignment-word match (BROAD_FOCUS_TERMS={'student','students','use','uses','used','using'} excluded). A 'not' attached to the modal's head verb records stance MODAL_NEGATED. Fixed cues only; paraphrased positions are not detected.",
+        "decision_basis": "position_statement_evidence: assignment argumentativeness cue and basis, status, and position statements with cue token, subject evidence, stance, and same-sentence specific focus matches.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 416,
+          "file": "services\\introduction_rules.py",
+          "function": "_position_evidence",
+          "start_line": 258
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Position check not applicable",
+        "purpose": "Position check not applicable",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.POSITION.CHECK_NOT_APPLICABLE",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "The assignment wording contains an argumentativeness cue, specific assignment words and a subject-predicate candidate were observed, and no sentence pairs a modal or first-person stance-verb cue with a specific match. Absence of the cue is not proof that no position is stated.",
+        "configuration": "Argumentativeness gate: the assignment topic contains a fixed phrase cue {'agree or disagree','take a position','take a stand','argue for or against','for or against','your opinion'} OR its first question word is in POSITION_MODAL_CUES={'should','must'}. Position cue: an AUX token tagged MD with lemma in {'should','must'} and a subject attached to the modal or its head verb, OR a VERB with lemma in FOR={'support','agree','favor','believe','think','recommend'} or AGAINST={'oppose','disagree','reject'} whose subject is I/we; the same sentence must contain a specific (non-broad) assignment-word match (BROAD_FOCUS_TERMS={'student','students','use','uses','used','using'} excluded). A 'not' attached to the modal's head verb records stance MODAL_NEGATED. Fixed cues only; paraphrased positions are not detected.",
+        "decision_basis": "position_statement_evidence: assignment argumentativeness cue and basis, status, and position statements with cue token, subject evidence, stance, and same-sentence specific focus matches.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 416,
+          "file": "services\\introduction_rules.py",
+          "function": "_position_evidence",
+          "start_line": 258
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No explicit position cue observed",
+        "purpose": "No explicit position cue observed",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.POSITION.NO_RELEVANT_POSITION_OBSERVED",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "The assignment wording contains a fixed argumentativeness cue (phrase such as 'agree or disagree' or a should/must question) and a sentence pairs a modal cue (should/must with a subject) or a first-person stance verb (support/agree/favor/believe/think/recommend or oppose/disagree/reject) with a specific assignment-word match in the same sentence.",
+        "configuration": "Argumentativeness gate: the assignment topic contains a fixed phrase cue {'agree or disagree','take a position','take a stand','argue for or against','for or against','your opinion'} OR its first question word is in POSITION_MODAL_CUES={'should','must'}. Position cue: an AUX token tagged MD with lemma in {'should','must'} and a subject attached to the modal or its head verb, OR a VERB with lemma in FOR={'support','agree','favor','believe','think','recommend'} or AGAINST={'oppose','disagree','reject'} whose subject is I/we; the same sentence must contain a specific (non-broad) assignment-word match (BROAD_FOCUS_TERMS={'student','students','use','uses','used','using'} excluded). A 'not' attached to the modal's head verb records stance MODAL_NEGATED. Fixed cues only; paraphrased positions are not detected.",
+        "decision_basis": "position_statement_evidence: assignment argumentativeness cue and basis, status, and position statements with cue token, subject evidence, stance, and same-sentence specific focus matches.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 416,
+          "file": "services\\introduction_rules.py",
+          "function": "_position_evidence",
+          "start_line": 258
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Explicit position cue observed",
+        "purpose": "Explicit position cue observed",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.POSITION.RELEVANT_POSITION_OBSERVED",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "See the emitted event for the exact condition and actual evidence; no registry description is available for this generated event.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "The current Rule Base emitted this event and its evidence.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 864,
+          "file": "services\\introduction_rules.py",
+          "function": "_reason_clause_lexical_check",
+          "start_line": 735
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No Clause Topic Overlap",
+        "purpose": "No Clause Topic Overlap",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "No alphabetic token was observed in the student input.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "text_presence status and alphabetic_word_count.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 1109,
+          "file": "services\\introduction_rules.py",
+          "function": "_rule_events",
+          "start_line": 899
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No alphabetic text",
+        "purpose": "No alphabetic text",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TEXT.EMPTY_OR_NONALPHABETIC",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "Alphabetic text exists but no finite root clause with parser-labeled subject was found; list threshold did not take precedence.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "observable_structure.list_or_fragment_candidate; keyword-list event takes precedence when both flags are true.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 531,
+          "file": "services\\introduction_rules.py",
+          "function": "_list_or_fragment_finding",
+          "start_line": 490
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Fragment candidate",
+        "purpose": "Fragment candidate",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TEXT.FRAGMENT_CANDIDATE",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "No root subject-predicate clause and at least three non-clausal sentence spans or four NOUN/PROPN tokens.",
+        "configuration": "No qualifying subject-linked finite root clause AND (at least 3 non-clausal sentence spans OR at least 4 NOUN/PROPN tokens).",
+        "decision_basis": "observable_structure.list_or_fragment_candidate.keyword_list_candidate.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 531,
+          "file": "services\\introduction_rules.py",
+          "function": "_list_or_fragment_finding",
+          "start_line": 490
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Keyword-list candidate",
+        "purpose": "Keyword-list candidate",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TEXT.KEYWORD_LIST_CANDIDATE",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "At least one alphabetic token was observed.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "text_presence status and alphabetic_word_count.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 1109,
+          "file": "services\\introduction_rules.py",
+          "function": "_rule_events",
+          "start_line": 899
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Alphabetic text present",
+        "purpose": "Alphabetic text present",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TEXT.PRESENT",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "At least one configured focus phrase has direct or lemma-normalized lexical evidence.",
+        "configuration": "Direct case-folded surface match OR equal lemma sequence over consecutive alphabetic tokens; only whitespace/apostrophe/hyphen separator characters may occur between phrase tokens.",
+        "decision_basis": "lexical_topic_evidence.observed_focus_terms.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "TopicService",
+          "end_line": 359,
+          "file": "services\\topic_service.py",
+          "function": "_find_matches",
+          "start_line": 315
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Configured focus terms observed",
+        "purpose": "Configured focus terms observed",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "No configured focus phrase matched directly or by lemma normalization.",
+        "configuration": "Direct case-folded surface match OR equal lemma sequence over consecutive alphabetic tokens; only whitespace/apostrophe/hyphen separator characters may occur between phrase tokens.",
+        "decision_basis": "lexical_topic_evidence.observed_focus_terms.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "TopicService",
+          "end_line": 359,
+          "file": "services\\topic_service.py",
+          "function": "_find_matches",
+          "start_line": 315
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No configured focus match",
+        "purpose": "No configured focus match",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "A verified sentence with a noun and ROOT verb/auxiliary beside a focus-matched sentence has no configured focus match, no shared neighboring content lemma and no third-person/demonstrative reference cue; explicit teacher focus is required. A review signal only, not irrelevance.",
+        "configuration": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue. Missing wording links suggest a review only, not irrelevance. Pronoun cues are not resolved references; shared words do not establish relevance, logic, or truth. Other reworded connections can be missed.",
+        "decision_basis": "sentence_topic_evidence.sentences retains exact spans, focus matches, concepts, neighboring shared lemmas, reference cues, status, condition and limitations for each sentence.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "end_line": 93,
+          "file": "services\\introduction_sentence_evidence.py",
+          "function": "sentence_topic_evidence",
+          "start_line": 22
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Possible sentence topic-connection gap",
+        "purpose": "Possible sentence topic-connection gap",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      }
+    ],
+    "rule_evidence": [
+      {
+        "evidence": [
+          {
+            "end": 6,
+            "start": 0,
+            "text": "Single"
+          },
+          {
+            "end": 10,
+            "start": 7,
+            "text": "use"
+          },
+          {
+            "end": 19,
+            "start": 11,
+            "text": "plastics"
+          },
+          {
+            "end": 23,
+            "start": 20,
+            "text": "are"
+          },
+          {
+            "end": 34,
+            "start": 24,
+            "text": "everywhere"
+          },
+          {
+            "end": 37,
+            "start": 35,
+            "text": "in"
+          },
+          {
+            "end": 41,
+            "start": 38,
+            "text": "our"
+          },
+          {
+            "end": 53,
+            "start": 42,
+            "text": "communities"
+          },
+          {
+            "end": 66,
+            "start": 55,
+            "text": "Communities"
+          },
+          {
+            "end": 73,
+            "start": 67,
+            "text": "should"
+          },
+          {
+            "end": 80,
+            "start": 74,
+            "text": "reduce"
+          },
+          {
+            "end": 86,
+            "start": 81,
+            "text": "their"
+          },
+          {
+            "end": 90,
+            "start": 87,
+            "text": "use"
+          },
+          {
+            "end": 93,
+            "start": 91,
+            "text": "of"
+          },
+          {
+            "end": 99,
+            "start": 94,
+            "text": "these"
+          },
+          {
+            "end": 108,
+            "start": 100,
+            "text": "plastics"
+          },
+          {
+            "end": 116,
+            "start": 109,
+            "text": "because"
+          },
+          {
+            "end": 121,
+            "start": 117,
+            "text": "they"
+          },
+          {
+            "end": 125,
+            "start": 122,
+            "text": "can"
+          },
+          {
+            "end": 133,
+            "start": 126,
+            "text": "pollute"
+          },
+          {
+            "end": 140,
+            "start": 134,
+            "text": "rivers"
+          },
+          {
+            "end": 144,
+            "start": 141,
+            "text": "and"
+          },
+          {
+            "end": 149,
+            "start": 145,
+            "text": "harm"
+          },
+          {
+            "end": 157,
+            "start": 150,
+            "text": "animals"
+          }
+        ],
+        "evidence_type": "direct_text_observation",
+        "limitation": "Word presence does not establish sentence completeness or meaning.",
+        "rule_id": "INTRO.TEXT.PRESENT",
+        "triggered": true,
+        "triggering_condition": "At least one alphabetic student token was observed."
+      },
+      {
+        "evidence": [
+          {
+            "complement_evidence": [],
+            "evidence_type": "spaCy_dependency_and_POS_heuristic",
+            "is_root_clause": true,
+            "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 23,
+              "pos": "AUX",
+              "start": 20,
+              "tag": "VBP",
+              "text": "are"
+            },
+            "sentence_end": 54,
+            "sentence_index": 0,
+            "sentence_start": 0,
+            "sentence_text": "Single-use plastics are everywhere in our communities.",
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 19,
+                "start": 11,
+                "text": "plastics"
+              }
+            ]
+          },
+          {
+            "complement_evidence": [
+              {
+                "dependency": "dobj",
+                "end": 90,
+                "start": 87,
+                "text": "use"
+              }
+            ],
+            "evidence_type": "spaCy_dependency_and_POS_heuristic",
+            "is_root_clause": true,
+            "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 80,
+              "pos": "VERB",
+              "start": 74,
+              "tag": "VB",
+              "text": "reduce"
+            },
+            "sentence_end": 158,
+            "sentence_index": 1,
+            "sentence_start": 55,
+            "sentence_text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 66,
+                "start": 55,
+                "text": "Communities"
+              }
+            ]
+          }
+        ],
+        "evidence_type": "spaCy_POS_and_dependency_observation",
+        "limitation": "These labels do not verify whether the proposition makes sense.",
+        "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "triggered": true,
+        "triggering_condition": "spaCy labeled a finite root predicate and a subject dependent on it."
+      },
+      {
+        "evidence": [
+          {
+            "end": 19,
+            "evidence_source": "student_text_span",
+            "focus_term": "single-use plastics",
+            "match_method": "direct",
+            "normalized_form": "single use plastic",
+            "observed_text": "Single-use plastics",
+            "pos": [
+              "ADJ",
+              "NOUN",
+              "NOUN"
+            ],
+            "source_token_indices": [
+              0,
+              2,
+              3
+            ],
+            "start": 0
+          },
+          {
+            "end": 53,
+            "evidence_source": "student_text_span",
+            "focus_term": "communities",
+            "match_method": "direct",
+            "normalized_form": "community",
+            "observed_text": "communities",
+            "pos": [
+              "NOUN"
+            ],
+            "source_token_indices": [
+              8
+            ],
+            "start": 42
+          },
+          {
+            "end": 66,
+            "evidence_source": "student_text_span",
+            "focus_term": "communities",
+            "match_method": "direct",
+            "normalized_form": "community",
+            "observed_text": "Communities",
+            "pos": [
+              "NOUN"
+            ],
+            "source_token_indices": [
+              10
+            ],
+            "start": 55
+          },
+          {
+            "end": 80,
+            "evidence_source": "student_text_span",
+            "focus_term": "reduce",
+            "match_method": "direct",
+            "normalized_form": "reduce",
+            "observed_text": "reduce",
+            "pos": [
+              "VERB"
+            ],
+            "source_token_indices": [
+              12
+            ],
+            "start": 74
+          }
+        ],
+        "evidence_type": "direct_lexical_span_with_direct_or_lemma_match_method",
+        "limitation": "Focus-term overlap is not evidence of sound or meaningful explanation.",
+        "rule_id": "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "triggered": true,
+        "triggering_condition": "At least one teacher focus phrase has direct or lemma-normalized lexical evidence."
+      },
+      {
+        "evidence": [
+          {
+            "clause_candidate_evidence": {
+              "predicate_evidence": {
+                "dependency": "ROOT",
+                "end": 23,
+                "pos": "AUX",
+                "start": 20,
+                "tag": "VBP",
+                "text": "are"
+              },
+              "subject_evidence": [
+                {
+                  "dependency": "nsubj",
+                  "end": 19,
+                  "start": 11,
+                  "text": "plastics"
+                }
+              ]
+            },
+            "end": 54,
+            "evidence_type": "lexical_match_plus_dependency_heuristic",
+            "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+            "sentence_text": "Single-use plastics are everywhere in our communities.",
+            "start": 0,
+            "topic_match_evidence": [
+              {
+                "end": 19,
+                "evidence_source": "student_text_span",
+                "focus_term": "single-use plastics",
+                "match_method": "direct",
+                "normalized_form": "single use plastic",
+                "observed_text": "Single-use plastics",
+                "pos": [
+                  "ADJ",
+                  "NOUN",
+                  "NOUN"
+                ],
+                "source_token_indices": [
+                  0,
+                  2,
+                  3
+                ],
+                "start": 0
+              },
+              {
+                "end": 53,
+                "evidence_source": "student_text_span",
+                "focus_term": "communities",
+                "match_method": "direct",
+                "normalized_form": "community",
+                "observed_text": "communities",
+                "pos": [
+                  "NOUN"
+                ],
+                "source_token_indices": [
+                  8
+                ],
+                "start": 42
+              }
+            ]
+          },
+          {
+            "clause_candidate_evidence": {
+              "predicate_evidence": {
+                "dependency": "ROOT",
+                "end": 80,
+                "pos": "VERB",
+                "start": 74,
+                "tag": "VB",
+                "text": "reduce"
+              },
+              "subject_evidence": [
+                {
+                  "dependency": "nsubj",
+                  "end": 66,
+                  "start": 55,
+                  "text": "Communities"
+                }
+              ]
+            },
+            "end": 158,
+            "evidence_type": "lexical_match_plus_dependency_heuristic",
+            "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+            "sentence_text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+            "start": 55,
+            "topic_match_evidence": [
+              {
+                "end": 66,
+                "evidence_source": "student_text_span",
+                "focus_term": "communities",
+                "match_method": "direct",
+                "normalized_form": "community",
+                "observed_text": "Communities",
+                "pos": [
+                  "NOUN"
+                ],
+                "source_token_indices": [
+                  10
+                ],
+                "start": 55
+              },
+              {
+                "end": 80,
+                "evidence_source": "student_text_span",
+                "focus_term": "reduce",
+                "match_method": "direct",
+                "normalized_form": "reduce",
+                "observed_text": "reduce",
+                "pos": [
+                  "VERB"
+                ],
+                "source_token_indices": [
+                  12
+                ],
+                "start": 74
+              }
+            ]
+          }
+        ],
+        "evidence_type": "lexical_and_syntactic_heuristic",
+        "limitation": "This does not establish that the sentence introduces the topic coherently.",
+        "rule_id": "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "triggered": true,
+        "triggering_condition": "A sentence span contains both a topic-term match and a subject-predicate candidate."
+      },
+      {
+        "evidence": [
+          {
+            "dependency": "ROOT",
+            "end": 23,
+            "pos": "AUX",
+            "start": 20,
+            "tag": "VBP",
+            "text": "are"
+          },
+          {
+            "dependency": "ROOT",
+            "end": 80,
+            "pos": "VERB",
+            "start": 74,
+            "tag": "VB",
+            "text": "reduce"
+          },
+          {
+            "dependency": "advcl",
+            "end": 133,
+            "pos": "VERB",
+            "start": 126,
+            "tag": "VB",
+            "text": "pollute"
+          }
+        ],
+        "evidence_type": "multiple_parser_labeled_clause_predicates",
+        "limitation": "Multiple clauses or sentences do not prove that the ideas are connected logically or soundly.",
+        "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "triggered": true,
+        "triggering_condition": "At least two finite clause-predicate candidates were observed."
+      },
+      {
+        "evidence": [
+          {
+            "advcl_predicate_end": 133,
+            "advcl_predicate_start": 126,
+            "advcl_predicate_text": "pollute",
+            "because_end": 116,
+            "because_start": 109,
+            "clause_end": 157,
+            "clause_start": 109,
+            "clause_token_count": 8,
+            "evidence_type": "spaCy_subtree_and_lexical_match_heuristic",
+            "limitation": "Topic-word overlap in the reason clause is not proof that the reason supports the point. Absence of overlap is not proof that it does not.",
+            "sentence_end": 158,
+            "sentence_index": 1,
+            "sentence_start": 55,
+            "sentence_text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+            "topic_matches_in_clause": [],
+            "topic_overlap_observed": false
+          }
+        ],
+        "evidence_type": "spaCy_subtree_and_lexical_match_heuristic",
+        "limitation": "This check uses lexical overlap inside a parser-identified advcl subtree. Topic-word presence does not prove logical support; topic-word absence does not prove irrelevance. Pronouns, paraphrases, and synonyms are not detected.",
+        "rule_id": "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP",
+        "triggered": true,
+        "triggering_condition": "A 'because' advcl clause was identified but contains no recorded focus-term match."
+      },
+      {
+        "evidence": [
+          {
+            "cue_token": {
+              "dependency": "aux",
+              "end": 73,
+              "lemma": "should",
+              "pos": "AUX",
+              "start": 67,
+              "tag": "MD",
+              "text": "should"
+            },
+            "cue_type": "modal",
+            "evidence_type": "POS_and_dependency_plus_lexical_match_heuristic",
+            "limitation": "Position cues are fixed word and parse patterns: a modal or stance verb plus a specific assignment-word match in the same sentence. They do not verify that the position is argued, supported, or clearly expressed, and paraphrased positions without these cues are not detected.",
+            "sentence_end": 158,
+            "sentence_index": 1,
+            "sentence_start": 55,
+            "sentence_text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals.",
+            "stance": "MODAL_AFFIRMED",
+            "subject_evidence": {
+              "dependency": "nsubj",
+              "end": 66,
+              "start": 55,
+              "text": "Communities"
+            },
+            "topic_match_evidence": [
+              {
+                "end": 66,
+                "evidence_source": "student_text_span",
+                "focus_term": "communities",
+                "match_method": "direct",
+                "normalized_form": "community",
+                "observed_text": "Communities",
+                "pos": [
+                  "NOUN"
+                ],
+                "source_token_indices": [
+                  10
+                ],
+                "start": 55
+              },
+              {
+                "end": 80,
+                "evidence_source": "student_text_span",
+                "focus_term": "reduce",
+                "match_method": "direct",
+                "normalized_form": "reduce",
+                "observed_text": "reduce",
+                "pos": [
+                  "VERB"
+                ],
+                "source_token_indices": [
+                  12
+                ],
+                "start": 74
+              }
+            ]
+          }
+        ],
+        "evidence_type": "POS_and_dependency_plus_lexical_match_heuristic",
+        "limitation": "Position cues are fixed word and parse patterns: a modal or stance verb plus a specific assignment-word match in the same sentence. They do not verify that the position is argued, supported, or clearly expressed, and paraphrased positions without these cues are not detected.",
+        "rule_id": "INTRO.POSITION.RELEVANT_POSITION_OBSERVED",
+        "triggered": true,
+        "triggering_condition": "An argumentativeness cue was matched in the assignment and a sentence contains a modal or first-person stance-verb cue plus a specific assignment-word match."
+      },
+      {
+        "evidence": [],
+        "evidence_type": "stage_scope_configuration",
+        "limitation": "This is a guidance goal, not a stage-readiness decision.",
+        "rule_id": "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "triggered": true,
+        "triggering_condition": "The requested analysis stage is Introduction."
+      },
+      {
+        "evidence": [],
+        "evidence_type": "system_scope_limitation",
+        "limitation": "A parser or lexical observation does not establish meaning, coherence, relevance, factual truth, or academic quality.",
+        "rule_id": "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+        "triggered": true,
+        "triggering_condition": "Always applied: this Rule Base does not validate meaning, logic, or facts."
+      }
+    ],
+    "sentence_topic_evidence": {
+      "condition": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue.",
+      "limitation": "Missing wording links suggest a review only, not irrelevance. Pronoun cues are not resolved references; shared words do not establish relevance, logic, or truth. Other reworded connections can be missed.",
+      "review_candidates": [],
+      "sentences": [
+        {
+          "concepts": [
+            "single use plastic",
+            "our community",
+            "community",
+            "use",
+            "plastic"
+          ],
+          "condition": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue.",
+          "content_lemmas": [
+            "community",
+            "plastic",
+            "single",
+            "use"
+          ],
+          "end": 54,
+          "focus_matches": [
+            {
+              "end": 19,
+              "evidence_source": "student_text_span",
+              "match_method": "direct",
+              "normalized_form": "single use plastic",
+              "observed_text": "Single-use plastics",
+              "pos": [
+                "ADJ",
+                "NOUN",
+                "NOUN"
+              ],
+              "source_token_indices": [
+                0,
+                2,
+                3
+              ],
+              "start": 0
+            },
+            {
+              "end": 53,
+              "evidence_source": "student_text_span",
+              "match_method": "direct",
+              "normalized_form": "community",
+              "observed_text": "communities",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                8
+              ],
+              "start": 42
+            }
+          ],
+          "has_noun": true,
+          "has_predicate": true,
+          "limitation": "Missing wording links suggest a review only, not irrelevance. Pronoun cues are not resolved references; shared words do not establish relevance, logic, or truth. Other reworded connections can be missed.",
+          "matched_focus_terms": [
+            "single-use plastics",
+            "communities"
+          ],
+          "matched_neighbor_indices": [
+            1
+          ],
+          "neighbor_sentence_indices": [
+            1
+          ],
+          "reference_cues": [],
+          "review_signal": false,
+          "sentence_index": 0,
+          "shared_neighbor_lemmas": [
+            "community",
+            "plastic",
+            "use"
+          ],
+          "span_verified": true,
+          "start": 0,
+          "status": "WORDING_MATCH_OBSERVED_NOT_RELEVANCE",
+          "text": "Single-use plastics are everywhere in our communities."
+        },
+        {
+          "concepts": [
+            "community",
+            "their use",
+            "these plastic",
+            "river",
+            "harm animal",
+            "use",
+            "plastic",
+            "harm",
+            "animal"
+          ],
+          "condition": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue.",
+          "content_lemmas": [
+            "animal",
+            "community",
+            "harm",
+            "plastic",
+            "pollute",
+            "reduce",
+            "river",
+            "use"
+          ],
+          "end": 158,
+          "focus_matches": [
+            {
+              "end": 66,
+              "evidence_source": "student_text_span",
+              "match_method": "direct",
+              "normalized_form": "community",
+              "observed_text": "Communities",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                10
+              ],
+              "start": 55
+            },
+            {
+              "end": 80,
+              "evidence_source": "student_text_span",
+              "match_method": "direct",
+              "normalized_form": "reduce",
+              "observed_text": "reduce",
+              "pos": [
+                "VERB"
+              ],
+              "source_token_indices": [
+                12
+              ],
+              "start": 74
+            }
+          ],
+          "has_noun": true,
+          "has_predicate": true,
+          "limitation": "Missing wording links suggest a review only, not irrelevance. Pronoun cues are not resolved references; shared words do not establish relevance, logic, or truth. Other reworded connections can be missed.",
+          "matched_focus_terms": [
+            "communities",
+            "reduce"
+          ],
+          "matched_neighbor_indices": [
+            0
+          ],
+          "neighbor_sentence_indices": [
+            0
+          ],
+          "reference_cues": [
+            "their",
+            "these",
+            "they"
+          ],
+          "review_signal": false,
+          "sentence_index": 1,
+          "shared_neighbor_lemmas": [
+            "community",
+            "plastic",
+            "use"
+          ],
+          "span_verified": true,
+          "start": 55,
+          "status": "WORDING_MATCH_OBSERVED_NOT_RELEVANCE",
+          "text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals."
+        }
+      ],
+      "source": "Existing TopicService focus spans, concepts, and spaCy sentence/token records; no additional NLP call."
+    },
+    "stage": "INTRODUCTION",
+    "text_presence": {
+      "alphabetic_word_count": 24,
+      "sentence_count": 2,
+      "status": "SENTENCE_STRUCTURE_OBSERVED",
+      "substantive_sentence_candidate_observed": true,
+      "token_count": 27
+    },
+    "uncertainty": [
+      "These rules use linguistic structure and lexical overlap only.",
+      "A grammatical clause can be semantically anomalous or contradictory.",
+      "No semantic intelligibility, logical coherence, or factual correctness judgment is made.",
+      "A central-direction candidate is not a validated thesis or a readiness decision.",
+      "A recorded position cue is not a verified argument, and paraphrased positions may not be detected."
+    ]
+  },
+  "availability": "ANALYZED",
+  "feedback": {
+    "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+    "Feedback Provenance": [
+      {
+        "feedback_field": "Current Goal",
+        "rule_id": "INTRO.GOAL.OBSERVABLE_INTRODUCTION"
+      },
+      {
+        "feedback_field": "Primary Feedback",
+        "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+      },
+      {
+        "feedback_field": "Primary Feedback",
+        "rule_id": "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+      },
+      {
+        "feedback_field": "What's Working",
+        "rule_id": "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+      },
+      {
+        "feedback_field": "What's Working",
+        "rule_id": "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE"
+      },
+      {
+        "feedback_field": "Next Step",
+        "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+      },
+      {
+        "feedback_field": "Next Step",
+        "rule_id": "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+      }
+    ],
+    "Needs Attention": [],
+    "Next Step": "Read your main statement with the explanation part. Keep it if it says what you intend, or add a detail a reader would need.",
+    "Primary Feedback": "The checks recorded a possible main statement and a 'because' part. Read them together and decide whether a reader needs more explanation.",
+    "What's Working": [
+      "These assignment words also appear in your opening: single-use plastics, communities, reduce. Check that they support the point you want to make.",
+      "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+    ],
+    "interpretation_limit": "These checks highlight sentence structure and topic-word matches; they do not determine whether the idea is correct or meaningful."
+  },
+  "interpretation_limit": "This combined result contains stage-specific linguistic and lexical observations. It does not establish semantic understanding, essay quality, factual correctness, readiness, or permission to advance.",
+  "related_topic_concept_evidence": {
+    "active_focus_concepts": [
+      {
+        "normalized_focus_concept": "environment",
+        "teacher_focus_term": "environment"
+      }
+    ],
+    "affects_rules_or_feedback": false,
+    "approved_relationships": [
+      {
+        "focus_concept": "environment",
+        "id": "environment.river.v1",
+        "related_concept": "river",
+        "relationship_label": "Natural environmental feature",
+        "relationship_type": "natural_environmental_feature",
+        "surface_forms": [
+          "river",
+          "rivers"
+        ]
+      },
+      {
+        "focus_concept": "environment",
+        "id": "environment.animal.v1",
+        "related_concept": "animal",
+        "relationship_label": "Living organism in the environment",
+        "relationship_type": "living_organism",
+        "surface_forms": [
+          "animal",
+          "animals"
+        ]
+      },
+      {
+        "focus_concept": "environment",
+        "id": "environment.forest.v1",
+        "related_concept": "forest",
+        "relationship_label": "Natural environmental feature",
+        "relationship_type": "natural_environmental_feature",
+        "surface_forms": [
+          "forest",
+          "forests"
+        ]
+      },
+      {
+        "focus_concept": "environment",
+        "id": "environment.habitat.v1",
+        "related_concept": "habitat",
+        "relationship_label": "Environmental habitat",
+        "relationship_type": "environmental_habitat",
+        "surface_forms": [
+          "habitat",
+          "habitats"
+        ]
+      },
+      {
+        "focus_concept": "environment",
+        "id": "environment.ecosystem.v1",
+        "related_concept": "ecosystem",
+        "relationship_label": "Ecological system",
+        "relationship_type": "ecological_system",
+        "surface_forms": [
+          "ecosystem",
+          "ecosystems"
+        ]
+      },
+      {
+        "focus_concept": "environment",
+        "id": "environment.pollution.v1",
+        "related_concept": "pollution",
+        "relationship_label": "Environmental problem",
+        "relationship_type": "environmental_problem",
+        "surface_forms": [
+          "pollution",
+          "pollutions"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "configuration_version": "1.0",
+        "end": 140,
+        "limitation": "A configured relationship records a lexical mention only, not an exact synonym, topic understanding, environmental support, a complete statement, or a valid argument. Negation, word sense and the writer's stance are not evaluated. This informational evidence does not affect direct/lemma coverage, rules or feedback.",
+        "match_method": "configured_topic_relationship",
+        "match_status": "LEXICAL_RELATION_OBSERVED",
+        "normalization_method": "spacy_lemma",
+        "normalization_source": "Existing spaCy lemma (casefolded), or explicitly configured surface_forms; no inferred inflection or synonym expansion",
+        "normalized_focus_concept": "environment",
+        "normalized_student_word": "river",
+        "relationship_id": "environment.river.v1",
+        "relationship_label": "Natural environmental feature",
+        "relationship_source": "content/topic_concept_relations.json",
+        "relationship_type": "natural_environmental_feature",
+        "sentence_index": 1,
+        "spacy_lemma": "river",
+        "start": 134,
+        "student_word": "rivers",
+        "teacher_focus_term": "environment",
+        "token_index": 22
+      },
+      {
+        "configuration_version": "1.0",
+        "end": 157,
+        "limitation": "A configured relationship records a lexical mention only, not an exact synonym, topic understanding, environmental support, a complete statement, or a valid argument. Negation, word sense and the writer's stance are not evaluated. This informational evidence does not affect direct/lemma coverage, rules or feedback.",
+        "match_method": "configured_topic_relationship",
+        "match_status": "LEXICAL_RELATION_OBSERVED",
+        "normalization_method": "spacy_lemma",
+        "normalization_source": "Existing spaCy lemma (casefolded), or explicitly configured surface_forms; no inferred inflection or synonym expansion",
+        "normalized_focus_concept": "environment",
+        "normalized_student_word": "animal",
+        "relationship_id": "environment.animal.v1",
+        "relationship_label": "Living organism in the environment",
+        "relationship_source": "content/topic_concept_relations.json",
+        "relationship_type": "living_organism",
+        "sentence_index": 1,
+        "spacy_lemma": "animal",
+        "start": 150,
+        "student_word": "animals",
+        "teacher_focus_term": "environment",
+        "token_index": 25
+      }
+    ],
+    "execution_status": "EXECUTED",
+    "future_integration": "Potential future evidence for evaluated topic-feedback revisions only after review; not consumed by any current Rule Base or FeedbackService branch.",
+    "informational_only": true,
+    "limitation": "A configured relationship records a lexical mention only, not an exact synonym, topic understanding, environmental support, a complete statement, or a valid argument. Negation, word sense and the writer's stance are not evaluated. This informational evidence does not affect direct/lemma coverage, rules or feedback.",
+    "reason": "MATCHES_OBSERVED",
+    "resource": {
+      "configuration_version": "1.0",
+      "provenance": "developer_curated",
+      "schema_version": 1,
+      "sha256": "eb1f66701e6f8e9d72f3af54974cf370a43581f42f3b5b48c14f6041d6db1e33",
+      "source": "content/topic_concept_relations.json",
+      "status": "AVAILABLE"
+    },
+    "summary": {
+      "relationship_record_count": 2,
+      "teacher_focus_concepts_with_related_evidence": [
+        "environment"
+      ],
+      "teacher_focus_terms_with_related_evidence": [
+        "environment"
+      ],
+      "total_related_concept_occurrences": 2,
+      "unique_related_concepts_observed": 2
+    }
+  },
+  "research_trace": {
+    "analysis_service_lookup_ms": 0,
+    "analysis_service_total_ms": 0,
+    "api_authentication_and_csrf_timing": "NOT_INSTRUMENTED",
+    "json_response_serialization_timing": "NOT_INSTRUMENTED",
+    "limitations": [
+      "Timings cover the marked in-process Python calls; Flask authentication, network transfer, and browser rendering are separate.",
+      "Cross-stage WordNet comparisons run inside the relevant Rule Base timing and do not have a separate duration measurement.",
+      "The rule trace is built from existing stage outputs and emitted events; it does not rerun the Rule Base or spaCy."
+    ],
+    "request_validation_and_assignment_resolution_ms": 0,
+    "runtime": {
+      "analysis_service_initialization": {
+        "duration_ms": null,
+        "note": "Model/service construction is timed only when Flask creates the service lazily; injected preconstructed services are not timed here.",
+        "status": "PRECONSTRUCTED_NOT_INSTRUMENTED"
+      },
+      "flask_version": "3.1.3",
+      "model": {
+        "language": "en",
+        "package_name": "core_web_sm",
+        "version": "3.7.1"
+      },
+      "nltk_version": "3.9.2",
+      "note": "Metadata is read from the already-loaded NLPService. This function does not parse text or query WordNet.",
+      "pipeline": {
+        "active_component_output_use": {
+          "attribute_ruler": "Runs in the pipeline; its attributes are available to later components but not separately reported by EssayScaff.",
+          "lemmatizer": "Token lemmas feed topic normalization and concept comparison.",
+          "ner": "Runs in the pipeline; named entities are not consumed by the active EssayScaff analysis output.",
+          "parser": "Dependency labels, heads, sentence boundaries, noun chunks, and subjects/complements feed the services.",
+          "tagger": "Token fine-grained tags are serialized; POS/tag values feed rule conditions.",
+          "tok2vec": "Runs as part of the configured pipeline; EssayScaff does not directly read its vectors."
+        },
+        "component_timings": "not instrumented individually; the recorded parse_ms measures the complete nlp(text) call.",
+        "disabled_components": [
+          "senter"
+        ],
+        "enabled_components": [
+          "tok2vec",
+          "tagger",
+          "parser",
+          "attribute_ruler",
+          "lemmatizer",
+          "ner"
+        ],
+        "tokenizer": {
+          "execution_status": "EXECUTED",
+          "listed_in_pipe_names": false,
+          "name": "tokenizer"
+        }
+      },
+      "python_version": "3.11.9",
+      "spacy_version": "3.7.5",
+      "sqlite_runtime_version": "3.45.1"
+    },
+    "selected_stage": "INTRODUCTION",
+    "stages": {
+      "INTRODUCTION": {
+        "execution_status": "EXECUTED",
+        "feedback_decisions": {
+          "fields": {
+            "Current Goal": {
+              "rule_ids": [
+                "INTRO.GOAL.OBSERVABLE_INTRODUCTION"
+              ],
+              "selected_message": "Introduce the topic, then tell readers the main point you plan to explain.",
+              "selection_branch": "stage_constant",
+              "skill": null,
+              "trait": null
+            },
+            "Needs Attention": {
+              "rule_ids": [],
+              "selected_message_count": 0,
+              "selection_branch": "independent_attention_checks",
+              "selection_condition": "Each caution is appended when its existing check identifies the corresponding condition.",
+              "skill": null,
+              "trait": null
+            },
+            "Next Step": {
+              "rule_ids": [
+                "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+              ],
+              "selected_message": "Read your main statement with the explanation part. Keep it if it says what you intend, or add a detail a reader would need.",
+              "selection_branch": "intro_ideas_point_and_reason",
+              "selection_condition": "central_direction_candidates is nonempty and reason_clause_evidence.clauses is nonempty; focus-word presence or absence within the reason does not change this neutral review",
+              "skill": "Review Your Explanation",
+              "trait": "Ideas"
+            },
+            "Primary Feedback": {
+              "rule_ids": [
+                "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+              ],
+              "selected_message": "The checks recorded a possible main statement and a 'because' part. Read them together and decide whether a reader needs more explanation.",
+              "selection_branch": "intro_ideas_point_and_reason",
+              "selection_condition": "central_direction_candidates is nonempty and reason_clause_evidence.clauses is nonempty; focus-word presence or absence within the reason does not change this neutral review",
+              "skill": "Review Your Explanation",
+              "trait": "Ideas"
+            },
+            "What's Working": {
+              "rule_ids": [
+                "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+                "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE"
+              ],
+              "selected_message_count": 2,
+              "selection_branch": "independent_evidence_checks",
+              "selection_condition": "Each positive wording item is appended when its own existing evidence condition passes.",
+              "skill": null,
+              "trait": null
+            }
+          },
+          "instructional_feedback": {
+            "catalog_status": "AVAILABLE",
+            "coverage": [
+              {
+                "instructional_category_selected": true,
+                "scope": "Statement/development patterns and wording observations",
+                "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+                "trait": "Ideas",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+                "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+                "trait": "Organization",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "No Introduction trait check implemented",
+                "status": "NOT_EVALUATED",
+                "trait": "Voice",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+                "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+                "trait": "Word Choice",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "Possible incomplete-subordinator pattern only",
+                "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+                "trait": "Sentence Fluency",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "No Introduction trait check implemented",
+                "status": "NOT_EVALUATED",
+                "trait": "Conventions",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "No Introduction trait check implemented",
+                "status": "NOT_EVALUATED",
+                "trait": "Presentation",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              }
+            ],
+            "framework": "6+1 Trait Writing Model",
+            "items": [
+              {
+                "catalog_reference": {
+                  "file": "content/lessons/feedback_help.json",
+                  "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+                  "version": 6
+                },
+                "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+                "feedback_field": "Primary Feedback",
+                "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+                "highlight_spans": [
+                  {
+                    "anchor": {
+                      "end": 157,
+                      "start": 109,
+                      "text": "because they can pollute rivers and harm animals"
+                    },
+                    "anchor_end_field": "clause_end",
+                    "anchor_path": [],
+                    "anchor_start_field": "clause_start",
+                    "context": {
+                      "end": 158,
+                      "sentence_index": 1,
+                      "start": 55,
+                      "text": "Communities should reduce their use of these plastics because they can pollute rivers and harm animals."
+                    },
+                    "end": 157,
+                    "evidence_index": 0,
+                    "interpretation": "Evidence location, not an error label or a quality judgment.",
+                    "kind": "reason_clause",
+                    "rule_id": "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP",
+                    "selection_reason": "First source-ordered recorded because subtree; marked as explanation evidence, regardless of word overlap.",
+                    "start": 109,
+                    "text": "because they can pollute rivers and harm animals"
+                  }
+                ],
+                "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+                "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+                "limitations": [
+                  "Lexical overlap is not semantic relevance.",
+                  "Clause structure is not proof of argument quality.",
+                  "Missing 'because' is not proof that an explanation is missing.",
+                  "Missing assignment keywords is not proof that a reason is unrelated.",
+                  "Demonstratives and pronouns are not resolved references.",
+                  "No automatic correctness or essay-quality certification is performed."
+                ],
+                "mapping_basis": "A main-statement pattern and a recorded because subtree support neutral explanation review. Word overlap or its absence does not determine validity or change the lesson.",
+                "observed_fields": {
+                  "central_candidate_count": 2,
+                  "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+                  "observed_focus_terms": [
+                    "single-use plastics",
+                    "communities",
+                    "reduce"
+                  ],
+                  "reason_clause_count": 1,
+                  "reason_topic_status": "BECAUSE_CLAUSE_NO_TOPIC_OVERLAP",
+                  "sentence_count": 2,
+                  "supported_predicate_count": 3,
+                  "topic_matches": [
+                    {
+                      "end": 19,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "single-use plastics",
+                      "match_method": "direct",
+                      "normalized_form": "single use plastic",
+                      "observed_text": "Single-use plastics",
+                      "pos": [
+                        "ADJ",
+                        "NOUN",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        0,
+                        2,
+                        3
+                      ],
+                      "start": 0
+                    },
+                    {
+                      "end": 53,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "communities",
+                      "match_method": "direct",
+                      "normalized_form": "community",
+                      "observed_text": "communities",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        8
+                      ],
+                      "start": 42
+                    },
+                    {
+                      "end": 66,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "communities",
+                      "match_method": "direct",
+                      "normalized_form": "community",
+                      "observed_text": "Communities",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        10
+                      ],
+                      "start": 55
+                    },
+                    {
+                      "end": 80,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "reduce",
+                      "match_method": "direct",
+                      "normalized_form": "reduce",
+                      "observed_text": "reduce",
+                      "pos": [
+                        "VERB"
+                      ],
+                      "source_token_indices": [
+                        12
+                      ],
+                      "start": 74
+                    }
+                  ]
+                },
+                "prepared_guidance": {
+                  "limitation": "The mark shows sentence evidence, not an error. Word matches cannot tell whether the explanation is true or supports your point.",
+                  "noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+                  "task": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need.",
+                  "why": "An explanation helps readers understand the point you want to make.",
+                  "working": "The checks recorded a main-statement pattern and an explanation part."
+                },
+                "rule_conditions": [
+                  {
+                    "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                    "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+                  },
+                  {
+                    "condition": "A 'because' advcl clause was identified but contains no recorded focus-term match.",
+                    "rule_id": "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+                  }
+                ],
+                "rule_ids": [
+                  "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                  "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+                ],
+                "selection_branch": "intro_ideas_point_and_reason",
+                "selection_condition": "central_direction_candidates is nonempty and reason_clause_evidence.clauses is nonempty; focus-word presence or absence within the reason does not change this neutral review",
+                "skill": "Review Your Explanation",
+                "trait": "Ideas",
+                "triggered_rule_ids": [
+                  "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                  "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+                ],
+                "working_text": "The checks recorded a main-statement pattern and an explanation part."
+              }
+            ],
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+            "stage": "INTRODUCTION"
+          },
+          "priority_order": [
+            "empty",
+            "whitespace-only",
+            "punctuation-only",
+            "keyword-list candidate",
+            "incomplete sentence",
+            "broad-word-only match",
+            "no assignment-word match",
+            "sentence topic-connection review",
+            "missing explicit position on an argumentative assignment",
+            "recorded main statement with because-part (neutral review)",
+            "recorded main statement with additional patterns (detail review)",
+            "recorded main statement without additional patterns (development task)",
+            "limited main-statement pattern evidence"
+          ],
+          "selection_source": "Branch labels and rule IDs follow the recorded evidence checks; student-facing messages use separate plain-language wording.",
+          "unselected_alternatives": "FeedbackService does not record unselected candidate messages or a hidden ranking."
+        },
+        "input_sections": {},
+        "output_counts": {
+          "feedback_provenance_items": 7,
+          "rule_events": 9
+        },
+        "timings_ms": {
+          "feedback_ms": 0.093,
+          "rule_base_ms": 0.625,
+          "topic_service_ms": 10.232
+        },
+        "topic_service": {
+          "execution_status": "EXECUTED",
+          "input": {
+            "assignment_topic": "Should communities reduce their use of single-use plastics?",
+            "focus_source": "teacher_provided",
+            "focus_terms": [
+              "single-use plastics",
+              "communities",
+              "reduce",
+              "environment"
+            ],
+            "include_wordnet": false,
+            "text_characters": 158
+          },
+          "steps": [
+            {
+              "duration_ms": 7.013,
+              "execution_status": "EXECUTED",
+              "id": "spacy_document_processing",
+              "limitation": "spaCy annotations are statistical predictions; this does not validate meaning.",
+              "model_name": "core_web_sm",
+              "model_version": "3.7.1",
+              "observation_serialization_ms": 0.261,
+              "output_counts": {
+                "alphabetic_word_count": 24,
+                "sentence_count": 2,
+                "token_count": 27
+              },
+              "parse_ms": 6.752,
+              "pipeline_components": [
+                "tok2vec",
+                "tagger",
+                "parser",
+                "attribute_ruler",
+                "lemmatizer",
+                "ner"
+              ]
+            },
+            {
+              "candidate_count": 11,
+              "duration_ms": 0.215,
+              "execution_status": "EXECUTED",
+              "id": "concept_extraction",
+              "implementation": "TopicService._extract_concepts on the already parsed Doc.",
+              "output": [
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "single use plastic",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 19,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "ADJ",
+                        "NOUN",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        0,
+                        2,
+                        3
+                      ],
+                      "start": 0,
+                      "text": "Single-use plastics"
+                    }
+                  ],
+                  "text": "Single-use plastics"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "our community",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 53,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "PRON",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        7,
+                        8
+                      ],
+                      "start": 38,
+                      "text": "our communities"
+                    }
+                  ],
+                  "text": "our communities"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase",
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "community",
+                  "occurrence_count": 2,
+                  "occurrences": [
+                    {
+                      "end": 66,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        10
+                      ],
+                      "start": 55,
+                      "text": "Communities"
+                    },
+                    {
+                      "end": 53,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        8
+                      ],
+                      "start": 42,
+                      "text": "communities"
+                    }
+                  ],
+                  "text": "Communities"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "their use",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 90,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "PRON",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        13,
+                        14
+                      ],
+                      "start": 81,
+                      "text": "their use"
+                    }
+                  ],
+                  "text": "their use"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "these plastic",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 108,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "DET",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        16,
+                        17
+                      ],
+                      "start": 94,
+                      "text": "these plastics"
+                    }
+                  ],
+                  "text": "these plastics"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase",
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "river",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 140,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        22
+                      ],
+                      "start": 134,
+                      "text": "rivers"
+                    }
+                  ],
+                  "text": "rivers"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "harm animal",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 157,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "NOUN",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        24,
+                        25
+                      ],
+                      "start": 145,
+                      "text": "harm animals"
+                    }
+                  ],
+                  "text": "harm animals"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "use",
+                  "occurrence_count": 2,
+                  "occurrences": [
+                    {
+                      "end": 10,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        2
+                      ],
+                      "start": 7,
+                      "text": "use"
+                    },
+                    {
+                      "end": 90,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        14
+                      ],
+                      "start": 87,
+                      "text": "use"
+                    }
+                  ],
+                  "text": "use"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "plastic",
+                  "occurrence_count": 2,
+                  "occurrences": [
+                    {
+                      "end": 19,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        3
+                      ],
+                      "start": 11,
+                      "text": "plastics"
+                    },
+                    {
+                      "end": 108,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        17
+                      ],
+                      "start": 100,
+                      "text": "plastics"
+                    }
+                  ],
+                  "text": "plastics"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "harm",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 149,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        24
+                      ],
+                      "start": 145,
+                      "text": "harm"
+                    }
+                  ],
+                  "text": "harm"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "animal",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 157,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        25
+                      ],
+                      "start": 150,
+                      "text": "animals"
+                    }
+                  ],
+                  "text": "animals"
+                }
+              ]
+            },
+            {
+              "duration_ms": 1.087,
+              "execution_status": "EXECUTED",
+              "focus_term_count": 4,
+              "id": "topic_matching",
+              "observed_focus_term_count": 3
+            },
+            {
+              "duration_ms": 0.002,
+              "execution_status": "SKIPPED",
+              "id": "wordnet_direct_suggestions",
+              "limitation": "This status covers TopicService focus-term suggestions, not separate cross-stage WordNet comparisons.",
+              "lookup_pairs": [],
+              "output": [],
+              "resource_probe": null,
+              "status": "disabled",
+              "suggestion_count": 0,
+              "wordnet_version": null
+            }
+          ],
+          "total_ms": 8.78
+        }
+      }
+    },
+    "teacher_context": {
+      "assignment_topic": "Should communities reduce their use of single-use plastics?",
+      "automatically_derived_candidates": [],
+      "focus_source": "teacher_provided",
+      "focus_terms": [
+        {
+          "normalized_form": "single use plastic",
+          "normalized_words": [
+            "single",
+            "use",
+            "plastic"
+          ],
+          "surface_words": [
+            "single",
+            "use",
+            "plastics"
+          ],
+          "term": "single-use plastics",
+          "wordnet_pos": [
+            "a",
+            "n"
+          ]
+        },
+        {
+          "normalized_form": "community",
+          "normalized_words": [
+            "community"
+          ],
+          "surface_words": [
+            "communities"
+          ],
+          "term": "communities",
+          "wordnet_pos": [
+            "n"
+          ]
+        },
+        {
+          "normalized_form": "reduce",
+          "normalized_words": [
+            "reduce"
+          ],
+          "surface_words": [
+            "reduce"
+          ],
+          "term": "reduce",
+          "wordnet_pos": [
+            "v"
+          ]
+        },
+        {
+          "normalized_form": "environment",
+          "normalized_words": [
+            "environment"
+          ],
+          "surface_words": [
+            "environment"
+          ],
+          "term": "environment",
+          "wordnet_pos": [
+            "n"
+          ]
+        }
+      ]
+    },
+    "teacher_context_call_frequency": {
+      "basis": "prepare_teacher_context calls the model once for the topic when no focus list is supplied, then once for each term passed to _unique_focus_terms; explicit terms skip topic parsing.",
+      "execution_status": "EXECUTED",
+      "full_section_spacy_documents": 1,
+      "spacy_calls_for_assignment_topic": 0,
+      "spacy_calls_for_focus_phrase_normalization": 4,
+      "status": "SOURCE_DERIVED_CALL_COUNT_NOT_TIMED_SEPARATELY",
+      "teacher_context_spacy_calls_source_derived": 4,
+      "total_spacy_nlp_invocations_source_derived": 5
+    },
+    "teacher_context_preparation_ms": 16.487,
+    "trace_version": 1
+  },
+  "stage_id": "INTRODUCTION"
+}

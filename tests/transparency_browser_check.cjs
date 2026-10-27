@@ -1,0 +1,1371 @@
+/* Real Chrome/CDP checks using only Node's built-in modules. */
+const assert = require('node:assert/strict');
+const { spawn } = require('node:child_process');
+const fs = require('node:fs');
+const path = require('node:path');
+const [origin, artifacts] = process.argv.slice(2);
+const chromePath = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+const topic = 'Should communities reduce their use of single-use plastics?';
+const focus = 'single-use plastics, communities, reduce, environment';
+const intro = 'Single-use plastics are everywhere in our communities. Communities should reduce their use of these plastics because they can pollute rivers and harm animals.';
+const body = 'Communities can reduce single-use plastics by carrying reusable bags. Reusable bags reduce waste in rivers.\n\nPlastic containers harm animals. Communities can protect animals by using reusable containers.';
+const conclusion = 'In conclusion, communities should reduce single-use plastics. Reusable bags and containers can protect rivers and animals.';
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const errors = [];
+let browser, socket, sessionId, nextId = 0;
+const pending = new Map();
+const checks = [];
+function send(method, params = {}, browserLevel = false) {
+  const id = ++nextId;
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => { pending.delete(id); reject(new Error(`CDP timeout: ${method}`)); }, 45000);
+    pending.set(id, { resolve, reject, timer });
+    socket.send(JSON.stringify({ id, method, params, ...(!browserLevel && sessionId ? { sessionId } : {}) }));
+  });
+}
+async function evaluate(expression) {
+  const result = await send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true, userGesture: true });
+  if (result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));
+  return result.result.value;
+}
+async function wait(expression, description) {
+  for (let i = 0; i < 240; i++) {
+    if (await evaluate(expression)) return;
+    await delay(100);
+  }
+  throw new Error(`Browser wait failed: ${description}`);
+}
+async function navigate(route, ready) {
+  await send('Page.navigate', { url: origin + route });
+  await wait(ready, route);
+}
+async function fill(selector, text) {
+  await evaluate(`(() => { const element=document.querySelector(${JSON.stringify(selector)}); element.value=${JSON.stringify(text)}; element.dispatchEvent(new Event('input',{bubbles:true})); })()`);
+}
+async function click(selector) {
+  await evaluate(`document.querySelector(${JSON.stringify(selector)}).click()`);
+}
+async function login(username) {
+  await navigate('/login', `location.pathname==='/login' && !!document.querySelector('#username')`);
+  await fill('#username', username);
+  await fill('#password', 'browser-password-1');
+  await evaluate(`document.querySelector('form').requestSubmit()`);
+  await wait(username === 'browser_teacher' ? `location.pathname==='/teacher'` : `location.pathname==='/' && typeof state!=='undefined' && !state.restoring`, 'login complete');
+}
+async function screenshot(name) {
+  // Let viewport/scroll changes reach the compositor before capturing the
+  // native textarea and its backdrop, which can be painted in separate layers.
+  await evaluate(`new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))`);
+  await delay(100);
+  const image = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
+  fs.writeFileSync(path.join(artifacts, name + '.png'), Buffer.from(image.data, 'base64'));
+}
+async function selectView(main, sub) {
+  const key=`${main}:${sub}`;
+  const owner=await evaluate(`Object.entries(NlpProcessExplorer.sectionOwners).find(([,keys])=>keys.includes(${JSON.stringify(key)}))?.[0]`);
+  assert.ok(owner,'original technical section has a process home: '+key);
+  if(owner==='header'){
+    if(!await evaluate(`document.querySelector('.explorer-input-records').open`))await click('.explorer-input-records > summary');
+  }else{
+    await click(`[data-process-id="${owner}"]`);
+    assert.equal(await evaluate('transparencyTabsApi.activeProcessId'),owner);
+    assert.equal(await evaluate(`document.querySelector('[data-explorer-developer="${owner}"]').tagName`),'SECTION','developer evidence is always visible');
+  }
+  if(await evaluate(`document.querySelector('[data-evidence-section="${key}"]').open`))await click(`[data-evidence-section="${key}"] > summary`);
+  await click(`[data-evidence-section="${key}"] > summary`);
+  assert.ok(await evaluate(`document.querySelector('[data-evidence-section="${key}"]').open&&document.querySelector('[data-evidence-section="${key}"]').getBoundingClientRect().height>0`),'original evidence reachable: '+key);
+}
+async function verifyInlineGuidance(response, expectedContent, capture = false) {
+  const originalState=await evaluate(`JSON.stringify(state)`);
+  const editor=await evaluate(`document.querySelector('#stage-text').value`);
+  const requests=await evaluate(`__analysisCalls.length`);
+  const writes=await evaluate(`__writes.length`);
+  const presentation=await evaluate(`studentFeedbackPresentation(state.analyses[state.currentStage])`);
+  const neutral=presentation.status==='NEUTRAL_OBSERVATION';
+  if(neutral){
+    assert.equal(expectedContent,null,'neutral call sites pass no corrective lesson');
+    assert.equal(presentation.teaching_content_source,null,'neutral branch displays no teaching source');
+    assert.equal(presentation.writing_dimension,null,'neutral branch displays no 6+1 concern label');
+    assert.equal(presentation.writing_skill,null,'neutral branch displays no corrective skill');
+    assert.deepEqual(Object.keys(presentation.displayed_guidance),['What I noticed',...(presentation.displayed_strengths?["What's working"]:[])],'neutral guidance omits empty corrective headings');
+  }else{
+    assert.equal(presentation.teaching_content_source.content_id,expectedContent);
+  }
+  assert.equal(presentation.selection_branch,response.research_trace.stages[response.stage_id].feedback_decisions.fields['Primary Feedback'].selection_branch);
+  const focus=await evaluate(`({text:document.querySelector('#feedback-writing-focus').textContent,hidden:document.querySelector('#feedback-writing-focus').hidden,label:document.querySelector('#feedback-writing-focus').getAttribute('aria-label')})`);
+  if(neutral){
+    assert.equal(focus.text,'No specific writing issue detected');
+    assert.equal(focus.hidden,presentation.tutor_items.length>1);
+    assert.equal(focus.label,'Neutral observation result, not a writing grade');
+  }else{
+    assert.equal(focus.text,presentation.displayed_dimension_label);
+    assert.equal(focus.hidden,presentation.tutor_items.length>1);
+  }
+  const primary=presentation.tutor_items[0];
+  let displayed;
+  if(neutral){
+    const sections=await evaluate(`({evidence:document.getElementById('tutor-evidence-section').hidden,why:document.getElementById('tutor-why-section').hidden,task:document.getElementById('tutor-task-section').hidden,working:document.getElementById('tutor-working-section').hidden})`);
+    assert.equal(sections.evidence,true,'neutral result shows no error location');
+    assert.equal(sections.why,true,'neutral result shows no Why it matters heading');
+    assert.equal(sections.task,true,'neutral result shows no How to improve heading');
+    assert.equal(sections.working,!presentation.displayed_strengths,'recorded strength shown only when present');
+    assert.equal(await evaluate(`document.querySelectorAll('#tutor-evidence mark,#editor-mirror mark').length`),0,'neutral result displays no error marks');
+    displayed=await evaluate(`({'What I noticed':document.querySelector('#tutor-noticed').textContent,...(!document.getElementById('tutor-working-section').hidden?{"What's working":document.querySelector('#tutor-working').textContent}:{})})`);
+    assert.deepEqual(displayed,presentation.displayed_guidance,'neutral tutor text matches the presentation model');
+    assert.ok(displayed['What I noticed']&&displayed['What I noticed'].trim(),'neutral notice is displayed');
+  }else{
+    displayed=await evaluate(`({'What I noticed':document.querySelector('#tutor-noticed').textContent,'Look at your writing':(document.querySelector('#tutor-evidence').textContent||'').trim(),'Why it matters':document.querySelector('#tutor-why').textContent,'How to improve':document.querySelector('#tutor-task').textContent})`);
+    // The evidence paragraph textContent joins contexts without a separator; the
+    // model joins with a newline. Compare with that difference allowed.
+    const modelGuidance={...presentation.displayed_guidance};
+    const domGuidance={...displayed};
+    if(modelGuidance['Look at your writing'].includes('\n')) {
+      domGuidance['Look at your writing']=domGuidance['Look at your writing'].replace(/\s+/g,'').includes(modelGuidance['Look at your writing'].replace(/\s+/g,''))?modelGuidance['Look at your writing']:domGuidance['Look at your writing'];
+      assert.equal(domGuidance['Look at your writing'].replace(/\s+/g,''),modelGuidance['Look at your writing'].replace(/\s+/g,''),'evidence characters match model');
+    } else {
+      assert.deepEqual(domGuidance,modelGuidance);
+    }
+    assert.equal(displayed['What I noticed'],primary.noticed);
+  }
+  const words=Object.values(displayed).join(' ').split(/\s+/).length;
+  if(!neutral) assert.ok(words>=35);
+  assert.equal(await evaluate(`document.querySelectorAll('#help-me-understand,#feedback-help-panel').length`),0,'separate help interaction removed');
+  await evaluate(`document.querySelector('#stage-text').focus(); displayFeedback(state.analyses[state.currentStage]);`);
+  assert.equal(await evaluate(`document.activeElement.id`),'stage-text','guidance never interrupts editor focus');
+  await selectView('engine','primary');
+  const traceRows=await evaluate(`Array.from(Array.from(document.querySelectorAll('#nlp-subpanel-engine-primary table')).find(table=>Array.from(table.tHead.rows[0].cells).some(cell=>cell.textContent==='Exact displayed guidance')).tBodies[0].rows,row=>Array.from(row.cells,cell=>cell.textContent))`);
+  const tracePairs=traceRows.map(row=>[row[0],row[2]]);
+  const expectedPairs=Object.entries(displayed);
+  assert.equal(tracePairs.length,expectedPairs.length);
+  for(let i=0;i<tracePairs.length;i+=1) {
+    assert.equal(tracePairs[i][0],expectedPairs[i][0]);
+    assert.equal(tracePairs[i][1].replace(/\s+/g,''),expectedPairs[i][1].replace(/\s+/g,''),'trace evidence characters match DOM');
+  }
+  assert.equal(traceRows[neutral?0:1][1],neutral?response.feedback['Primary Feedback']:'Verified analysis evidence');
+  if(neutral) assert.equal(traceRows.some(row=>row[1]==='Verified analysis evidence'),false,'neutral trace shows no verified evidence row');
+  if(neutral&&traceRows[1]) assert.equal(traceRows[1][0],"What's working");
+  if(capture) {
+    await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+    await evaluate(`document.querySelector('.feedback-card').scrollIntoView({block:'center'})`);
+    await screenshot('s51-desktop-direct-feedback');
+    await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+    await evaluate(`document.querySelector('.feedback-card').scrollIntoView({block:'center'})`);
+    const width=await evaluate(`({viewport:innerWidth,document:document.documentElement.scrollWidth,cardHeight:document.querySelector('.feedback-card').getBoundingClientRect().height})`);
+    assert.equal(width.viewport,390);assert.ok(width.document<=390);
+    assert.ok(width.cardHeight<900,'compact tutor card on mobile');
+    await screenshot('s51-mobile-direct-feedback');
+    await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  }
+  assert.equal(await evaluate(`document.querySelector('#stage-text').value`),editor);
+  assert.equal(await evaluate(`JSON.stringify(state)`),originalState,'guidance does not change drafts, progression, lessons or saved state');
+  assert.equal(await evaluate(`__analysisCalls.length`),requests,'guidance/trace never reruns NLP');
+  assert.equal(await evaluate(`__writes.length`),writes,'guidance never persists writing');
+  checks.push({check:'S5.1 concise inline scaffolding',stage:response.stage_id,dimension:presentation.writing_dimension,skill:presentation.writing_skill,branch:presentation.selection_branch,words,exactDisplayedGuidance:displayed,independentWritingPreserved:true});
+}
+async function verifyLayout(width, height, name) {
+  await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 600 });
+  await evaluate(`document.querySelector('#nlp-transparency').scrollIntoView({block:'start'})`);
+  const dimensions = await evaluate(`(() => {const stage=document.querySelector('.explorer-stage-navigation');const processes=document.querySelector('.explorer-process-group:not([hidden]) .explorer-process-buttons');return {viewport:innerWidth,document:document.documentElement.scrollWidth,stageWidth:stage.clientWidth,stageScroll:stage.scrollWidth,processWidth:processes?processes.clientWidth:0,processScroll:processes?processes.scrollWidth:0,stageButtons:stage.querySelectorAll('.explorer-stage-button').length,legacyNavigation:document.querySelectorAll('#nlp-process-select,.explorer-navigation,.explorer-mobile-navigation,.explorer-layout').length};})()`);
+  assert.ok(dimensions.document <= dimensions.viewport + 1, `${name}: no page-wide horizontal overflow: ${JSON.stringify(dimensions)}`);
+  assert.equal(dimensions.viewport,width,`${name}: mobile viewport must not shrink to accommodate overflowing header controls`);
+  assert.ok(dimensions.stageWidth > 100);
+  assert.equal(dimensions.stageButtons,6,`${name}: six horizontal stage buttons`);
+  assert.equal(dimensions.legacyNavigation,0,`${name}: obsolete vertical navigation absent`);
+  if (width < 600) {
+    assert.ok(dimensions.stageScroll>0&&dimensions.processWidth>0,`${name}: contextual stage and process rows render on mobile`);
+    assert.ok(dimensions.processWidth<=dimensions.document,`${name}: process row fits the content column`);
+  }
+  await screenshot(name);
+  checks.push({ check: name + ' layout', ...dimensions });
+}
+async function analyze(stage, writing) {
+  await click(`[data-stage="${stage}"]`);
+  await fill('#stage-text', writing);
+  await evaluate(`document.querySelector('#stage-text').focus()`);
+  await click('#analyze-button');
+  await wait(`document.querySelector('#nlp-transparency-content').dataset.status==='CURRENT' && state.analyses.${stage}?.stage_id==='${stage}'`, stage + ' current evidence');
+  assert.equal(await evaluate(`document.querySelectorAll('[data-operation]').length`), 16);
+  const current = await evaluate(`state.analyses.${stage}`);
+  assert.deepEqual(current, await evaluate(`window.__lastAnalysis`));
+  assert.equal(await evaluate(`document.querySelector('#tutor-noticed').textContent`), await evaluate(`studentFeedbackPresentation(state.analyses[state.currentStage]).displayed_guidance['What I noticed']`));
+  assert.equal(await evaluate(`document.activeElement.id`),'stage-text','analysis update must not move typing focus');
+  return current;
+}
+
+async function verifyCausalWalkthroughs() {
+  const corpus=JSON.parse(fs.readFileSync(path.join(__dirname,'causal_transparency_cases.json'),'utf8'));
+  const results=[];
+  for(const [name,sample] of Object.entries(corpus.cases)) {
+    // Use the real authenticated route, then inspect its unmodified response.
+    const response=await evaluate(`(async()=>{cancelAnalysisWork();const r=await fetch('/api/analyze-stage',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':document.querySelector('meta[name="csrf-token"]').content},body:JSON.stringify(${JSON.stringify({...sample,assignment_topic:corpus.assignment_topic,focus_terms:corpus.focus_terms,include_transparency_trace:true})})});if(!r.ok)throw new Error('causal API '+r.status);return r.json();})()`);
+    await evaluate(`(()=>{const r=${JSON.stringify(response)};const ling=r.analysis.linguistic_observations||r.research_trace.stages[r.stage_id].linguistic_observations;state.currentStage=r.stage_id;state.currentView=r.stage_id;document.querySelector('#stage-text').value=ling.text;document.querySelector('#assignment-topic').value=r.analysis.assignment_topic;document.querySelector('#focus-terms').value=r.analysis.lexical_topic_evidence.focus_terms.join(', ');state.drafts[r.stage_id]=ling.text;state.analyses[r.stage_id]=r;state.analysisSnapshots[r.stage_id]=analysisSnapshot(r.stage_id);displayFeedback(r);})()`);
+    const before=await evaluate(`JSON.stringify(state.analyses[state.currentStage])`), calls=await evaluate(`__analysisCalls.length`);
+    assert.equal(await evaluate(`document.querySelectorAll('[data-causal-panel]').length`),45);
+    assert.equal(await evaluate(`Array.from(document.querySelectorAll('[data-causal-panel]')).some(panel=>panel.textContent.includes('A · Original essay')||panel.textContent.includes('H · Why the conclusion is limited'))`),false,'removed A–H overview tables');
+    for(const [main,sub] of [['rules','trace'],['rules','stage'],['engine','primary'],['engine','next'],['final','overview'],['topic','wordnet']]) {
+      await selectView(main,sub);
+      await evaluate(`document.querySelector('[data-causal-panel="${main}:${sub}"] > details').open=true`);
+      await wait(`!!document.querySelector('[data-causal-details="${main}:${sub}"]')`,'causal lazy disclosure');
+      const content=await evaluate(`document.querySelector('[data-causal-panel="${main}:${sub}"]').innerText`);
+      assert.ok(await evaluate(`document.querySelector('[data-causal-details="${main}:${sub}"]').getBoundingClientRect().height>0`),`${name} ${main}:${sub}: expanded technical evidence is visible`);
+      assert.ok(content.includes('NOT RECORDED'),`${name} ${main}:${sub}: missing-evidence disclosure`);
+      if(name==='intro_presence'&&main==='rules'&&sub==='trace') assert.match(content,/alphabetic_word_count: observed 6; required count > 0; comparison satisfied/);
+      if(name==='intro_incomplete'&&main==='rules'&&sub==='stage') {assert.match(content,/Although: SCONJ/);assert.match(content,/Warning candidate retained/);}
+      if(name==='intro_before'&&main==='rules'&&sub==='stage') assert.match(content,/No warning candidate retained/);
+      if(name==='body_generic'&&main==='final') {
+        assert.match(content,/available checks did not identify a specific structural concern/);
+        assert.match(content,/NO_SUPPORTED_CONCERN_SELECTED/);
+      }
+    }
+    if(name==='intro_incomplete') {
+      // Capture all eight real rendered processes at both widths; no mock DOM.
+      for(const [main,sub] of [['student','text'],['backend','validation'],['nlp','dependencies'],['concept','occurrences'],['topic','direct'],['rules','stage'],['engine','primary'],['final','overview']]) {
+        await selectView(main,sub);
+        for(const [width,height,label] of [[1440,1000,'desktop'],[390,844,'mobile']]) {
+          await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<600});
+          await evaluate(`document.querySelector('[data-causal-panel="${main}:${sub}"]').scrollIntoView({block:'start'})`);
+          assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth+1`),`${main} ${label}: no page overflow`);
+          await screenshot(`causal-${main}-${label}`);
+        }
+      }
+    }
+    assert.equal(await evaluate(`JSON.stringify(state.analyses[state.currentStage])`),before);
+    assert.equal(await evaluate(`__analysisCalls.length`),calls,'inspection does not analyze');
+    results.push({name,stage:response.stage_id,primaryBranch:response.research_trace.stages[response.stage_id].feedback_decisions.fields['Primary Feedback'].selection_branch,events:response.analysis.rule_evidence.map(e=>e.rule_id)});
+  }
+  // Boundary probe: an empty Introduction must return 400, never a fabricated analyzed response.
+  // Chrome logs the expected 400 as a console network error, so it is exempted only while this probe runs.
+  globalThis.__expectNetwork400 = true;
+  const empty=await evaluate(`(async()=>{const r=await fetch('/api/analyze-stage',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':document.querySelector('meta[name="csrf-token"]').content},body:JSON.stringify({stage_id:'INTRODUCTION',assignment_topic:'Classroom smartphones',introduction_text:''})});return {status:r.status,body:await r.json()};})()`);
+  assert.equal(empty.status,400);
+  for(let i=0;i<40 && !errors.some(e=>String(e.url||'').endsWith('/api/analyze-stage')&&String(e.text||'').includes('400'));i++) await delay(100);
+  globalThis.__expectNetwork400 = false;
+  fs.writeFileSync(path.join(artifacts,'causal-cases.json'),JSON.stringify({results,empty},null,2));
+  checks.push({check:'Causal walkthroughs: real API cases, 45 panels, source comparisons, informational events, read-only inspection, 16 desktop/mobile screenshots',cases:results,emptyInputStatus:empty.status});
+  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+}
+
+async function verifyRuleDecisionTrees() {
+  const corpus=JSON.parse(fs.readFileSync(path.join(__dirname,'causal_transparency_cases.json'),'utf8'));
+  const exactIntro='Smartphones are common in many classrooms, and students often use them to find information. Teachers can use smartphones for learning activities, such as looking up difficult words and reading educational materials. However, notifications and games can cause distractions during class. Although smartphones can also interrupt lessons. Schools should allow smartphones during teacher-guided activities because clear rules can help students focus on learning.';
+  const samples=[['intro',{stage_id:'INTRODUCTION',introduction_text:exactIntro}],['body',corpus.cases.body_wordnet],['conclusion',corpus.cases.conclusion_new]];
+  const records=[];
+  for(const [name,sample] of samples) {
+    const payload={...sample,assignment_topic:'Should students be allowed to use smartphones during class?',focus_terms:['smartphones','students','classroom','learning','distractions'],include_transparency_trace:true};
+    const response=await evaluate(`(async()=>{cancelAnalysisWork();const r=await fetch('/api/analyze-stage',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':document.querySelector('meta[name="csrf-token"]').content},body:JSON.stringify(${JSON.stringify(payload)})});if(!r.ok)throw new Error('rule tree API '+r.status);return r.json();})()`);
+    await evaluate(`(()=>{const r=${JSON.stringify(response)};const d=transparencyData(r);state.currentStage=r.stage_id;state.currentView=r.stage_id;document.querySelector('#stage-text').value=transparencyCurrentText(d);state.drafts[r.stage_id]=document.querySelector('#stage-text').value;state.analyses[r.stage_id]=r;state.analysisSnapshots[r.stage_id]=analysisSnapshot(r.stage_id);displayFeedback(r);})()`);
+    const snapshot=await evaluate(`JSON.stringify(state)`), calls=await evaluate(`__analysisCalls.length`), writes=await evaluate(`__writes.length`);
+    await selectView('rules','overview');
+    const ids=response.analysis.rule_evaluation_trace.map(r=>r.rule_id);
+    assert.deepEqual(await evaluate(`Array.from(document.querySelector('.rule-tree-selector').options,o=>o.value)`),ids);
+    for(const row of response.analysis.rule_evaluation_trace) {
+      await evaluate(`(()=>{const s=document.querySelector('.rule-tree-selector');s.value=${JSON.stringify(row.rule_id)};s.dispatchEvent(new Event('change'));})()`);
+      assert.equal(await evaluate(`document.querySelector('[data-rule-explorer]').dataset.ruleStatus`),row.status);
+      assert.equal(await evaluate(`document.querySelectorAll('[data-rule-node]').length`),6);
+      const expected=await evaluate(`(()=>{const r=state.analyses[state.currentStage];return buildRuleDecisionTree(r.analysis.rule_evaluation_trace.find(x=>x.rule_id===${JSON.stringify(row.rule_id)}),r).edges.some(e=>e.to==='feedback');})()`);
+      assert.equal(await evaluate(`!!document.querySelector('[data-rule-to="feedback"]')`),expected);
+      await click('[data-rule-node="decision"]');
+      assert.ok((await evaluate(`document.querySelector('.rule-tree-details').innerText`)).includes(row.status));
+      assert.ok((await evaluate(`document.querySelector('.rule-tree-decision-summary').innerText`)).includes('Why did this rule produce this result?'));
+      assert.ok(!(await evaluate(`document.querySelector('[data-rule-explorer]').innerText`)).includes('No supported connector'));
+      if(row.rule_id==='INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE') {
+        const summary=await evaluate(`document.querySelector('.rule-tree-decision-summary').innerText`);
+        assert.match(summary,/5 central-direction candidates/);
+        assert.match(summary,/absence condition was not satisfied/);
+        await click('[data-rule-node="writing"]');
+        assert.match(await evaluate(`document.querySelector('.rule-tree-evidence-role').innerText`),/not detected writing mistakes/);
+        assert.equal(await evaluate(`document.querySelectorAll('.rule-tree-details .rule-tree-writing').length`),2);
+        assert.ok(await evaluate(`document.querySelectorAll('.rule-tree-details mark').length<=6`));
+        await evaluate(`Array.from(document.querySelectorAll('.rule-tree-details details')).find(d=>d.querySelector('summary').textContent==='Show all relevant verified evidence').open=true`);
+        await wait(`document.querySelectorAll('.rule-tree-details .rule-tree-writing').length>2`,'expanded verified evidence');
+        assert.equal(await evaluate(`!!document.querySelector('[data-rule-to="feedback"]')`),false);
+      }
+    }
+    // Retained dependency visualization remains interactive and renders actual SVG edges.
+    await selectView('nlp','dependencies');
+    assert.ok(await evaluate(`document.querySelectorAll('.dependency-tree-node').length>0`));
+    assert.ok(await evaluate(`document.querySelectorAll('svg .dependency-tree-edge').length>0`));
+    await click('.dependency-tree-node');
+    assert.ok((await evaluate(`document.querySelector('.dependency-tree-details').innerText`)).includes('Token span'));
+    await selectView('rules','overview');
+    const captures=name==='intro' ? [['INTRO.TEXT.PRESENT','text-present'],['INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR','incomplete-subordinator'],['INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED','non-triggered'],['INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE','missing-structure']]
+      : [[ids.find(id=>id.includes(name==='body'?'SUPPORTING_DETAIL':'NEW_MATERIAL.UNOBSERVED'))||ids[0],name]];
+    for(const [id,filename] of captures) {
+      await evaluate(`(()=>{const s=document.querySelector('.rule-tree-selector');s.value=${JSON.stringify(id)};s.dispatchEvent(new Event('change'));})()`);
+      for(const [width,height,label] of [[1440,1100,'desktop'],[390,844,'mobile']]) {
+        await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<600});
+        await evaluate(`document.querySelector('[data-rule-explorer]').scrollIntoView({block:'start'})`);
+        assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth+1`),'no page overflow');
+        const geometry=await evaluate(`Array.from(document.querySelectorAll('[data-rule-node]'),n=>{const r=n.getBoundingClientRect();return {top:r.top,bottom:r.bottom,width:r.width};})`);
+        assert.ok(geometry.every((r,i)=>r.width>150&&(!i||r.top>=geometry[i-1].bottom)),'readable non-overlapping nodes');
+        await screenshot(`rule-tree-${filename}-${label}`);
+        await click('[data-rule-node="conditions"]');
+        await evaluate(`document.querySelector('.rule-tree-details').scrollIntoView({block:'start'})`);
+        await screenshot(`rule-tree-${filename}-${label}-conditions`);
+        await evaluate(`document.querySelector('.rule-tree-decision-summary').scrollIntoView({block:'start'})`);
+        await screenshot(`rule-tree-${filename}-${label}-summary`);
+        await click('[data-rule-node="writing"]');
+      }
+    }
+    // Links from the existing tables' tabs use the same explorer.
+    for(const sub of ['triggered','not-triggered','trace']) {
+      await selectView('rules',sub);
+      await evaluate(`(()=>{const p=document.querySelector('#nlp-subpanel-rules-${sub}');Array.from(p.querySelectorAll('details')).find(d=>d.querySelector('summary')?.textContent==='Explore these rules in the Visual Decision Tree').open=true;})()`);
+      await wait(`!!document.querySelector('#nlp-subpanel-rules-${sub} [data-open-rule]')`,'rule links');
+      await click(`#nlp-subpanel-rules-${sub} [data-open-rule]`);
+      assert.equal(await evaluate(`transparencyTabsApi.activeProcessId`),'rule-events');
+    }
+    assert.equal(await evaluate(`JSON.stringify(state)`),snapshot);
+    assert.equal(await evaluate(`__analysisCalls.length`),calls);
+    assert.equal(await evaluate(`__writes.length`),writes);
+    records.push({stage:response.stage_id,rules:ids.length});
+  }
+  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  checks.push({check:'Rule Base decision trees: exact Introduction, dynamic Body/Conclusion, provenance edges, dependency tree, read-only selection, desktop/mobile screenshots',records});
+}
+
+async function verifyFeedbackDecisionFlow() {
+  const corpus=JSON.parse(fs.readFileSync(path.join(__dirname,'causal_transparency_cases.json'),'utf8'));
+  const exactIntro='Smartphones are common in many classrooms, and students often use them to find information. Teachers can use smartphones for learning activities, such as looking up difficult words and reading educational materials. However, notifications and games can cause distractions during class. Although smartphones can also interrupt lessons. Schools should allow smartphones during teacher-guided activities because clear rules can help students focus on learning.';
+  const FIELDS=['Current Goal','Primary Feedback',"What's Working",'Needs Attention','Next Step'];
+  const samples=[
+    ['intro',{stage_id:'INTRODUCTION',introduction_text:exactIntro}],
+    ['body',corpus.cases.body_wordnet],
+    ['conclusion',corpus.cases.conclusion_new],
+  ];
+  const records=[];
+  const alignStates=new Set();
+  let lastState,lastCalls,lastWrites,uncitedRecord=null;
+  for(const [name,sample] of samples) {
+    const payload={...sample,assignment_topic:'Should students be allowed to use smartphones during class?',focus_terms:['smartphones','students','classroom','learning','distractions'],include_transparency_trace:true};
+    const response=await evaluate(`(async()=>{cancelAnalysisWork();const r=await fetch('/api/analyze-stage',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':document.querySelector('meta[name="csrf-token"]').content},body:JSON.stringify(${JSON.stringify(payload)})});if(!r.ok)throw new Error('feedback flow API '+r.status);return r.json();})()`);
+    await evaluate(`(()=>{const r=${JSON.stringify(response)};const d=transparencyData(r);state.currentStage=r.stage_id;state.currentView=r.stage_id;document.querySelector('#stage-text').value=transparencyCurrentText(d);state.drafts[r.stage_id]=document.querySelector('#stage-text').value;state.analyses[r.stage_id]=r;state.analysisSnapshots[r.stage_id]=analysisSnapshot(r.stage_id);displayFeedback(r);})()`);
+    const snapshot=await evaluate(`JSON.stringify(state)`), calls=await evaluate(`__analysisCalls.length`), writes=await evaluate(`__writes.length`);
+    lastState=snapshot; lastCalls=calls; lastWrites=writes;
+    await selectView('engine','overview');
+    assert.equal(await evaluate(`document.querySelectorAll('#nlp-transparency-content [data-evidence-section]').length`),45,`${name}: all 45 original technical sections remain`);
+    assert.equal(await evaluate(`document.querySelectorAll('[data-feedback-flow]').length`),1,`${name}: exactly one feedback flow explorer`);
+    assert.equal(await evaluate(`!!document.querySelector('#nlp-subpanel-engine-overview [data-feedback-flow]')`),true,`${name}: explorer mounted in Feedback Engine overview`);
+    const initial=await evaluate(`(()=>{const e=document.querySelector('[data-feedback-flow]');const m=buildFeedbackDecisionFlow('Primary Feedback',state.analyses[state.currentStage]);return {text:e.innerText,summary:e.querySelector('.feedback-flow-summary').innerText,field:e.dataset.feedbackField,options:Array.from(e.querySelector('.feedback-flow-selector').options,o=>o.value),nodes:Array.from(e.querySelectorAll('[data-flow-node]')).map(b=>({key:b.dataset.flowNode,kind:b.dataset.kind,pressed:b.getAttribute('aria-pressed'),title:b.querySelector('strong').textContent})),connectors:e.querySelectorAll('.feedback-flow-connector').length,linked:e.querySelectorAll('[data-flow-from]').length,linkedTitles:Array.from(e.querySelectorAll('[data-flow-from]')).every(c=>!!c.title),edges:m.edges.length};})()`);
+    assert.match(initial.text,/Explore Feedback — Visual Decision Flow/);
+    assert.match(initial.summary,/Why was this feedback selected\?/);
+    assert.ok(initial.summary.includes('OBSERVED'),`${name}: summary reports recorded values`);
+    assert.ok(initial.summary.includes('no per-branch runtime evaluations were recorded'),`${name}: summary states the retention limitation`);
+    assert.doesNotMatch(initial.text,/rejected at runtime|checked and rejected/i,`${name}: no rejected-at-runtime claim`);
+    assert.deepEqual(initial.options,FIELDS);
+    assert.equal(initial.field,'Primary Feedback');
+    assert.deepEqual(initial.nodes.map(n=>n.key),['events','conditions','branch','output','tutor']);
+    assert.ok(initial.nodes.every(n=>n.kind&&n.title),`${name}: node kinds and titles`);
+    assert.equal(initial.nodes.filter(n=>n.pressed==='true').length,1,`${name}: exactly one pressed node`);
+    assert.equal(initial.nodes.find(n=>n.pressed==='true').key,'events');
+    assert.equal(initial.connectors,4,`${name}: four connectors`);
+    assert.equal(initial.linked,initial.edges,`${name}: linked connectors match model edges`);
+    assert.ok(initial.linkedTitles,`${name}: every linked connector carries its edge label`);
+    const sampleAlign=[];
+    for(const field of FIELDS) {
+      await evaluate(`(()=>{const s=document.querySelector('[data-feedback-flow] .feedback-flow-selector');s.value=${JSON.stringify(field)};s.dispatchEvent(new Event('change'));})()`);
+      const view=await evaluate(`(()=>{const e=document.querySelector('[data-feedback-flow]');const f=${JSON.stringify(field)};const r=state.analyses[state.currentStage];const m=buildFeedbackDecisionFlow(f,r);const d=r.research_trace.stages[r.stage_id].feedback_decisions.fields[f];return {field:e.dataset.feedbackField,branch:e.dataset.feedbackBranch,align:e.dataset.itemAlignment,modelBranch:m.branch,recorded:d.selection_branch,priority:m.prioritySentence,purpose:typeof FEEDBACK_FLOW_BRANCH_PURPOSES!=='undefined'&&m.branch?!!FEEDBACK_FLOW_BRANCH_PURPOSES[m.branch]:false,summary:e.querySelector('.feedback-flow-summary-body').innerText,identity:e.querySelector('.feedback-flow-identity').textContent,nodes:e.querySelectorAll('[data-flow-node]').length,pressed:e.querySelectorAll('[data-flow-node][aria-pressed="true"]').length,connectors:e.querySelectorAll('.feedback-flow-connector').length,linked:e.querySelectorAll('[data-flow-from]').length,edges:m.edges.length};})()`);
+      assert.equal(view.field,field,`${name}/${field} field selection`);
+      assert.equal(view.modelBranch,view.recorded,`${name}/${field} model branch equals recorded branch`);
+      assert.equal(view.branch,view.modelBranch||'NOT_RECORDED',`${name}/${field} dataset branch`);
+      assert.ok(view.purpose,`${name}/${field} recorded branch has a source-derived purpose`);
+      assert.ok(view.summary.includes(view.priority),`${name}/${field} priority sentence in summary`);
+      assert.ok(view.identity.startsWith(field),`${name}/${field} identity line`);
+      assert.equal(view.nodes,5,`${name}/${field} five nodes`);
+      assert.equal(view.pressed,1,`${name}/${field} one pressed node`);
+      assert.equal(view.connectors,4,`${name}/${field} four connectors`);
+      assert.equal(view.linked,view.edges,`${name}/${field} linked connectors match edges`);
+      sampleAlign.push(view.align); alignStates.add(view.align);
+      for(const key of ['events','conditions','branch','output','tutor']) {
+        await click(`[data-flow-node="${key}"]`);
+        const details=await evaluate(`(()=>{const d=document.querySelector('[data-feedback-flow] .feedback-flow-details');const f=${JSON.stringify(field)};const m=buildFeedbackDecisionFlow(f,state.analyses[state.currentStage]);return {title:d.querySelector('.feedback-flow-detail-title').textContent,expected:m.nodes.find(n=>n.key===${JSON.stringify(key)}).title,source:d.querySelector('.transparency-source').textContent,text:d.innerText,messages:m.messages};})()`);
+        assert.equal(details.title,details.expected,`${name}/${field}/${key} detail title`);
+        assert.ok(details.source.startsWith('Source:'),`${name}/${field}/${key} source line`);
+        assert.match(details.text,/What is this\?/,`${name}/${field}/${key} six-question rows`);
+        assert.match(details.text,/What are its limitations\?/,`${name}/${field}/${key} six-question rows`);
+        if(key==='output') for(const message of details.messages) if(message) assert.ok(details.text.includes(message),`${name}/${field} exact output text`);
+      }
+    }
+    if(name==='intro') {
+      // Count-checked item alignment with the aligned provenance record shown read-only.
+      await evaluate(`(()=>{const s=document.querySelector('[data-feedback-flow] .feedback-flow-selector');s.value="What's Working";s.dispatchEvent(new Event('change'));})()`);
+      const aligned=await evaluate(`(()=>{const e=document.querySelector('[data-feedback-flow]');const s=e.querySelector('.feedback-flow-item-selector');const r=state.analyses[state.currentStage];return {align:e.dataset.itemAlignment,count:r.feedback["What's Working"].length,hidden:s.parentElement.hidden,options:s.options.length,first:s.options[0]?s.options[0].textContent:''};})()`);
+      assert.equal(aligned.align,'available',"intro What's Working has count-checked item alignment");
+      assert.equal(aligned.hidden,false,'item selector visible when items align');
+      assert.equal(aligned.options,aligned.count+1,'one whole-field option plus one per item');
+      assert.match(aligned.first,/Whole field/);
+      await evaluate(`(()=>{const s=document.querySelector('[data-feedback-flow] .feedback-flow-item-selector');s.value='1';s.dispatchEvent(new Event('change'));})()`);
+      assert.match(await evaluate(`document.querySelector('[data-feedback-flow] .feedback-flow-item-note').textContent`),/Item 1 of/);
+      await click('[data-flow-node="output"]');
+      const itemDetails=await evaluate(`document.querySelector('[data-feedback-flow] .feedback-flow-details').innerText`);
+      assert.match(itemDetails,/Aligned Rule ID/);
+      assert.match(itemDetails,/SOURCE-VERIFIED DERIVATION/);
+      assert.match(itemDetails,/not a runtime per-item log/);
+    }
+    // Cross-links from the five field panels and provenance all reopen the same explorer.
+    for(const [sub,expected] of [['goal','Current Goal'],['primary','Primary Feedback'],['working',"What's Working"],['attention','Needs Attention'],['next','Next Step']]) {
+      await selectView('engine',sub);
+      await evaluate(`(()=>{const p=document.querySelector('#nlp-subpanel-engine-${sub}');const d=Array.from(p.querySelectorAll('details')).find(x=>x.querySelector('summary').textContent==='Explore this field in the Visual Decision Flow');d.querySelector('summary').click();})()`);
+      await wait(`!!document.querySelector('#nlp-subpanel-engine-${sub} [data-open-field]')`,`${name} ${sub} flow link`);
+      assert.equal(await evaluate(`document.querySelectorAll('#nlp-subpanel-engine-${sub} [data-open-field]').length`),1,`${name}/${sub} one link button`);
+      await click(`#nlp-subpanel-engine-${sub} [data-open-field]`);
+      assert.equal(await evaluate('transparencyTabsApi.activeProcessId'),'feedback-decision',`${name}/${sub} link opens the flow's process`);
+      assert.equal(await evaluate(`document.querySelector('[data-evidence-section="engine:overview"]').open`),true,`${name}/${sub} link expands its exact developer evidence`);
+      assert.equal(await evaluate(`document.querySelector('[data-feedback-flow]').dataset.feedbackField`),expected,`${name}/${sub} link selects ${expected}`);
+    }
+    await selectView('engine','provenance');
+    await evaluate(`(()=>{const p=document.querySelector('#nlp-subpanel-engine-provenance');const d=Array.from(p.querySelectorAll('details')).find(x=>x.querySelector('summary').textContent==='Explore each field in the Visual Decision Flow');d.querySelector('summary').click();})()`);
+    await wait(`document.querySelectorAll('#nlp-subpanel-engine-provenance [data-open-field]').length===5`,`${name} provenance flow links`);
+    await click(`#nlp-subpanel-engine-provenance [data-open-field="Needs Attention"]`);
+    assert.equal(await evaluate('transparencyTabsApi.activeProcessId'),'feedback-decision',`${name} provenance link opens the flow's process`);
+    assert.equal(await evaluate(`document.querySelector('[data-evidence-section="engine:overview"]').open`),true);
+    assert.equal(await evaluate(`document.querySelector('[data-feedback-flow]').dataset.feedbackField`),'Needs Attention',`${name} provenance link selects Needs Attention`);
+    assert.equal(await evaluate(`document.querySelectorAll('[data-open-field]').length`),10,`${name}: five field links plus five provenance links`);
+    assert.equal(await evaluate(`JSON.stringify(state)`),snapshot,`${name}: state unchanged by inspection`);
+    assert.equal(await evaluate(`__analysisCalls.length`),calls,`${name}: inspection makes no analysis request`);
+    assert.equal(await evaluate(`__writes.length`),writes,`${name}: inspection makes no persistence write`);
+    await selectView('engine','overview');
+    await evaluate(`(()=>{const s=document.querySelector('[data-feedback-flow] .feedback-flow-selector');s.value='Primary Feedback';s.dispatchEvent(new Event('change'));document.querySelector('[data-feedback-flow]').scrollIntoView({block:'start'});})()`);
+    assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth+1`),`${name}: no desktop overflow`);
+    await screenshot(`feedback-flow-${name}-desktop`);
+    if(name==='body') {
+      // Recorded-but-uncited events, including the informational WordNet event, stay visible as NOT CITED.
+      const uncitedInfo=await evaluate(`(()=>{const m=buildFeedbackDecisionFlow('Primary Feedback',state.analyses[state.currentStage]);return {count:m.uncited.length,ids:m.uncited.map(r=>r.rule_id),hasWordnet:m.uncited.some(r=>r.rule_id.includes('WORDNET'))};})()`);
+      assert.ok(uncitedInfo.count>0,'body_wordnet retains recorded-but-uncited events for Primary Feedback');
+      assert.ok(uncitedInfo.hasWordnet,'informational WordNet event is recorded but not cited by Primary Feedback');
+      await click('[data-flow-node="events"]');
+      await evaluate(`(()=>{const d=document.querySelector('[data-feedback-flow] .feedback-flow-details');const x=Array.from(d.querySelectorAll('details')).find(c=>c.querySelector('summary').textContent.includes('not cited by this field'));x.querySelector('summary').click();})()`);
+      await wait(`document.querySelector('[data-feedback-flow] .feedback-flow-details').innerText.includes('NOT CITED')`,'uncited disclosure content');
+      await evaluate(`document.querySelector('[data-feedback-flow] .feedback-flow-details').scrollIntoView({block:'start'})`);
+      await screenshot('feedback-flow-uncited-event-desktop');
+      uncitedRecord=uncitedInfo.ids;
+    }
+    records.push({stage:response.stage_id,primaryBranch:response.research_trace.stages[response.stage_id].feedback_decisions.fields['Primary Feedback'].selection_branch,itemAlignment:[...sampleAlign],screenshot:`feedback-flow-${name}-desktop`});
+  }
+  assert.ok(alignStates.has('available'),'at least one field shows count-checked item alignment');
+  assert.ok(alignStates.has('not-applicable'),'single-message fields state that item alignment does not apply');
+  // Missing provenance: UNKNOWN, never an invented NOT_CITED, and a written reason everywhere.
+  await evaluate(`(()=>{const base=JSON.parse(JSON.stringify(state.analyses[state.currentStage]));delete base.feedback['Feedback Provenance'];window.__flowProbe=base;renderNlpTransparency(base);})()`);
+  await selectView('engine','overview');
+  const probe=await evaluate(`(()=>{const m=buildFeedbackDecisionFlow('Primary Feedback',window.__flowProbe);const w=buildFeedbackDecisionFlow("What's Working",window.__flowProbe);return {field:document.querySelector('[data-feedback-flow]').dataset.feedbackField,cited:m.cited.length,uncited:m.uncited.length,unknown:m.unknown.length,emitted:(m.emitted||[]).length,align:w.itemAlignment.available?'available':w.isList?'unavailable':'not-applicable',note:w.itemAlignment.reason};})()`);
+  assert.equal(probe.field,'Primary Feedback','probe explorer renders with the default field');
+  assert.equal(probe.uncited,0,'NOT_CITED requires both decision and provenance records');
+  assert.ok(probe.cited>0,'decision rule IDs still cite emitted events without provenance');
+  if(probe.emitted>probe.cited) assert.ok(probe.unknown>0,'remaining events are UNKNOWN without provenance');
+  await click('[data-flow-node="events"]');
+  if(probe.unknown>0) {
+    await evaluate(`(()=>{const d=document.querySelector('[data-feedback-flow] .feedback-flow-details');const x=Array.from(d.querySelectorAll('details')).find(c=>c.querySelector('summary').textContent.includes('unknown connection to this field'));x.querySelector('summary').click();})()`);
+    await wait(`document.querySelector('[data-feedback-flow] .feedback-flow-details').innerText.includes('CONNECTION UNKNOWN')`,'unknown disclosure content');
+  }
+  await evaluate(`document.querySelector('[data-feedback-flow]').scrollIntoView({block:'start'})`);
+  assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth+1`),'missing provenance: no overflow');
+  await screenshot('feedback-flow-missing-provenance-desktop');
+  await evaluate(`(()=>{const s=document.querySelector('[data-feedback-flow] .feedback-flow-selector');s.value="What's Working";s.dispatchEvent(new Event('change'));})()`);
+  const probeList=await evaluate(`(()=>{const e=document.querySelector('[data-feedback-flow]');return {align:e.dataset.itemAlignment,note:e.querySelector('.feedback-flow-item-note').textContent};})()`);
+  assert.ok(['unavailable','not-applicable'].includes(probeList.align),'without provenance the item selector never claims alignment');
+  assert.ok(probeList.note.length>0,'a written reason replaces the missing alignment');
+  if(probeList.align==='unavailable') assert.match(probeList.note,/provenance/i);
+  await evaluate(`(()=>{delete window.__flowProbe;renderNlpTransparency(state.analyses[state.currentStage]);})()`);
+  assert.equal(await evaluate(`JSON.stringify(state)`),lastState,'state unchanged after the probe and its restore');
+  assert.equal(await evaluate(`__analysisCalls.length`),lastCalls,'the probe makes no analysis request');
+  assert.equal(await evaluate(`__writes.length`),lastWrites,'the probe makes no persistence write');
+  // Mobile: single-column layout, stacked non-overlapping nodes, summary visible.
+  await selectView('engine','overview');
+  await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+  await evaluate(`document.querySelector('.feedback-flow-summary').scrollIntoView({block:'center'})`);
+  const mobile=await evaluate(`(()=>{const geo=Array.from(document.querySelectorAll('[data-flow-node]')).map(n=>{const r=n.getBoundingClientRect();return {top:r.top,bottom:r.bottom,width:r.width};});const s=document.querySelector('.feedback-flow-summary').getBoundingClientRect();return {viewport:innerWidth,document:document.documentElement.scrollWidth,geo,summaryHeight:s.height,layout:getComputedStyle(document.querySelector('.feedback-flow-layout')).gridTemplateColumns};})()`);
+  assert.equal(mobile.viewport,390);
+  assert.ok(mobile.document<=390,'no mobile overflow');
+  assert.ok(mobile.summaryHeight>40,'mobile summary renders');
+  assert.equal(mobile.layout.split(' ').length,1,'single-column mobile layout');
+  assert.ok(mobile.geo.every((r,i)=>r.width>150&&(!i||r.top>=mobile.geo[i-1].bottom)),'mobile nodes stack without overlap');
+  await screenshot('feedback-flow-mobile-summary');
+  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  assert.equal(await evaluate(`JSON.stringify(state)`),lastState,'state unchanged by screenshots');
+  assert.equal(await evaluate(`__analysisCalls.length`),lastCalls,'screenshots make no analysis request');
+  assert.equal(await evaluate(`__writes.length`),lastWrites,'screenshots make no persistence write');
+  checks.push({check:'Feedback decision flow: 45 panels, five fields with recorded branch parity, six questions per node, source-verified honesty, item alignment, cross-links, read-only inspection, desktop/mobile screenshots',records,itemAlignment:[...alignStates],uncitedBodyEvents:uncitedRecord});
+  checks.push({check:'Feedback decision flow missing-provenance probe: UNKNOWN not NOT_CITED, written reasons, no requests',unknown:probe.unknown,cited:probe.cited,uncited:probe.uncited,listAlignment:probe.align});
+}
+
+async function verifyProcessExplorer() {
+  const before=await evaluate(`({calls:__analysisCalls.length,state:JSON.stringify(state)})`);
+  assert.equal(await evaluate(`document.querySelectorAll('[data-main-tab],[data-sub-tab],[data-view-mode]').length`),0);
+  assert.equal(await evaluate(`document.querySelectorAll('[data-evidence-section]').length`),45);
+  assert.equal(await evaluate(`document.querySelectorAll('.explorer-stage-button').length`),6,'six horizontal stage buttons');
+  assert.equal(await evaluate(`document.querySelectorAll('[data-explorer-toggle]').length`),0,'no evidence-revealing toggle exists');
+  const processes=await evaluate(`transparencyTabsApi.processes.map(p=>({id:p.id,title:p.title,status:p.execution.status,group:p.group}))`);
+  assert.equal(new Set(processes.map(p=>p.id)).size,processes.length);
+  for(const process of processes){
+    await click(`[data-process-id="${process.id}"]`);
+    assert.equal(await evaluate(`document.querySelectorAll('[data-process-id][aria-current="step"]').length`),1);
+    assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('[data-explorer-process]')).filter(p=>!p.hidden).map(p=>p.dataset.explorerProcess)`),[process.id]);
+    assert.equal(await evaluate(`document.querySelector('.explorer-stage-button[aria-pressed="true"]').textContent.includes(${JSON.stringify(process.group==='preparation'?'Assignment Preparation':process.group==='linguistic'?'Linguistic Processing':process.group==='topic'?'Topic Processing':process.group==='rules'?'Rule Evaluation':process.group==='feedback'?'Feedback Decisions':'Output & Technical Trace')})`),true,process.id+' activates its stage');
+    // innerText applies the CSS uppercase transform on the A–H titles, so the label check reads source text.
+    const panel=await evaluate(`document.querySelector('[data-explorer-process="${process.id}"]').textContent`);
+    for(const label of ['Process Overview','Actual Input','Visual Representation','Actual Recorded Evidence','How the Process Works','Output and Next Destination','Implementation Source','Limitations','Developer Evidence'])assert.ok(panel.includes(label),process.id+' '+label);
+    assert.equal(await evaluate(`document.querySelectorAll('[data-explorer-process="${process.id}"] [data-stage-section]').length`),8,process.id+': A–H evidence sections');
+    assert.equal(await evaluate(`document.querySelectorAll('[data-explorer-process="${process.id}"] details[data-stage-section]').length`),0,process.id+': no evidence hidden in a disclosure');
+    assert.equal(await evaluate(`document.querySelector('[data-explorer-developer="${process.id}"]').tagName`),'SECTION',process.id+': developer evidence always visible');
+    assert.equal(await evaluate(`document.querySelector('[data-explorer-process="${process.id}"]').querySelectorAll('[data-explorer-toggle]').length`),0,process.id+': no toggle');
+  }
+  await selectView('rules','overview');assert.ok(await evaluate(`document.querySelector('[data-explorer-developer="rule-events"]').contains(document.querySelector('[data-rule-explorer="true"]'))`));
+  await selectView('engine','overview');assert.ok(await evaluate(`document.querySelector('[data-explorer-developer="feedback-decision"]').contains(document.querySelector('[data-feedback-flow]'))`));
+  await selectView('nlp','dependencies');
+  // The process page's own Visual Representation also draws the real tree, so scope this to the retained operation section.
+  assert.equal(await evaluate(`document.querySelectorAll('[data-dependency-tree-section="true"]').length`),2,'process page and retained operation section each render the recorded dependency tree');
+  assert.ok(await evaluate(`document.querySelector('#transparency-step-dependencies').querySelector('[data-dependency-tree-section="true"]')!==null`),'retained operation section still contains its dependency visualization');
+  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  // Selecting a stage or process swaps the content in place; it must not pull the viewport.
+  await evaluate(`document.querySelector('#nlp-transparency').scrollIntoView({block:'start'})`);
+  await delay(150);
+  const stageAnchor=await evaluate(`window.scrollY`);
+  await click('[data-process-stage="rules"]');
+  await delay(100);
+  const stageSwitch=await evaluate(`({y:window.scrollY,group:transparencyTabsApi.processes.find(p=>p.id===transparencyTabsApi.activeProcessId).group,stage:document.querySelector('.explorer-stage-button[aria-pressed="true"]').dataset.processStage})`);
+  assert.equal(stageSwitch.group,'rules','stage click selects the first process of that stage');
+  assert.equal(stageSwitch.stage,'rules','stage button state follows the click');
+  assert.equal(stageSwitch.y,stageAnchor,'stage click switches content without moving the page');
+  await evaluate(`document.querySelector('.explorer-process-navigation').scrollIntoView({block:'start'});window.scrollBy(0,-110)`);
+  await delay(100);
+  const processAnchor=await evaluate(`window.scrollY`);
+  await click('[data-process-id="rule-events"]');
+  await delay(100);
+  const processSwitch=await evaluate(`({y:window.scrollY,active:transparencyTabsApi.activeProcessId,visible:(()=>{const p=document.querySelector('[data-explorer-process="rule-events"]');return p&&!p.hidden;})()})`);
+  assert.equal(processSwitch.active,'rule-events','process click activates its panel');
+  assert.equal(processSwitch.visible,true,'process click shows the matching panel');
+  assert.equal(processSwitch.y,processAnchor,'process click switches content without moving the page');
+  await click('[data-process-id="tokens"]');await evaluate(`document.querySelector('.explorer-detail-host').scrollIntoView({block:'start'});window.scrollBy(0,-90)`);await screenshot('process-explorer-desktop');
+  const colors=await evaluate(`({active:getComputedStyle(document.querySelector('[data-process-id="tokens"]')).backgroundColor,inactive:getComputedStyle(document.querySelector('[data-process-id="pos"]')).backgroundColor})`);assert.notEqual(colors.active,colors.inactive,'selected process is visually distinct');
+  const stagePalette=await evaluate(`Array.from(document.querySelectorAll('.explorer-stage-button')).map(b=>({group:b.dataset.processStage,color:getComputedStyle(b.querySelector('.explorer-stage-number')).color,background:getComputedStyle(b.querySelector('.explorer-stage-number')).backgroundColor}))`);
+  assert.equal(new Set(stagePalette.map(item=>item.color)).size,6,'each stage has its own accent color');
+  assert.equal(await evaluate(`document.querySelector('.nlp-process-explorer').dataset.activeStage`),'linguistic','active stage color scope follows the selected process');
+  await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+  assert.equal(await evaluate(`document.querySelectorAll('#nlp-process-select,.explorer-navigation,.explorer-mobile-navigation,.explorer-layout').length`),0,'obsolete navigation absent on mobile');
+  assert.equal(await evaluate(`document.querySelectorAll('.explorer-stage-button').length`),6,'six stage buttons on mobile');
+  await evaluate(`document.querySelector('.explorer-process-navigation').scrollIntoView({block:'start'})`);
+  await delay(100);
+  const mobileAnchor=await evaluate(`window.scrollY`);
+  await click('[data-process-id="pos"]');
+  await delay(100);
+  assert.equal(await evaluate(`window.scrollY`),mobileAnchor,'mobile process click switches content without moving the page');
+  assert.equal(await evaluate('transparencyTabsApi.activeProcessId'),'pos');assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth+1`));
+  await evaluate(`document.querySelector('.explorer-process-navigation').scrollIntoView({block:'start'});window.scrollBy(0,-110)`);
+  await screenshot('process-explorer-mobile');
+  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  assert.equal(await evaluate('__analysisCalls.length'),before.calls);assert.equal(await evaluate('JSON.stringify(state)'),before.state);
+  checks.push({check:'NLP Process Explorer: six stage buttons, contextual process navigation, in-place stage/process switching without page movement, A–H evidence always visible, original 45 evidence sections, preserved visualizers, mobile layout, no rerun',processes,noTeleport:{desktop:true,mobile:true},screenshots:['process-explorer-desktop','process-explorer-mobile']});
+}
+
+async function verifyImmersiveTransparencyFocus() {
+  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  await analyze('INTRODUCTION', intro);
+  const analysisCalls = await evaluate(`__analysisCalls.length`);
+  const stateSnapshot = await evaluate(`JSON.stringify(state)`);
+  const baseline = await evaluate(`({focus:document.body.classList.contains('transparency-focus'),pageScrollable:document.documentElement.scrollHeight>innerHeight+50,toggleHidden:document.querySelector('#transparency-focus-toggle').hidden,explorer:!!document.querySelector('#nlp-transparency-content [data-process-explorer="true"]'),mainWidth:Math.round(document.querySelector('.app-main').getBoundingClientRect().width),detailWidth:Math.round(document.querySelector('#nlp-transparency').getBoundingClientRect().width),stageNavWidth:Math.round(document.querySelector('.explorer-stage-navigation').getBoundingClientRect().width)})`);
+  assert.equal(baseline.focus,false,'focus off before entry');
+  assert.equal(baseline.pageScrollable,true,'page scrolls normally before entry');
+  assert.equal(baseline.toggleHidden,false,'focus toggle visible after analysis');
+  assert.equal(baseline.explorer,true,'process explorer rendered');
+
+  // Scrolling down near the transparency keeps the normal page layout.
+  await evaluate(`document.querySelector('#nlp-transparency').scrollIntoView({block:'start'})`);
+  await delay(150);
+  await send('Input.dispatchMouseEvent',{type:'mouseWheel',x:700,y:500,deltaX:0,deltaY:160});
+  await delay(250);
+  assert.equal(await evaluate(`document.body.classList.contains('transparency-focus')`),false,'wheel down does not stretch the page into focus');
+  const scrolled = await evaluate(`({page:window.scrollY,mainWidth:Math.round(document.querySelector('.app-main').getBoundingClientRect().width),detailWidth:Math.round(document.querySelector('#nlp-transparency').getBoundingClientRect().width)})`);
+  assert.ok(scrolled.page>0,'page scrolls normally');
+  assert.equal(scrolled.mainWidth,baseline.mainWidth,'content width is unchanged while scrolling');
+  assert.equal(scrolled.detailWidth,baseline.detailWidth,'explorer width is unchanged while scrolling');
+
+  // Full-screen is explicit: the toggle keeps the same content width.
+  await click('#transparency-focus-toggle');
+  await delay(200);
+  assert.equal(await evaluate(`document.body.classList.contains('transparency-focus')`),true,'toggle engages full-screen');
+  const engaged = await evaluate(`(() => {const pane=document.querySelector('#nlp-transparency');const header=document.querySelector('.app-header').getBoundingClientRect();const sidebar=document.querySelector('.app-sidebar').getBoundingClientRect();const paneRect=pane.getBoundingClientRect();const toggle=document.querySelector('#transparency-focus-toggle');return {pageScrollable:document.documentElement.scrollHeight>innerHeight+2,docWidth:document.documentElement.scrollWidth,viewport:innerWidth,mainWidth:Math.round(document.querySelector('.app-main').getBoundingClientRect().width),detailWidth:Math.round(paneRect.width),stageNavWidth:Math.round(document.querySelector('.explorer-stage-navigation').getBoundingClientRect().width),headerTop:header.top,headerBottom:header.bottom,sidebarTop:sidebar.top,sidebarBottom:sidebar.bottom,sidebarLabel:document.querySelector('.app-sidebar').textContent.includes('STUDENT SPACE'),editorHidden:getComputedStyle(document.querySelector('#work-area')).display==='none',headingHidden:getComputedStyle(document.querySelector('.workspace-page-heading')).display==='none',contextHidden:getComputedStyle(document.querySelector('#workspace-assignment-context')).display==='none',paneTop:paneRect.top,paneBottom:paneRect.bottom,paneHeight:paneRect.height,inner:innerHeight,paneScrollable:pane.scrollHeight>pane.clientHeight,toggleText:toggle.textContent,ariaPressed:toggle.getAttribute('aria-pressed'),toggleHidden:toggle.hidden};})()`);
+  assert.equal(engaged.mainWidth,baseline.mainWidth,'full-screen keeps the normal content width');
+  assert.equal(engaged.detailWidth,baseline.detailWidth,'full-screen does not stretch the explorer');
+  assert.ok(engaged.stageNavWidth<=baseline.stageNavWidth,'stage navigation is never stretched in full-screen');
+  assert.equal(engaged.pageScrollable,false,'document no longer scrolls in focus — only the transparency pane'+JSON.stringify(await evaluate(`({scrollH:document.documentElement.scrollHeight,innerH:innerHeight,headerH:document.querySelector('.app-header').offsetHeight,topChrome:getComputedStyle(document.documentElement).getPropertyValue('--app-top-chrome-h'),layoutH:Math.round(document.querySelector('.app-layout').getBoundingClientRect().height),mainH:Math.round(document.querySelector('.app-main').getBoundingClientRect().height),mainMargin:getComputedStyle(document.querySelector('.app-main')).margin,viewH:Math.round(document.querySelector('.workspace-view').getBoundingClientRect().height),viewMargin:getComputedStyle(document.querySelector('.workspace-view')).margin,children:Array.from(document.querySelector('.app-main').children).map(el=>({t:el.tagName+'#'+el.id+'.'+String(el.className).slice(0,32),d:getComputedStyle(el).display,h:Math.round(el.getBoundingClientRect().height),mt:getComputedStyle(el).marginTop,mb:getComputedStyle(el).marginBottom}))})`)));
+  assert.ok(engaged.docWidth<=engaged.viewport+1,'no horizontal overflow in the wider focus layout');
+  assert.ok(engaged.headerTop<=0.5&&engaged.headerBottom>60,'header fixed at the top');
+  assert.ok(engaged.sidebarTop>=engaged.headerBottom-1&&engaged.sidebarBottom<=engaged.inner+1,'Student Space fixed above within the viewport');
+  assert.equal(engaged.sidebarLabel,true,'Student Space present');
+  assert.equal(engaged.editorHidden,true,'editor sections hidden while focused');
+  assert.equal(engaged.headingHidden,true,'workspace heading hidden while focused');
+  assert.equal(engaged.contextHidden,true,'assignment context hidden while focused');
+  assert.ok(engaged.paneTop>=60&&engaged.paneTop<160,'transparency starts right below the fixed chrome');
+  assert.ok(Math.abs(engaged.paneBottom-engaged.inner)<=40,'transparency fills to the viewport bottom');
+  assert.ok(engaged.paneScrollable,'transparency pane is the scrollable area');
+  assert.equal(engaged.toggleText,'Exit full-screen');
+  assert.equal(engaged.ariaPressed,'true');
+  assert.equal(engaged.toggleHidden,false);
+  await screenshot('transparency-focus-desktop');
+
+  // Wheel inside the pane scrolls the pane; the window scroll position never moves.
+  const beforeWheel = await evaluate(`({pane:document.querySelector('#nlp-transparency').scrollTop,page:window.scrollY})`);
+  await send('Input.dispatchMouseEvent',{type:'mouseWheel',x:700,y:500,deltaX:0,deltaY:300});
+  await delay(250);
+  const afterWheel = await evaluate(`({pane:document.querySelector('#nlp-transparency').scrollTop,page:window.scrollY})`);
+  assert.ok(afterWheel.pane>beforeWheel.pane,'wheel scrolls the transparency pane');
+  assert.equal(afterWheel.page,beforeWheel.page,'window scroll unchanged while pane scrolls');
+
+  assert.equal(await evaluate(`document.querySelectorAll('.transparency-tabs,.transparency-subtabs').length`),0,'no horizontal tab rows in full-screen explorer');
+  const paneAnchor=await evaluate(`document.querySelector('#nlp-transparency').scrollTop`);
+  await evaluate(`transparencyTabsApi.selectProcess('tokens')`);
+  await delay(100);
+  assert.equal(await evaluate(`document.querySelector('#nlp-transparency').scrollTop`),paneAnchor,'process selection in full-screen does not move the pane');
+  const tokenTable=await evaluate(`(()=>{const t=document.querySelector('[data-explorer-process="tokens"] .transparency-table-wrap');return {maxHeight:getComputedStyle(t).maxHeight,height:t.clientHeight,scroll:t.scrollHeight};})()`);
+  assert.equal(tokenTable.maxHeight,'none','reading evidence is not trapped in a nested fixed-height scroller');
+
+  // Exit with the toggle: editor sections return and the page scrolls normally again.
+  await click('#transparency-focus-toggle');
+  await delay(150);
+  const exited = await evaluate(`({focus:document.body.classList.contains('transparency-focus'),editor:getComputedStyle(document.querySelector('#work-area')).display!=='none',pageScrollable:document.documentElement.scrollHeight>innerHeight+50,label:document.querySelector('#transparency-focus-toggle').textContent,pressed:document.querySelector('#transparency-focus-toggle').getAttribute('aria-pressed')})`);
+  assert.equal(exited.focus,false,'toggle exits focus');
+  assert.equal(exited.editor,true,'editor visible again after toggle exit');
+  assert.equal(exited.pageScrollable,true,'page scrolls normally again');
+  assert.equal(exited.label,'Full-screen explorer');
+  assert.equal(exited.pressed,'false');
+
+  // Re-enter with the same toggle; wheel up at the pane top must not exit.
+  await click('#transparency-focus-toggle');
+  await delay(150);
+  assert.equal(await evaluate(`document.body.classList.contains('transparency-focus')`),true,'toggle re-enters focus');
+  await evaluate(`document.querySelector('#nlp-transparency').scrollTop=0`);
+  await delay(600);
+  await send('Input.dispatchMouseEvent',{type:'mouseWheel',x:700,y:500,deltaX:0,deltaY:-160});
+  await delay(250);
+  assert.equal(await evaluate(`document.body.classList.contains('transparency-focus')`),true,'wheel up at the pane top keeps full-screen');
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('#work-area')).display==='none'`),true,'editor stays hidden until the toggle is used');
+  await click('#transparency-focus-toggle');
+  await delay(150);
+  assert.equal(await evaluate(`document.body.classList.contains('transparency-focus')`),false,'toggle exits full-screen');
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('#work-area')).display!=='none'`),true,'editor visible after toggle exit');
+  assert.equal(await evaluate(`document.documentElement.scrollHeight>innerHeight+50`),true,'page scrollable after toggle exit');
+  assert.equal(await evaluate(`__analysisCalls.length`),analysisCalls,'focus never triggers analysis');
+  assert.equal(await evaluate(`JSON.stringify(state)`),stateSnapshot,'focus changes no drafts, analyses or saved state');
+  checks.push({check:'Full-screen process explorer (desktop): manual toggle only, normal content width, fixed header and Student Space, one content scroller, toggle exit',paneHeight:Math.round(engaged.paneHeight),viewport:engaged.viewport,pageScrollsOnly:false,analysisCallsDuringFocus:0});
+
+  // Mobile: same explicit-only contract with the Student Space as a fixed top row above the pane.
+  await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+  await evaluate(`document.querySelector('#nlp-transparency').scrollIntoView({block:'start'})`);
+  await delay(150);
+  await send('Input.dispatchMouseEvent',{type:'mouseWheel',x:195,y:400,deltaX:0,deltaY:160});
+  await delay(250);
+  assert.equal(await evaluate(`document.body.classList.contains('transparency-focus')`),false,'mobile wheel does not enter full-screen');
+  await click('#transparency-focus-toggle');
+  await delay(200);
+  assert.equal(await evaluate(`document.body.classList.contains('transparency-focus')`),true,'mobile toggle enters full-screen');
+  const mobile = await evaluate(`(() => {const header=document.querySelector('.app-header').getBoundingClientRect();const sidebar=document.querySelector('.app-sidebar').getBoundingClientRect();const pane=document.querySelector('#nlp-transparency').getBoundingClientRect();return {headerTop:header.top,headerBottom:header.bottom,sidebarTop:sidebar.top,sidebarBottom:sidebar.bottom,paneTop:pane.top,paneBottom:pane.bottom,inner:innerHeight,docWidth:document.documentElement.scrollWidth,viewport:innerWidth,pageScrollable:document.documentElement.scrollHeight>innerHeight+2,editorHidden:getComputedStyle(document.querySelector('#work-area')).display==='none',label:document.querySelector('#transparency-focus-toggle').textContent};})()`);
+  assert.ok(mobile.headerTop<=0.5&&mobile.headerBottom>50,'mobile header fixed at top');
+  assert.ok(mobile.sidebarTop>=mobile.headerBottom-1&&mobile.sidebarBottom<=mobile.paneTop+1,'mobile Student Space fixed above the transparency');
+  assert.ok(Math.abs(mobile.paneBottom-mobile.inner)<=40,'mobile pane fills to the viewport bottom');
+  assert.ok(mobile.docWidth<=mobile.viewport+1,'mobile focus has no horizontal overflow');
+  assert.equal(mobile.pageScrollable,false,'mobile document does not scroll in focus');
+  assert.equal(mobile.editorHidden,true,'mobile editor hidden while focused');
+  assert.equal(mobile.label,'Exit full-screen');
+  await screenshot('transparency-focus-mobile');
+  await click('#transparency-focus-toggle');
+  await delay(150);
+  assert.equal(await evaluate(`document.body.classList.contains('transparency-focus')`),false,'mobile toggle exit');
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('#work-area')).display!=='none'`),true,'mobile editor restored');
+  assert.equal(await evaluate(`document.documentElement.scrollHeight>innerHeight+50`),true,'mobile page scrolls normally after exit');
+  assert.equal(await evaluate(`__analysisCalls.length`),analysisCalls,'mobile focus never triggers analysis');
+  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  checks.push({check:'Immersive transparency focus (mobile): manual toggle only, header and Student Space fixed above, pane-only scrolling, toggle exit',viewport:mobile.viewport,pageScrollsOnly:false,analysisCallsDuringFocus:0});
+}
+
+async function verifyExplanationOnlyEditor() {
+  await send('Emulation.setDeviceMetricsOverride', {width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  await fill('#assignment-topic', 'Should students use smartphones in the classroom?');
+  await fill('#focus-terms', 'smartphones, students, classroom');
+  const sentence = 'Although students use smartphones during class.';
+  const short = 'Smartphones are common tools in the classroom. ' + sentence;
+  const response = await analyze('INTRODUCTION', short);
+  const decision = response.research_trace.stages.INTRODUCTION.feedback_decisions.fields['Primary Feedback'];
+  assert.equal(decision.selection_branch, 'intro_sentence_fluency_complete_sentence');
+  assert.ok(decision.rule_ids.includes('INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR'));
+  assert.equal(await evaluate(`document.querySelector('#feedback-writing-focus').textContent`), 'Sentence Fluency · Complete Your Sentence');
+  assert.equal(await evaluate(`document.querySelector('#editor-mirror mark').textContent`), sentence);
+  assert.equal(await evaluate(`document.querySelector('#editor-mirror').dataset.category`), 'Sentence Fluency');
+  assert.equal(await evaluate(`document.querySelectorAll('#introduction-lesson-next,#introduction-lesson-retry,#tutor-practice').length`), 0);
+  await evaluate(`document.querySelector('.writing-editor').scrollIntoView({block:'center'})`);
+  await screenshot('tutor-although-inside-editor');
+
+  // Newly authored 189-word stress fixture. The user's historical essay was not supplied.
+  const longIntroduction = 'Smartphones are common tools in the classroom. Students carry them to school and use them for many different activities. A phone can provide quick access to dictionaries, articles, and educational videos. Teachers sometimes ask learners to look up unfamiliar words or compare information from several sources. These activities can support a lesson when students have a clear purpose. However, phones can also distract students when messages arrive during class. Some students open games or social media instead of listening to their teacher. Schools therefore need simple rules that explain when phones are useful and when they should remain in a bag. Teachers can help students check whether information is reliable before using it in an assignment. Students should also learn to respect other people by asking permission before taking photographs. Parents and teachers can work together to encourage responsible habits. In my opinion, smartphones should be allowed for planned learning activities under teacher supervision. Students also need regular opportunities to discuss their ideas without looking at screens. Although students can find useful information using smartphones. Clear classroom expectations can help students focus on their work and use technology thoughtfully.';
+  assert.equal(longIntroduction.split(/\s+/).length, 189);
+  await analyze('INTRODUCTION', longIntroduction);
+  const exactSentence = 'Although students can find useful information using smartphones.';
+  assert.equal(await evaluate(`document.querySelector('#editor-mirror mark').textContent`), exactSentence);
+  const sourceBefore = await evaluate(`JSON.stringify(state.analyses.INTRODUCTION)`);
+  for (const [width, height, name] of [[1440,1000,'desktop'],[390,844,'mobile'],[1024,900,'resized']]) {
+    await send('Emulation.setDeviceMetricsOverride', {width,height,deviceScaleFactor:1,mobile:width<600});
+    await delay(100);
+    await evaluate(`revealEditorEvidence(); document.querySelector('.writing-editor').scrollIntoView({block:'center'})`);
+    const geometry = await evaluate(`(() => {const t=document.querySelector('#stage-text'),m=document.querySelector('#editor-mirror'),mark=m.querySelector('mark'); const ts=getComputedStyle(t),ms=getComputedStyle(m),r=t.getBoundingClientRect(),h=mark.getBoundingClientRect();return {font:ts.font,mirrorFont:ms.font,padding:ts.padding,mirrorPadding:ms.padding,width:t.clientWidth,mirrorWidth:m.offsetWidth,scroll:t.scrollTop,transform:m.style.transform,editorTop:r.top,editorBottom:r.bottom,markTop:h.top,markBottom:h.bottom,background:getComputedStyle(mark).backgroundColor,caret:ts.caretColor,textColor:ts.color,textareaBackground:ts.backgroundColor,viewport:innerWidth,documentWidth:document.documentElement.scrollWidth};})()`);
+    assert.equal(geometry.font, geometry.mirrorFont);
+    assert.equal(geometry.padding, geometry.mirrorPadding);
+    assert.equal(geometry.width, geometry.mirrorWidth);
+    assert.ok(geometry.markBottom > geometry.editorTop && geometry.markTop < geometry.editorBottom);
+    assert.ok(geometry.documentWidth <= width);
+    assert.notEqual(geometry.background, 'rgba(0, 0, 0, 0)');
+    assert.equal(geometry.textareaBackground, 'rgba(0, 0, 0, 0)');
+    await screenshot('tutor-long-189-' + name);
+    checks.push({check:'189-word substitute Introduction: editor highlight ' + name, exactSentence, ...geometry});
+  }
+  assert.equal(await evaluate(`JSON.stringify(state.analyses.INTRODUCTION)`), sourceBefore, 'resize/scroll preserve analysis');
+  await evaluate(`(() => {const t=document.querySelector('#stage-text');t.scrollTop=0;t.dispatchEvent(new Event('scroll'));})()`);
+  assert.equal(await evaluate(`document.querySelector('#editor-mirror').style.transform`), 'translate(0px, 0px)');
+  await evaluate(`revealEditorEvidence()`);
+
+  // Native input/undo/redo: no value replacement by the mirror; one debounced analysis.
+  const callsBefore = await evaluate(`__analysisCalls.length`);
+  await evaluate(`(() => {const t=document.querySelector('#stage-text');t.focus();t.setSelectionRange(t.value.length,t.value.length);})()`);
+  await send('Input.insertText', {text:' Additional wording.'});
+  assert.equal(await evaluate(`document.querySelectorAll('#editor-mirror mark').length`), 0);
+  assert.equal(await evaluate(`document.querySelector('#tutor-typing-dots').hidden`), false);
+  await wait(`__analysisCalls.length===${callsBefore+1} && state.analysisSnapshots.INTRODUCTION===analysisSnapshot('INTRODUCTION')`, 'debounced updated Introduction');
+  assert.equal(await evaluate(`__analysisCalls.length`), callsBefore+1, 'typing produces one debounced request');
+  assert.equal(await evaluate(`document.querySelector('#feedback-content').hidden`), false);
+  await send('Input.dispatchKeyEvent', {type:'keyDown',key:'z',code:'KeyZ',windowsVirtualKeyCode:90,modifiers:2});
+  await send('Input.dispatchKeyEvent', {type:'keyUp',key:'z',code:'KeyZ',windowsVirtualKeyCode:90,modifiers:2});
+  assert.equal(await evaluate(`document.querySelector('#stage-text').value`), longIntroduction, 'native undo preserved');
+  await send('Input.dispatchKeyEvent', {type:'keyDown',key:'y',code:'KeyY',windowsVirtualKeyCode:89,modifiers:2});
+  await send('Input.dispatchKeyEvent', {type:'keyUp',key:'y',code:'KeyY',windowsVirtualKeyCode:89,modifiers:2});
+  assert.equal(await evaluate(`document.querySelector('#stage-text').value`), longIntroduction + ' Additional wording.', 'native redo preserved');
+  assert.equal(await evaluate(`document.querySelectorAll('#editor-mirror mark').length`), 0, 'undo/redo do not restore old offsets');
+
+  // Real revised analysis, with a complete main statement after Although.
+  const revision = 'Smartphones are common tools in the classroom. Although students use smartphones during class, they should follow their teacher\'s instructions.';
+  await analyze('INTRODUCTION', revision);
+  assert.equal(await evaluate(`__analysisCalls.length`), callsBefore + 2);
+  assert.equal(await evaluate(`studentFeedbackPresentation(state.analyses.INTRODUCTION).verified_subordinator`), null);
+
+  await send('Emulation.setDeviceMetricsOverride', {width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  await fill('#assignment-topic', topic); await fill('#focus-terms', focus);
+  await analyze('BODY', 'Communities reduce plastics. Communities reduce waste.\n\nCommunities protect waterways.');
+  const concerns = await evaluate(`studentFeedbackPresentation(state.analyses.BODY).tutor_items`);
+  assert.ok(concerns.length >= 2 && concerns.length <= 3);
+  assert.equal(concerns[0].skill, 'Develop Your Supporting Details');
+  const selectIndex = concerns.findIndex(item => item.skill === 'Review Repeated Sentence Openings');
+  assert.ok(selectIndex > 0);
+  const cursor = await evaluate(`({start:document.querySelector('#stage-text').selectionStart,end:document.querySelector('#stage-text').selectionEnd})`);
+  const beforeTabs = await evaluate(`JSON.stringify(state)`);
+  await evaluate(`document.querySelectorAll('#tutor-tabs button')[${selectIndex}].click()`);
+  assert.equal(await evaluate(`document.querySelector('#editor-mirror').dataset.category`), 'Sentence Fluency');
+  assert.equal(await evaluate(`document.querySelector('#feedback-writing-focus').textContent`), 'Sentence Fluency · Review Repeated Sentence Openings');
+  assert.equal(await evaluate(`document.querySelector('#feedback-writing-focus').hidden`), true, 'selected concern title appears only in its tab');
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('#tutor-tabs button[aria-selected="true"]')).backgroundColor`), await evaluate(`getComputedStyle(document.querySelector('#editor-mirror mark')).backgroundColor`), 'purple selected tab matches purple editor highlight');
+  assert.equal(await evaluate(`JSON.stringify(state)`), beforeTabs);
+  assert.deepEqual(await evaluate(`({start:document.querySelector('#stage-text').selectionStart,end:document.querySelector('#stage-text').selectionEnd})`), cursor);
+  await evaluate(`document.querySelectorAll('#tutor-tabs button')[0].click()`);
+  assert.equal(await evaluate(`document.querySelector('#editor-mirror').dataset.category`), 'Ideas');
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('#tutor-tabs button[aria-selected="true"]')).backgroundColor`), await evaluate(`getComputedStyle(document.querySelector('#editor-mirror mark')).backgroundColor`), 'selected development tab matches its editor highlight');
+  await evaluate(`document.querySelector('.writing-editor').scrollIntoView({block:'center'})`);
+  await screenshot('tutor-independent-concerns');
+  checks.push({check:'Explanation-only tutor: real Although event, native undo/redo, debounced and manual reanalysis, independent concern switching',concerns:concerns.map(item=>item.label),automaticRequests:1});
+}
+
+async function verifyLiveBodyFeedback() {
+  const samples=JSON.parse(fs.readFileSync(path.join(__dirname,'body_live_feedback_cases.json'),'utf8'));
+  await fill('#assignment-topic',samples.assignment_topic);await fill('#focus-terms',samples.focus_terms.join(', '));
+  const cases=[['A','',samples.body,[4,1]],['B',samples.introduction,samples.body,[4,1]],
+    ['C',samples.introduction,samples.one_sentence,[1]],['D',samples.introduction,samples.developed,[4,3]],
+    ['supported',samples.introduction,samples.body.split('\n\n')[0]+'\n\nSecond, smartphones support learning.',[4,1]]];
+  for(const [name,introduction,bodyText,counts] of cases) {
+    await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+    await click('[data-stage="INTRODUCTION"]');await fill('#stage-text',introduction);
+    await click('[data-stage="BODY"]');
+    const calls=await evaluate(`__analysisCalls.length`);
+    await fill('#stage-text',bodyText.slice(0,100));await delay(400);
+    await fill('#stage-text',bodyText);await delay(400);
+    assert.equal(await evaluate(`__analysisCalls.length`),calls,'continuous typing resets debounce');
+    assert.equal(await evaluate(`document.querySelector('#tutor-state-title').textContent`),'Checking your latest writing…');
+    await wait(`state.analyses.BODY && state.analysisSnapshots.BODY===analysisSnapshot('BODY')`,'automatic Body '+name);
+    assert.equal(await evaluate(`__analysisCalls.length`),calls+1);
+    const result=await evaluate(`state.analyses.BODY`);
+    assert.deepEqual(result.analysis.paragraphs.map(p=>p.counts.sentence_count),counts);
+    assert.equal(await evaluate(`document.querySelector('#stage-text').value`),bodyText);
+    const presentation=await evaluate(`studentFeedbackPresentation(state.analyses.BODY)`);
+    if(name==='supported') {
+      assert.equal(presentation.writing_skill,'Develop Your Supporting Details');
+      assert.match(presentation.tutor_items[0].noticed,/Paragraph 2 has a possible main statement, but no additional sentence was recorded/);
+      assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('#editor-mirror mark'),m=>m.textContent)`),['Second, smartphones support learning.']);
+    } else {
+      assert.equal(presentation.selection_branch,'body_neutral_observable');
+      assert.equal(presentation.tutor_items[0].role,'NO_SUPPORTED_CONCERN_SELECTED');
+      assert.equal(presentation.writing_dimension,null);
+      assert.equal(presentation.tutor_items[0].task_text,'');assert.equal(presentation.teaching_content_source,null);
+      assert.equal(await evaluate(`document.querySelector('#tutor-task-section').hidden`),true);
+      assert.ok(presentation.instructional_feedback.strengths.length>0);
+      assert.equal(await evaluate(`document.querySelectorAll('#editor-mirror mark').length`),0,'neutral segmentation never becomes a problem highlight');
+      assert.ok(!presentation.tutor_items[0].evidence_text.includes('I could not point'));
+      if(name==='A'||name==='B') assert.equal(presentation.instructional_feedback.observed_paragraphs[1].counts.sentence_count,1);
+    }
+    assert.equal(result.analysis.introduction_to_body_continuity.status,name==='A'?'NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED':'LEXICAL_COMPARISON_AVAILABLE');
+    await evaluate(`document.querySelector('.writing-editor').scrollIntoView({block:'center'})`);
+    await screenshot('live-body-'+name+'-desktop');
+    if(name==='supported') {
+      await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+      await delay(100);await evaluate(`revealEditorEvidence();document.querySelector('.writing-editor').scrollIntoView({block:'center'})`);
+      assert.equal(await evaluate(`getComputedStyle(document.querySelector('#editor-mirror')).padding`),await evaluate(`getComputedStyle(document.querySelector('#stage-text')).padding`));
+      await screenshot('live-body-supported-mobile');
+    }
+    checks.push({check:'Automatic Body analysis '+name,counts,branch:presentation.selection_branch,role:presentation.tutor_items[0].role,requests:1});
+  }
+
+  // Delay delivery of one real backend response. The ready newest snapshot
+  // must wait for it; a second simultaneous analysis is never dispatched.
+  await evaluate(`window.__liveOriginalFetch=window.fetch;window.__liveStarts=[];window.__liveActive=0;window.__liveMax=0;window.__releaseLive=null;window.fetch=async(...args)=>{if(String(args[0])!=='/api/analyze-stage')return __liveOriginalFetch(...args);__liveActive++;__liveMax=Math.max(__liveMax,__liveActive);const first=__liveStarts.length===0;__liveStarts.push(JSON.parse(args[1].body));try{const response=await __liveOriginalFetch(...args);if(first)await new Promise(resolve=>window.__releaseLive=resolve);return response;}finally{__liveActive--;}};`);
+  await fill('#stage-text','Smartphones support learning.');
+  await wait(`__releaseLive!==null`,'older real response held');
+  await fill('#stage-text','Students use smartphones to review vocabulary.');
+  await delay(1150);
+  assert.equal(await evaluate(`__liveStarts.length`),1,'latest request waits behind older execution');
+  assert.equal(await evaluate(`state.analyses.BODY===undefined`),true,'old text feedback is absent');
+  await evaluate(`__releaseLive()`);
+  await wait(`__liveStarts.length===2 && state.analyses.BODY && state.analysisSnapshots.BODY===analysisSnapshot('BODY')`,'latest serialized real response');
+  assert.equal(await evaluate(`__liveMax`),1);
+  assert.equal(await evaluate(`__liveStarts[1].body_text`),'Students use smartphones to review vocabulary.');
+  await evaluate(`window.fetch=__liveOriginalFetch`);
+  const finalResult=await evaluate(`state.analyses.BODY`);
+  assert.equal(finalResult.research_trace.stages.BODY.linguistic_observations?.text || finalResult.analysis.linguistic_observations?.text,'Students use smartphones to review vocabulary.');
+  await click('#copy-full-analysis');await wait(`document.querySelector('#analysis-copy-status').textContent==='Full analysis copied.'`,'latest automatic report copied');
+  assert.equal((await evaluate(`navigator.clipboard.readText()`)).replace(/\r\n/g,'\n'),await evaluate(`buildFullAnalysisReport(state.analyses.BODY)`));
+  await evaluate(`window.fetch=async(...args)=>{if(String(args[0])==='/api/analyze-stage'){window.fetch=__liveOriginalFetch;throw new TypeError('controlled offline');}return __liveOriginalFetch(...args);};`);
+  await fill('#stage-text','Smartphones help students learn new words.');
+  await wait(`state.tutorError===true`,'automatic network error');
+  assert.equal(await evaluate(`document.querySelector('#stage-text').value`),'Smartphones help students learn new words.');
+  assert.equal(await evaluate(`document.querySelector('#tutor-state-title').textContent`),'Writing analysis is temporarily unavailable. You can try Analyze Now.');
+  const retryCalls=await evaluate(`__analysisCalls.length`);
+  await evaluate(`document.querySelector('#analyze-button').click();document.querySelector('#analyze-button').click();`);
+  await wait(`state.analyses.BODY && state.analysisSnapshots.BODY===analysisSnapshot('BODY')`,'manual retry after automatic failure');
+  assert.equal(await evaluate(`__analysisCalls.length`),retryCalls+1,'duplicate manual clicks share the pending snapshot');
+  const emptyCalls=await evaluate(`__analysisCalls.length`);
+  await fill('#stage-text','');await delay(1150);
+  assert.equal(await evaluate(`__analysisCalls.length`),emptyCalls);
+  assert.equal(await evaluate(`document.querySelector('#feedback-content').hidden`),true);
+  assert.equal(await evaluate(`__writes.length`),0);
+  checks.push({check:'Live analysis serialization, stale rejection, real latest-snapshot clipboard, network retry, duplicate suppression and empty draft',maxConcurrent:1,persistenceRequests:0});
+}
+
+async function verifyIntroductionFeedbackQuality() {
+  const assignment='Should students be allowed to use smartphones during class?';
+  const prefix='Smartphones are common in many classrooms, and students often use them to find information. Teachers can use smartphones for learning activities, such as looking up difficult words and reading educational materials. However, notifications and games can cause distractions during class. ';
+  const incomplete='Although smartphones can also interrupt lessons.';
+  const point='Schools should allow smartphones during teacher-guided activities because clear rules can help students focus on learning.';
+  const ending='And have slumber party at my aunt house';
+  const full=prefix+incomplete+' '+point+' '+ending;
+  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  await fill('#assignment-topic',assignment);
+  await fill('#focus-terms','smartphones, students, classroom, learning, distractions');
+  const response=await analyze('INTRODUCTION',full);
+  const snapshot=JSON.stringify(response);
+  let model=await evaluate(`studentFeedbackPresentation(state.analyses.INTRODUCTION)`);
+  assert.equal(model.selection_branch,'intro_sentence_fluency_complete_sentence');
+  assert.equal(model.tutor_items.length,2);
+  assert.deepEqual(model.tutor_items.map(i=>i.feedback_heading),['Main Feedback','Also Check']);
+  assert.equal(model.tutor_items[1].label,'Ideas · Review Topic Connection');
+  const marks=async selector=>evaluate(`Array.from(document.querySelectorAll(${JSON.stringify(selector)}),m=>m.textContent)`);
+  assert.deepEqual(await marks('#editor-mirror mark'),[incomplete]);
+  assert.deepEqual(await marks('#tutor-evidence mark'),[incomplete]);
+  for(const [width,height,size] of [[1440,1000,'desktop'],[390,844,'mobile']]) {
+    await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<600});
+    for(const index of [0,1]) {
+      await evaluate(`document.querySelectorAll('#tutor-tabs button')[${index}].click();revealEditorEvidence();document.querySelector('.writing-editor').scrollIntoView({block:'center'})`);
+      const expected=index===0?incomplete:ending;
+      assert.deepEqual(await marks('#editor-mirror mark'),[expected]);
+      assert.deepEqual(await marks('#tutor-evidence mark'),[expected]);
+      assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth`));
+      const geometry=await evaluate(`(()=>{const t=document.querySelector('#stage-text'),m=document.querySelector('#editor-mirror');return {editorWidth:t.clientWidth,mirrorWidth:m.offsetWidth,font:getComputedStyle(t).font,mirrorFont:getComputedStyle(m).font};})()`);
+      assert.equal(geometry.editorWidth,geometry.mirrorWidth);assert.equal(geometry.font,geometry.mirrorFont);
+      await screenshot(`introduction-quality-${size}-${index===0?'main':'also'}-editor`);
+      await evaluate(`document.querySelector('.feedback-card').scrollIntoView({block:'center'})`);
+      await screenshot(`introduction-quality-${size}-${index===0?'main':'also'}-tutor`);
+    }
+  }
+  assert.equal(await evaluate(`JSON.stringify(state.analyses.INTRODUCTION)`),snapshot);
+  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+  const without=await analyze('INTRODUCTION',prefix+point+' '+ending);
+  assert.equal(without.research_trace.stages.INTRODUCTION.feedback_decisions.fields['Primary Feedback'].selection_branch,'intro_ideas_review_topic_connection');
+  assert.deepEqual(await marks('#editor-mirror mark'),[ending]);
+  for(const [text,status] of [
+    ['She helped me understand the lesson better.','CONTEXT_REVIEW_DEFERRED'],
+    ["We had a slumber party at my aunt's house.",'POSSIBLE_CONNECTION_GAP'],
+    ['Students can communicate with invisible dragons during class.','WORDING_MATCH_OBSERVED_NOT_RELEVANCE'],
+  ]) {
+    const r=await analyze('INTRODUCTION',prefix+point+' '+text);
+    assert.equal(r.analysis.sentence_topic_evidence.sentences.at(-1).status,status);
+  }
+  const complex=await analyze('INTRODUCTION','Although smartphones can distract students, teachers can use them for learning.');
+  assert.deepEqual(complex.analysis.observable_structure.incomplete_subordinator_candidates,[]);
+  // Neutral reason branches retain the recorded span in transparency but display no error mark.
+  for(const reason of [
+    'because students can use educational apps during class',
+    'because invisible dragons control the price of bananas on Mars',
+  ]) {
+    const r=await analyze('INTRODUCTION','Smartphones can support learning in the classroom when teachers guide students. Clear classroom rules may help reduce distractions during lessons. Schools should allow smartphones '+reason+'.');
+    assert.equal(r.research_trace.stages.INTRODUCTION.feedback_decisions.fields['Primary Feedback'].selection_branch,'intro_ideas_point_and_reason');
+    const span=r.research_trace.stages.INTRODUCTION.feedback_decisions.instructional_feedback.items[0].highlight_spans[0];
+    assert.equal(r.analysis.linguistic_observations.text.slice(span.start,span.end),reason);
+    assert.equal(await evaluate(`studentFeedbackPresentation(state.analyses.INTRODUCTION).writing_dimension`),null);
+    assert.deepEqual(await marks('#editor-mirror mark'),[]);
+    assert.deepEqual(await marks('#tutor-evidence mark'),[]);
+  }
+  await analyze('INTRODUCTION','🌍 '+full);
+  await evaluate(`document.querySelectorAll('#tutor-tabs button')[1].click()`);
+  assert.deepEqual(await marks('#editor-mirror mark'),[ending]);
+  await selectView('engine','primary');
+  await evaluate(`Array.from(document.querySelectorAll('#nlp-subpanel-engine-primary details')).filter(d=>d.querySelector('summary')?.textContent.includes('Causal')).forEach(d=>{d.open=true;d.dispatchEvent(new Event('toggle'))})`);
+  const copy=await evaluate(`buildFullAnalysisReport(state.analyses.INTRODUCTION)`);
+  assert.ok(copy.includes('sentence_topic_evidence')&&copy.includes('INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW'));
+  assert.equal(await evaluate(`__writes.length`),0);
+  checks.push({check:'Introduction quality A-G: six-sentence real input, Main Feedback + one Also Check, exact editor/tutor spans at desktop/mobile, cautious context statuses, complex sentence safeguard, reason clause and Unicode regressions',events:response.analysis.rule_evidence.map(e=>e.rule_id),persistenceRequests:0});
+}
+
+async function verifyManualIntroductionCorrections() {
+  const samples=JSON.parse(fs.readFileSync(path.join(__dirname,'introduction_tutor_cases.json'),'utf8'));
+  await fill('#assignment-topic',samples.assignment_topic);
+  await fill('#focus-terms',samples.focus_terms.join(', '));
+  const expected={
+    long_although:['intro_sentence_fluency_complete_sentence','Sentence Fluency · Complete Your Sentence','HELP-INTRO-COMPLETE-SENTENCE'],
+    cafeteria_although:['intro_sentence_fluency_complete_sentence','Sentence Fluency · Complete Your Sentence','HELP-INTRO-COMPLETE-SENTENCE'],
+    keyword_list:['intro_organization_topic_intro','Organization · Introduce Your Topic','HELP-INTRO-TOPIC-INTRO'],
+    main_point:['intro_ideas_state_position','Ideas · State Your Position','HELP-INTRO-STATE-POSITION'],
+    cafeteria_complete:['intro_ideas_topic_match','Ideas · Match Your Topic','HELP-TOPIC-MATCH'],
+  };
+  for(const [name,[branch,label,lesson]] of Object.entries(expected)) {
+    await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+    const response=await analyze('INTRODUCTION',samples.cases[name]);
+    const model=await evaluate(`studentFeedbackPresentation(state.analyses.INTRODUCTION)`);
+    assert.equal(model.selection_branch,branch);
+    assert.equal(model.tutor_items[0].label,label);
+    assert.equal(response.feedback['Primary Feedback'],model.original_feedback['Primary Feedback']);
+    await verifyInlineGuidance(response,lesson);
+    assert.equal(await evaluate(`document.querySelector('#feedback-writing-focus').hidden`),model.tutor_items.length>1);
+    assert.equal(await evaluate(`document.querySelectorAll('#tutor-tabs button').length`),model.tutor_items.length>1?model.tutor_items.length:0);
+    assert.equal(await evaluate(`document.querySelector('#tutor-why').textContent.includes('These checks recorded an observation')`),false);
+    let expectedMarks=[];
+    if(name==='keyword_list') {
+      expectedMarks=response.analysis.rule_evidence.find(event=>event.rule_id==='INTRO.TEXT.KEYWORD_LIST_CANDIDATE').evidence.map(span=>span.text);
+      assert.equal(expectedMarks.length,7);
+      assert.match(model.tutor_items[0].task_text,/one sentence about it/);
+    } else if(name==='main_point') {
+      expectedMarks=[samples.cases[name]];
+      assert.match(model.tutor_items[0].noticed,/could not identify a clear position/);
+    } else if(name.includes('although')) {
+      expectedMarks=[response.analysis.linguistic_observations.sentences.find(sentence=>sentence.text.startsWith('Although')).text];
+    }
+    assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('#editor-mirror mark'),mark=>mark.textContent)`),expectedMarks);
+    for(const [width,height,size] of [[1440,1000,'desktop'],[390,844,'mobile']]) {
+      await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<600});
+      await delay(100);
+      await evaluate(`revealEditorEvidence();document.querySelector('.writing-editor').scrollIntoView({block:'center'})`);
+      assert.equal(await evaluate(`getComputedStyle(document.querySelector('#editor-mirror')).padding`),await evaluate(`getComputedStyle(document.querySelector('#stage-text')).padding`));
+      assert.equal(await evaluate(`document.querySelector('#editor-mirror').offsetWidth`),await evaluate(`document.querySelector('#stage-text').clientWidth`));
+      assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth`));
+      await screenshot('introduction-correction-'+name+'-'+size);
+    }
+    const vocabulary=model.tutor_items.findIndex(item=>item.lesson_id==='HELP-TOPIC-MATCH');
+    if(name.startsWith('cafeteria')) {
+      assert.ok(vocabulary>=0);
+      const original=await evaluate(`JSON.stringify(state.analyses.INTRODUCTION)`);
+      const calls=await evaluate(`__analysisCalls.length`);
+      if(vocabulary>0) await evaluate(`document.querySelectorAll('#tutor-tabs button')[${vocabulary}].click()`);
+      const summary=await evaluate(`document.querySelector('#tutor-evidence').textContent`);
+      assert.match(summary,/0 of 5 configured focus terms observed/);
+      assert.ok(summary.includes(samples.focus_terms.join(', ')));
+      assert.equal(summary.includes('I could not point'),false);
+      assert.equal(await evaluate(`document.querySelectorAll('#editor-mirror mark').length`),0);
+      assert.match(await evaluate(`document.querySelector('#tutor-task').textContent`),/do not need to insert every assignment word literally/);
+      await send('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+      await evaluate(`document.querySelector('.feedback-card').scrollIntoView({block:'center'})`);
+      await screenshot('introduction-correction-'+name+'-vocabulary-summary');
+      if(vocabulary>0) {
+        await evaluate(`document.querySelectorAll('#tutor-tabs button')[0].click()`);
+        assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('#editor-mirror mark'),mark=>mark.textContent)`),expectedMarks);
+      }
+      assert.equal(await evaluate(`JSON.stringify(state.analyses.INTRODUCTION)`),original);
+      assert.equal(await evaluate(`__analysisCalls.length`),calls);
+    }
+    const calls=await evaluate(`__analysisCalls.length`);
+    await evaluate(`(() => {const t=document.querySelector('#stage-text');t.focus();t.setSelectionRange(t.value.length,t.value.length);})()`);
+    await send('Input.insertText',{text:' Edited.'});
+    assert.equal(await evaluate(`document.querySelectorAll('#editor-mirror mark').length`),0);
+    assert.equal(await evaluate(`document.querySelector('#feedback-content').hidden`),true);
+    assert.equal(await evaluate(`document.querySelector('#copy-full-analysis').disabled`),true);
+    assert.equal(await evaluate(`__analysisCalls.length`),calls);
+    checks.push({check:'Manual Introduction presentation correction: '+name,branch,label,marks:expectedMarks,originalFeedbackPreserved:true});
+  }
+  const diagnostic=await analyze('INTRODUCTION',samples.cases.before_false_positive);
+  assert.deepEqual(diagnostic.analysis.observable_structure.incomplete_subordinator_candidates,[],'complete before construction no longer emits incomplete evidence');
+  assert.ok(!diagnostic.analysis.rule_evidence.some(event=>event.rule_id==='INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR'));
+  assert.notEqual(diagnostic.research_trace.stages.INTRODUCTION.feedback_decisions.fields['Primary Feedback'].selection_branch,'intro_sentence_fluency_complete_sentence');
+  checks.push({check:'Before-only safeguard removes the confirmed false positive at its source',status:'CORRECTED',rule:'INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR'});
+}
+
+async function verifyCombinedBeforeSafeguard() {
+  const samples=JSON.parse(fs.readFileSync(path.join(__dirname,'before_subordinator_cases.json'),'utf8'));
+  await fill('#assignment-topic',samples.assignment_topic);
+  await fill('#focus-terms',samples.focus_terms.join(', '));
+  const response=await analyze('INTRODUCTION',samples.cases.H);
+  const evidence=response.analysis.observable_structure.incomplete_subordinator_candidates;
+  assert.deepEqual(evidence.map(item=>item.text),['Although']);
+  const event=response.analysis.rule_evidence.find(event=>event.rule_id==='INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR');
+  assert.deepEqual(event.evidence,evidence);
+  const decision=response.research_trace.stages.INTRODUCTION.feedback_decisions.fields['Primary Feedback'];
+  assert.equal(decision.selection_branch,'intro_sentence_fluency_complete_sentence');
+  assert.ok(decision.selected_message.includes('Although'));
+  assert.ok(!decision.selected_message.includes("'before'"));
+  const target='Although the cooks prepare healthy meals every morning.';
+  assert.equal(await evaluate(`studentFeedbackPresentation(state.analyses.INTRODUCTION).verified_subordinator.text`),'Although');
+  assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('#editor-mirror mark'),mark=>mark.textContent)`),[target]);
+  for(const [width,height,size] of [[1440,1000,'desktop'],[390,844,'mobile']]) {
+    await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<600});
+    await delay(100);
+    await evaluate(`revealEditorEvidence();document.querySelector('.writing-editor').scrollIntoView({block:'center'})`);
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('#editor-mirror')).padding`),await evaluate(`getComputedStyle(document.querySelector('#stage-text')).padding`));
+    await screenshot('before-safeguard-combined-'+size);
+  }
+  await selectView('rules','triggered');
+  assert.ok(await evaluate(`document.querySelector('#nlp-subpanel-rules-triggered').innerText.includes('INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR')`));
+  const calls=await evaluate(`__analysisCalls.length`);
+  await click('#copy-full-analysis');
+  await wait(`document.querySelector('#analysis-copy-status').textContent==='Full analysis copied.'`,'combined Introduction clipboard');
+  const copied=await evaluate(`navigator.clipboard.readText()`);
+  assert.equal(copied.replace(/\r\n/g,'\n'),await evaluate(`buildFullAnalysisReport(state.analyses.INTRODUCTION)`));
+  assert.ok(copied.includes(decision.selected_message));
+  assert.equal(await evaluate(`__analysisCalls.length`),calls);
+  const original=await evaluate(`JSON.stringify(state.analyses.INTRODUCTION)`);
+  await evaluate(`document.querySelectorAll('#tutor-tabs button')[1]?.click()`);
+  assert.equal(await evaluate(`document.querySelectorAll('#editor-mirror mark').length`),0);
+  await evaluate(`document.querySelectorAll('#tutor-tabs button')[0]?.click()`);
+  assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('#editor-mirror mark'),mark=>mark.textContent)`),[target]);
+  assert.equal(await evaluate(`JSON.stringify(state.analyses.INTRODUCTION)`),original);
+  checks.push({check:'Case H corrected at source: only actual Although evidence, verified editor highlight and clipboard',evidence,selectedBranch:decision.selection_branch});
+}
+async function verifyStudentTextInspector(introduction) {
+  const expected = introduction.analysis.linguistic_observations.text;
+  const originalEditor = await evaluate(`document.querySelector('#stage-text').value`);
+  const model = await evaluate(`studentTextInputEvidence(state.analyses.INTRODUCTION)`);
+  assert.equal(model.text, expected, 'retained snapshot text selected from real response');
+  assert.equal(model.code_point_characters, Array.from(expected).length);
+  assert.equal(model.whitespace_words, expected.trim().split(/\s+/).length);
+  assert.equal(model.assignment_question, topic);
+  assert.deepEqual(model.configured_focus_terms, introduction.analysis.lexical_topic_evidence.focus_terms);
+  assert.equal(model.saved_revision_id, null, 'no revision identifier is invented');
+  assert.equal(model.transmitted_request_payload, null, 'no HTTP payload log is invented');
+  assert.equal(model.stage, 'INTRODUCTION');
+  const calls = await evaluate(`__analysisCalls.length`);
+  const writes = await evaluate(`__writes.length`);
+  const sections = ['original', 'received', 'explanation', 'observed', 'forward', 'limitations'];
+  for (const sub of ['overview', 'text', 'context']) {
+    await selectView('student', sub);
+    assert.equal(await evaluate(`!!document.querySelector('#nlp-subpanel-student-${sub} [data-student-input-inspector]')`), true, `student inspector renders on ${sub}`);
+    const order = await evaluate(`Array.from(document.querySelector('#nlp-subpanel-student-${sub} [data-student-input-inspector]').children).filter(element=>element.dataset.inputSection).map(element=>element.dataset.inputSection)`);
+    assert.deepEqual(order, sections, `${sub}: sections A-F in order`);
+    const viewer = await evaluate(`document.querySelector('#nlp-subpanel-student-${sub} .student-source-text').textContent`);
+    assert.equal(viewer, expected, `${sub}: exact retained text, no normalization`);
+    const offsets = await evaluate(`({start:document.querySelector('#nlp-subpanel-student-${sub} .student-source-text').dataset.sourceStart,end:document.querySelector('#nlp-subpanel-student-${sub} .student-source-text').dataset.sourceEnd,editable:document.querySelector('#nlp-subpanel-student-${sub} .student-source-text').getAttribute('aria-readonly')})`);
+    assert.equal(offsets.start, '0');
+    assert.equal(offsets.end, String(Array.from(expected).length));
+    assert.equal(offsets.editable, 'true');
+    const body = await evaluate(`document.querySelector('#nlp-subpanel-student-${sub} [data-student-input-inspector]').innerText`);
+    for (const label of ['A. ORIGINAL STUDENT ESSAY', 'B. ACTUAL INPUT RECEIVED', 'C. WHAT HAPPENED IN THIS STEP?', 'D. ACTUAL OBSERVED RESULT', 'E. OUTPUT PASSED FORWARD', 'F. LIMITATIONS']) assert.ok(body.includes(label), `${sub}: ${label}`);
+    assert.ok(body.includes('Not recorded.'), `${sub}: unrecorded payload/revision are explicit`);
+    assert.ok(body.includes('not a network-payload log'), `${sub}: request-payload limitation`);
+    assert.ok(body.includes('not a database revision ID'), `${sub}: fingerprint provenance`);
+  }
+  await selectView('student', 'context');
+  assert.ok((await evaluate(`document.querySelector('#nlp-subpanel-student-context').innerText`)).includes('Earlier sections: not applicable for Introduction.'));
+  await selectView('student', 'overview');
+  assert.equal(await evaluate(`!!Array.from(document.querySelectorAll('#nlp-subpanel-student-overview details')).find(details=>details.querySelector('summary').textContent.startsWith('Source references'))`), true, 'source references disclosure exists');
+  await evaluate(`Array.from(document.querySelectorAll('#nlp-subpanel-student-overview details')).find(details=>details.querySelector('summary').textContent.startsWith('Source references')).open=true`);
+  const references = await evaluate(`Array.from(document.querySelectorAll('#nlp-subpanel-student-overview details')).find(details=>details.querySelector('summary').textContent.startsWith('Source references')).innerText`);
+  for (const reference of ['performStageAnalysis', 'analyze_stage', 'selectStage', 'studentTextInputEvidence']) assert.ok(references.includes(reference), `real source reference: ${reference}`);
+  // Change only the live editor value (no input event) so no analysis can be
+  // scheduled, then re-activate the sub-tab to refresh the snapshot label.
+  await evaluate(`document.querySelector('#stage-text').value = document.querySelector('#stage-text').value + ' edited after analysis'`);
+  await selectView('student', 'text');
+  await selectView('student', 'overview');
+  const stale = await evaluate(`({status:document.querySelector('#nlp-subpanel-student-overview [data-student-input-inspector] .student-input-version').dataset.snapshotStatus,label:document.querySelector('#nlp-subpanel-student-overview [data-student-input-inspector] .student-input-version').textContent,viewer:document.querySelector('#nlp-subpanel-student-overview [data-student-input-inspector] .student-source-text').textContent})`);
+  assert.equal(stale.status, 'PREVIOUS', 'edited editor marks the inspected snapshot as previously analyzed');
+  assert.match(stale.label, /Previously analyzed version/);
+  assert.equal(stale.viewer, expected, 'stale view never swaps in the unprocessed draft');
+  assert.equal(await evaluate(`document.querySelector('#stage-text').value`), originalEditor + ' edited after analysis', 'inspector never rewrites the editor');
+  await evaluate(`document.querySelector('#stage-text').value = ${JSON.stringify(originalEditor)}`);
+  await selectView('student', 'text');
+  await selectView('student', 'overview');
+  assert.equal(await evaluate(`document.querySelector('#nlp-subpanel-student-overview [data-student-input-inspector] .student-input-version').dataset.snapshotStatus`), 'CURRENT', 'snapshot label returns to current after restoring the editor');
+  await evaluate(`document.querySelector('#nlp-transparency').scrollIntoView({block:'start'})`);
+  await screenshot('student-text-desktop-overview');
+  await send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
+  await evaluate(`document.querySelector('#nlp-transparency').scrollIntoView({block:'start'})`);
+  const mobile = await evaluate(`({viewport:innerWidth,document:document.documentElement.scrollWidth})`);
+  assert.ok(mobile.document <= mobile.viewport + 1, 'no page-wide horizontal overflow in Process 01 on mobile');
+  await screenshot('student-text-mobile-overview');
+  await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 1000, deviceScaleFactor: 1, mobile: false });
+  assert.equal(await evaluate(`__analysisCalls.length`), calls, 'opening and refreshing Process 01 never reruns analysis');
+  assert.equal(await evaluate(`__writes.length`), writes, 'opening Process 01 never saves or submits');
+  assert.equal(await evaluate(`document.querySelector('#stage-text').value`), originalEditor, 'editor text restored exactly');
+  checks.push({ check: 'Process 01 Student Text inspector: sections A-F, exact retained text, provenance, stale snapshot, no rerun', sections: sections.length, characters: Array.from(expected).length, staleLabel: 'PREVIOUS', analysisRequests: 0, persistenceRequests: 0, mobile });
+}
+(async () => {
+  browser = spawn(chromePath, ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--remote-debugging-port=0', `--user-data-dir=${path.join(artifacts, 'chrome-profile')}`, 'about:blank'], { stdio: ['ignore', 'ignore', 'pipe'] });
+  const wsUrl = await new Promise((resolve, reject) => {
+    let stderr = '';
+    const timer = setTimeout(() => reject(new Error('Chrome CDP startup timeout')), 20000);
+    browser.stderr.on('data', chunk => { stderr += chunk; const match = /DevTools listening on (ws:\/\/[^\s]+)/.exec(stderr); if (match) { clearTimeout(timer); resolve(match[1]); } });
+    browser.on('error', reject);
+  });
+  socket = new WebSocket(wsUrl);
+  await new Promise((resolve, reject) => { socket.onopen = resolve; socket.onerror = reject; });
+  socket.onmessage = event => {
+    const message = JSON.parse(event.data);
+    if (message.id) {
+      const item = pending.get(message.id);
+      if (!item) return;
+      pending.delete(message.id); clearTimeout(item.timer);
+      message.error ? item.reject(new Error(JSON.stringify(message.error))) : item.resolve(message.result);
+    } else if (message.method === 'Page.javascriptDialogOpening') {
+      // The existing unsaved-writing beforeunload guard also applies to logout.
+      void send('Page.handleJavaScriptDialog', { accept: true });
+    } else if (message.method === 'Runtime.exceptionThrown') errors.push(message.params.exceptionDetails);
+    else if (message.method === 'Log.entryAdded' && message.params.entry.level === 'error' && !String(message.params.entry.url || '').endsWith('/favicon.ico') && !globalThis.__expectNetwork400) errors.push(message.params.entry);
+  };
+  const version = await send('Browser.getVersion', {}, true);
+  checks.push({ check: 'Actual browser', product: version.product, userAgent: version.userAgent });
+  const target = await send('Target.createTarget', { url: 'about:blank' }, true);
+  sessionId = (await send('Target.attachToTarget', { targetId: target.targetId, flatten: true }, true)).sessionId;
+  await send('Page.enable'); await send('Runtime.enable'); await send('Log.enable');
+  await send('Browser.grantPermissions', { origin, permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'] }, true);
+  await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 1000, deviceScaleFactor: 1, mobile: false });
+  await login('browser_student');
+  await click('[data-app-link="workspace"]');
+  await wait(`state.activeAppView==='workspace' && !state.restoring`, 'workspace');
+  assert.match(await evaluate(`document.querySelector('#nlp-transparency-content').textContent`), /Analyze your current writing first/);
+  await evaluate(`window.__analysisCalls=[]; window.__writes=[]; const originalFetch=window.fetch; window.fetch=async (...args)=>{ const url=String(args[0]); if(url==='/api/analyze-stage') window.__analysisCalls.push(url); if(['/api/drafts','/api/revisions','/api/submissions'].includes(url) && args[1]?.method==='POST') window.__writes.push(url); const response=await originalFetch(...args); if(url==='/api/analyze-stage')window.__lastAnalysis=await response.clone().json(); return response; };`);
+  await fill('#assignment-topic', topic); await fill('#focus-terms', focus);
+  const introduction = await analyze('INTRODUCTION', intro);
+  const a = introduction.analysis;
+  assert.deepEqual(a.linguistic_observations.counts, { token_count: 27, alphabetic_word_count: 24, sentence_count: 2 });
+  assert.equal(a.rule_evidence.length, 9); assert.equal(a.rule_evaluation_trace.length, 19);
+  assert.equal(a.rule_evaluation_trace.filter(row => row.status === 'TRIGGERED').length, 9);
+  assert.equal(a.lexical_topic_evidence.matches.length, 4);
+  assert.equal(a.linguistic_observations.tokens.find(token => token.text === 'harm').pos, 'NOUN');
+  assert.equal(introduction.research_trace.stages.INTRODUCTION.feedback_decisions.fields['Primary Feedback'].selection_branch, 'intro_ideas_point_and_reason');
+  const related = introduction.related_topic_concept_evidence;
+  assert.equal(related.execution_status,'EXECUTED');
+  assert.deepEqual(related.evidence.map(item=>[item.student_word,item.normalized_student_word,item.start,item.end]),[['rivers','river',134,140],['animals','animal',150,157]]);
+  assert.equal(related.summary.unique_related_concepts_observed,2);
+  assert.equal(related.summary.total_related_concept_occurrences,2);
+  assert.equal(related.affects_rules_or_feedback,false);
+  await verifyInlineGuidance(introduction,null,true);
+  await selectView('student','overview');
+  const callCount = await evaluate(`__analysisCalls.length`);
+  assert.equal(await evaluate(`document.querySelectorAll('[data-main-tab],[data-sub-tab]').length`),0);
+  assert.equal(await evaluate(`document.querySelector('[data-evidence-section="student:overview"]').open`),true);
+  await verifyStudentTextInspector(introduction);
+  const views = await evaluate(`HORIZONTAL_TRANSPARENCY_TABS.map(([main,label,sub])=>({main,label,sub}))`);
+  for (const group of views) for (const [sub] of group.sub) {
+    await selectView(group.main,sub);
+    assert.ok(await evaluate(`document.querySelector('[data-evidence-section="${group.main}:${sub}"]').getBoundingClientRect().height>0`),`${group.main}/${sub}: original technical evidence is reachable`);
+  }
+  // Real roving process selection and keyboard focus.
+  await click('[data-process-id="focus-preparation"]');
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'End',code:'End'});
+  assert.equal(await evaluate(`document.activeElement.dataset.processId`),'technical-trace');
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowUp',code:'ArrowUp'});
+  assert.equal(await evaluate(`document.activeElement.dataset.processId`),'api-rendering');
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Home',code:'Home'});
+  assert.equal(await evaluate(`document.activeElement.dataset.processId`),'focus-preparation');
+  // Exact call map stays inspectable, rather than implying the tab row is call order.
+  await selectView('backend','flow');
+  await evaluate(`Array.from(document.querySelectorAll('.transparency-flow-node')).find(button=>button.textContent.startsWith('Tokens')).click()`);
+  assert.equal(await evaluate(`document.activeElement.parentElement.dataset.evidenceSection`), 'nlp:tokens');
+  assert.equal(await evaluate(`transparencyTabsApi.activeProcessId`),'tokens');
+  const tokenRows = await evaluate(`Array.from(document.querySelectorAll('#transparency-step-tokens tbody tr')).map(row=>Array.from(row.cells,cell=>cell.textContent))`);
+  assert.equal(tokenRows.length, 27);
+  tokenRows.forEach((row, index) => {
+    assert.equal(row[1], a.linguistic_observations.tokens[index].text);
+    assert.equal(Number(row[2]), a.linguistic_observations.tokens[index].start);
+    assert.equal(Number(row[3]), a.linguistic_observations.tokens[index].end);
+  });
+  await selectView('student','overview');
+  await verifyLayout(1440, 1000, 'desktop-introduction');
+  await selectView('nlp','tokens');
+  await evaluate(`document.querySelector('[data-evidence-section="nlp:tokens"]').scrollIntoView({block:'start'})`);
+  await screenshot('desktop-tokens');
+  await selectView('topic','related');
+  const relatedRows = await evaluate(`(() => {const table=Array.from(document.querySelectorAll('#nlp-subpanel-topic-related table')).find(table=>table.tHead.rows[0].cells[0].textContent==='Student Word'); return Array.from(table.tBodies[0].rows,row=>Array.from(row.cells,cell=>cell.textContent));})()`);
+  assert.equal(relatedRows.length,related.evidence.length);
+  relatedRows.forEach((row,index)=>{const item=related.evidence[index]; assert.equal(row[0],item.student_word); assert.equal(row[1],item.normalized_student_word); assert.ok(row[4].includes(item.relationship_id)); assert.ok(row[5].includes(`[${item.start}, ${item.end})`));});
+  await evaluate(`Array.from(document.querySelectorAll('#nlp-subpanel-topic-related table')).find(table=>table.tHead.rows[0].cells[0].textContent==='Student Word').scrollIntoView({block:'center'})`);
+  await screenshot('desktop-related-topic-concepts');
+  await selectView('rules','overview');
+  assert.match(await evaluate(`document.querySelector('#nlp-subpanel-rules-overview').innerText`),/Emitted Rule Events[\s\S]*9[\s\S]*Evaluation records[\s\S]*19/);
+  await selectView('rules','triggered');
+  assert.equal(await evaluate(`document.querySelectorAll('#nlp-subpanel-rules-triggered tbody tr').length`),9);
+  await selectView('rules','trace');
+  assert.equal(await evaluate(`document.querySelectorAll('#nlp-subpanel-rules-trace tbody tr').length`),19);
+  await evaluate(`document.querySelector('[data-evidence-section="rules:trace"]').scrollIntoView({block:'start'})`);
+  await screenshot('desktop-rule-trace');
+  await selectView('student','overview');
+  await verifyLayout(390, 844, 'mobile-introduction');
+  await selectView('nlp','tokens');
+  await evaluate(`document.querySelector('.explorer-stage-navigation').scrollIntoView({block:'start'});window.scrollBy(0,-110)`);
+  await screenshot('mobile-tokens');
+  assert.equal(await evaluate(`document.querySelectorAll('#nlp-process-select,.explorer-navigation,.explorer-mobile-navigation,.explorer-layout').length`),0,'mobile uses the horizontal stage and process rows');
+  assert.equal(await evaluate(`document.querySelectorAll('.explorer-stage-button').length`),6,'six stage buttons remain available on mobile');
+  await selectView('topic','related');
+  await evaluate(`Array.from(document.querySelectorAll('#nlp-subpanel-topic-related table')).find(table=>table.tHead.rows[0].cells[0].textContent==='Student Word').scrollIntoView({block:'center'})`);
+  await screenshot('mobile-related-topic-concepts');
+  await click('#copy-full-analysis');
+  await wait(`document.querySelector('#analysis-copy-status').textContent==='Full analysis copied.'`, 'actual clipboard write');
+  const copied = await evaluate(`navigator.clipboard.readText()`);
+  // Windows' native clipboard normalizes LF line endings to CRLF.
+  assert.equal(copied.replace(/\r\n/g,'\n'), await evaluate(`buildFullAnalysisReport(state.analyses.INTRODUCTION)`));
+  assert.ok(copied.includes('Related Topic Concepts'));
+  assert.ok(copied.includes('[source: related_topic_concept_evidence]'));
+  for(const item of related.evidence) assert.ok(copied.includes(item.relationship_id));
+  assert.ok(copied.includes('HELP-INTRO-EXPLAIN-POINT'),'copy report retains the prepared branch-to-lesson mapping');
+  assert.equal(await evaluate(`__analysisCalls.length`), callCount);
+  const records = await evaluate(`(() => {const records=[]; buildFullAnalysisReport(state.analyses.INTRODUCTION,records); return records.map(record=>record.path);})()`);
+  await selectView('final','complete');
+  await evaluate(`Array.from(document.querySelectorAll('#nlp-subpanel-final-complete details')).find(details=>details.querySelector('summary').textContent.startsWith('Complete retained evidence index')).open=true`);
+  await wait(`document.querySelectorAll('#nlp-subpanel-final-complete details[data-source]').length>0`, 'evidence index');
+  assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('#nlp-subpanel-final-complete details[data-source]'),element=>element.dataset.source)`), records);
+  checks.push({ check: 'Process explorer: all 45 original technical sections, keyboard controls, Introduction evidence, clipboard equality, no rerun, complete export index', originalEvidenceSections:views.reduce((total,group)=>total+group.sub.length,0), tokens: tokenRows.length, emittedEvents: 9, evaluationRecords: 19, matchedTerms: 3, matchOccurrences: 4, reportCharacters: copied.length });
+  await verifyProcessExplorer();
+  await fill('#stage-text', intro + ' Edited.');
+  assert.equal(await evaluate(`document.querySelector('#nlp-transparency-content').dataset.status`), 'STALE');
+  assert.equal(await evaluate(`document.querySelector('#copy-full-analysis').disabled`), true);
+  assert.equal(await evaluate(`document.querySelectorAll('#nlp-transparency-content table').length`), 0);
+  assert.equal(await evaluate(`document.querySelector('#feedback-content').hidden`),true);
+  assert.equal(await evaluate(`document.querySelector('#feedback-writing-focus').hidden`),true);
+  for (const [writing, expected] of [
+    ['Rivers, animals, people.',['river','animal']],
+    ['Plastic pollution can harm rivers and animals.',['pollution','river','animal']],
+    ['People enjoy basketball.',[]],
+    ['Rivers, rivers! Animals.',['river','river','animal']],
+    ['No rivers or animals are mentioned.',['river','animal']],
+  ]) {
+    const response=await analyze('INTRODUCTION',writing);
+    assert.deepEqual(response.related_topic_concept_evidence.evidence.map(item=>item.normalized_student_word),expected);
+    assert.equal(response.analysis.lexical_topic_evidence.observed_unique_focus_terms,0);
+    const mapping=await evaluate(`studentFeedbackPresentation(state.analyses.INTRODUCTION)`);
+    assert.equal(mapping.teaching_content_source.content_id,'HELP-TOPIC-MATCH','recorded no-focus branch now has approved vocabulary guidance');
+    assert.equal(await evaluate(`document.querySelector('#feedback-writing-focus').hidden`),mapping.tutor_items.length>1);
+    if(writing==='Rivers, animals, people.') assert.deepEqual(response.analysis.central_direction_candidate.candidates,[]);
+    await selectView('topic','related');
+    assert.match(await evaluate(`document.querySelector('#nlp-subpanel-topic-related').innerText`),/does not change direct\/lemma counts/);
+  }
+  await fill('#assignment-topic','School uniforms'); await fill('#focus-terms','school uniforms');
+  const uniforms=await analyze('INTRODUCTION','Rivers and animals.');
+  assert.equal(uniforms.related_topic_concept_evidence.execution_status,'NOT_APPLICABLE');
+  assert.deepEqual(uniforms.related_topic_concept_evidence.evidence,[]);
+  await fill('#assignment-topic',topic); await fill('#focus-terms',focus);
+  const mainPoint=await analyze('INTRODUCTION','Communities should reduce single-use plastics.');
+  await verifyInlineGuidance(mainPoint,'HELP-INTRO-DEVELOP-POINT');
+  const subordinatorHelp=await analyze('INTRODUCTION','Throwing away plastic waste on communities is very harmful in the environment. Because it can effect rivers, animals, plants ect.');
+  await verifyInlineGuidance(subordinatorHelp,'HELP-INTRO-COMPLETE-SENTENCE');
+  assert.equal(await evaluate(`document.querySelector('#tutor-noticed').textContent`),"The sentence containing 'Because' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.");
+  assert.equal(await evaluate(`document.querySelector('#tutor-why').textContent`),"'Because' introduces a reason. Your reader expects a main statement that gives the result or claim.");
+  assert.equal(await evaluate(`studentFeedbackPresentation(state.analyses.INTRODUCTION).verified_subordinator.text`),'Because');
+  const althoughHelp=await analyze('INTRODUCTION','Although communities reduce single-use plastics.');
+  await verifyInlineGuidance(althoughHelp,'HELP-INTRO-COMPLETE-SENTENCE');
+  assert.equal(await evaluate(`document.querySelector('#tutor-noticed').textContent`),"The sentence containing 'Although' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.");
+  assert.equal(await evaluate(`document.querySelector('#tutor-noticed').textContent.includes('Because')`),false,'no causal wording for a concessive marker');
+  assert.equal(await evaluate(`studentFeedbackPresentation(state.analyses.INTRODUCTION).verified_subordinator.text`),'Although');
+  const cleanReason=await analyze('INTRODUCTION','Communities should reduce plastic waste because it can affect rivers and animals.');
+  // Sentence completeness does not imply topic-word overlap inside its reason;
+  // the recorded neutral branch must stay neutral in the tutor.
+  const cleanPresentation=await evaluate(`studentFeedbackPresentation(state.analyses.INTRODUCTION)`);
+  assert.equal(cleanPresentation.status,'NEUTRAL_OBSERVATION');
+  assert.equal(cleanPresentation.writing_dimension,null,'neutral review does not depend on reason word overlap');
+  assert.equal(cleanPresentation.writing_skill,null,'neutral review displays no corrective skill');
+  assert.equal(await evaluate(`document.querySelector('#feedback-writing-focus').textContent`),'No specific writing issue detected');
+  assert.equal(await evaluate(`document.querySelectorAll('#tutor-evidence mark,#editor-mirror mark').length`),0,'neutral review displays no error mark');
+  assert.equal(await evaluate(`document.getElementById('tutor-task-section').hidden`),true,'neutral review displays no How to improve');
+  assert.equal(cleanPresentation.instructional_feedback.items[0].feedback_purpose,'NEUTRAL_REVIEW_TASK');
+  checks.push({check:'Related concepts: actual spans, separate counts, A/B/D/E/F/G difficult examples, no sentence approval from a list',relatedConcepts:related.summary.unique_related_concepts_observed,relatedOccurrences:related.summary.total_related_concept_occurrences,exactSpans:related.evidence.map(item=>[item.student_word,item.start,item.end])});
+  await analyze('INTRODUCTION', intro);
+  const bodyResponse = await analyze('BODY', body);
+  assert.equal(bodyResponse.analysis.paragraphs.length, 2);
+  assert.equal(bodyResponse.related_topic_concept_evidence.execution_status,'EXECUTED');
+  assert.ok(bodyResponse.related_topic_concept_evidence.evidence.length>0);
+  await selectView('rules','stage');
+  await evaluate(`Array.from(document.querySelectorAll('#transparency-step-stage details')).find(details=>details.querySelector('summary').textContent.startsWith('All Body paragraph observations')).open=true`);
+  await wait(`document.querySelector('#transparency-step-stage').textContent.includes('Paragraph 2')`, 'Body paragraphs');
+  await verifyLayout(1440, 1000, 'desktop-body');
+  await verifyLayout(390, 844, 'mobile-body');
+  checks.push({ check: 'Body current analysis with Introduction context', paragraphs: bodyResponse.analysis.paragraphs.length, events: bodyResponse.analysis.rule_evidence.length });
+  const detailHelp=await analyze('BODY','Communities reduce single-use plastics.');
+  await verifyInlineGuidance(detailHelp,'HELP-BODY-DEVELOP-POINT');
+  const connectionHelp=await analyze('BODY','Communities reduce plastics. Residents reuse bags.\n\nOrchestras perform symphonies. Musicians practice instruments.');
+  await verifyInlineGuidance(connectionHelp,'HELP-BODY-PARAGRAPH-LINK');
+  await analyze('BODY',body);
+  const conclusionResponse = await analyze('CONCLUSION', conclusion);
+  assert.ok(conclusionResponse.analysis.synthesis_structure_candidates);
+  assert.ok(conclusionResponse.analysis.new_material_observations);
+  assert.equal(conclusionResponse.related_topic_concept_evidence.execution_status,'EXECUTED');
+  assert.ok(conclusionResponse.related_topic_concept_evidence.evidence.length>0);
+  assert.equal(conclusionResponse.research_trace.stages.CONCLUSION.feedback_decisions.fields['Primary Feedback'].selection_branch,'conclusion_ideas_bring_together');
+  // The synthesis record is a neutral review: no corrective trait, lesson,
+  // highlight or improvement task is displayed, while transparency retains it.
+  assert.equal(await evaluate(`studentFeedbackPresentation(state.analyses.CONCLUSION).status`),'NEUTRAL_OBSERVATION');
+  await verifyInlineGuidance(conclusionResponse,null);
+  await verifyLayout(1440, 1000, 'desktop-conclusion');
+  await verifyLayout(390, 844, 'mobile-conclusion');
+  await selectView('rules','stage');
+  assert.match(await evaluate(`document.querySelector('#transparency-step-stage').innerText`),/Synthesis-structure candidates[\s\S]*Unobserved concepts/);
+  await selectView('engine','primary');
+  assert.match(await evaluate(`document.querySelector('#nlp-subpanel-engine-primary').innerText`),new RegExp(conclusionResponse.research_trace.stages.CONCLUSION.feedback_decisions.fields['Primary Feedback'].selection_branch));
+  await delay(200);
+  assert.equal(await evaluate(`__writes.length`), 0);
+  assert.equal(await evaluate(`document.querySelectorAll('#nlp-transparency-content pre').length`), 0);
+  checks.push({ check: 'Conclusion continuity, synthesis, closure, new material and diagram navigation', events: conclusionResponse.analysis.rule_evidence.length, persistenceRequests: 0 });
+  await verifyExplanationOnlyEditor();
+  await verifyIntroductionFeedbackQuality();
+  await verifyManualIntroductionCorrections();
+  await verifyCombinedBeforeSafeguard();
+  await verifyLiveBodyFeedback();
+  await verifyCausalWalkthroughs();
+  await verifyRuleDecisionTrees();
+  await verifyFeedbackDecisionFlow();
+  await verifyImmersiveTransparencyFocus();
+  await evaluate(`document.querySelector('form[action="/logout"]').requestSubmit()`);
+  await wait(`location.pathname==='/login'`, 'logout');
+  await login('browser_teacher');
+  await navigate('/teacher/research-inspector', `!!document.querySelector('#run-research-analysis') && !document.querySelector('#run-research-analysis').disabled`);
+  await fill('#research-topic', topic); await fill('#research-focus-terms', focus); await fill('#research-introduction', intro);
+  await evaluate(`document.querySelector('#research-sample-form').requestSubmit()`);
+  await wait(`!document.querySelector('#copy-research-json').disabled`, 'teacher inspector analysis');
+  const teacher = await evaluate(`JSON.parse(document.querySelector('#research-raw-json').textContent).api_response`);
+  assert.equal(teacher.analysis.rule_evidence.length, 9);
+  assert.equal(teacher.analysis.rule_evaluation_trace.length, 19);
+  await click('#next-process');
+  checks.push({ check: 'Teacher Research Inspector real analysis and process navigation', emittedEvents: 9, evaluationRecords: 19 });
+  const beforeSamples=JSON.parse(fs.readFileSync(path.join(__dirname,'before_subordinator_cases.json'),'utf8'));
+  await fill('#research-topic',beforeSamples.assignment_topic);
+  await fill('#research-focus-terms',beforeSamples.focus_terms.join(', '));
+  await fill('#research-introduction',beforeSamples.cases.H);
+  await evaluate(`document.querySelector('#research-sample-form').requestSubmit()`);
+  await wait(`!document.querySelector('#copy-research-json').disabled && JSON.parse(document.querySelector('#research-raw-json').textContent).api_response.analysis.linguistic_observations.text===${JSON.stringify(beforeSamples.cases.H)}`,'teacher corrected combined Introduction');
+  const correctedInspector=await evaluate(`JSON.parse(document.querySelector('#research-raw-json').textContent).api_response`);
+  assert.deepEqual(correctedInspector.analysis.observable_structure.incomplete_subordinator_candidates.map(item=>item.text),['Although']);
+  assert.equal(correctedInspector.research_trace.stages.INTRODUCTION.feedback_decisions.fields['Primary Feedback'].selection_branch,'intro_sentence_fluency_complete_sentence');
+  checks.push({check:'Research Inspector reports corrected Case H execution',incompleteMarkers:['Although']});
+  assert.deepEqual(errors, [], 'No browser JavaScript/console errors');
+  fs.writeFileSync(path.join(artifacts, 'verification.json'), JSON.stringify({ checks, javascriptErrors: errors }, null, 2));
+  console.log(JSON.stringify({ checks, javascriptErrors: errors, artifacts }, null, 2));
+})().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => {
+  if (socket?.readyState === WebSocket.OPEN) {
+    try { await send('Browser.close', {}, true); } catch (_) {}
+    socket.close();
+  }
+  browser?.kill();
+});

@@ -1,0 +1,3117 @@
+{
+  "records": {
+    "T01": {
+      "text": "Schools should allow smartphones during class.",
+      "branch": "intro_ideas_develop_main_point",
+      "trait": "Ideas",
+      "skill": "Develop Your Main Point",
+      "lesson": "HELP-INTRO-DEVELOP-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded a possible main-point sentence, with no additional sentence parts under this check.",
+        "Look at your writing": "Schools should allow smartphones during class.",
+        "Why it matters": "A reason, example, or explanation can help readers understand your point.",
+        "How to improve": "Choose a reason, example, or explanation a reader would need. Add it in your own words if needed; no fixed starting word is required."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 1,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-DEVELOP-POINT",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "DEVELOPMENT_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 20,
+                  "start": 15,
+                  "text": "allow"
+                },
+                "anchor_end_field": "end",
+                "anchor_path": [
+                  "predicate_evidence"
+                ],
+                "anchor_start_field": "start",
+                "context": {
+                  "end": 46,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Schools should allow smartphones during class."
+                },
+                "end": 46,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "main_statement",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                "selection_reason": "First source-ordered subject-linked root pattern; a possible statement to develop, not a missing-point finding.",
+                "start": 0,
+                "text": "Schools should allow smartphones during class."
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-DEVELOP-POINT",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "A recorded possible main statement with no additional qualifying clause pattern supports a next development task, not a claim that no point or explanation exists.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "NO_ADDITIONAL_CLAUSE_ELABORATION_OBSERVED",
+              "observed_focus_terms": [
+                "smartphones",
+                "class"
+              ],
+              "reason_clause_count": 0,
+              "reason_topic_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+              "sentence_count": 1,
+              "supported_predicate_count": 1,
+              "topic_matches": [
+                {
+                  "end": 32,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    3
+                  ],
+                  "start": 21
+                },
+                {
+                  "end": 45,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    5
+                  ],
+                  "start": 40
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "This check can miss other kinds of development. The mark identifies your recorded statement, not an error or a judgment of its quality.",
+              "noticed": "The checks recorded a possible main-point sentence, with no additional sentence parts under this check.",
+              "task": "Choose a reason, example, or explanation a reader would need. Add it in your own words if needed; no fixed starting word is required.",
+              "why": "A reason, example, or explanation can help readers understand your point.",
+              "working": "A subject-and-verb pattern was recorded as a possible main statement."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "Fewer than two finite clause-predicate candidates were observed.",
+                "rule_id": "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE"
+            ],
+            "selection_branch": "intro_ideas_develop_main_point",
+            "selection_condition": "central_direction_candidates is nonempty; no recorded because-clause; development status is not STRUCTURAL_ELABORATION_CANDIDATE",
+            "skill": "Develop Your Main Point",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE"
+            ],
+            "working_text": "A subject-and-verb pattern was recorded as a possible main statement."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main-point sentence, with no additional sentence parts under this check. Choose a reason, example, or explanation to add if readers need one.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, class. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Choose a reason, example, or explanation that would help a reader understand your point. Add it in your own words if needed; no fixed starting word is required."
+      },
+      "displayed_strengths": "A subject-and-verb pattern was recorded as a possible main statement.",
+      "displayed_highlights": [
+        "Schools should allow smartphones during class."
+      ]
+    },
+    "T02": {
+      "text": "Schools should allow smartphones during class because students can research information for their lessons.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Review Your Explanation",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+        "Look at your writing": "Schools should allow smartphones during class because students can research information for their lessons.",
+        "Why it matters": "An explanation helps readers understand the point you want to make.",
+        "How to improve": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "reason_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 105,
+                  "start": 46,
+                  "text": "because students can research information for their lessons"
+                },
+                "anchor_end_field": "clause_end",
+                "anchor_path": [],
+                "anchor_start_field": "clause_start",
+                "context": {
+                  "end": 106,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Schools should allow smartphones during class because students can research information for their lessons."
+                },
+                "end": 105,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "reason_clause",
+                "rule_id": "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+                "selection_reason": "First source-ordered recorded because subtree; marked as explanation evidence, regardless of word overlap.",
+                "start": 46,
+                "text": "because students can research information for their lessons"
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "A main-statement pattern and a recorded because subtree support neutral explanation review. Word overlap or its absence does not determine validity or change the lesson.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+              "observed_focus_terms": [
+                "smartphones",
+                "students",
+                "class"
+              ],
+              "reason_clause_count": 1,
+              "reason_topic_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+              "sentence_count": 1,
+              "supported_predicate_count": 2,
+              "topic_matches": [
+                {
+                  "end": 32,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    3
+                  ],
+                  "start": 21
+                },
+                {
+                  "end": 62,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "students",
+                  "match_method": "direct",
+                  "normalized_form": "student",
+                  "observed_text": "students",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    7
+                  ],
+                  "start": 54
+                },
+                {
+                  "end": 45,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    5
+                  ],
+                  "start": 40
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "The mark shows sentence evidence, not an error. Word matches cannot tell whether the explanation is true or supports your point.",
+              "noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+              "task": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need.",
+              "why": "An explanation helps readers understand the point you want to make.",
+              "working": "The checks recorded a main-statement pattern and an explanation part."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "A 'because' advcl clause was identified and contains at least one focus-term match.",
+                "rule_id": "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+            ],
+            "selection_branch": "intro_ideas_point_and_reason",
+            "selection_condition": "central_direction_candidates is nonempty and reason_clause_evidence.clauses is nonempty; focus-word presence or absence within the reason does not change this neutral review",
+            "skill": "Review Your Explanation",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+            ],
+            "working_text": "The checks recorded a main-statement pattern and an explanation part."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main statement and a 'because' part. Read them together and decide whether a reader needs more explanation.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, class. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Read your main statement with the explanation part. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "displayed_strengths": "The checks recorded a main-statement pattern and an explanation part.",
+      "displayed_highlights": [
+        "because students can research information for their lessons"
+      ]
+    },
+    "T03": {
+      "text": "Students should be allowed to use smartphones in class. They can search for difficult words. This may help them understand their lessons.",
+      "branch": "intro_ideas_review_details",
+      "trait": "Ideas",
+      "skill": "Review Your Details",
+      "lesson": "HELP-INTRO-REVIEW-DETAILS",
+      "guidance": {
+        "What I noticed": "The checks recorded a possible main statement and additional sentence parts.",
+        "Look at your writing": "They can search for difficult words.",
+        "Why it matters": "Readers can follow your point when they can see how your details connect to it.",
+        "How to improve": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 3,
+      "development_count": 4,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 71,
+                  "start": 65,
+                  "text": "search"
+                },
+                "anchor_end_field": "end",
+                "anchor_path": [],
+                "anchor_start_field": "start",
+                "context": {
+                  "end": 92,
+                  "sentence_index": 1,
+                  "start": 56,
+                  "text": "They can search for difficult words."
+                },
+                "end": 92,
+                "evidence_index": 1,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "development_pattern",
+                "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+                "selection_reason": "First additional recorded predicate. Its sentence is shown alone; shared-sentence evidence marks only the extra predicate.",
+                "start": 56,
+                "text": "They can search for difficult words."
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "Recorded main-statement and additional-clause patterns support reviewing details already present without requiring because or inferring logical support.",
+            "observed_fields": {
+              "central_candidate_count": 3,
+              "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+              "observed_focus_terms": [
+                "smartphones",
+                "students",
+                "class"
+              ],
+              "reason_clause_count": 0,
+              "reason_topic_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+              "sentence_count": 3,
+              "supported_predicate_count": 4,
+              "topic_matches": [
+                {
+                  "end": 45,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    6
+                  ],
+                  "start": 34
+                },
+                {
+                  "end": 8,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "students",
+                  "match_method": "direct",
+                  "normalized_form": "student",
+                  "observed_text": "Students",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    0
+                  ],
+                  "start": 0
+                },
+                {
+                  "end": 54,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    8
+                  ],
+                  "start": 49
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "You do not need to use 'because'. The mark shows recorded sentence evidence, not an error or proof that the ideas work together.",
+              "noticed": "The checks recorded a possible main statement and additional sentence parts.",
+              "task": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it.",
+              "why": "Readers can follow your point when they can see how your details connect to it.",
+              "working": "More than one subject-and-verb pattern was recorded in your opening."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "At least two finite clause-predicate candidates were observed.",
+                "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+            ],
+            "selection_branch": "intro_ideas_review_details",
+            "selection_condition": "central_direction_candidates is nonempty; no recorded because-clause; development status is STRUCTURAL_ELABORATION_CANDIDATE; no logical relationship is inferred",
+            "skill": "Review Your Details",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+            ],
+            "working_text": "More than one subject-and-verb pattern was recorded in your opening."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main statement and additional sentence parts. Choose one detail and review how it helps explain your point.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, class. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it."
+      },
+      "displayed_strengths": "More than one subject-and-verb pattern was recorded in your opening.",
+      "displayed_highlights": [
+        "They can search for difficult words."
+      ]
+    },
+    "T04": {
+      "text": "Schools should allow smartphones during class because these devices provide quick access to online dictionaries.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Review Your Explanation",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+        "Look at your writing": "Schools should allow smartphones during class because these devices provide quick access to online dictionaries.",
+        "Why it matters": "An explanation helps readers understand the point you want to make.",
+        "How to improve": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "reason_status": "BECAUSE_CLAUSE_NO_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 111,
+                  "start": 46,
+                  "text": "because these devices provide quick access to online dictionaries"
+                },
+                "anchor_end_field": "clause_end",
+                "anchor_path": [],
+                "anchor_start_field": "clause_start",
+                "context": {
+                  "end": 112,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Schools should allow smartphones during class because these devices provide quick access to online dictionaries."
+                },
+                "end": 111,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "reason_clause",
+                "rule_id": "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP",
+                "selection_reason": "First source-ordered recorded because subtree; marked as explanation evidence, regardless of word overlap.",
+                "start": 46,
+                "text": "because these devices provide quick access to online dictionaries"
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "A main-statement pattern and a recorded because subtree support neutral explanation review. Word overlap or its absence does not determine validity or change the lesson.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+              "observed_focus_terms": [
+                "smartphones",
+                "class"
+              ],
+              "reason_clause_count": 1,
+              "reason_topic_status": "BECAUSE_CLAUSE_NO_TOPIC_OVERLAP",
+              "sentence_count": 1,
+              "supported_predicate_count": 2,
+              "topic_matches": [
+                {
+                  "end": 32,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    3
+                  ],
+                  "start": 21
+                },
+                {
+                  "end": 45,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    5
+                  ],
+                  "start": 40
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "The mark shows sentence evidence, not an error. Word matches cannot tell whether the explanation is true or supports your point.",
+              "noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+              "task": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need.",
+              "why": "An explanation helps readers understand the point you want to make.",
+              "working": "The checks recorded a main-statement pattern and an explanation part."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "A 'because' advcl clause was identified but contains no recorded focus-term match.",
+                "rule_id": "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+            ],
+            "selection_branch": "intro_ideas_point_and_reason",
+            "selection_condition": "central_direction_candidates is nonempty and reason_clause_evidence.clauses is nonempty; focus-word presence or absence within the reason does not change this neutral review",
+            "skill": "Review Your Explanation",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+            ],
+            "working_text": "The checks recorded a main-statement pattern and an explanation part."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main statement and a 'because' part. Read them together and decide whether a reader needs more explanation.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, class. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Read your main statement with the explanation part. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "displayed_strengths": "The checks recorded a main-statement pattern and an explanation part.",
+      "displayed_highlights": [
+        "because these devices provide quick access to online dictionaries"
+      ]
+    },
+    "T05": {
+      "text": "Schools should allow smartphones during class because smartphones provide quick access to online dictionaries.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Review Your Explanation",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+        "Look at your writing": "Schools should allow smartphones during class because smartphones provide quick access to online dictionaries.",
+        "Why it matters": "An explanation helps readers understand the point you want to make.",
+        "How to improve": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "reason_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 109,
+                  "start": 46,
+                  "text": "because smartphones provide quick access to online dictionaries"
+                },
+                "anchor_end_field": "clause_end",
+                "anchor_path": [],
+                "anchor_start_field": "clause_start",
+                "context": {
+                  "end": 110,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Schools should allow smartphones during class because smartphones provide quick access to online dictionaries."
+                },
+                "end": 109,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "reason_clause",
+                "rule_id": "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+                "selection_reason": "First source-ordered recorded because subtree; marked as explanation evidence, regardless of word overlap.",
+                "start": 46,
+                "text": "because smartphones provide quick access to online dictionaries"
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "A main-statement pattern and a recorded because subtree support neutral explanation review. Word overlap or its absence does not determine validity or change the lesson.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+              "observed_focus_terms": [
+                "smartphones",
+                "class"
+              ],
+              "reason_clause_count": 1,
+              "reason_topic_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+              "sentence_count": 1,
+              "supported_predicate_count": 2,
+              "topic_matches": [
+                {
+                  "end": 32,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    3
+                  ],
+                  "start": 21
+                },
+                {
+                  "end": 65,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    7
+                  ],
+                  "start": 54
+                },
+                {
+                  "end": 45,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    5
+                  ],
+                  "start": 40
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "The mark shows sentence evidence, not an error. Word matches cannot tell whether the explanation is true or supports your point.",
+              "noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+              "task": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need.",
+              "why": "An explanation helps readers understand the point you want to make.",
+              "working": "The checks recorded a main-statement pattern and an explanation part."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "A 'because' advcl clause was identified and contains at least one focus-term match.",
+                "rule_id": "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+            ],
+            "selection_branch": "intro_ideas_point_and_reason",
+            "selection_condition": "central_direction_candidates is nonempty and reason_clause_evidence.clauses is nonempty; focus-word presence or absence within the reason does not change this neutral review",
+            "skill": "Review Your Explanation",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+            ],
+            "working_text": "The checks recorded a main-statement pattern and an explanation part."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main statement and a 'because' part. Read them together and decide whether a reader needs more explanation.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, class. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Read your main statement with the explanation part. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "displayed_strengths": "The checks recorded a main-statement pattern and an explanation part.",
+      "displayed_highlights": [
+        "because smartphones provide quick access to online dictionaries"
+      ]
+    },
+    "T06": {
+      "text": "Because students can use smartphones during class.",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "trait": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "lesson": "HELP-INTRO-COMPLETE-SENTENCE",
+      "guidance": {
+        "What I noticed": "The sentence containing 'Because' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+        "Look at your writing": "Because students can use smartphones during class.",
+        "Why it matters": "'Because' introduces a reason. Your reader expects a main statement that gives the result or claim.",
+        "How to improve": "Ask yourself: Because students can use smartphones during class, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 0,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+        "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": false,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": true,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-COMPLETE-SENTENCE",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "RECORDED_STRUCTURAL_CONCERN",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 7,
+                  "start": 0,
+                  "text": "Because"
+                },
+                "anchor_end_field": "end",
+                "anchor_path": [],
+                "anchor_start_field": "start",
+                "context": {
+                  "end": 50,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Because students can use smartphones during class."
+                },
+                "end": 50,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "incomplete_sentence",
+                "rule_id": "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+                "selection_reason": "The single recorded incomplete-marker sentence is the review location.",
+                "start": 0,
+                "text": "Because students can use smartphones during class."
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-COMPLETE-SENTENCE",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "The selected backend branch reviews an unfinished-sentence finding when a flagged starting sentence part is recorded and no main statement completes it. Sentence Fluency · Complete Your Sentence is the teaching focus; the pattern check can flag complete sentences.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "NO_ADDITIONAL_CLAUSE_ELABORATION_OBSERVED",
+              "observed_focus_terms": [
+                "smartphones",
+                "students",
+                "class"
+              ],
+              "reason_clause_count": 0,
+              "reason_topic_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+              "sentence_count": 1,
+              "supported_predicate_count": 0,
+              "topic_matches": [
+                {
+                  "end": 36,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    4
+                  ],
+                  "start": 25
+                },
+                {
+                  "end": 16,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "students",
+                  "match_method": "direct",
+                  "normalized_form": "student",
+                  "observed_text": "students",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    1
+                  ],
+                  "start": 8
+                },
+                {
+                  "end": 49,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    6
+                  ],
+                  "start": 44
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "This is a possible sentence-structure concern based on grammar predictions, not a guaranteed judgment.",
+              "noticed": "The sentence containing 'Because' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+              "task": "Ask yourself: Because students can use smartphones during class, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete.",
+              "why": "'Because' introduces a reason. Your reader expects a main statement that gives the result or claim."
+            },
+            "rule_conditions": [
+              {
+                "condition": "A subordinator did not receive the expected parser attachment for a subordinate clause.",
+                "rule_id": "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR"
+              },
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+            ],
+            "selection_branch": "intro_sentence_fluency_complete_sentence",
+            "selection_condition": "incomplete_subordinator_candidates is non-empty",
+            "skill": "Complete Your Sentence",
+            "trait": "Sentence Fluency",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+            ],
+            "working_text": ""
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The words after 'Because' may leave the thought unfinished. Add the missing part of your idea so the sentence tells readers your point.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, class. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Read the words after 'Because' and finish the thought with your main statement."
+      },
+      "displayed_strengths": "",
+      "displayed_highlights": [
+        "Because students can use smartphones during class."
+      ]
+    },
+    "T07": {
+      "text": "Because students can use smartphones for learning, schools should allow them during class.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Review Your Explanation",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+        "Look at your writing": "Because students can use smartphones for learning, schools should allow them during class.",
+        "Why it matters": "An explanation helps readers understand the point you want to make.",
+        "How to improve": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "reason_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 49,
+                  "start": 0,
+                  "text": "Because students can use smartphones for learning"
+                },
+                "anchor_end_field": "clause_end",
+                "anchor_path": [],
+                "anchor_start_field": "clause_start",
+                "context": {
+                  "end": 90,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Because students can use smartphones for learning, schools should allow them during class."
+                },
+                "end": 49,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "reason_clause",
+                "rule_id": "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+                "selection_reason": "First source-ordered recorded because subtree; marked as explanation evidence, regardless of word overlap.",
+                "start": 0,
+                "text": "Because students can use smartphones for learning"
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "A main-statement pattern and a recorded because subtree support neutral explanation review. Word overlap or its absence does not determine validity or change the lesson.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+              "observed_focus_terms": [
+                "smartphones",
+                "students",
+                "class",
+                "learning"
+              ],
+              "reason_clause_count": 1,
+              "reason_topic_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+              "sentence_count": 1,
+              "supported_predicate_count": 2,
+              "topic_matches": [
+                {
+                  "end": 36,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    4
+                  ],
+                  "start": 25
+                },
+                {
+                  "end": 16,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "students",
+                  "match_method": "direct",
+                  "normalized_form": "student",
+                  "observed_text": "students",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    1
+                  ],
+                  "start": 8
+                },
+                {
+                  "end": 89,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    13
+                  ],
+                  "start": 84
+                },
+                {
+                  "end": 49,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "learning",
+                  "match_method": "direct",
+                  "normalized_form": "learning",
+                  "observed_text": "learning",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    6
+                  ],
+                  "start": 41
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "The mark shows sentence evidence, not an error. Word matches cannot tell whether the explanation is true or supports your point.",
+              "noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+              "task": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need.",
+              "why": "An explanation helps readers understand the point you want to make.",
+              "working": "The checks recorded a main-statement pattern and an explanation part."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "A 'because' advcl clause was identified and contains at least one focus-term match.",
+                "rule_id": "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+            ],
+            "selection_branch": "intro_ideas_point_and_reason",
+            "selection_condition": "central_direction_candidates is nonempty and reason_clause_evidence.clauses is nonempty; focus-word presence or absence within the reason does not change this neutral review",
+            "skill": "Review Your Explanation",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+            ],
+            "working_text": "The checks recorded a main-statement pattern and an explanation part."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main statement and a 'because' part. Read them together and decide whether a reader needs more explanation.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, class, learning. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Read your main statement with the explanation part. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "displayed_strengths": "The checks recorded a main-statement pattern and an explanation part.",
+      "displayed_highlights": [
+        "Because students can use smartphones for learning"
+      ]
+    },
+    "T08": {
+      "text": "Although smartphones can distract students.",
+      "branch": "intro_sentence_fluency_complete_sentence",
+      "trait": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "lesson": "HELP-INTRO-COMPLETE-SENTENCE",
+      "guidance": {
+        "What I noticed": "The sentence containing 'Although' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+        "Look at your writing": "Although smartphones can distract students.",
+        "Why it matters": "'Although' introduces a contrasting idea. Your reader expects another statement explaining what happens despite that idea.",
+        "How to improve": "Ask yourself: Although smartphones can distract students, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 0,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+        "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": false,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": true,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-COMPLETE-SENTENCE",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "RECORDED_STRUCTURAL_CONCERN",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 8,
+                  "start": 0,
+                  "text": "Although"
+                },
+                "anchor_end_field": "end",
+                "anchor_path": [],
+                "anchor_start_field": "start",
+                "context": {
+                  "end": 43,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Although smartphones can distract students."
+                },
+                "end": 43,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "incomplete_sentence",
+                "rule_id": "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+                "selection_reason": "The single recorded incomplete-marker sentence is the review location.",
+                "start": 0,
+                "text": "Although smartphones can distract students."
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-COMPLETE-SENTENCE",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "The selected backend branch reviews an unfinished-sentence finding when a flagged starting sentence part is recorded and no main statement completes it. Sentence Fluency · Complete Your Sentence is the teaching focus; the pattern check can flag complete sentences.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "NO_ADDITIONAL_CLAUSE_ELABORATION_OBSERVED",
+              "observed_focus_terms": [
+                "smartphones",
+                "students"
+              ],
+              "reason_clause_count": 0,
+              "reason_topic_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+              "sentence_count": 1,
+              "supported_predicate_count": 0,
+              "topic_matches": [
+                {
+                  "end": 20,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    1
+                  ],
+                  "start": 9
+                },
+                {
+                  "end": 42,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "students",
+                  "match_method": "direct",
+                  "normalized_form": "student",
+                  "observed_text": "students",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    4
+                  ],
+                  "start": 34
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "This is a possible sentence-structure concern based on grammar predictions, not a guaranteed judgment.",
+              "noticed": "The sentence containing 'Although' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+              "task": "Ask yourself: Although smartphones can distract students, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete.",
+              "why": "'Although' introduces a contrasting idea. Your reader expects another statement explaining what happens despite that idea."
+            },
+            "rule_conditions": [
+              {
+                "condition": "A subordinator did not receive the expected parser attachment for a subordinate clause.",
+                "rule_id": "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR"
+              },
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+            ],
+            "selection_branch": "intro_sentence_fluency_complete_sentence",
+            "selection_condition": "incomplete_subordinator_candidates is non-empty",
+            "skill": "Complete Your Sentence",
+            "trait": "Sentence Fluency",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+            ],
+            "working_text": ""
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The words after 'Although' may leave the thought unfinished. Add the missing part of your idea so the sentence tells readers your point.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Read the words after 'Although' and finish the thought with your main statement."
+      },
+      "displayed_strengths": "",
+      "displayed_highlights": [
+        "Although smartphones can distract students."
+      ]
+    },
+    "T09": {
+      "text": "Although smartphones can distract students, teachers can use them for learning.",
+      "branch": "intro_ideas_review_details",
+      "trait": "Ideas",
+      "skill": "Review Your Details",
+      "lesson": "HELP-INTRO-REVIEW-DETAILS",
+      "guidance": {
+        "What I noticed": "The checks recorded a possible main statement and additional sentence parts.",
+        "Look at your writing": "Although smartphones can distract students, teachers can use them for learning.",
+        "Why it matters": "Readers can follow your point when they can see how your details connect to it.",
+        "How to improve": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 33,
+                  "start": 25,
+                  "text": "distract"
+                },
+                "anchor_end_field": "end",
+                "anchor_path": [],
+                "anchor_start_field": "start",
+                "context": {
+                  "end": 79,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Although smartphones can distract students, teachers can use them for learning."
+                },
+                "end": 33,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "development_pattern",
+                "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+                "selection_reason": "First additional recorded predicate. Its sentence is shown alone; shared-sentence evidence marks only the extra predicate.",
+                "start": 25,
+                "text": "distract"
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "Recorded main-statement and additional-clause patterns support reviewing details already present without requiring because or inferring logical support.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+              "observed_focus_terms": [
+                "smartphones",
+                "students",
+                "learning"
+              ],
+              "reason_clause_count": 0,
+              "reason_topic_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+              "sentence_count": 1,
+              "supported_predicate_count": 2,
+              "topic_matches": [
+                {
+                  "end": 20,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    1
+                  ],
+                  "start": 9
+                },
+                {
+                  "end": 42,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "students",
+                  "match_method": "direct",
+                  "normalized_form": "student",
+                  "observed_text": "students",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    4
+                  ],
+                  "start": 34
+                },
+                {
+                  "end": 78,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "learning",
+                  "match_method": "direct",
+                  "normalized_form": "learn",
+                  "observed_text": "learning",
+                  "pos": [
+                    "VERB"
+                  ],
+                  "source_token_indices": [
+                    11
+                  ],
+                  "start": 70
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "You do not need to use 'because'. The mark shows recorded sentence evidence, not an error or proof that the ideas work together.",
+              "noticed": "The checks recorded a possible main statement and additional sentence parts.",
+              "task": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it.",
+              "why": "Readers can follow your point when they can see how your details connect to it.",
+              "working": "More than one subject-and-verb pattern was recorded in your opening."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "At least two finite clause-predicate candidates were observed.",
+                "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+            ],
+            "selection_branch": "intro_ideas_review_details",
+            "selection_condition": "central_direction_candidates is nonempty; no recorded because-clause; development status is STRUCTURAL_ELABORATION_CANDIDATE; no logical relationship is inferred",
+            "skill": "Review Your Details",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+            ],
+            "working_text": "More than one subject-and-verb pattern was recorded in your opening."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main statement and additional sentence parts. Choose one detail and review how it helps explain your point.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, learning. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it."
+      },
+      "displayed_strengths": "More than one subject-and-verb pattern was recorded in your opening.",
+      "displayed_highlights": [
+        "distract"
+      ]
+    },
+    "T10": {
+      "text": "Smartphones are useful classroom tools. Students can read educational articles. These activities give them more ways to learn.",
+      "branch": "intro_ideas_review_details",
+      "trait": "Ideas",
+      "skill": "Review Your Details",
+      "lesson": "HELP-INTRO-REVIEW-DETAILS",
+      "guidance": {
+        "What I noticed": "The checks recorded a possible main statement and additional sentence parts.",
+        "Look at your writing": "Students can read educational articles.",
+        "Why it matters": "Readers can follow your point when they can see how your details connect to it.",
+        "How to improve": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 3,
+      "development_count": 3,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 57,
+                  "start": 53,
+                  "text": "read"
+                },
+                "anchor_end_field": "end",
+                "anchor_path": [],
+                "anchor_start_field": "start",
+                "context": {
+                  "end": 79,
+                  "sentence_index": 1,
+                  "start": 40,
+                  "text": "Students can read educational articles."
+                },
+                "end": 79,
+                "evidence_index": 1,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "development_pattern",
+                "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+                "selection_reason": "First additional recorded predicate. Its sentence is shown alone; shared-sentence evidence marks only the extra predicate.",
+                "start": 40,
+                "text": "Students can read educational articles."
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "Recorded main-statement and additional-clause patterns support reviewing details already present without requiring because or inferring logical support.",
+            "observed_fields": {
+              "central_candidate_count": 3,
+              "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+              "observed_focus_terms": [
+                "smartphones",
+                "students",
+                "classroom",
+                "learning"
+              ],
+              "reason_clause_count": 0,
+              "reason_topic_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+              "sentence_count": 3,
+              "supported_predicate_count": 3,
+              "topic_matches": [
+                {
+                  "end": 11,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "Smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    0
+                  ],
+                  "start": 0
+                },
+                {
+                  "end": 48,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "students",
+                  "match_method": "direct",
+                  "normalized_form": "student",
+                  "observed_text": "Students",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    6
+                  ],
+                  "start": 40
+                },
+                {
+                  "end": 32,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "classroom",
+                  "match_method": "direct",
+                  "normalized_form": "classroom",
+                  "observed_text": "classroom",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    3
+                  ],
+                  "start": 23
+                },
+                {
+                  "end": 125,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "learning",
+                  "match_method": "normalized",
+                  "normalized_form": "learn",
+                  "observed_text": "learn",
+                  "pos": [
+                    "VERB"
+                  ],
+                  "source_token_indices": [
+                    19
+                  ],
+                  "start": 120
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "You do not need to use 'because'. The mark shows recorded sentence evidence, not an error or proof that the ideas work together.",
+              "noticed": "The checks recorded a possible main statement and additional sentence parts.",
+              "task": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it.",
+              "why": "Readers can follow your point when they can see how your details connect to it.",
+              "working": "More than one subject-and-verb pattern was recorded in your opening."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "At least two finite clause-predicate candidates were observed.",
+                "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+            ],
+            "selection_branch": "intro_ideas_review_details",
+            "selection_condition": "central_direction_candidates is nonempty; no recorded because-clause; development status is STRUCTURAL_ELABORATION_CANDIDATE; no logical relationship is inferred",
+            "skill": "Review Your Details",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+            ],
+            "working_text": "More than one subject-and-verb pattern was recorded in your opening."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main statement and additional sentence parts. Choose one detail and review how it helps explain your point.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, classroom, learning. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it."
+      },
+      "displayed_strengths": "More than one subject-and-verb pattern was recorded in your opening.",
+      "displayed_highlights": [
+        "Students can read educational articles."
+      ]
+    },
+    "T11": {
+      "text": "Schools should allow smartphones during class. We had a slumber party at my aunt's house.",
+      "branch": "intro_ideas_review_topic_connection",
+      "trait": "Ideas",
+      "skill": "Review Topic Connection",
+      "lesson": "HELP-INTRO-TOPIC-CONNECTION",
+      "guidance": {
+        "What I noticed": "This sentence may not clearly connect to your topic.",
+        "Look at your writing": "We had a slumber party at my aunt's house.",
+        "Why it matters": "Each sentence should help explain your main idea.",
+        "How to improve": "Read this sentence together with the others. Does it help explain your point about the assignment topic? If the connection is hard to see, explain it in your own words or leave this idea for another piece of writing."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 2,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+        "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-TOPIC-CONNECTION",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "WORDING_REVIEW_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 89,
+                  "start": 47,
+                  "text": "We had a slumber party at my aunt's house."
+                },
+                "anchor_end_field": "end",
+                "anchor_path": [],
+                "anchor_start_field": "start",
+                "context": {
+                  "end": 89,
+                  "sentence_index": 1,
+                  "start": 47,
+                  "text": "We had a slumber party at my aunt's house."
+                },
+                "end": 89,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "wording_observation",
+                "rule_id": "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW",
+                "selection_reason": "Verified source-ordered recorded wording evidence.",
+                "start": 47,
+                "text": "We had a slumber party at my aunt's house."
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-TOPIC-CONNECTION",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "A recorded verified sentence has no focus match or neighboring content-word link and no reference cue beside a focus-matched sentence. This supports cautious review, not an off-topic verdict.",
+            "observed_fields": {
+              "central_candidate_count": 2,
+              "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+              "observed_focus_terms": [
+                "smartphones",
+                "class"
+              ],
+              "reason_clause_count": 0,
+              "reason_topic_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+              "sentence_count": 2,
+              "supported_predicate_count": 2,
+              "topic_matches": [
+                {
+                  "end": 32,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    3
+                  ],
+                  "start": 21
+                },
+                {
+                  "end": 45,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    5
+                  ],
+                  "start": 40
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "The checks found no wording link here, but different words can express connected ideas. Ask your teacher if you are unsure.",
+              "noticed": "This sentence may not clearly connect to your topic.",
+              "task": "Read this sentence together with the others. Does it help explain your point about the assignment topic? If the connection is hard to see, explain it in your own words or leave this idea for another piece of writing.",
+              "why": "Each sentence should help explain your main idea."
+            },
+            "rule_conditions": [
+              {
+                "condition": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue.",
+                "rule_id": "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW"
+            ],
+            "selection_branch": "intro_ideas_review_topic_connection",
+            "selection_condition": "a recorded sentence connection review event exists after higher-priority sentence and whole-topic checks",
+            "skill": "Review Topic Connection",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW"
+            ],
+            "working_text": ""
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "This sentence may not clearly connect to your topic. Read it with the sentences beside it and check how it helps explain your point.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, class. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Read this sentence with the others. Does it help explain your point about the assignment topic?"
+      },
+      "displayed_strengths": "",
+      "displayed_highlights": [
+        "We had a slumber party at my aunt's house."
+      ]
+    },
+    "T12": {
+      "text": "Students can communicate with invisible dragons during class.",
+      "branch": "intro_ideas_develop_main_point",
+      "trait": "Ideas",
+      "skill": "Develop Your Main Point",
+      "lesson": "HELP-INTRO-DEVELOP-POINT",
+      "guidance": {
+        "What I noticed": "The checks recorded a possible main-point sentence, with no additional sentence parts under this check.",
+        "Look at your writing": "Students can communicate with invisible dragons during class.",
+        "Why it matters": "A reason, example, or explanation can help readers understand your point.",
+        "How to improve": "Choose a reason, example, or explanation a reader would need. Add it in your own words if needed; no fixed starting word is required."
+      },
+      "reason_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+      "central_count": 1,
+      "development_count": 1,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-DEVELOP-POINT",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "DEVELOPMENT_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 24,
+                  "start": 13,
+                  "text": "communicate"
+                },
+                "anchor_end_field": "end",
+                "anchor_path": [
+                  "predicate_evidence"
+                ],
+                "anchor_start_field": "start",
+                "context": {
+                  "end": 61,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Students can communicate with invisible dragons during class."
+                },
+                "end": 61,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "main_statement",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                "selection_reason": "First source-ordered subject-linked root pattern; a possible statement to develop, not a missing-point finding.",
+                "start": 0,
+                "text": "Students can communicate with invisible dragons during class."
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-DEVELOP-POINT",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "A recorded possible main statement with no additional qualifying clause pattern supports a next development task, not a claim that no point or explanation exists.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "NO_ADDITIONAL_CLAUSE_ELABORATION_OBSERVED",
+              "observed_focus_terms": [
+                "students",
+                "class"
+              ],
+              "reason_clause_count": 0,
+              "reason_topic_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+              "sentence_count": 1,
+              "supported_predicate_count": 1,
+              "topic_matches": [
+                {
+                  "end": 8,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "students",
+                  "match_method": "direct",
+                  "normalized_form": "student",
+                  "observed_text": "Students",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    0
+                  ],
+                  "start": 0
+                },
+                {
+                  "end": 60,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    7
+                  ],
+                  "start": 55
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "This check can miss other kinds of development. The mark identifies your recorded statement, not an error or a judgment of its quality.",
+              "noticed": "The checks recorded a possible main-point sentence, with no additional sentence parts under this check.",
+              "task": "Choose a reason, example, or explanation a reader would need. Add it in your own words if needed; no fixed starting word is required.",
+              "why": "A reason, example, or explanation can help readers understand your point.",
+              "working": "A subject-and-verb pattern was recorded as a possible main statement."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "Fewer than two finite clause-predicate candidates were observed.",
+                "rule_id": "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE"
+            ],
+            "selection_branch": "intro_ideas_develop_main_point",
+            "selection_condition": "central_direction_candidates is nonempty; no recorded because-clause; development status is not STRUCTURAL_ELABORATION_CANDIDATE",
+            "skill": "Develop Your Main Point",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE"
+            ],
+            "working_text": "A subject-and-verb pattern was recorded as a possible main statement."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main-point sentence, with no additional sentence parts under this check. Choose a reason, example, or explanation to add if readers need one.",
+        "What's Working": [
+          "These assignment words also appear in your opening: class. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Choose a reason, example, or explanation that would help a reader understand your point. Add it in your own words if needed; no fixed starting word is required."
+      },
+      "displayed_strengths": "A subject-and-verb pattern was recorded as a possible main statement.",
+      "displayed_highlights": [
+        "Students can communicate with invisible dragons during class."
+      ]
+    },
+    "T13": {
+      "text": "Schools should allow smartphones during class because smartphones control invisible dragons on Mars.",
+      "branch": "intro_ideas_point_and_reason",
+      "trait": "Ideas",
+      "skill": "Review Your Explanation",
+      "lesson": "HELP-INTRO-EXPLAIN-POINT",
+      "guidance": {
+        "What I noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+        "Look at your writing": "Schools should allow smartphones during class because smartphones control invisible dragons on Mars.",
+        "Why it matters": "An explanation helps readers understand the point you want to make.",
+        "How to improve": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "reason_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+      "central_count": 1,
+      "development_count": 2,
+      "events": [
+        "INTRO.TEXT.PRESENT",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION"
+      ],
+      "instructional_feedback": {
+        "catalog_status": "AVAILABLE",
+        "coverage": [
+          {
+            "instructional_category_selected": true,
+            "scope": "Statement/development patterns and wording observations",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Ideas",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Organization",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Voice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+            "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+            "trait": "Word Choice",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "Possible incomplete-subordinator pattern only",
+            "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+            "trait": "Sentence Fluency",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Conventions",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          },
+          {
+            "instructional_category_selected": false,
+            "scope": "No Introduction trait check implemented",
+            "status": "NOT_EVALUATED",
+            "trait": "Presentation",
+            "trait_quality_assessment": "NOT_PERFORMED"
+          }
+        ],
+        "framework": "6+1 Trait Writing Model",
+        "items": [
+          {
+            "catalog_reference": {
+              "file": "content/lessons/feedback_help.json",
+              "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+              "version": 5
+            },
+            "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+            "feedback_field": "Primary Feedback",
+            "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+            "highlight_spans": [
+              {
+                "anchor": {
+                  "end": 99,
+                  "start": 46,
+                  "text": "because smartphones control invisible dragons on Mars"
+                },
+                "anchor_end_field": "clause_end",
+                "anchor_path": [],
+                "anchor_start_field": "clause_start",
+                "context": {
+                  "end": 100,
+                  "sentence_index": 0,
+                  "start": 0,
+                  "text": "Schools should allow smartphones during class because smartphones control invisible dragons on Mars."
+                },
+                "end": 99,
+                "evidence_index": 0,
+                "interpretation": "Evidence location, not an error label or a quality judgment.",
+                "kind": "reason_clause",
+                "rule_id": "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+                "selection_reason": "First source-ordered recorded because subtree; marked as explanation evidence, regardless of word overlap.",
+                "start": 46,
+                "text": "because smartphones control invisible dragons on Mars"
+              }
+            ],
+            "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+            "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "mapping_basis": "A main-statement pattern and a recorded because subtree support neutral explanation review. Word overlap or its absence does not determine validity or change the lesson.",
+            "observed_fields": {
+              "central_candidate_count": 1,
+              "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+              "observed_focus_terms": [
+                "smartphones",
+                "class"
+              ],
+              "reason_clause_count": 1,
+              "reason_topic_status": "BECAUSE_CLAUSE_WITH_TOPIC_OVERLAP",
+              "sentence_count": 1,
+              "supported_predicate_count": 2,
+              "topic_matches": [
+                {
+                  "end": 32,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    3
+                  ],
+                  "start": 21
+                },
+                {
+                  "end": 65,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "smartphones",
+                  "match_method": "direct",
+                  "normalized_form": "smartphone",
+                  "observed_text": "smartphones",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    7
+                  ],
+                  "start": 54
+                },
+                {
+                  "end": 45,
+                  "evidence_source": "student_text_span",
+                  "focus_term": "class",
+                  "match_method": "direct",
+                  "normalized_form": "class",
+                  "observed_text": "class",
+                  "pos": [
+                    "NOUN"
+                  ],
+                  "source_token_indices": [
+                    5
+                  ],
+                  "start": 40
+                }
+              ]
+            },
+            "prepared_guidance": {
+              "limitation": "The mark shows sentence evidence, not an error. Word matches cannot tell whether the explanation is true or supports your point.",
+              "noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+              "task": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need.",
+              "why": "An explanation helps readers understand the point you want to make.",
+              "working": "The checks recorded a main-statement pattern and an explanation part."
+            },
+            "rule_conditions": [
+              {
+                "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+              },
+              {
+                "condition": "A 'because' advcl clause was identified and contains at least one focus-term match.",
+                "rule_id": "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+              }
+            ],
+            "rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+            ],
+            "selection_branch": "intro_ideas_point_and_reason",
+            "selection_condition": "central_direction_candidates is nonempty and reason_clause_evidence.clauses is nonempty; focus-word presence or absence within the reason does not change this neutral review",
+            "skill": "Review Your Explanation",
+            "trait": "Ideas",
+            "triggered_rule_ids": [
+              "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+              "INTRO.REASON.CLAUSE_TOPIC_OVERLAP"
+            ],
+            "working_text": "The checks recorded a main-statement pattern and an explanation part."
+          }
+        ],
+        "limitations": [
+          "Lexical overlap is not semantic relevance.",
+          "Clause structure is not proof of argument quality.",
+          "Missing 'because' is not proof that an explanation is missing.",
+          "Missing assignment keywords is not proof that a reason is unrelated.",
+          "Demonstratives and pronouns are not resolved references.",
+          "No automatic correctness or essay-quality certification is performed."
+        ],
+        "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+        "stage": "INTRODUCTION"
+      },
+      "backend_feedback": {
+        "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "Primary Feedback": "The checks recorded a possible main statement and a 'because' part. Read them together and decide whether a reader needs more explanation.",
+        "What's Working": [
+          "These assignment words also appear in your opening: smartphones, class. Check that they support the point you want to make.",
+          "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+        ],
+        "Needs Attention": [],
+        "Next Step": "Read your main statement with the explanation part. Keep it if it says what you intend, or add a detail a reader would need."
+      },
+      "displayed_strengths": "The checks recorded a main-statement pattern and an explanation part.",
+      "displayed_highlights": [
+        "because smartphones control invisible dragons on Mars"
+      ]
+    }
+  },
+  "javascriptErrors": []
+}

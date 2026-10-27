@@ -1,0 +1,26 @@
+[
+  {
+    "file": "screenshots/introduction-ui-correction/after-T04-desktop.png",
+    "sha256": "dab9fc42d4beef2ff3f57e6c595c8e30ae2c9cb17134332a3da96250e0c2bf5a"
+  },
+  {
+    "file": "screenshots/introduction-ui-correction/after-T04-stage-progress.png",
+    "sha256": "45436fb928b28fdb8236356d7b3dff145ce20f92b708c13a3f25243c3077639f"
+  },
+  {
+    "file": "screenshots/introduction-ui-correction/after-T04-mobile.png",
+    "sha256": "e0d8c7d0dbf0c987924eae21c8318fa9df97200668984ae7bcf33b0e385597dd"
+  },
+  {
+    "file": "screenshots/introduction-ui-correction/after-T01-desktop.png",
+    "sha256": "08b6d3c8178d2ae528bf13385c229e4b2e7b4906ae22cf30780b12190754ce8b"
+  },
+  {
+    "file": "screenshots/introduction-ui-correction/after-T01-stage-progress.png",
+    "sha256": "e5856614392b72cc89ffe41db41f994baa012f70febcdc3355395ef627a903b9"
+  },
+  {
+    "file": "screenshots/introduction-ui-correction/after-student-framework-trace.png",
+    "sha256": "da2fa7345dc355632928f30ffe9c7f31bde5865f7054e1c5478ce853e19f21a4"
+  }
+]

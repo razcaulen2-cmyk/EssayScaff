@@ -1,0 +1,880 @@
+"""Transparency uses the existing analysis API's real rule and NLP evidence."""
+
+import hashlib
+import json
+from pathlib import Path
+
+import pytest
+
+from app import create_app
+from services.draft_store import DraftStore
+from services.essay_analysis_service import EssayAnalysisService
+from tests.auth_helpers import register_student
+from tests.test_workspace_frontend import NODE, _run_workspace_frontend
+
+
+def test_student_transparency_restores_dashboard_alongside_one_copy_action():
+    project_root = Path(__file__).resolve().parents[1]
+    template = (project_root / "templates" / "index.html").read_text(encoding="utf-8")
+    style = (project_root / "static" / "style.css").read_text(encoding="utf-8")
+    assert template.count(">Copy Full Analysis</button>") == 1
+    assert "How EssayScaff Analyzed Your Writing" in template
+    assert "The copied report includes your writing and may contain assignment information." in template
+    assert template.count('id="nlp-transparency-content"') == 1
+    assert "Analyze your current writing first" in template
+    assert template.count('role="tablist"') == 1
+    assert 'id="tutor-tabs"' in template
+    assert ".student-app .analysis-export" in style
+    assert ".student-app .transparency-flow-annotations" in style
+    assert ".student-app .transparency-explanation-grid" in style
+
+
+def test_analysis_api_preserves_real_transparency_evidence_and_source_offsets(tmp_path):
+    app = create_app(analysis_service=EssayAnalysisService(), secret_key="phase7-test-secret")
+    app.config.update(TESTING=True, DRAFT_DATABASE_PATH=str(tmp_path / "transparency.sqlite3"))
+    DraftStore(app.config["DRAFT_DATABASE_PATH"])
+    client = app.test_client()
+    assert register_student(client, "transparency_student").status_code == 302
+
+    text = "Students build knowledge with daily reading. Reading helps learners practice."
+    response = client.post(
+        "/api/analyze-stage",
+        json={
+            "stage_id": "BODY",
+            "assignment_topic": "Reading habits",
+            "focus_terms": "reading, students",
+            "body_text": text,
+            "include_transparency_trace": True,
+        },
+    )
+    assert response.status_code == 200
+    result = response.get_json()
+    analysis = result["analysis"]
+
+    matches = analysis["lexical_topic_evidence"]["matches"]
+    reading_match = next(match for match in matches if match["focus_term"] == "reading")
+    assert reading_match["match_method"] == "direct"
+    assert text[reading_match["start"] : reading_match["end"]] == reading_match["observed_text"]
+    assert reading_match["observed_text"] == "reading"
+
+    rule = next(
+        event
+        for event in analysis["rule_evidence"]
+        if event["rule_id"] == "BODY.P1.PARAGRAPH.FOCUS_TERMS_OBSERVED"
+    )
+    assert rule["triggering_condition"]
+    assert any(
+        text[item["start"] : item["end"]] == item["observed_text"]
+        for item in rule["actual_evidence"]
+        if "start" in item and "end" in item and "observed_text" in item
+    )
+    provenance = result["feedback"]["Feedback Provenance"]
+    assert any(item["rule_id"] == rule["rule_id"] for item in provenance)
+    assert all(set(item) == {"feedback_field", "rule_id"} for item in provenance)
+    assert result["interpretation_limit"]
+    assert "word overlap" in analysis["lexical_topic_evidence"]["limitation"].lower()
+    assert result["research_trace"]["selected_stage"] == "BODY"
+    stage_trace = result["research_trace"]["stages"]["BODY"]
+    assert stage_trace["linguistic_observations"]["text"] == text
+    assert "body" not in stage_trace["input_sections"]
+    assert "cross_stage_comparison_inputs" not in stage_trace
+    assert "rule_evaluation_trace" not in stage_trace
+    topic_matching = next(
+        step for step in stage_trace["topic_service"]["steps"]
+        if step["id"] == "topic_matching"
+    )
+    assert "output" not in topic_matching
+    assert analysis["rule_evaluation_trace"]
+
+
+def test_student_trace_compacts_only_data_repeated_in_selected_analysis(tmp_path):
+    app = create_app(analysis_service=EssayAnalysisService(), secret_key="compact-trace-test")
+    app.config.update(TESTING=True, DRAFT_DATABASE_PATH=str(tmp_path / "compact-trace.sqlite3"))
+    DraftStore(app.config["DRAFT_DATABASE_PATH"])
+    client = app.test_client()
+    assert register_student(client, "compact_trace_student").status_code == 302
+
+    introduction = "Students read books every day."
+    body = "Students read books and discuss ideas."
+    conclusion = "Overall, students should read books every day."
+    stages = (
+        ("INTRODUCTION", {"introduction_text": introduction}, introduction),
+        ("BODY", {"introduction_text": introduction, "body_text": body}, body),
+        ("CONCLUSION", {
+            "introduction_text": introduction,
+            "body_text": body,
+            "conclusion_text": conclusion,
+        }, conclusion),
+    )
+
+    for stage_id, section_inputs, expected_text in stages:
+        response = client.post(
+            "/api/analyze-stage",
+            json={
+                "stage_id": stage_id,
+                "assignment_topic": "Reading habits",
+                "focus_terms": "reading, students, books",
+                **section_inputs,
+                "include_transparency_trace": True,
+            },
+        )
+        assert response.status_code == 200
+        result = response.get_json()
+        stage_trace = result["research_trace"]["stages"][stage_id]
+        linguistic = (
+            result["analysis"].get("linguistic_observations")
+            or stage_trace.get("linguistic_observations")
+        )
+        assert linguistic["text"] == expected_text
+        assert stage_id.casefold() not in stage_trace["input_sections"]
+        assert "rule_evaluation_trace" not in stage_trace
+        assert "cross_stage_comparison_inputs" not in stage_trace
+        topic_matching = next(
+            step for step in stage_trace["topic_service"]["steps"]
+            if step["id"] == "topic_matching"
+        )
+        assert "output" not in topic_matching
+        assert result["analysis"]["rule_evaluation_trace"]
+
+
+PLASTICS_TOPIC = "Should communities reduce their use of single-use plastics?"
+PLASTICS_FOCUS = ["single-use plastics", "communities", "reduce", "environment"]
+PLASTICS_INTRODUCTION = (
+    "Single-use plastics are everywhere in our communities. Communities should reduce their use "
+    "of these plastics because they can pollute rivers and harm animals."
+)
+PLASTICS_BODY = (
+    "Communities can reduce single-use plastics by carrying reusable bags. Reusable bags reduce waste in rivers.\n\n"
+    "Plastic containers harm animals. Communities can protect animals by using reusable containers."
+)
+PLASTICS_CONCLUSION = (
+    "In conclusion, communities should reduce single-use plastics. Reusable bags and containers can protect rivers and animals."
+)
+
+
+@pytest.fixture(scope="module")
+def transparency_responses(tmp_path_factory):
+    """Real selected-stage HTTP responses, including Flask's production compaction."""
+    service = EssayAnalysisService()
+    app = create_app(analysis_service=service, secret_key="s3-transparency-fixtures")
+    app.config.update(
+        TESTING=True,
+        DRAFT_DATABASE_PATH=str(tmp_path_factory.mktemp("transparency-api") / "fixtures.sqlite3"),
+    )
+    client = app.test_client()
+    assert register_student(client, "s3_transparency_student").status_code == 302
+    cases = [
+        ("introduction_exact", "INTRODUCTION", {"introduction_text": PLASTICS_INTRODUCTION}),
+        ("introduction_empty", "INTRODUCTION", {"introduction_text": ""}),
+        ("introduction_whitespace", "INTRODUCTION", {"introduction_text": "   \n  "}),
+        ("introduction_no_matches", "INTRODUCTION", {"introduction_text": "Public buses carry commuters. Cities can add routes."}),
+        ("introduction_no_optional_trace", "INTRODUCTION", {"introduction_text": PLASTICS_INTRODUCTION, "include_transparency_trace": False}),
+        ("body_one_no_context", "BODY", {"body_text": PLASTICS_BODY.split("\n\n")[0]}),
+        ("body_multiple_with_context", "BODY", {"introduction_text": PLASTICS_INTRODUCTION, "body_text": PLASTICS_BODY}),
+        ("body_repeated", "BODY", {"body_text": "Communities reduce plastic waste. Plastic waste can harm animals. Plastic waste reaches rivers."}),
+        ("body_no_overlap", "BODY", {"introduction_text": "Quartz crystals sparkle.", "body_text": "Volcanoes erupt beneath oceans."}),
+        ("body_empty", "BODY", {"body_text": ""}),
+        ("conclusion_with_context", "CONCLUSION", {"introduction_text": PLASTICS_INTRODUCTION, "body_text": PLASTICS_BODY, "conclusion_text": PLASTICS_CONCLUSION}),
+        ("conclusion_no_context", "CONCLUSION", {"conclusion_text": PLASTICS_CONCLUSION}),
+        ("conclusion_no_overlap", "CONCLUSION", {"introduction_text": "Quartz crystals sparkle.", "body_text": "Volcanoes erupt beneath oceans.", "conclusion_text": "Overall, orchestras perform symphonies."}),
+        ("conclusion_new_material", "CONCLUSION", {"introduction_text": PLASTICS_INTRODUCTION, "body_text": PLASTICS_BODY, "conclusion_text": PLASTICS_CONCLUSION + " Satellites explore distant galaxies."}),
+        ("conclusion_empty", "CONCLUSION", {"conclusion_text": ""}),
+    ]
+    results = {}
+    for name, stage, sections in cases:
+        payload = {
+            "stage_id": stage, "assignment_topic": PLASTICS_TOPIC,
+            "focus_terms": PLASTICS_FOCUS, "include_transparency_trace": True, **sections,
+        }
+        response = client.post("/api/analyze-stage", json=payload)
+        text = sections[f"{stage.lower()}_text"]
+        expected_status = 200 if text.strip() else 400
+        assert response.status_code == expected_status
+        if expected_status == 200:
+            selected = response.get_json()
+        else:
+            # HTTP intentionally rejects empty writing; inspect the coordinator's
+            # genuine empty-stage output without changing route validation.
+            combined = service.analyze(
+                PLASTICS_TOPIC, PLASTICS_FOCUS,
+                **{key: value for key, value in sections.items() if key.endswith("_text")},
+                include_research_trace=True,
+            )
+            selected = {
+                **combined["stages"][stage], "interpretation_limit": combined["interpretation_limit"],
+                "research_trace": {**combined["research_trace"], "selected_stage": stage},
+            }
+        results[name] = selected
+    return results
+
+
+def test_exact_plastics_introduction_preserves_prechange_observations_and_feedback(transparency_responses):
+    result = transparency_responses["introduction_exact"]
+    analysis = result["analysis"]
+    assert analysis["linguistic_observations"]["counts"] == {
+        "token_count": 27, "alphabetic_word_count": 24, "sentence_count": 2,
+    }
+    assert "paragraph_count" not in analysis and "paragraph_count" not in analysis["text_presence"]
+    assert analysis["lexical_topic_evidence"]["observed_unique_focus_terms"] == 3
+    assert len(analysis["lexical_topic_evidence"]["matches"]) == 4
+    assert len(analysis["central_direction_candidate"]["candidates"]) == 2
+    assert analysis["development_evidence"]["predicate_count"] == 3
+    assert len(analysis["rule_evidence"]) == 7
+    assert len(analysis["rule_evaluation_trace"]) == 14
+    assert sum(row["status"] == "TRIGGERED" for row in analysis["rule_evaluation_trace"]) == 7
+    assert sum(row["status"] == "EVALUATED_NOT_TRIGGERED" for row in analysis["rule_evaluation_trace"]) == 7
+    assert len(PLASTICS_INTRODUCTION.split()) == 23
+    assert next(token for token in analysis["linguistic_observations"]["tokens"] if token["text"] == "harm")["pos"] == "NOUN"
+    trace = result["research_trace"]["stages"]["INTRODUCTION"]
+    assert trace["feedback_decisions"]["fields"]["Primary Feedback"]["selection_branch"] == "central_clause_with_multiple_clause_candidates"
+    wordnet = next(step for step in trace["topic_service"]["steps"] if step["id"] == "wordnet_direct_suggestions")
+    assert wordnet["execution_status"] == "SKIPPED" and wordnet["status"] == "disabled"
+    assert wordnet["resource_probe"] is None and wordnet["lookup_pairs"] == [] and wordnet["output"] == []
+    protected = {"analysis": analysis, "feedback": result["feedback"], "feedback_decisions": trace["feedback_decisions"]}
+    encoded = json.dumps(protected, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    # Captured independently from this exact API result before S3.1 source edits.
+    # Re-pinned 2026-10-19 after the Introduction subordinator false-positive
+    # safeguard (services/introduction_rules.py) and the corresponding research-
+    # inspector condition/configuration documentation. Previous hash:
+    # c73bd8844acd37c69007f0fc54741f84de33ee7c3619882d0156845f229aba6b.
+    # Authorized diff: 17 metadata-only paths (rule_evaluation_trace condition,
+    # configuration, and implementation start_line/end_line). After stripping
+    # those four fields the analysis results are byte-identical.
+    assert hashlib.sha256(encoded).hexdigest() == "0d1fc44a95773623b4699b86f60415cace05f6b8fe0da65c0efabf9c3837acbd"
+    for match in analysis["lexical_topic_evidence"]["matches"]:
+        assert PLASTICS_INTRODUCTION[match["start"]:match["end"]] == match["observed_text"]
+
+
+@pytest.mark.skipif(NODE is None, reason="Node.js is required for actual app.js DOM rendering")
+def test_full_report_preserves_real_stage_evidence_in_the_copy_action(tmp_path, transparency_responses):
+    scenario = r'''
+(async () => {
+  let calls = 0;
+  const page = makeWorkspace((url, options) => { calls++; return fetch(url, options); }, new Map());
+  await waitForRestoration(page);
+  await click(page.appLinks.find(link => link.dataset.appLink === "workspace"));
+  const copied = [];
+  page.context.navigator = {clipboard:{writeText:async text => {copied.push(text);}}};
+  page.elements["feedback-details"].open = true;
+  for (const [name, response] of Object.entries(actualStageResponses.TRANSPARENCY_CASES)) {
+    const stage = response.stage_id;
+    const trace = response.research_trace?.stages?.[stage];
+    const linguistic = response.analysis.linguistic_observations || trace?.linguistic_observations;
+    page.context.currentResponse = response;
+    page.elements["assignment-topic"].value = response.analysis.assignment_topic;
+    page.elements["focus-terms"].value = response.analysis.lexical_topic_evidence.focus_terms.join(", ");
+    page.elements["stage-text"].value = linguistic.text;
+    value(page, `
+      state.currentStage = currentResponse.stage_id; state.currentView = currentResponse.stage_id;
+      state.drafts.INTRODUCTION = currentResponse.research_trace?.stages?.[state.currentStage]?.input_sections?.introduction || "";
+      state.drafts.BODY = currentResponse.research_trace?.stages?.[state.currentStage]?.input_sections?.body || "";
+      state.drafts[state.currentStage] = document.getElementById("stage-text").value;
+      state.analyses[state.currentStage] = currentResponse;
+      state.analysisSnapshots[state.currentStage] = analysisSnapshot(state.currentStage);
+    `);
+    const original = JSON.stringify(response);
+    const editor = page.elements["stage-text"].value;
+    const dirty = value(page, "isDirty()");
+    const originalState = value(page, "JSON.stringify(state)");
+    const timers = page.timers.size;
+    const callsBefore = calls;
+    value(page, "displayFeedback(currentResponse)");
+    assert.equal(page.elements["feedback-details"].open, true, name);
+    assert.equal(page.elements["tutor-noticed"].textContent, value(page,"studentFeedbackPresentation(currentResponse).displayed_guidance['What I noticed']"));
+    assert.ok(page.elements["nlp-transparency-content"].children.length > 0, "dashboard or eligibility explanation is rendered");
+    const report = value(page,"buildFullAnalysisReport(currentResponse)");
+    assert.equal(value(page,"buildFullAnalysisReport(currentResponse)"),report,`${name}: deterministic report`);
+    for (const title of ["1. Report Context","2. Text Processing","3. Topic Matching","4. Rule Evaluation","5. Writing Feedback","6. Algorithm Explanations and Limitations"]) assert.ok(report.includes(title));
+    const linguisticPath = response.analysis.linguistic_observations ? "analysis.linguistic_observations" : `research_trace.stages.${stage}.linguistic_observations`;
+    assert.deepEqual(reportRecord(report,linguisticPath),linguistic,`${name}: every linguistic record and span`);
+    assert.match(report,new RegExp(`Tokens \\[source:[^\\n]*\\n${linguistic.counts.token_count}\\n`));
+    assert.match(report,new RegExp(`Sentences \\[source:[^\\n]*\\n${linguistic.counts.sentence_count}\\n`));
+    assert.match(report,new RegExp(`Alphabetic words \\[source:[^\\n]*\\n${linguistic.counts.alphabetic_word_count}\\n`));
+    assert.match(report,new RegExp(`Paragraphs \\[source:[^\\n]*\\n${stage === "INTRODUCTION" ? "Not collected for this stage\\." : response.analysis.paragraph_count ?? response.analysis.text_presence.paragraph_count}\\n`));
+    assert.ok(report.includes(linguistic.text),`${name}: exact analyzed text`);
+    assert.deepEqual(reportRecord(report,"analysis.lexical_topic_evidence"),response.analysis.lexical_topic_evidence);
+    assert.deepEqual(reportRecord(report,"analysis.rule_evidence"),response.analysis.rule_evidence,`${name}: all emitted evidence including empty arrays`);
+    if (response.analysis.rule_evaluation_trace) assert.deepEqual(reportRecord(report,"analysis.rule_evaluation_trace"),response.analysis.rule_evaluation_trace);
+    for (const [index, step] of (trace?.topic_service?.steps || []).entries()) assert.deepEqual(reportRecord(report,`research_trace.stages.${stage}.topic_service.steps[${index}]`),step);
+    for (const key of ["paragraphs","conclusion_paragraphs","observable_structure","central_direction_candidate","development_evidence","cross_paragraph_continuity","synthesis_structure_candidates","closure_candidates","new_material_observations","introduction_to_body_continuity","introduction_to_conclusion_continuity","body_to_conclusion_continuity"]) {
+      if (response.analysis[key] !== undefined) assert.deepEqual(reportRecord(report,`analysis.${key}`),response.analysis[key],`${name}: complete ${key}`);
+    }
+    for (const [section,text] of Object.entries(trace?.input_sections || {})) {
+      if (section !== stage.toLowerCase()) assert.ok(report.includes(text),`${name}: ${section} context`);
+    }
+    for (const field of ["Current Goal","Primary Feedback","What's Working","Needs Attention","Next Step"]) {
+      assert.ok(report.includes(`${field} [source: feedback[`));
+      const messages = response.feedback[field];
+      for (const message of Array.isArray(messages) ? messages : [messages]) assert.ok(report.includes(message),`${name}: exact ${field} message`);
+    }
+    const events = reportRecord(report,"analysis.rule_evidence");
+    const resolve = value => {
+      if (Array.isArray(value)) return value.map(resolve);
+      if (value && typeof value === "object") {
+        if (value.$ref) {
+          const match = /^analysis\.rule_evidence\[(\d+)\]\.(actual_evidence|evidence)$/.exec(value.$ref);
+          assert.ok(match,"provenance references must resolve to complete exported events");
+          return events[Number(match[1])][match[2]];
+        }
+        return Object.fromEntries(Object.entries(value).map(([key,item]) => [key,resolve(item)]));
+      }
+      return value;
+    };
+    assert.deepEqual(resolve(reportRecord(report,'feedback["Feedback Provenance"]')),response.feedback["Feedback Provenance"]);
+    if (trace?.feedback_decisions) assert.deepEqual(reportRecord(report,`research_trace.stages.${stage}.feedback_decisions`),trace.feedback_decisions);
+    assert.match(report,/POS\/tag predictions are statistical annotations/);
+    assert.match(report,/does not prove that a proposition is meaningful/);
+    assert.match(report,/not verified semantic equivalence/);
+    if (name === "body_one_no_context" || name === "conclusion_no_context") assert.match(report,/Not applicable — no earlier section was supplied/);
+    if (name === "body_no_overlap") assert.match(report,/No direct or lemma matches were recorded for this check/);
+    if (name === "introduction_no_optional_trace") {
+      assert.match(report,/Status not recorded\./);
+      assert.match(report,/Detailed execution metadata: Not available in the cached response/);
+      assert.match(report,/Recorded FeedbackService branches[^\n]*\nNot available in the cached response/);
+    }
+    const copiedBefore = copied.length;
+    assert.equal(page.elements["copy-full-analysis"].disabled,response.availability !== "ANALYZED");
+    await click(page.elements["copy-full-analysis"]);
+    if (response.availability === "ANALYZED") {
+      assert.equal(copied.at(-1),report,`${name}: the actual copy action uses the complete report`);
+      assert.equal(page.elements["analysis-copy-status"].textContent,"Full analysis copied.");
+    } else assert.equal(copied.length,copiedBefore,"coordinator-only empty results cannot masquerade as a successful current analysis");
+    assert.equal(calls, callsBefore, `${name}: export uses the cached result`);
+    assert.equal(page.timers.size, timers);
+    assert.equal(page.elements["stage-text"].value, editor);
+    assert.equal(value(page, "isDirty()"), dirty);
+    assert.equal(value(page, "JSON.stringify(state)"), originalState);
+    assert.equal(JSON.stringify(response) === original, true, `${name}: evidence/feedback/branch trace are not mutated`);
+  }
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error => { console.error(error); process.exitCode = 1; });
+'''
+    _run_workspace_frontend(tmp_path, scenario, {"TRANSPARENCY_CASES": transparency_responses})
+
+
+@pytest.mark.skipif(NODE is None, reason="Node.js is required for related-concept rendering states")
+def test_related_concept_frontend_distinguishes_unavailable_unconfigured_empty_and_old_responses(tmp_path, transparency_responses):
+    scenario = r'''
+(async () => {
+  const page=makeWorkspace(fetch,new Map());
+  await waitForRestoration(page);
+  const walk=element=>[element,...element.children.flatMap(walk)];
+  const text=element=>walk(element).map(item=>item.textContent).join("\n");
+  for(const status of ["RESOURCE_UNAVAILABLE","CONFIGURATION_INVALID","NOT_APPLICABLE","EXECUTED",null]) {
+    const response=JSON.parse(JSON.stringify(actualStageResponses.CURRENT_RELATED));
+    if(status) {
+      response.related_topic_concept_evidence.execution_status=status;
+      response.related_topic_concept_evidence.evidence=[];
+      response.related_topic_concept_evidence.summary={unique_related_concepts_observed:0,total_related_concept_occurrences:0,teacher_focus_terms_with_related_evidence:[]};
+    } else delete response.related_topic_concept_evidence;
+    page.context.currentResponse=response;
+    value(page,"renderNlpTransparency(currentResponse)");
+    const panel=walk(page.elements["nlp-transparency-content"]).find(item=>item.dataset.subPanel==="topic:related");
+    assert.match(text(panel),new RegExp(status || "NOT_RECORDED"));
+    if(status==="EXECUTED") assert.match(text(panel),/Executed — no approved related vocabulary was observed/);
+    else assert.doesNotMatch(text(panel),/Executed — no approved related vocabulary was observed/);
+    if(!status) assert.match(text(panel),/No relationship or zero count is inferred/);
+    const report=value(page,"buildFullAnalysisReport(currentResponse)");
+    if(status) assert.deepEqual(reportRecord(report,"related_topic_concept_evidence"),response.related_topic_concept_evidence);
+    else assert.match(report,/Related Topic Concepts[^\n]*\nNot available in the cached response/);
+  }
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error=>{console.error(error);process.exitCode=1;});
+'''
+    _run_workspace_frontend(tmp_path, scenario, {"CURRENT_RELATED": transparency_responses["introduction_exact"]})
+
+
+@pytest.mark.skipif(NODE is None, reason="Node.js is required for actual app.js DOM rendering")
+def test_full_report_distinguishes_wordnet_and_missing_data_states(tmp_path):
+    scenario = r'''
+(async () => {
+  const page = makeWorkspace(fetch, new Map());
+  await waitForRestoration(page);
+  const candidate = {relationship_type:"shared_synset_candidate", synset_id:"dog.n.01", limitation:"Candidate only; senses are not disambiguated."};
+  // Deterministic records retain the real direct-step / cross-stage API shapes.
+  // Missing corpora and explicit errors need no changes to the installed engine.
+  const states = [
+    ["direct_disabled", false, {execution_status:"SKIPPED",status:"disabled",resource_probe:null,lookup_pairs:[],output:[]}, /Not executed for this stage — disabled/, null],
+    ["direct_skipped", false, {execution_status:"SKIPPED",lookup_pairs:[],output:[]}, /Not executed for this stage — skipped/, null],
+    ["direct_not_evaluated", false, {execution_status:"NOT_EVALUATED",output:[]}, /Not executed for this stage — not evaluated/, null],
+    ["direct_not_applicable", false, {execution_status:"NOT_APPLICABLE",output:[]}, /Not applicable for this stage/, null],
+    ["direct_executed_empty", false, {execution_status:"EXECUTED",status:"available",lookup_pairs:[],output:[]}, /Executed — WordNet candidate check completed/, "0"],
+    ["direct_executed_candidates", false, {execution_status:"EXECUTED",status:"available",lookup_pairs:[{candidate_emitted:true}],output:[candidate]}, /Executed — WordNet candidate check completed/, "1"],
+    ["direct_resource_missing", false, {execution_status:"FAILED",status:"resource_missing",resource_probe:"essay",lookup_pairs:[],output:[]}, /Resource unavailable — WordNet corpus is missing/, null],
+    ["direct_error", false, {execution_status:"FAILED",status:"error",output:[]}, /Error — WordNet processing reported a failure/, null],
+    ["direct_empty_without_status", false, {output:[],lookup_pairs:[]}, /^Status not recorded\.$/, null],
+    ["direct_resource_available_without_execution", false, {status:"available",output:[],lookup_pairs:[]}, /^Status not recorded\.$/, null],
+    ["direct_candidates_without_execution", false, {output:[candidate]}, /^Status not recorded\.$/, "1 recorded; execution not established"],
+    ["cross_not_evaluated", true, {status:"not_evaluated",suggestions:[]}, /Not executed for this stage — not evaluated/, null],
+    ["cross_executed_empty", true, {status:"AVAILABLE",wordnet_version:"3.0",resource_probe:"essay",lookup_pairs:[],suggestions:[]}, /Executed — WordNet candidate check completed/, "0"],
+    ["cross_executed_candidates", true, {status:"AVAILABLE",wordnet_version:"3.0",lookup_pairs:[{candidate_emitted:true}],suggestions:[candidate]}, /Executed — WordNet candidate check completed/, "1"],
+    ["cross_resource_missing", true, {status:"RESOURCE_MISSING",resource_probe:"essay",lookup_pairs:[],suggestions:[]}, /Resource unavailable — WordNet corpus is missing/, null],
+    ["cross_unknown", true, {suggestions:[],lookup_pairs:[]}, /^Status not recorded\.$/, null],
+    ["cross_no_context", true, {status:"not_evaluated",suggestions:[]}, /Not applicable — no earlier section was supplied/, null],
+  ];
+  for (const [name, cross, record, expected, expectedCount] of states) {
+    const response = JSON.parse(JSON.stringify(actualStageResponses.BODY));
+    if (cross) {
+      response.analysis.introduction_to_body_continuity = {
+        status:name === "cross_no_context" ? "NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED" : "LEXICAL_COMPARISON_AVAILABLE",
+        direct_lexical_continuity:[], lemma_normalized_continuity:[], wordnet_relationship_candidates:record,
+      };
+    } else {
+      delete response.analysis.introduction_to_body_continuity;
+      const steps = response.research_trace.stages.BODY.topic_service.steps;
+      steps.splice(steps.findIndex(step => step.id === "wordnet_direct_suggestions"),1,{id:"wordnet_direct_suggestions",...record});
+    }
+    page.context.currentResponse = response;
+    const original = JSON.stringify(response);
+    const report = value(page,"buildFullAnalysisReport(currentResponse)");
+    const label = cross ? "WordNet — introduction_to_body_continuity" : "WordNet — direct focus suggestions";
+    const status = report.slice(report.indexOf(label + " [source:")).split("\n")[1];
+    assert.match(status,expected,name);
+    if (expectedCount === null) assert.doesNotMatch(status,/Executed —/,`${name}: an empty record does not establish execution`);
+    const text = report.split("4. Rule Evaluation")[0];
+    if (/executed_empty/.test(name)) assert.match(text,/No WordNet relationship candidates were recorded for this check/);
+    else assert.doesNotMatch(text,/No WordNet relationship candidates were recorded for this check/);
+    const index = response.research_trace.stages.BODY.topic_service.steps.findIndex(step => step.id === "wordnet_direct_suggestions");
+    const renderedRecord = cross ? reportRecord(report,"analysis.introduction_to_body_continuity").wordnet_relationship_candidates : reportRecord(report,`research_trace.stages.BODY.topic_service.steps[${index}]`);
+    for (const [key, actual] of Object.entries(record)) assert.deepEqual(renderedRecord[key],actual,`${name}: recorded ${key}`);
+    if (expectedCount === "0" || expectedCount === "1") assert.equal(String((cross ? renderedRecord.suggestions : renderedRecord.output).length),expectedCount);
+    if (expectedCount?.startsWith("1")) assert.ok(text.includes("dog.n.01"),`${name}: recorded candidates remain accessible`);
+    assert.equal(JSON.stringify(response) === original,true,`${name}: cached input is read-only`);
+  }
+
+  page.context.currentResponse = {
+    stage_id:"CONCLUSION",analysis:{lexical_topic_evidence:{wordnet_relationship_candidates:[candidate]}},feedback:{},
+  };
+  const retained = value(page,"buildFullAnalysisReport(currentResponse)");
+  assert.match(retained,/WordNet — direct focus suggestions[^\n]*\nStatus not recorded\./);
+  assert.deepEqual(reportRecord(retained,"analysis.lexical_topic_evidence").wordnet_relationship_candidates,[candidate]);
+  assert.ok(retained.includes("dog.n.01"),"retained Conclusion candidates do not require a duplicate trace copy");
+
+  // Absent fields are not measured zero, and genuine zero must survive ?? logic.
+  for (const [analysis, expected] of [
+    [{stage:"BODY"},"Not available in the cached response."],
+    [{stage:"BODY",paragraph_count:0},"0"],
+    [{stage:"BODY",paragraphs:[]},"0"],
+    [{stage:"INTRODUCTION"},"Not collected for this stage."],
+    [{stage:"CONCLUSION"},"Not available in the cached response."],
+    [{stage:"CONCLUSION",text_presence:{paragraph_count:0}},"0"],
+  ]) {
+    page.context.currentResponse = {stage_id:analysis.stage,analysis,feedback:{}};
+    const report = value(page,"buildFullAnalysisReport(currentResponse)");
+    const count = report.slice(report.indexOf("Paragraphs [source:")).split("\n")[1];
+    assert.equal(count,expected);
+  }
+  page.context.currentResponse = {stage_id:"BODY",analysis:{},feedback:{}};
+  const missing = value(page,"buildFullAnalysisReport(currentResponse)");
+  for (const label of ["Tokens","Complete linguistic observations","Complete lexical evidence","Complete rule evaluation records","Every emitted Rule Event"]) {
+    assert.match(missing.slice(missing.indexOf(label)).split("\n")[1],/Not available in the cached response/);
+  }
+  assert.match(missing,/Status not recorded\./);
+  assert.match(missing,/Full-stage extracted-concept trace: Not available/);
+  assert.doesNotMatch(missing,/No direct or lemma matches were recorded|Expand all 0 tokens|Expand 0 emitted Rule Events/);
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error => { console.error(error); process.exitCode = 1; });
+'''
+    _run_workspace_frontend(tmp_path, scenario)
+
+
+@pytest.mark.skipif(NODE is None, reason="Node.js is required for report generation")
+def test_full_report_is_complete_deterministic_and_excludes_unrelated_private_data(tmp_path):
+    scenario = r'''
+(async () => {
+  const page = makeWorkspace(fetch,new Map());
+  await waitForRestoration(page);
+  const response = JSON.parse(JSON.stringify(actualStageResponses.CONCLUSION));
+  const privateValue = "PRIVATE-ACCOUNT-SECRET-DO-NOT-EXPORT";
+  response.user_id = privateValue;
+  response.session_token = privateValue;
+  response.account = {password:privateValue,username:privateValue};
+  response.unrelated_records = [{writing_text:privateValue}];
+  response.research_trace.stages.INTRODUCTION = {linguistic_observations:{text:privateValue}};
+  response.research_trace.teacher_context.assignment_id = privateValue;
+  response.research_trace.teacher_context.csrf_token = privateValue;
+  response.research_trace.stages.CONCLUSION.account = {writing_text:privateValue};
+  response.analysis.student_id = privateValue;
+  response.analysis.unrelated_student_records = [{writing_text:privateValue}];
+  response.analysis.linguistic_observations.tokens[0].sessionToken = privateValue;
+  response.feedback.username = privateValue;
+  const unique = "Unique retained evidence — café <script>literal</script>\n".repeat(5000);
+  response.analysis.additional_observation = {text:unique,start:0,end:unique.length};
+  response.research_trace.stages.CONCLUSION.additional_trace_evidence = {source_section:"body",text:"Unique prior-section trace",start:5,end:31};
+  // Unequal retained linguistic copies must both remain available.
+  response.research_trace.stages.CONCLUSION.linguistic_observations = {text:"Distinct retained source",counts:{token_count:3},tokens:[]};
+  const linked = response.feedback["Feedback Provenance"][0];
+  linked.actual_evidence = [{text:"Unique provenance evidence",start:8,end:34}];
+  page.context.currentResponse = response;
+  const original = JSON.stringify(response);
+  const report = value(page,"buildFullAnalysisReport(currentResponse)");
+  assert.doesNotMatch(report,new RegExp(privateValue));
+  assert.deepEqual(reportRecord(report,"analysis.additional_observation"),{text:unique,start:0,end:unique.length});
+  assert.deepEqual(reportRecord(report,"research_trace.stages.CONCLUSION.additional_trace_evidence"),response.research_trace.stages.CONCLUSION.additional_trace_evidence);
+  assert.deepEqual(reportRecord(report,"research_trace.stages.CONCLUSION.linguistic_observations"),response.research_trace.stages.CONCLUSION.linguistic_observations);
+  assert.deepEqual(reportRecord(report,'feedback["Feedback Provenance"]')[0].actual_evidence,linked.actual_evidence,"different provenance evidence must not be replaced by a reference");
+  assert.ok(report.endsWith("END OF FULL ANALYSIS"));
+  assert.ok(report.length>unique.length,"large reports must not be truncated");
+  assert.equal(JSON.stringify(response),original,"redaction and formatting do not mutate the cache");
+  const reverse = value => Array.isArray(value) ? value.map(reverse) : value && typeof value === "object" ? Object.fromEntries(Object.entries(value).reverse().map(([key,item])=>[key,reverse(item)])) : value;
+  page.context.currentResponse = reverse(response);
+  assert.equal(value(page,"buildFullAnalysisReport(currentResponse)"),report,"object insertion order must not affect the report");
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error=>{console.error(error);process.exitCode=1;});
+'''
+    _run_workspace_frontend(tmp_path, scenario)
+
+
+@pytest.mark.skipif(NODE is None, reason="Node.js is required for actual dashboard rendering")
+def test_horizontal_dashboard_real_evidence_navigation_staleness_and_report_agreement(tmp_path, transparency_responses):
+    scenario = r'''
+(async () => {
+  let calls = 0;
+  const page = makeWorkspace((...args) => { calls++; return fetch(...args); }, new Map());
+  await waitForRestoration(page);
+  await click(page.appLinks.find(link => link.dataset.appLink === "workspace"));
+  const walk = element => [element, ...element.children.flatMap(walk)];
+  const text = element => walk(element).map(item => item.textContent).join("\n");
+  const open = async element => { element.open = true; for (const handler of element.listeners.toggle || []) await handler(); };
+  const host = page.elements["nlp-transparency-content"];
+  for (const [name, response] of Object.entries(actualStageResponses.TRANSPARENCY_CASES)) {
+    if (response.availability !== "ANALYZED") continue;
+    page.context.currentResponse = response;
+    const data = response.analysis.linguistic_observations || response.research_trace?.stages?.[response.stage_id]?.linguistic_observations;
+    page.elements["assignment-topic"].value = response.analysis.assignment_topic;
+    page.elements["focus-terms"].value = response.analysis.lexical_topic_evidence.focus_terms.join(", ");
+    page.elements["stage-text"].value = data.text;
+    value(page, `state.currentStage = currentResponse.stage_id; state.currentView = currentResponse.stage_id;
+      state.drafts[state.currentStage] = document.getElementById("stage-text").value;
+      state.analyses[state.currentStage] = currentResponse;
+      state.analysisSnapshots[state.currentStage] = analysisSnapshot(state.currentStage);`);
+    const beforeCalls = calls;
+    const original = JSON.stringify(response);
+    value(page, "displayFeedback(currentResponse)");
+    assert.equal(host.dataset.status, "CURRENT", name);
+    assert.equal(page.elements["copy-full-analysis"].disabled, false);
+    const operations = walk(host).filter(item => item.dataset.operation);
+    assert.equal(operations.length, 16, `${name}: all 15 restored operations plus informational related concepts remain available`);
+    for (const operation of operations) {
+      const explanation = text(operation);
+      for (const label of ["WHAT is it?", "HOW does it work?", "WHY do we need it?", "WHERE is it used?"]) assert.ok(explanation.includes(label), `${name}: ${operation.id} ${label}`);
+    }
+    const GROUP_MEMBERS = { student: ["student"], nlp: ["nlp", "concept"], topic: ["topic"], rules: ["rules"], engine: ["engine", "final"], backend: ["backend"] };
+    const mainTabs = walk(host).filter(item => item.dataset.mainTab);
+    const subTabs = walk(host).filter(item => item.dataset.subTab);
+    const mainPanels = walk(host).filter(item => item.dataset.mainPanel);
+    const subPanels = walk(host).filter(item => item.dataset.subPanel);
+    assert.equal(mainTabs.length,6);
+    assert.deepEqual(mainTabs.map(item => text(item).trim()),["01\nStudent Text","02\nLanguage Analysis","03\nTopic Check","04\nRule Check","05\nFeedback Result","06\nAdvanced Inspector"]);
+    const checkSelection = () => {
+      assert.equal(mainPanels.filter(item => !item.hidden).length,1,`${name}: one main panel visible`);
+      assert.equal(subPanels.filter(item => !item.hidden).length,1,`${name}: one sub-panel visible`);
+      assert.equal(mainTabs.filter(item => item.attributes["aria-selected"] === "true").length,1);
+      assert.equal(subTabs.filter(item => item.attributes["aria-selected"] === "true").length,1);
+      assert.equal(mainTabs.filter(item => item.tabIndex === 0).length,1);
+      assert.equal(subTabs.filter(item => item.tabIndex === 0).length,1);
+    };
+    checkSelection();
+    assert.equal(subPanels.find(item => !item.hidden).dataset.subPanel,"student:overview");
+    for (const mainTab of mainTabs) {
+      await click(mainTab);
+      const prefixes = GROUP_MEMBERS[mainTab.dataset.mainTab].map(member => member + ":");
+      for (const subTab of subTabs.filter(item => prefixes.some(prefix => item.dataset.subTab.startsWith(prefix)))) {
+        await click(subTab);
+        checkSelection();
+        const panel = subPanels.find(item => !item.hidden);
+        assert.equal(panel.dataset.subPanel,subTab.dataset.subTab);
+        assert.ok(text(panel).length>100,`${name}: every sub-tab contains real explanation/evidence`);
+        for (const label of ["WHAT is it?", "HOW does it work?", "WHY do we need it?", "WHERE is it used?"]) assert.ok(text(panel).includes(label));
+      }
+    }
+    // Native tab semantics: linked IDs, roving tab stops, keyboard wrap/Home/End.
+    for (const tab of [...mainTabs,...subTabs]) assert.ok(walk(host).some(item => item.id === tab.attributes["aria-controls"]));
+    const key = async (tab, pressed) => { for (const handler of tab.listeners.keydown || []) await handler({key:pressed,preventDefault(){}}); };
+    await click(mainTabs[0]);
+    await key(mainTabs[0],"End");
+    assert.equal(mainTabs[5].attributes["aria-selected"],"true");
+    await key(mainTabs[5],"ArrowRight");
+    assert.equal(mainTabs[0].attributes["aria-selected"],"true");
+    await key(mainTabs[0],"Home");
+    const studentTabs = subTabs.filter(item => item.dataset.subTab.startsWith("student:"));
+    await key(studentTabs.at(-1),"Home");
+    assert.equal(studentTabs[0].attributes["aria-selected"],"true");
+    await key(studentTabs[0],"ArrowLeft");
+    assert.equal(studentTabs.at(-1).attributes["aria-selected"],"true");
+    checkSelection();
+    const nodes = walk(host).filter(item => item.className?.includes("transparency-flow-node"));
+    assert.ok(nodes.length >= 15);
+    assert.ok(nodes.every(item => operations.some(operation => operation.id === item.attributes["aria-controls"])));
+    await click(nodes.find(item => item.textContent.includes("Dependencies")));
+    assert.equal(subPanels.find(item => !item.hidden).dataset.subPanel,"nlp:dependencies");
+    const diagram = text(walk(host).find(item => item.className === "transparency-flow"));
+    assert.match(diagram, /Inside TopicService.analyze/);
+    assert.match(diagram, /NLPService.parse.*spaCy Language.*analyze_doc/);
+    assert.match(diagram, /same Doc/);
+    if (response.stage_id !== "INTRODUCTION") assert.match(diagram, /Nested inside this Rule Base/);
+    if (response.stage_id !== "CONCLUSION") assert.doesNotMatch(diagram, /Direct WordNet suggestions[^\n]*Executed —/);
+    const byOperation = Object.fromEntries(operations.map(item => [item.dataset.operation, item]));
+    const tokenDisclosure = walk(byOperation.tokens).find(item => item.className === "transparency-data-disclosure");
+    assert.equal(walk(tokenDisclosure).filter(item => item.tagName === "TBODY")[0].children.length, data.tokens.length);
+    const tokenRows = walk(tokenDisclosure).filter(item => item.tagName === "TBODY")[0].children;
+    tokenRows.forEach((row,index) => {
+      assert.equal(row.children[1].textContent, data.tokens[index].text);
+      assert.equal(row.children[2].textContent, String(data.tokens[index].start));
+      assert.equal(row.children[3].textContent, String(data.tokens[index].end));
+      assert.equal(Array.from(data.text).slice(data.tokens[index].start,data.tokens[index].end).join(""),data.tokens[index].text);
+    });
+    const posBody = walk(byOperation.pos).find(item => item.tagName === "TBODY");
+    posBody.children.forEach((row,index) => {
+      assert.equal(row.children[1].textContent,data.tokens[index].pos);
+      assert.equal(row.children[3].textContent,data.tokens[index].tag);
+    });
+    const dependencyBody = walk(byOperation.dependencies).find(item => item.tagName === "TBODY");
+    const actualEdges = data.sentences.flatMap(sentence => sentence.dependencies);
+    assert.equal(dependencyBody.children.length,actualEdges.length);
+    dependencyBody.children.forEach((row,index) => {
+      assert.equal(row.children[1].textContent,actualEdges[index].dependency);
+      assert.equal(row.children[2].textContent,actualEdges[index].head);
+      assert.equal(row.children[3].textContent,String(actualEdges[index].head_start));
+    });
+    if (name === "introduction_exact") {
+      assert.match(text(subPanels.find(item => item.dataset.subPanel === "rules:overview")), /Emitted Rule Events[\s\S]*7[\s\S]*Evaluation records[\s\S]*14/);
+      assert.equal(walk(subPanels.find(item => item.dataset.subPanel === "rules:triggered")).find(item => item.tagName === "TBODY").children.length,7);
+      assert.equal(walk(subPanels.find(item => item.dataset.subPanel === "rules:not-triggered")).find(item => item.tagName === "TBODY").children.length,7);
+      assert.equal(walk(byOperation.rules).find(item => item.tagName === "TBODY").children.length,14);
+      assert.match(text(byOperation.feedback), /central_clause_with_multiple_clause_candidates/);
+      assert.match(text(byOperation.wordnet), /Not executed for this stage — disabled/);
+      assert.match(text(byOperation.focus), /Total match occurrences[\s\S]*4/);
+      const sentenceBody = walk(byOperation.sentences).find(item => item.tagName === "TBODY");
+      assert.equal(sentenceBody.children.length,2);
+      sentenceBody.children.forEach((row,index) => assert.equal(row.children[1].textContent,data.sentences[index].text));
+    }
+    const records = value(page, "(() => { const records=[]; buildFullAnalysisReport(currentResponse,records); return records; })()");
+    const related = response.related_topic_concept_evidence;
+    const relatedPanel = subPanels.find(item => item.dataset.subPanel === "topic:related");
+    assert.ok(relatedPanel,"related-concept sub-tab is retained for older cached responses too");
+    if (related) {
+      assert.match(text(relatedPanel),new RegExp(related.execution_status));
+      const relationTable = walk(relatedPanel).find(item => item.tagName === "TABLE" && walk(item).some(cell => cell.textContent === "Student Word"));
+      if (related.evidence.length) {
+        const rendered = walk(relationTable).find(item => item.tagName === "TBODY").children;
+        assert.equal(rendered.length,related.evidence.length);
+        rendered.forEach((row,i) => {
+          const item=related.evidence[i];
+          assert.equal(row.children[0].textContent,item.student_word);
+          assert.equal(row.children[1].textContent,item.normalized_student_word);
+          assert.ok(row.children[2].textContent.includes(item.teacher_focus_term));
+          assert.ok(row.children[4].textContent.includes(item.relationship_id));
+          assert.ok(row.children[5].textContent.includes(`[${item.start}, ${item.end})`));
+          assert.equal(Array.from(data.text).slice(item.start,item.end).join(""),item.student_word);
+        });
+      }
+      assert.deepEqual(reportRecord(value(page,"buildFullAnalysisReport(currentResponse)"),"related_topic_concept_evidence"),related);
+      if (name === "introduction_exact") {
+        assert.deepEqual(related.evidence.map(item=>item.student_word),["rivers","animals"]);
+        assert.equal(related.summary.total_related_concept_occurrences,2);
+        assert.equal(related.summary.unique_related_concepts_observed,2);
+        assert.match(text(relatedPanel),/does not change direct\/lemma counts/);
+      }
+    }
+    const archive = walk(subPanels.find(item => item.dataset.subPanel === "final:complete")).find(item => item.tagName === "DETAILS" && item.children[0].textContent.startsWith("Complete retained evidence index"));
+    await open(archive);
+    const index = archive.children.filter(item => item.tagName === "DETAILS");
+    assert.equal(index.length,records.length,`${name}: every exported technical record has a visual evidence view`);
+    assert.deepEqual(index.map(item => item.dataset.source),Array.from(records, record => record.path));
+    // Render every top-level evidence record, including genuine empty/missing data.
+    for (const entry of index) await open(entry);
+    assert.ok(walk(host).every(item => item.tagName !== "PRE"),"no source-code listings or JSON dumps");
+    assert.equal(walk(host).filter(item => item.attributes.role === "tablist" && item.dataset.tabLevel === "main").length,1);
+    assert.equal(walk(host).filter(item => item.attributes.role === "tablist" && item.dataset.tabLevel === "sub").length,6);
+    assert.equal(calls,beforeCalls,`${name}: navigation and evidence inspection never call API`);
+    assert.equal(JSON.stringify(response),original,`${name}: rendering does not mutate evidence`);
+    if (response.stage_id === "BODY") assert.match(text(byOperation.stage),/All Body paragraph observations/);
+    if (response.stage_id === "CONCLUSION") assert.match(text(byOperation.stage),/Synthesis-structure candidates[\s\S]*Unobserved concepts/);
+  }
+  // Input events invalidate current evidence and Copy together, before debounce.
+  page.elements["stage-text"].value += " Changed.";
+  await input(page.elements["stage-text"]);
+  assert.equal(host.dataset.status,"STALE");
+  assert.match(text(host), /STALE.*no longer represents the current draft/);
+  assert.equal(walk(host).filter(item => item.tagName === "TABLE").length,0,"old evidence cannot masquerade as the edited draft");
+  assert.equal(page.elements["copy-full-analysis"].disabled,true);
+  assert.equal(value(page,"currentAnalysisForExport()"),null);
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error => { console.error(error); process.exitCode=1; });
+'''
+    _run_workspace_frontend(tmp_path, scenario, {"TRANSPARENCY_CASES": transparency_responses})
+
+
+@pytest.mark.skipif(NODE is None, reason="Node.js is required for dashboard rendering")
+def test_simple_and_technical_view_modes_navigate_without_reanalysis(tmp_path, transparency_responses):
+    scenario = r'''
+(async () => {
+  let calls = 0;
+  const page = makeWorkspace((...args) => { calls++; return fetch(...args); }, new Map());
+  await waitForRestoration(page);
+  await click(page.appLinks.find(link => link.dataset.appLink === "workspace"));
+  const walk = element => [element, ...element.children.flatMap(walk)];
+  const text = element => walk(element).map(item => item.textContent).join("\n");
+  const host = page.elements["nlp-transparency-content"];
+  const response = Object.values(actualStageResponses.TRANSPARENCY_CASES).find(item => item.availability === "ANALYZED");
+  assert.ok(response, "an analyzed response fixture exists");
+  page.context.currentResponse = response;
+  const data = response.analysis.linguistic_observations || response.research_trace?.stages?.[response.stage_id]?.linguistic_observations;
+  page.elements["assignment-topic"].value = response.analysis.assignment_topic;
+  page.elements["focus-terms"].value = response.analysis.lexical_topic_evidence.focus_terms.join(", ");
+  page.elements["stage-text"].value = data.text;
+  value(page, `state.currentStage = currentResponse.stage_id; state.currentView = currentResponse.stage_id;
+    state.drafts[state.currentStage] = document.getElementById("stage-text").value;
+    state.analyses[state.currentStage] = currentResponse;
+    state.analysisSnapshots[state.currentStage] = analysisSnapshot(state.currentStage);`);
+  const beforeCalls = calls;
+  const original = JSON.stringify(response);
+  value(page, "displayFeedback(currentResponse)");
+  assert.equal(host.dataset.status, "CURRENT");
+
+  const GROUP_MEMBERS = { student:["student"], nlp:["nlp","concept"], topic:["topic"], rules:["rules"], engine:["engine","final"], backend:["backend"] };
+  const ROWS = { student:3, nlp:11, topic:8, rules:7, engine:12, backend:4 };
+  const byId = id => walk(host).find(item => item.id === id);
+  const hostFor = group => walk(host).find(item => item.dataset.simpleVisualizer === group);
+  const hasAncestor = (element, test) => { for (let node = element?.parentNode; node; node = node.parentNode) if (test(node)) return true; return false; };
+  const roots = () => ({
+    explorer: walk(host).find(item => item.dataset.ruleExplorer === "true"),
+    flow: walk(host).find(item => item.dataset.feedbackFlow === "true"),
+    tree: walk(host).find(item => item.attributes["data-dependency-tree-section"] !== undefined),
+  });
+  let mainTabs = walk(host).filter(item => item.dataset.mainTab);
+  let subTabs = walk(host).filter(item => item.dataset.subTab);
+  let subPanels = walk(host).filter(item => item.dataset.subPanel);
+  let modeButtons = walk(host).filter(item => item.dataset.viewMode);
+  let summaries = walk(host).filter(item => item.dataset.simpleGroup);
+
+  // Structure: six groups, all 45 original sub-tabs, five summaries, Simple View default.
+  assert.equal(mainTabs.length, 6, "six group tabs exist");
+  assert.equal(subTabs.length, 45, "all 45 original sub-tabs remain");
+  assert.equal(subPanels.length, 45, "all 45 original sub-panels remain");
+  assert.deepEqual(summaries.map(node => node.dataset.simpleGroup), ["student", "nlp", "topic", "rules", "engine"]);
+  assert.equal(value(page, "getTransparencyViewMode()"), "simple", "Simple View is the default");
+  assert.equal(value(page, "transparencyTabsApi !== null && transparencyBackendTab !== null"), true);
+  for (const [mode, pressed] of [["simple", "true"], ["technical", "false"]]) {
+    assert.equal(modeButtons.find(button => button.dataset.viewMode === mode).attributes["aria-pressed"], pressed);
+  }
+
+  // Simple View: exactly five visible groups; Advanced Inspector tab and panel hidden.
+  assert.deepEqual(mainTabs.filter(tab => !tab.hidden).map(tab => tab.dataset.mainTab), ["student", "nlp", "topic", "rules", "engine"]);
+  assert.equal(mainTabs.find(tab => tab.dataset.mainTab === "backend").hidden, true, "Advanced Inspector hidden in Simple View");
+  assert.equal(byId("nlp-panel-backend").hidden, true);
+  for (const group of ["student", "nlp", "topic", "rules", "engine"]) {
+    assert.equal(mainTabs.filter(tab => tab.dataset.mainTab === group && !tab.hidden).length, 1);
+  }
+
+  // Summary cards: headings, View evidence action, recorded facts, no invented values.
+  for (const summary of summaries) {
+    const headings = walk(summary).filter(node => node.tagName === "H4").map(node => node.textContent);
+    assert.deepEqual(headings.slice(0, 3), ["What happened?", "What did the system find?", "Why does it matter?"]);
+    assert.equal(walk(summary).filter(node => node.dataset.viewEvidence === summary.dataset.simpleGroup).length, 1);
+    const content = text(summary);
+    assert.ok(content.length > 150, `${summary.dataset.simpleGroup}: summary carries real content`);
+    assert.doesNotMatch(content, /undefined|\[object Object\]|NaN|\bnull\b/, `${summary.dataset.simpleGroup}: no fabricated values`);
+    if (summary.dataset.simpleGroup === "student") assert.match(content, /Show the analyzed essay/);
+    if (summary.dataset.simpleGroup === "engine") assert.match(content, /Your five feedback fields/);
+    if (summary.dataset.simpleGroup === "nlp") assert.ok(hostFor("nlp"), "nlp summary owns its visualizer slot");
+  }
+
+  // Visualizer relocation in Simple View: teaching tools live in their summary slots.
+  let current = roots();
+  assert.ok(current.explorer, "Rule Decision Tree exists");
+  assert.equal(current.explorer.parentNode, hostFor("rules"), "Rule Decision Tree relocates to the Rule Check summary");
+  assert.ok(current.flow, "Feedback Decision Flow exists");
+  assert.equal(current.flow.parentNode, hostFor("engine"), "Feedback Decision Flow relocates to the Feedback Result summary");
+  if (current.tree) assert.equal(current.tree.parentNode, hostFor("nlp"), "Dependency Tree relocates to the Language Analysis summary");
+
+  // Technical View: everything exposed, teaching tools return to their panels.
+  await click(modeButtons.find(button => button.dataset.viewMode === "technical"));
+  assert.equal(value(page, "getTransparencyViewMode()"), "technical");
+  modeButtons = walk(host).filter(item => item.dataset.viewMode);
+  assert.equal(modeButtons.find(button => button.dataset.viewMode === "technical").attributes["aria-pressed"], "true");
+  assert.equal(modeButtons.find(button => button.dataset.viewMode === "simple").attributes["aria-pressed"], "false");
+  mainTabs = walk(host).filter(item => item.dataset.mainTab);
+  assert.equal(mainTabs.find(tab => tab.dataset.mainTab === "backend").hidden, false, "Advanced Inspector visible in Technical View");
+  assert.equal(subPanels.filter(panel => !panel.hidden).length, 1, "one sub-panel stays visible");
+  assert.equal(subPanels.find(panel => !panel.hidden).dataset.subPanel, "student:overview");
+  current = roots();
+  assert.equal(current.explorer.parentNode, byId("nlp-subpanel-rules-overview"), "Rule Decision Tree back at its home");
+  assert.equal(current.flow.parentNode, byId("nlp-subpanel-engine-overview"), "Feedback Decision Flow back at its home");
+  if (current.tree) assert.ok(hasAncestor(current.tree, node => node.id === "transparency-step-dependencies"), "Dependency Tree back at its home");
+
+  // Group navigation in Technical View: member sub-tabs stay under their group.
+  for (const [group, members] of Object.entries(GROUP_MEMBERS)) {
+    await click(mainTabs.find(tab => tab.dataset.mainTab === group));
+    const visiblePanels = walk(host).filter(item => item.dataset.mainPanel && !item.hidden);
+    assert.equal(visiblePanels.length, 1);
+    assert.equal(visiblePanels[0].dataset.mainPanel, group);
+    const groupSubTabs = subTabs.filter(tab => members.some(member => tab.dataset.subTab.startsWith(member + ":")));
+    assert.equal(groupSubTabs.length, ROWS[group], `${group}: member sub-tabs flattened under the group`);
+    assert.equal(walk(host).filter(item => item.dataset.tabLevel === "sub" && item.parentNode === byId(`nlp-panel-${group}`)).length, 1, `${group}: one sub-tab row`);
+  }
+  await click(mainTabs.find(tab => tab.dataset.mainTab === "nlp"));
+  await click(subTabs.find(tab => tab.dataset.subTab === "concept:occurrences"));
+  assert.equal(subPanels.filter(panel => !panel.hidden)[0].dataset.subPanel, "concept:occurrences");
+  assert.equal(byId("nlp-panel-nlp").hidden, false, "concept rows belong to the Language Analysis group");
+  await click(mainTabs.find(tab => tab.dataset.mainTab === "engine"));
+  await click(subTabs.find(tab => tab.dataset.subTab === "final:limitations"));
+  assert.equal(subPanels.filter(panel => !panel.hidden)[0].dataset.subPanel, "final:limitations");
+  assert.equal(byId("nlp-panel-engine").hidden, false, "final rows belong to the Feedback Result group");
+  assert.equal(calls, beforeCalls, "navigation never calls the API");
+
+  // Advanced Inspector only in Technical View; Simple View falls back to the last student group.
+  await click(mainTabs.find(tab => tab.dataset.mainTab === "topic"));
+  mainTabs = walk(host).filter(item => item.dataset.mainTab);
+  await click(mainTabs.find(tab => tab.dataset.mainTab === "backend"));
+  assert.equal(subPanels.filter(panel => !panel.hidden)[0].dataset.subPanel, "backend:overview");
+  await click(modeButtons.find(button => button.dataset.viewMode === "simple"));
+  assert.equal(value(page, "getTransparencyViewMode()"), "simple");
+  mainTabs = walk(host).filter(item => item.dataset.mainTab);
+  assert.notEqual(mainTabs.find(tab => tab.attributes["aria-selected"] === "true").dataset.mainTab, "backend", "Simple View leaves Advanced Inspector");
+  assert.equal(mainTabs.find(tab => tab.dataset.mainTab === "backend").hidden, true);
+  assert.equal(byId("nlp-panel-backend").hidden, true);
+
+  // View evidence: jumps to the group's first sub-tab and switches to Technical View.
+  await click(walk(host).find(item => item.dataset.viewEvidence === "rules"));
+  assert.equal(value(page, "getTransparencyViewMode()"), "technical");
+  subPanels = walk(host).filter(item => item.dataset.subPanel);
+  assert.equal(subPanels.filter(panel => !panel.hidden)[0].dataset.subPanel, "rules:overview");
+  mainTabs = walk(host).filter(item => item.dataset.mainTab);
+  assert.equal(mainTabs.find(tab => tab.attributes["aria-selected"] === "true").dataset.mainTab, "rules");
+
+  // Mode persists across a full re-render; no relocation needed in Technical View.
+  value(page, "transparencyLastContext = null");
+  value(page, "displayFeedback(currentResponse)");
+  assert.equal(host.dataset.status, "CURRENT");
+  assert.equal(value(page, "getTransparencyViewMode()"), "technical", "Technical View persists across re-render");
+  mainTabs = walk(host).filter(item => item.dataset.mainTab);
+  subTabs = walk(host).filter(item => item.dataset.subTab);
+  summaries = walk(host).filter(item => item.dataset.simpleGroup);
+  assert.equal(mainTabs.length, 6);
+  assert.equal(subTabs.length, 45);
+  assert.equal(summaries.length, 5, "summaries are rebuilt on re-render");
+  current = roots();
+  assert.equal(current.explorer.parentNode, byId("nlp-subpanel-rules-overview"));
+  if (current.tree) assert.ok(hasAncestor(current.tree, node => node.id === "transparency-step-dependencies"));
+
+  // Missing recorded data is labeled Unavailable, never invented.
+  const degraded = JSON.parse(JSON.stringify(response));
+  delete degraded.analysis.assignment_topic;
+  if (degraded.research_trace?.teacher_context) delete degraded.research_trace.teacher_context.assignment_topic;
+  page.context.currentResponse = degraded;
+  value(page, "displayFeedback(currentResponse)");
+  summaries = walk(host).filter(item => item.dataset.simpleGroup);
+  const studentSummary = text(summaries.find(item => item.dataset.simpleGroup === "student"));
+  assert.match(studentSummary, /Assignment question: Unavailable/, "missing recorded data is labeled Unavailable");
+  assert.doesNotMatch(studentSummary, /undefined|\[object Object\]/);
+  page.context.currentResponse = response;
+
+  // View switching and navigation never rerun analysis or mutate evidence.
+  assert.equal(calls, beforeCalls, "view switching never calls the API");
+  assert.equal(JSON.stringify(response), original, "rendering never mutates evidence");
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error => { console.error(error); process.exitCode=1; });
+'''
+    _run_workspace_frontend(tmp_path, scenario, {"TRANSPARENCY_CASES": transparency_responses})

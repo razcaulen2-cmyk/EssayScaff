@@ -1,0 +1,184 @@
+"""Real API outputs drive permanent causal-presentation regressions.
+
+No result is edited to force a condition or an unavailable corpus status.
+The shared browser case corpus also feeds Chrome/CDP checks.
+"""
+import hashlib
+import json
+from pathlib import Path
+
+import pytest
+
+from app import create_app
+from services.essay_analysis_service import EssayAnalysisService
+from tests.auth_helpers import register_student
+from tests.test_workspace_frontend import NODE, _run_workspace_frontend
+
+ROOT = Path(__file__).resolve().parents[1]
+CORPUS = json.loads(Path(__file__).with_name("causal_transparency_cases.json").read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="module")
+def causal_responses(tmp_path_factory):
+    service = EssayAnalysisService()
+    protected = [ROOT / "app.py", *sorted((ROOT / "services").glob("*.py")), *sorted((ROOT / "content").rglob("*.json"))]
+    hashes = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in protected}
+    app = create_app(service, secret_key="isolated-causal-regression")
+    app.config.update(TESTING=True, DRAFT_DATABASE_PATH=str(tmp_path_factory.mktemp("causal") / "isolated.sqlite3"))
+    client = app.test_client()
+    assert register_student(client, "causal_student").status_code == 302
+    results = {}
+    for name, case in CORPUS["cases"].items():
+        response = client.post("/api/analyze-stage", json={**case, "assignment_topic": CORPUS["assignment_topic"], "focus_terms": CORPUS["focus_terms"], "include_transparency_trace": True})
+        assert response.status_code == 200, (name, response.get_json())
+        results[name] = response.get_json()
+    # Empty selected text is rejected by the actual student route. Do not invent
+    # an ANALYZED response or bypass that boundary to make a UI scenario pass.
+    empty = client.post("/api/analyze-stage", json={"stage_id": "INTRODUCTION", "introduction_text": "", "assignment_topic": CORPUS["assignment_topic"]})
+    assert empty.status_code == 400
+    assert all(hashlib.sha256(Path(p).read_bytes()).hexdigest() == h for p, h in hashes.items())
+    return results
+
+
+@pytest.mark.parametrize("name", CORPUS["cases"])
+def test_real_causal_inputs_spans_and_event_integrity(causal_responses, name):
+    r = causal_responses[name]
+    a = r["analysis"]
+    t = r["research_trace"]["stages"][r["stage_id"]]
+    linguistic = a.get("linguistic_observations") or t["linguistic_observations"]
+    text = CORPUS["cases"][name][r["stage_id"].lower() + "_text"]
+    assert linguistic["text"] == text
+    for item in [*linguistic["tokens"], *linguistic["sentences"], *linguistic["noun_phrases"], *a.get("paragraphs", []), *a["lexical_topic_evidence"]["matches"]]:
+        assert text[item["start"]:item["end"]] == item.get("text", item.get("observed_text"))
+    ids = {e["rule_id"] for e in a["rule_evidence"]}
+    assert all(p["rule_id"] in ids for p in r["feedback"]["Feedback Provenance"])
+    assert not any("WORDNET" in p["rule_id"] for p in r["feedback"]["Feedback Provenance"])
+    if name == "intro_presence":
+        assert a["text_presence"]["alphabetic_word_count"] == 6
+        assert "INTRO.TEXT.PRESENT" in ids
+    if name == "intro_incomplete":
+        assert [e["text"] for e in a["observable_structure"]["incomplete_subordinator_candidates"]] == ["Although"]
+        assert t["feedback_decisions"]["fields"]["Primary Feedback"]["selection_branch"] == "intro_sentence_fluency_complete_sentence"
+    if name == "intro_before":
+        assert a["observable_structure"]["incomplete_subordinator_candidates"] == []
+    if name == "intro_list":
+        assert a["observable_structure"]["list_or_fragment_candidate"]["keyword_list_candidate"]
+        assert a["observable_structure"]["central_direction_candidates"] == []
+    if name == "body_mixed":
+        assert [p["counts"]["sentence_count"] for p in a["paragraphs"]] == [4, 1]
+        assert t["feedback_decisions"]["fields"]["Primary Feedback"]["selection_branch"] == "body_ideas_develop_point"
+    if name == "body_generic":
+        assert [p["counts"]["sentence_count"] for p in a["paragraphs"]] == [4, 1]
+        assert len(ids) > 1
+        assert t["feedback_decisions"]["fields"]["Primary Feedback"]["selection_branch"] == "body_neutral_observable"
+    if name == "body_wordnet":
+        wn = a["introduction_to_body_continuity"]["wordnet_relationship_candidates"]
+        assert wn["lookup_pairs"]
+        assert any({p["source_lemma"], p["target_lemma"]} == {"pupil", "student"} for p in wn["lookup_pairs"])
+        assert any({p["source_lemma"], p["target_lemma"]} == {"teacher", "instructor"} for p in wn["lookup_pairs"])
+        for pair in wn["lookup_pairs"]:
+            assert pair["candidate_emitted"] == (len(pair["shared_synset_ids"]) == 1)
+    if name == "conclusion_new":
+        assert a["new_material_observations"]["unobserved_concept_candidates"]
+        assert t["feedback_decisions"]["fields"]["Primary Feedback"]["selection_branch"] == "conclusion_ideas_new_words"
+    if name == "missing_context":
+        assert a["introduction_to_conclusion_continuity"]["status"] == "NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED"
+
+
+@pytest.mark.skipif(NODE is None, reason="Node required for actual frontend rendering")
+def test_causal_models_render_all_panels_and_explain_real_decisions(tmp_path, causal_responses):
+    scenario = r'''
+(async () => {
+  let calls=0;
+  const page=makeWorkspace((...args)=>{calls++;return fetch(...args);},new Map());
+  await waitForRestoration(page);await click(page.appLinks.find(link=>link.dataset.appLink==="workspace"));
+  const walk=node=>[node,...node.children.flatMap(walk)], text=node=>walk(node).map(n=>n.textContent).join("\n");
+  async function open(node) {node.open=true;await dispatch(node,"toggle");}
+  for(const [name,response] of Object.entries(actualStageResponses.CAUSAL_CASES)) {
+    page.context.currentResponse=response;
+    const stage=response.stage_id,trace=response.research_trace.stages[stage],a=response.analysis;
+    const ling=a.linguistic_observations||trace.linguistic_observations;
+    page.elements["stage-text"].value=ling.text;
+    page.elements["assignment-topic"].value=a.assignment_topic;
+    page.elements["focus-terms"].value=a.lexical_topic_evidence.focus_terms.join(", ");
+    value(page,`state.currentStage=currentResponse.stage_id;state.currentView=currentResponse.stage_id;state.drafts[state.currentStage]=document.getElementById("stage-text").value;state.analyses[state.currentStage]=currentResponse;state.analysisSnapshots[state.currentStage]=analysisSnapshot(state.currentStage)`);
+    const before=JSON.stringify(response),beforeState=value(page,"JSON.stringify(state)"),beforeCalls=calls;
+    value(page,"displayFeedback(currentResponse)");
+    const host=page.elements["nlp-transparency-content"], panels=walk(host).filter(n=>n.dataset.causalPanel);
+    assert.equal(panels.length,45,name);
+    for(const panel of panels) {
+      for(const label of ["A · Original essay","B · Actual component input","E–F · Why / recorded result","H · Why the conclusion is limited"])
+        assert.equal(text(panel).includes(label),false,`${name} ${panel.dataset.causalPanel}: removed overview table`);
+      const disclosure=panel.children.find(n=>n.tagName==="DETAILS");await open(disclosure);
+      assert.ok(walk(panel).some(n=>n.dataset.causalDetails===panel.dataset.causalPanel));
+      assert.ok(text(panel).includes("NOT RECORDED"),`${name} ${panel.dataset.causalPanel}: missing-evidence disclosure absent`);
+      if(panel.dataset.causalPanel.split(":")[0]!=="backend") assert.ok(!text(panel).includes("Why this analysis produced this result"),`${name} ${panel.dataset.causalPanel}: technical heading must not appear in student view`);
+    }
+    for(const panel of panels.filter(p=>p.dataset.causalPanel.startsWith("backend:"))) assert.ok(text(panel).includes("Why this analysis produced this result"),`${name} ${panel.dataset.causalPanel}: Advanced Inspector heading removed`);
+    const rulePanel=panels.find(p=>p.dataset.causalPanel==="rules:trace");
+    for(const row of a.rule_evaluation_trace) {
+      page.context.currentRow=row;
+      const m=value(page,"causalRuleModel(currentRow,currentResponse,transparencyData(currentResponse))");
+      assert.ok(m.checks.length,`${name}: measured comparison missing ${row.rule_id}`);
+      assert.ok(text(rulePanel).includes(row.rule_id));
+      const emitted=a.rule_evidence.some(e=>e.rule_id===row.rule_id);
+      assert.equal(Boolean(m.event),emitted);
+      if(row.status==="TRIGGERED") assert.ok(m.checks.every(c=>c.satisfied!==false || c.path.includes("noun_or_proper_noun_count")),`${name} ${row.rule_id}: contradictory reconstruction`);
+      if(row.rule_id.includes("WORDNET")) assert.match(m.usage,/Informational Rule Event/);
+    }
+    for(const field of ["Primary Feedback","Next Step"]) {
+      page.context.currentField=field;
+      const rows=value(page,"causalFeedbackPriority(transparencyData(currentResponse),currentField)");
+      const selected=rows.findIndex(r=>r.branch===trace.feedback_decisions.fields[field].selection_branch);
+      assert.ok(selected>=0,`${name} ${field}: recognized selected branch`);
+      assert.equal(rows[selected].passes,true,`${name} ${field}: selected branch condition`);
+      assert.ok(rows.slice(0,selected).every(r=>r.passes===false),`${name} ${field}: earlier source conditions must fail`);
+      if(stage==="BODY") {
+        for(const check of trace.feedback_decisions.selection_checks) {
+          const row=rows.find(r=>r.branch===check.branch);assert.equal(row.passes,check.condition_matched);
+          assert.ok(row.control.includes(check.status));
+        }
+      } else assert.ok(rows.slice(selected+1).every(r=>r.control.startsWith("SKIPPED")));
+    }
+    for(const field of ["What's Working","Needs Attention"]) {
+      page.context.currentField=field;
+      const checks=value(page,"causalIndependentFeedback(transparencyData(currentResponse),currentField)");
+      assert.equal(checks.filter(c=>c.passes).length,response.feedback[field].length,`${name} ${field}: independent source conditions explain actual list size`);
+    }
+    if(name==="intro_presence") {
+      const model=value(page,`causalRuleModel(currentResponse.analysis.rule_evaluation_trace.find(r=>r.rule_id==="INTRO.TEXT.PRESENT"),currentResponse,transparencyData(currentResponse))`);
+      assert.equal(model.checks[0].value,6);assert.equal(model.checks[0].required,"count > 0");
+    }
+    if(name==="intro_incomplete") {
+      const stagePanel=panels.find(p=>p.dataset.causalPanel==="rules:stage");
+      assert.match(text(stagePanel),/Although: SCONJ/);assert.match(text(stagePanel),/VERIFIED/);assert.match(text(stagePanel),/Warning candidate retained/);
+      const finalPanel=panels.find(p=>p.dataset.causalPanel==="final:overview");
+      assert.match(text(finalPanel),/HELP-INTRO-COMPLETE-SENTENCE/);assert.match(text(finalPanel),/Actual mark bounds/);
+    }
+    if(name==="intro_before") assert.match(text(panels.find(p=>p.dataset.causalPanel==="rules:stage")),/No warning candidate retained/);
+    if(stage==="INTRODUCTION") {
+      for(const s of ling.sentences) for(const token of s.tokens) {
+        if(token.pos!=="SCONJ"||!["although","as","because","before","if","once","since","though","unless","until","when","whereas","while"].includes(token.text.toLowerCase())) continue;
+        page.context.sentenceRecord=s;page.context.markerToken=token;
+        const c=value(page,"causalSubordinatorConditions(sentenceRecord,markerToken)");
+        assert.ok(c);assert.equal(c.supportedWarning,a.observable_structure.incomplete_subordinator_candidates.some(w=>w.start===token.start),`${name}: source-condition explanation agrees with real detector`);
+      }
+    }
+    if(name==="body_generic") {
+      const presentation=value(page,"studentFeedbackPresentation(currentResponse)");
+      assert.equal(presentation.tutor_items[0].role,"NO_SUPPORTED_CONCERN_SELECTED");assert.equal(presentation.tutor_items[0].excerpt,null);
+      assert.equal(presentation.tutor_items[0].task_text,"");assert.equal(presentation.writing_dimension,null);
+      assert.match(text(panels.find(p=>p.dataset.causalPanel==="final:overview")),/Omitted/);
+    }
+    const limitPanel=panels.find(p=>p.dataset.causalPanel==="final:limitations");
+    for(const wording of [...(a.uncertainty||[]),...(a.prohibited_conclusions||[])]) {
+      const d=walk(limitPanel).find(n=>n.tagName==="DETAILS"&&n.children[0]?.textContent.endsWith(wording));
+      assert.ok(d);await open(d);assert.match(text(d),/unconditional stage-scope statement/);
+      assert.doesNotMatch(text(d),/origin of this wording has not been verified/);
+    }
+    assert.equal(JSON.stringify(response),before);assert.equal(value(page,"JSON.stringify(state)"),beforeState);assert.equal(calls,beforeCalls);
+  }
+  console.log("Feedback presentation scenarios completed.");
+})().catch(error=>{console.error(error);process.exitCode=1;});
+'''
+    _run_workspace_frontend(tmp_path, scenario, {"CAUSAL_CASES": causal_responses})

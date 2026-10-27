@@ -1,0 +1,804 @@
+"""Deterministic Introduction feedback derived from actual Rule Base events."""
+
+from typing import Any
+
+
+# These very broad focus words do not, by themselves, communicate the specific
+# assignment subject. This only qualifies feedback wording; matching is unchanged.
+BROAD_FOCUS_TERMS = {"student", "students", "use", "uses", "used", "using"}
+
+
+def _emitted_events(analysis: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Accept both event flag conventions without claiming explicitly false events."""
+    return {
+        event["rule_id"]: event
+        for event in analysis["rule_evidence"]
+        if event.get("triggered", True) and event.get("fired", True)
+    }
+
+
+def _emitted_rule_ids(rule_ids: list[str], events: dict[str, Any]) -> list[str]:
+    """Keep branch links honest when an expected event was not emitted."""
+    return [rule_id for rule_id in rule_ids if rule_id in events]
+
+
+class FeedbackService:
+    """Turn Introduction findings into short revision guidance, never replacement prose."""
+
+    def generate(self, analysis: dict[str, Any], *, include_trace: bool = False) -> dict[str, Any]:
+        events = _emitted_events(analysis)
+        observed_focus = analysis["lexical_topic_evidence"]["observed_focus_terms"]
+        broad_focus = [term for term in observed_focus if term.strip().casefold() in BROAD_FOCUS_TERMS]
+        specific_focus = [term for term in observed_focus if term.strip().casefold() not in BROAD_FOCUS_TERMS]
+        central = analysis["observable_structure"]["central_direction_candidates"]
+        list_finding = analysis["observable_structure"]["list_or_fragment_candidate"]
+        incomplete = analysis["observable_structure"]["incomplete_subordinator_candidates"]
+        development = analysis["development_evidence"]
+
+        current_goal = "Introduce the assignment topic, then tell readers the main point you plan to explain."
+        goal_rules = ["INTRO.GOAL.OBSERVABLE_INTRODUCTION"]
+
+        primary_rules: list[str]
+        if analysis["text_presence"]["status"] == "EMPTY":
+            primary_branch = "empty_input"
+            primary = "This section is empty. Write an opening sentence in your own words."
+            primary_rules = ["INTRO.TEXT.EMPTY_OR_NONALPHABETIC"]
+        elif analysis["text_presence"]["status"] == "WHITESPACE_ONLY":
+            primary_branch = "whitespace_only"
+            primary = "This section has only spaces. Write an opening sentence in your own words."
+            primary_rules = ["INTRO.TEXT.EMPTY_OR_NONALPHABETIC"]
+        elif analysis["text_presence"]["status"] == "PUNCTUATION_ONLY":
+            primary_branch = "punctuation_only"
+            primary = "This section has punctuation but no words. Write an opening sentence in your own words."
+            primary_rules = ["INTRO.TEXT.EMPTY_OR_NONALPHABETIC"]
+        elif list_finding["keyword_list_candidate"]:
+            primary_branch = "keyword_list_candidate"
+            if observed_focus:
+                primary = (
+                    "The opening reads like a list: some words match the assignment, but the checks did not find a sentence explaining how they fit together. "
+                    "Choose one idea and write a sentence about it."
+                )
+            else:
+                primary = (
+                    "The opening reads like a list, but the checks found no assignment words or sentence connecting these words. "
+                    "Check the assignment, then write one sentence introducing an idea from it."
+                )
+            primary_rules = ["INTRO.TEXT.KEYWORD_LIST_CANDIDATE"]
+        elif incomplete:
+            primary_branch = "possible_incomplete_subordinator"
+            marker = incomplete[0]["text"]
+            primary = (
+                f"The sentence may be unfinished after '{marker}'. Add the rest of the thought so readers can follow it."
+            )
+            primary_rules = [
+                "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+                "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+            ]
+        elif broad_focus and not specific_focus:
+            primary_branch = "broad_only_focus_match"
+            primary = (
+                "Only broad words matched (" + ", ".join(broad_focus) + "). "
+                "Name the specific subject from the assignment in your opening."
+            )
+            primary_rules = ["INTRO.TOPIC.FOCUS_TERMS_OBSERVED"]
+        elif not observed_focus:
+            primary_branch = "no_focus_match"
+            primary = (
+                "The checks did not find words from the assignment focus in your opening. Compare it with the assignment; "
+                "you may have used different words for the same idea."
+            )
+            primary_rules = ["INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED"]
+        elif central:
+            if development["status"] != "STRUCTURAL_ELABORATION_CANDIDATE":
+                primary_branch = "central_clause_without_multiple_clause_candidate"
+                primary = "The checks found a sentence pattern that may state your main point. Read it as a new reader and check that your point is clear."
+                primary_rules = [
+                    "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                    "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+                ]
+            else:
+                primary_branch = "central_clause_with_multiple_clause_candidates"
+                primary = (
+                    "The checks found sentence patterns that may state a point and give a reason. Check that the reason explains the point."
+                )
+                primary_rules = [
+                    "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                    "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+                ]
+        else:
+            one_sentence_with_specific_topic = (
+                bool(specific_focus)
+                and analysis["linguistic_observations"]["counts"]["sentence_count"] <= 1
+            )
+            if one_sentence_with_specific_topic:
+                primary_branch = "one_sentence_specific_focus_without_root_candidate"
+                primary = "The checks found assignment words but could not spot a main-point sentence pattern. Read the sentence aloud and check that your point is clear."
+                primary_rules = [
+                    "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+                    "INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE",
+                ]
+            else:
+                primary_branch = "no_root_subject_predicate_candidate"
+                primary = (
+                    "The checks could not spot a sentence pattern for the main point. Read your opening aloud and check whether a reader can find your point."
+                )
+                primary_rules = ["INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE"]
+
+        working: list[str] = []
+        working_rules: list[str] = []
+        if specific_focus:
+            working.append(
+                "These words from the assignment also appear in your opening: " + ", ".join(specific_focus)
+                + ". Check how they support the point you want to make."
+            )
+            working_rules.append("INTRO.TOPIC.FOCUS_TERMS_OBSERVED")
+        context_with_specific_focus = [
+            candidate
+            for candidate in analysis["observable_structure"]["introductory_context_candidates"]
+            if any(
+                match["focus_term"] in specific_focus
+                for match in candidate["topic_match_evidence"]
+            )
+        ]
+        if context_with_specific_focus:
+            working.append(
+                "One sentence uses assignment words and may state your main point. Check that it answers the assignment question."
+            )
+            working_rules.append("INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE")
+        if central and not specific_focus:
+            working.append(
+                "The checks found a sentence pattern that may state your main point. They do not check whether the idea is true."
+            )
+            working_rules.append("INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE")
+
+        needs_attention: list[str] = []
+        attention_rules: list[str] = []
+        if incomplete and not primary_rules.count("INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR"):
+            needs_attention.append(
+                f"The sentence may be unfinished after '{incomplete[0]['text']}'. Add the rest of the thought so readers can follow it."
+            )
+            attention_rules.append("INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR")
+        if not observed_focus and "INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED" not in primary_rules:
+            needs_attention.append(
+                "The checks did not find words from the assignment focus. Compare your opening with the assignment; you may have used different words for the same idea."
+            )
+            attention_rules.append("INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED")
+        elif broad_focus and not specific_focus and "INTRO.TOPIC.FOCUS_TERMS_OBSERVED" not in primary_rules:
+            needs_attention.append(
+                "The checks found only broad words such as " + ", ".join(broad_focus) + ". Name the assignment's specific subject in your opening."
+            )
+            attention_rules.append("INTRO.TOPIC.FOCUS_TERMS_OBSERVED")
+        if analysis["text_presence"]["status"] in {"EMPTY", "WHITESPACE_ONLY", "PUNCTUATION_ONLY"}:
+            next_step_branch = "empty_or_nonalphabetic"
+            next_step = "Write an opening sentence in your own words. Then compare it with the assignment topic."
+            next_step_rules = ["INTRO.TEXT.EMPTY_OR_NONALPHABETIC"]
+        elif list_finding["keyword_list_candidate"]:
+            next_step_branch = "keyword_list_candidate"
+            next_step = (
+                "Choose one focus-matched idea and explain it in your own sentence."
+                if observed_focus
+                else "Check the assignment focus, choose one idea you want to introduce, and write it as a sentence in your own words."
+            )
+            next_step_rules = ["INTRO.TEXT.KEYWORD_LIST_CANDIDATE"]
+        elif incomplete:
+            next_step_branch = "possible_incomplete_subordinator"
+            next_step = f"Read the words after '{incomplete[0]['text']}' and add the rest of the thought."
+            next_step_rules = ["INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR"]
+        elif broad_focus and not specific_focus:
+            next_step_branch = "broad_only_focus_match"
+            next_step = "Compare your opening with the assignment. Broad words such as " + ", ".join(broad_focus) + " may not name its specific subject."
+            next_step_rules = ["INTRO.TOPIC.FOCUS_TERMS_OBSERVED"]
+        elif not observed_focus:
+            next_step_branch = "no_specific_focus_match"
+            next_step = "Compare your opening with the assignment. You may use different words to express the same idea."
+            next_step_rules = ["INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED"]
+        elif not central:
+            if specific_focus and analysis["linguistic_observations"]["counts"]["sentence_count"] <= 1:
+                next_step_branch = "concise_specific_focus"
+                next_step = "Read your opening aloud. Can a new reader tell the topic and your main point? Add words only if something is unclear."
+            else:
+                next_step_branch = "no_central_clause_candidate"
+                next_step = "Read your opening aloud. Can a new reader find the topic and your point? Add or change words if needed."
+            next_step_rules = ["INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE"]
+        elif central and development["status"] != "STRUCTURAL_ELABORATION_CANDIDATE":
+            next_step_branch = "no_additional_clause_candidate"
+            next_step = "Add background before the Body only if readers need it to understand your main point."
+            next_step_rules = ["INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE"]
+        elif central and development["status"] == "STRUCTURAL_ELABORATION_CANDIDATE":
+            next_step_branch = "multiple_clause_candidates"
+            next_step = "Read your main point and reason together. If they do not fit, explain the connection in your own words."
+            next_step_rules = [
+                "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+            ]
+        # Resolve links only after message selection: provenance must not change
+        # the existing attention-message suppression or branch priorities.
+        goal_rules = _emitted_rule_ids(goal_rules, events)
+        primary_rules = _emitted_rule_ids(primary_rules, events)
+        working_rules = _emitted_rule_ids(working_rules, events)
+        attention_rules = _emitted_rule_ids(attention_rules, events)
+        next_step_rules = _emitted_rule_ids(next_step_rules, events)
+        provenance = []
+        field_rules = [
+            ("Current Goal", goal_rules),
+            ("Primary Feedback", primary_rules),
+            ("What's Working", working_rules),
+            ("Needs Attention", attention_rules),
+            ("Next Step", next_step_rules),
+        ]
+        for field, rule_ids in field_rules:
+            for rule_id in dict.fromkeys(rule_ids):
+                event = events.get(rule_id)
+                if event is None:
+                    continue
+                provenance.append(
+                    {
+                        "feedback_field": field,
+                        "rule_id": event["rule_id"],
+                        "triggering_condition": event["triggering_condition"],
+                        "actual_evidence": event["evidence"],
+                        "evidence_type": event["evidence_type"],
+                        "limitations": event["limitation"],
+                    }
+                )
+
+        result = {
+            "Current Goal": current_goal,
+            "Primary Feedback": primary,
+            "What's Working": working,
+            "Needs Attention": needs_attention,
+            "Next Step": next_step,
+            "Feedback Provenance": provenance,
+            "interpretation_limit": "These checks highlight sentence structure and topic-word matches; they do not determine whether the idea is correct or meaningful.",
+        }
+        if include_trace:
+            primary_conditions = {
+                "empty_input": "text_presence.status == EMPTY",
+                "whitespace_only": "text_presence.status == WHITESPACE_ONLY",
+                "punctuation_only": "text_presence.status == PUNCTUATION_ONLY",
+                "keyword_list_candidate": "list_or_fragment_candidate.keyword_list_candidate is true",
+                "possible_incomplete_subordinator": "incomplete_subordinator_candidates is non-empty",
+                "broad_only_focus_match": "no specific focus term matched; at least one broad focus term matched",
+                "no_focus_match": "observed_focus_terms is empty after higher-priority text, list, and subordinator checks",
+                "central_clause_without_multiple_clause_candidate": "central candidate exists; development status is not STRUCTURAL_ELABORATION_CANDIDATE",
+                "central_clause_with_multiple_clause_candidates": "central candidate exists; development status is STRUCTURAL_ELABORATION_CANDIDATE",
+                "one_sentence_specific_focus_without_root_candidate": "no central candidate; specific focus exists; sentence_count <= 1",
+                "no_root_subject_predicate_candidate": "no central candidate and the concise specific-focus exception does not apply",
+            }
+            next_conditions = {
+                "empty_or_nonalphabetic": "text_presence.status in {EMPTY, WHITESPACE_ONLY, PUNCTUATION_ONLY}",
+                "keyword_list_candidate": "keyword_list_candidate is true",
+                "possible_incomplete_subordinator": "incomplete_subordinator_candidates is non-empty",
+                "concise_specific_focus": "no central candidate; specific focus; sentence_count <= 1",
+                "no_central_clause_candidate": "no central candidate; concise-specific-focus exception does not apply",
+                "broad_only_focus_match": "no specific focus term; broad focus term(s) observed",
+                "no_specific_focus_match": "no specific focus term and no broad focus term observed",
+                "no_additional_clause_candidate": "central candidate and development status is not structural elaboration",
+                "multiple_clause_candidates": "central candidate and development status is structural elaboration",
+            }
+            result["_Research Decision Trace"] = {
+                "fields": {
+                    "Current Goal": {"selection_branch": "stage_constant", "rule_ids": goal_rules, "selected_message": current_goal},
+                    "Primary Feedback": {"selection_branch": primary_branch, "selection_condition": primary_conditions.get(primary_branch), "rule_ids": primary_rules, "selected_message": primary},
+                    "What's Working": {"selection_branch": "independent_evidence_checks", "selection_condition": "Each positive wording item is appended when its own existing evidence condition passes.", "rule_ids": working_rules, "selected_message_count": len(working)},
+                    "Needs Attention": {"selection_branch": "independent_attention_checks", "selection_condition": "Each caution is appended when its existing check identifies the corresponding condition.", "rule_ids": attention_rules, "selected_message_count": len(needs_attention)},
+                    "Next Step": {"selection_branch": next_step_branch, "selection_condition": next_conditions.get(next_step_branch), "rule_ids": next_step_rules, "selected_message": next_step},
+                },
+                "unselected_alternatives": "FeedbackService does not record unselected candidate messages or a hidden ranking.",
+                "priority_order": ["empty", "whitespace-only", "punctuation-only", "keyword-list candidate", "incomplete subordinator", "broad-only focus match", "no focus match", "central clause without additional clause candidates", "central clause with multiple clause candidates", "one-sentence specific-focus fallback", "no root subject-predicate candidate"],
+                "selection_source": "Branch labels and rule IDs follow the recorded evidence checks; student-facing messages use separate plain-language wording.",
+            }
+        return result
+
+
+    def generate_conclusion(self, analysis: dict[str, Any], *, include_trace: bool = False) -> dict[str, Any]:
+        """Generate deterministic Conclusion feedback from actual Conclusion rule events."""
+        events = _emitted_events(analysis)
+        presence = analysis["text_presence"]
+        lexical = analysis["lexical_topic_evidence"]
+        intro = analysis["introduction_to_conclusion_continuity"]
+        body = analysis["body_to_conclusion_continuity"]
+        synthesis = analysis["synthesis_structure_candidates"]
+        closure = analysis["closure_candidates"]
+        new_material = analysis["new_material_observations"]
+
+        current_goal = "Return to your main idea, connect it with earlier points, and leave the reader with a clear ending."
+        goal_rules = ["CONCLUSION.GOAL.REVIEW_TOPIC_AND_PRIOR_IDEAS"]
+        if presence["alphabetic_word_count"] == 0:
+            primary_branch = "empty_or_nonalphabetic"
+            primary = "The Conclusion is empty. Write a closing paragraph in your own words."
+            primary_rules = ["CONCLUSION.TEXT.EMPTY_OR_NONALPHABETIC"]
+        elif presence["keyword_list_candidate"]:
+            primary_branch = "keyword_list_candidate"
+            if lexical["observed_focus_terms"]:
+                primary = (
+                    "Some words match the assignment, but the checks did not find a sentence that connects them. "
+                    "Choose one idea and write a closing sentence about it."
+                )
+            else:
+                primary = (
+                    "The checks found no words from the assignment focus and no sentence connecting these words. "
+                    "Check the assignment, then write a closing sentence about one idea."
+                )
+            primary_rules = ["CONCLUSION.TEXT.KEYWORD_LIST_CANDIDATE"]
+        elif not analysis["clause_candidates"]:
+            primary_branch = "no_clause_candidate"
+            primary = "The checks could not spot a sentence pattern for a closing idea. Read your ending aloud and add any missing part."
+            primary_rules = ["CONCLUSION.STRUCTURE.NO_CLAUSE_CANDIDATE"]
+        elif new_material["unobserved_concept_candidates"]:
+            primary_branch = "unobserved_prior_concepts"
+            examples = ", ".join(
+                item["normalized_form"]
+                for item in new_material["unobserved_concept_candidates"][:3]
+            )
+            primary = (
+                f"These words ({examples}) were not found in the earlier sections provided. "
+                "Decide whether readers need to hear about them earlier; the check may miss reworded ideas."
+            )
+            primary_rules = ["CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS"]
+        elif synthesis["candidates"]:
+            primary_branch = "synthesis_structure_candidate"
+            primary = (
+                "One sentence uses words from more than one earlier idea. Read it with those sections and check that it brings the ideas together as you intend."
+            )
+            primary_rules = ["CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE"]
+        elif closure["candidates"]:
+            primary_branch = "closure_structure_candidate"
+            primary = (
+                "The ending has a final sentence or closing phrase. Read it with the whole essay and decide whether it leaves the point you want."
+            )
+            primary_rules = ["CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE"]
+        elif lexical["observed_focus_terms"]:
+            primary_branch = "topic_focus_match_only"
+            primary = (
+                "Some words from the assignment appear in the Conclusion. Check whether your ending returns to your main point."
+            )
+            primary_rules = ["CONCLUSION.TOPIC.FOCUS_MATCHES"]
+        else:
+            primary_branch = "general_closure_review"
+            primary = (
+                "Read your final sentences and check whether they leave the point you want readers to remember. "
+                "There is no one required ending phrase."
+            )
+            primary_rules = ["CONCLUSION.CLOSURE.NO_CANDIDATE"]
+
+        working: list[str] = []
+        working_rules: list[str] = []
+        if lexical["observed_focus_terms"]:
+            working.append(
+                "These words from the assignment also appear in your Conclusion: "
+                + ", ".join(lexical["observed_focus_terms"])
+                + ". Check how they return to your main idea."
+            )
+            working_rules.append("CONCLUSION.TOPIC.FOCUS_MATCHES")
+        if intro["status"] == "LEXICAL_COMPARISON_AVAILABLE" and (
+            intro["direct_lexical_continuity"] or intro["lemma_normalized_continuity"]
+        ):
+            working.append(
+                "Some words in the Conclusion also appear in the Introduction. Check whether your ending returns to its main idea."
+            )
+            working_rules.append("CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON")
+        if body["status"] == "LEXICAL_COMPARISON_AVAILABLE" and (
+            body["direct_lexical_continuity"] or body["lemma_normalized_continuity"]
+        ):
+            working.append(
+                "Some words in the Conclusion also appear in the Body. Check whether your ending brings those points together."
+            )
+            working_rules.append("CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON")
+        if synthesis["candidates"]:
+            working.append(
+                "One sentence uses words from more than one earlier idea. Check whether it brings those ideas together."
+            )
+            working_rules.append("CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE")
+        if closure["candidates"]:
+            working.append(
+                "Your ending has a final sentence or a closing phrase. Check whether it leaves the point you want."
+            )
+            working_rules.append("CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE")
+        if new_material["phrase_combinations_of_observed_concepts"]:
+            working.append(
+                "This phrase uses words that appeared earlier, though the full phrase is new here."
+            )
+            working_rules.append("CONCLUSION.NEW_MATERIAL.KNOWN_CONCEPT_COMBINATION")
+
+        needs: list[str] = []
+        needs_rules: list[str] = []
+        if presence["keyword_list_candidate"]:
+            needs.append("The checks did not find a sentence connecting these words. Choose your main closing idea and write a sentence about it.")
+            needs_rules.append("CONCLUSION.TEXT.KEYWORD_LIST_CANDIDATE")
+        if not lexical["observed_focus_terms"]:
+            needs.append("The checks did not find words from the assignment focus. You may have used different words; compare the Conclusion with the assignment.")
+            needs_rules.append("CONCLUSION.TOPIC.NO_FOCUS_MATCH")
+        if not analysis["clause_candidates"]:
+            needs.append("The checks could not spot a sentence pattern for a full idea. Read your ending aloud; this check can miss unusual writing styles.")
+            needs_rules.append("CONCLUSION.STRUCTURE.NO_CLAUSE_CANDIDATE")
+        if intro["status"] == "LEXICAL_COMPARISON_AVAILABLE" and not (
+            intro["direct_lexical_continuity"] or intro["lemma_normalized_continuity"]
+        ):
+            needs.append("The checks found no shared key words with the Introduction. Reworded ideas may be missed, so compare the sections yourself.")
+            needs_rules.append("CONCLUSION.CONTINUITY.INTRODUCTION_LEXICAL_COMPARISON")
+        if body["status"] == "LEXICAL_COMPARISON_AVAILABLE" and not (
+            body["direct_lexical_continuity"] or body["lemma_normalized_continuity"]
+        ):
+            needs.append("The checks found no shared key words with the Body. Reworded ideas may be missed, so compare the sections yourself.")
+            needs_rules.append("CONCLUSION.CONTINUITY.BODY_LEXICAL_COMPARISON")
+        if new_material["unobserved_concept_candidates"]:
+            needs.append("Some words were not found in the earlier sections provided. Decide whether readers need more explanation earlier.")
+            needs_rules.append("CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS")
+        if synthesis["status"] == "NO_SYNTHESIS_STRUCTURE_CANDIDATE_OBSERVED" and (
+            intro["status"] == "LEXICAL_COMPARISON_AVAILABLE"
+            or body["status"] == "LEXICAL_COMPARISON_AVAILABLE"
+        ):
+            needs.append("The checks did not find a sentence using words from two earlier ideas. They may miss reworded ideas; read the sections together.")
+            needs_rules.append("CONCLUSION.SYNTHESIS.NO_CANDIDATE")
+        if closure["status"] == "NO_CLOSURE_CANDIDATE_OBSERVED":
+            needs.append("The checks did not find a final sentence pattern or closing phrase. You do not need to use a fixed phrase.")
+            needs_rules.append("CONCLUSION.CLOSURE.NO_CANDIDATE")
+        needs.append("These checks cannot tell whether an idea is true or whether the ending works well.")
+        needs_rules.append("CONCLUSION.LIMITATION.NO_SEMANTIC_VALIDATION")
+
+        if presence["alphabetic_word_count"] == 0:
+            next_step_branch = "empty_or_nonalphabetic"
+            next_step = "Write a closing paragraph in your own words. Return to your main point and choose a final thought."
+            next_step_rules = ["CONCLUSION.TEXT.EMPTY_OR_NONALPHABETIC"]
+        elif presence["keyword_list_candidate"]:
+            next_step_branch = "keyword_list_candidate"
+            next_step = "Choose the main idea you want readers to remember. Connect it to an earlier point in your own words."
+            next_step_rules = ["CONCLUSION.TEXT.KEYWORD_LIST_CANDIDATE"]
+        elif new_material["unobserved_concept_candidates"]:
+            next_step_branch = "unobserved_prior_concepts"
+            next_step = "Check the words that were not found earlier. Add an explanation before the Conclusion if readers need one."
+            next_step_rules = ["CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS"]
+        elif synthesis["candidates"]:
+            next_step_branch = "synthesis_structure_candidate"
+            next_step = "Read the Conclusion with the earlier sections. Does it bring the points you chose together?"
+            next_step_rules = ["CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE"]
+        elif not closure["candidates"]:
+            next_step_branch = "no_closure_candidate"
+            next_step = "Choose the final point you want readers to remember. End in a way that fits your essay; no fixed phrase is needed."
+            next_step_rules = ["CONCLUSION.CLOSURE.NO_CANDIDATE"]
+        else:
+            next_step_branch = "closure_candidate"
+            next_step = "Read the final sentence with the whole essay. Does it leave the ending you want?"
+            next_step_rules = ["CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE"]
+
+        goal_rules = _emitted_rule_ids(goal_rules, events)
+        primary_rules = _emitted_rule_ids(primary_rules, events)
+        working_rules = _emitted_rule_ids(working_rules, events)
+        needs_rules = _emitted_rule_ids(needs_rules, events)
+        next_step_rules = _emitted_rule_ids(next_step_rules, events)
+        provenance = []
+        for field, rule_ids in (
+            ("Current Goal", goal_rules),
+            ("Primary Feedback", primary_rules),
+            ("What's Working", working_rules),
+            ("Needs Attention", needs_rules),
+            ("Next Step", next_step_rules),
+        ):
+            for rule_id in dict.fromkeys(rule_ids):
+                event = events.get(rule_id)
+                if event:
+                    provenance.append(
+                        {
+                            "feedback_field": field,
+                            "rule_id": rule_id,
+                            "triggering_condition": event["triggering_condition"],
+                            "actual_evidence": event["actual_evidence"],
+                            "source_sections": event["source_sections"],
+                            "evidence_type": event["evidence_type"],
+                            "limitations": event["limitations"],
+                        }
+                    )
+        result = {
+            "Current Goal": current_goal,
+            "Primary Feedback": primary,
+            "What's Working": working,
+            "Needs Attention": needs,
+            "Next Step": next_step,
+            "Feedback Provenance": provenance,
+            "interpretation_limit": "This feedback is deterministic and observational; it does not judge semantic quality or readiness.",
+        }
+        if include_trace:
+            primary_conditions = {
+                "empty_or_nonalphabetic": "text_presence.alphabetic_word_count == 0",
+                "keyword_list_candidate": "text_presence.keyword_list_candidate is true",
+                "no_clause_candidate": "clause_candidates is empty",
+                "unobserved_prior_concepts": "new_material_observations.unobserved_concept_candidates is non-empty",
+                "synthesis_structure_candidate": "synthesis_structure_candidates.candidates is non-empty",
+                "closure_structure_candidate": "closure_candidates.candidates is non-empty",
+                "topic_focus_match_only": "lexical focus exists after all higher-priority branches do not apply",
+                "general_closure_review": "no prior primary branch applies",
+            }
+            next_conditions = {
+                "empty_or_nonalphabetic": "alphabetic_word_count == 0",
+                "keyword_list_candidate": "keyword_list_candidate is true",
+                "unobserved_prior_concepts": "unobserved_concept_candidates is non-empty",
+                "synthesis_structure_candidate": "synthesis candidates exist after earlier branches do not apply",
+                "no_closure_candidate": "closure_candidates.candidates is empty",
+                "closure_candidate": "closure candidate exists and earlier branches do not apply",
+            }
+            result["_Research Decision Trace"] = {
+                "fields": {
+                    "Current Goal": {"selection_branch": "stage_constant", "rule_ids": goal_rules, "selected_message": current_goal},
+                    "Primary Feedback": {"selection_branch": primary_branch, "selection_condition": primary_conditions.get(primary_branch), "rule_ids": primary_rules, "selected_message": primary},
+                    "What's Working": {"selection_branch": "independent_evidence_checks", "selection_condition": "Each item is appended when its existing lexical, continuity, synthesis, closure, or phrase-combination condition is met.", "rule_ids": working_rules, "selected_message_count": len(working)},
+                    "Needs Attention": {"selection_branch": "independent_attention_checks", "selection_condition": "Each caution is appended when its corresponding existing stage result meets the negative/limitation condition.", "rule_ids": needs_rules, "selected_message_count": len(needs)},
+                    "Next Step": {"selection_branch": next_step_branch, "selection_condition": next_conditions.get(next_step_branch), "rule_ids": next_step_rules, "selected_message": next_step, "limitation": "Rule links describe the selected Next Step condition, not necessarily the Primary Feedback condition."},
+                },
+                "unselected_alternatives": "FeedbackService does not record unselected candidate messages or a hidden ranking.",
+                "priority_order": ["empty", "keyword-list candidate", "no clause candidate", "unobserved prior concepts", "synthesis structure candidate", "closure structure candidate", "topic focus match only", "general closure review"],
+                "selection_source": "Branch labels and rule IDs follow the recorded evidence checks; student-facing messages use separate plain-language wording.",
+            }
+        return result
+
+    def generate_body(self, analysis: dict[str, Any], *, include_trace: bool = False) -> dict[str, Any]:
+        """Create Body-specific feedback tied to the Body analyzer's rule events."""
+        events = _emitted_events(analysis)
+        paragraphs = analysis["paragraphs"]
+        substantive = [paragraph for paragraph in paragraphs if paragraph["substantive"]]
+        cross_pairs = analysis["cross_paragraph_continuity"]["paragraph_pairs"]
+        body_links = analysis["introduction_to_body_continuity"]
+
+        goal = "Use each Body paragraph to explain one idea. Add details and show how the paragraphs connect."
+        goal_rules = ["BODY.GOAL.DEVELOP_BODY_IDEAS"]
+
+        primary_rules: list[str]
+        if not substantive:
+            primary_branch = "no_substantive_paragraph"
+            primary = "The Body section has no words yet. Write your first paragraph in your own words."
+            primary_rules = ["BODY.TEXT.NO_SUBSTANTIVE_PARAGRAPH"]
+        else:
+            list_paragraph = next(
+                (p for p in substantive if p["fragment_or_list_candidate"]["keyword_list_candidate"]),
+                None,
+            )
+            shift_pair = next(
+                (
+                    pair
+                    for pair in cross_pairs
+                    if pair["status"] == "NO_EXPLICIT_LEXICAL_LINK_OBSERVED"
+                ),
+                None,
+            )
+            limited_paragraph = next(
+                (
+                    p
+                    for p in substantive
+                    if not p["supporting_detail_candidates"]["candidates"]
+                    and p["counts"]["sentence_count"] > 0
+                ),
+                None,
+            )
+            repeated_opening = next(
+                (
+                    (p, p["repetition_observations"]["repeated_sentence_openings"][0])
+                    for p in substantive
+                    if p["repetition_observations"]["repeated_sentence_openings"]
+                ),
+                None,
+            )
+
+            if list_paragraph:
+                primary_branch = "first_list_like_paragraph"
+                index = list_paragraph["paragraph_index"]
+                if list_paragraph["observed_focus_terms"]:
+                    primary = (
+                        f"Paragraph {index} uses words from the assignment, but the checks did not find a sentence that connects them. "
+                        "Choose one idea and explain it in a sentence."
+                    )
+                else:
+                    primary = (
+                        f"The checks found no assignment words or sentence connecting the words in Paragraph {index}. "
+                        "Check the assignment, then write a sentence about one idea."
+                    )
+                primary_rules = [f"BODY.P{index}.PARAGRAPH.KEYWORD_LIST_CANDIDATE"]
+            elif shift_pair:
+                primary_branch = "first_unlinked_adjacent_paragraph_pair"
+                left_index, right_index = shift_pair["paragraph_pair"]
+                primary = (
+                    f"The checks found no shared key words or transition words between Paragraphs {left_index} and {right_index}. "
+                    "Read them together and add a link if readers may not see how the ideas connect."
+                )
+                primary_rules = ["BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON"]
+            elif limited_paragraph:
+                primary_branch = "first_paragraph_without_additional_clause_candidate"
+                index = limited_paragraph["paragraph_index"]
+                primary = (
+                    f"The checks did not find another sentence part to develop the idea in Paragraph {index}. "
+                    "Consider adding a reason, example, or explanation if readers need one."
+                )
+                primary_rules = [f"BODY.P{index}.SUPPORTING_DETAIL.NOT_OBSERVED"]
+            elif repeated_opening:
+                primary_branch = "first_repeated_sentence_opening"
+                paragraph, opening = repeated_opening
+                index = paragraph["paragraph_index"]
+                primary = (
+                    f"More than one sentence in Paragraph {index} starts with '{opening['opening']}'. "
+                    "Change an opening only if the repetition sounds awkward."
+                )
+                primary_rules = [f"BODY.P{index}.REPETITION.REPEATED_SENTENCE_OPENINGS"]
+            else:
+                primary_branch = "general_observable_body_evidence"
+                primary = (
+                    "The checks found sentences and words in the Body. Read each paragraph and check that it explains your point."
+                )
+                primary_rules = [
+                    f"BODY.P{paragraph['paragraph_index']}.PARAGRAPH.SEGMENTED"
+                    for paragraph in substantive
+                ]
+
+        working: list[str] = []
+        working_rules: list[str] = []
+        for paragraph in substantive:
+            index = paragraph["paragraph_index"]
+            if paragraph["observed_focus_terms"]:
+                working.append(
+                    f"Paragraph {index} uses assignment words such as: "
+                    + ", ".join(paragraph["observed_focus_terms"])
+                    + ". Check how they support the paragraph's idea."
+                )
+                working_rules.append(f"BODY.P{index}.PARAGRAPH.FOCUS_TERMS_OBSERVED")
+            if paragraph["topic_sentence_candidates"]:
+                working.append(
+                    f"Paragraph {index} has a sentence that may introduce its idea. Check that the rest of the paragraph explains that idea."
+                )
+                working_rules.append(f"BODY.P{index}.TOPIC_SENTENCE.CANDIDATE")
+            if paragraph["supporting_detail_candidates"]["candidates"]:
+                working.append(
+                    f"Paragraph {index} has other sentence patterns that may add detail. Check that they explain or support its idea."
+                )
+                working_rules.append(f"BODY.P{index}.SUPPORTING_DETAIL.CANDIDATE")
+
+            repetitions = paragraph["repetition_observations"]
+            repeated_terms = repetitions["repeated_surface_content_words"]
+            if repeated_terms:
+                first = repeated_terms[0]
+                working.append(
+                    f"Paragraph {index} uses '{first['term']}' {first['occurrence_count']} times. "
+                    "Repeating a word can help readers follow an idea; check whether it sounds natural."
+                )
+                working_rules.append(f"BODY.P{index}.REPETITION.REPEATED_SURFACE_CONTENT_WORDS")
+
+        needs: list[str] = []
+        needs_rules: list[str] = []
+        for paragraph in substantive:
+            index = paragraph["paragraph_index"]
+            if paragraph["fragment_or_list_candidate"]["keyword_list_candidate"]:
+                needs.append(
+                    f"The checks did not find a sentence connecting the words in Paragraph {index}. Choose one idea and explain it in your own words."
+                )
+                needs_rules.append(f"BODY.P{index}.PARAGRAPH.KEYWORD_LIST_CANDIDATE")
+            if not paragraph["observed_focus_terms"]:
+                needs.append(
+                    f"The checks found no words from the assignment focus in Paragraph {index}. You may have used different words; compare it with the assignment."
+                )
+                needs_rules.append(f"BODY.P{index}.PARAGRAPH.FOCUS_TERMS_NOT_OBSERVED")
+            if not paragraph["supporting_detail_candidates"]["candidates"]:
+                needs.append(
+                    f"The checks did not find another sentence part that adds detail in Paragraph {index}. Add a reason or example if readers need one."
+                )
+                needs_rules.append(f"BODY.P{index}.SUPPORTING_DETAIL.NOT_OBSERVED")
+
+        if analysis["cross_paragraph_continuity"]["status"] == "PAIRWISE_OBSERVATIONS":
+            if any(pair["status"] == "NO_EXPLICIT_LEXICAL_LINK_OBSERVED" for pair in cross_pairs):
+                needs.append(
+                    "The checks found no shared key words between some neighboring paragraphs. Read them together and add a link if needed."
+                )
+                needs_rules.append("BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON")
+
+        if body_links["status"] == "LEXICAL_COMPARISON_AVAILABLE":
+            if body_links["direct_lexical_continuity"] or body_links["lemma_normalized_continuity"]:
+                working.append(
+                    "Some words in the Body also appear in the Introduction. Check whether the Body explains the point you introduced."
+                )
+                working_rules.append("BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON")
+            elif body_links["unobserved_introduction_concepts"]:
+                needs.append(
+                    "The checks found no shared key words with the Introduction. You may have reworded the idea, so compare the sections yourself."
+                )
+                needs_rules.append("BODY.INTRO_CONTINUITY.LEXICAL_COMPARISON")
+
+        needs.append("These checks cannot tell whether ideas are true or whether they make sense together.")
+        needs_rules.append("BODY.LIMITATION.NO_SEMANTIC_VALIDATION")
+
+        if not substantive:
+            next_step_branch = "no_substantive_paragraph"
+            next_step = "Write your first Body paragraph in your own words. Explain one idea from your assignment."
+            next_step_rules = ["BODY.TEXT.NO_SUBSTANTIVE_PARAGRAPH"]
+        elif list_paragraph:
+            next_step_branch = "first_list_like_paragraph"
+            next_step = (
+                "Choose one assignment idea and explain it in a sentence in your own words."
+                if list_paragraph["observed_focus_terms"]
+                else "Check the assignment, choose one idea, and explain it in a sentence in your own words."
+            )
+            next_step_rules = [f"BODY.P{list_paragraph['paragraph_index']}.PARAGRAPH.KEYWORD_LIST_CANDIDATE"]
+        elif shift_pair:
+            next_step_branch = "first_unlinked_adjacent_paragraph_pair"
+            next_step = "Read the two paragraphs together. Add a sentence to show how their ideas connect if needed."
+            next_step_rules = ["BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON"]
+        elif limited_paragraph:
+            next_step_branch = "first_paragraph_without_additional_clause_candidate"
+            next_step = "Choose one paragraph. Add a reason, example, or explanation if readers need more detail."
+            next_step_rules = [f"BODY.P{limited_paragraph['paragraph_index']}.SUPPORTING_DETAIL.NOT_OBSERVED"]
+        elif repeated_opening:
+            next_step_branch = "first_repeated_sentence_opening"
+            next_step = "Read the repeated sentence openings aloud. Change one if the repetition sounds awkward."
+            next_step_rules = [f"BODY.P{repeated_opening[0]['paragraph_index']}.REPETITION.REPEATED_SENTENCE_OPENINGS"]
+        elif body_links["status"] == "NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED":
+            next_step_branch = "introduction_context_unavailable"
+            next_step = "Compare each Body paragraph with the assignment. Check that each one explains an idea you want readers to understand."
+            # Availability is already recorded by the decision trace, not a Rule Event.
+            next_step_rules = []
+        else:
+            next_step_branch = "general_body_review"
+            next_step = "Read each paragraph. Check that it explains one idea and connects to the next paragraph."
+            next_step_rules = ["BODY.GOAL.DEVELOP_BODY_IDEAS"]
+
+        goal_rules = _emitted_rule_ids(goal_rules, events)
+        primary_rules = _emitted_rule_ids(primary_rules, events)
+        working_rules = _emitted_rule_ids(working_rules, events)
+        needs_rules = _emitted_rule_ids(needs_rules, events)
+        next_step_rules = _emitted_rule_ids(next_step_rules, events)
+        provenance = []
+        for field, rule_ids in (
+            ("Current Goal", goal_rules),
+            ("Primary Feedback", primary_rules),
+            ("What's Working", working_rules),
+            ("Needs Attention", needs_rules),
+            ("Next Step", next_step_rules),
+        ):
+            for rule_id in dict.fromkeys(rule_ids):
+                event = events.get(rule_id)
+                if event:
+                    provenance.append(
+                        {
+                            "feedback_field": field,
+                            "rule_id": rule_id,
+                            "triggering_condition": event["triggering_condition"],
+                            "actual_evidence": event["actual_evidence"],
+                            "evidence_type": event["evidence_type"],
+                            "limitations": event["limitations"],
+                        }
+                    )
+        result = {
+            "Current Goal": goal,
+            "Primary Feedback": primary,
+            "What's Working": working,
+            "Needs Attention": needs,
+            "Next Step": next_step,
+            "Feedback Provenance": provenance,
+            "interpretation_limit": (
+                "This deterministic feedback reports observed Body structure and lexical evidence; it does not validate support, logic, meaning, or readiness."
+            ),
+        }
+        if include_trace:
+            primary_conditions = {
+                "no_substantive_paragraph": "no substantive paragraph exists",
+                "first_list_like_paragraph": "first substantive paragraph in paragraph order with keyword_list_candidate true",
+                "first_unlinked_adjacent_paragraph_pair": "first pair with NO_EXPLICIT_LEXICAL_LINK_OBSERVED status",
+                "first_paragraph_without_additional_clause_candidate": "first sentence-bearing substantive paragraph with no detail candidates",
+                "first_repeated_sentence_opening": "first substantive paragraph with repeated_sentence_openings",
+                "general_observable_body_evidence": "none of the higher-priority Body primary conditions applies",
+            }
+            next_conditions = {
+                "no_substantive_paragraph": "no substantive paragraph exists",
+                "first_list_like_paragraph": "first substantive paragraph with keyword_list_candidate true",
+                "first_unlinked_adjacent_paragraph_pair": "first unlinked adjacent substantive paragraph pair exists",
+                "first_paragraph_without_additional_clause_candidate": "first sentence-bearing substantive paragraph has no detail candidates",
+                "first_repeated_sentence_opening": "a repeated two-token sentence opening exists and higher-priority branches do not apply",
+                "introduction_context_unavailable": "Introduction continuity status is NOT_AVAILABLE_NO_INTRODUCTION_SUPPLIED",
+                "general_body_review": "none of the higher-priority Body Next Step conditions applies",
+            }
+            result["_Research Decision Trace"] = {
+                "fields": {
+                    "Current Goal": {"selection_branch": "stage_constant", "rule_ids": goal_rules, "selected_message": goal},
+                    "Primary Feedback": {"selection_branch": primary_branch, "selection_condition": primary_conditions.get(primary_branch), "rule_ids": primary_rules, "selected_message": primary},
+                    "What's Working": {"selection_branch": "paragraph_evidence_loop", "selection_condition": "Per substantive paragraph, append only items whose focus/topic/detail/repetition evidence list is non-empty.", "rule_ids": working_rules, "selected_message_count": len(working)},
+                    "Needs Attention": {"selection_branch": "paragraph_and_cross_stage_checks", "selection_condition": "Append paragraph, adjacent-pair, Introduction comparison, and limitation messages when their recorded conditions match.", "rule_ids": needs_rules, "selected_message_count": len(needs)},
+                    "Next Step": {"selection_branch": next_step_branch, "selection_condition": next_conditions.get(next_step_branch), "rule_ids": next_step_rules, "selected_message": next_step, "limitation": "Missing Introduction context is an input-availability condition with no Rule Event; general review links only to the stage guidance goal."},
+                },
+                "priority_order": ["empty", "first list-like paragraph", "first unlinked adjacent paragraph pair", "first paragraph without additional clause candidate", "first repeated opening", "missing Introduction context", "general review"],
+                "unselected_alternatives": "FeedbackService does not record a ranked list of unselected alternatives.",
+            }
+        return result

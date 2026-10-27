@@ -1,0 +1,34 @@
+{
+  "javascriptErrors": [],
+  "branch": "conclusion_ideas_bring_together",
+  "ruleIds": [
+    "CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE"
+  ],
+  "status": "PREPARED_INLINE_GUIDANCE",
+  "dimension": "Ideas",
+  "skill": "Bring Ideas Together",
+  "lesson": "HELP-CONCLUSION-BRING-TOGETHER",
+  "tutorItems": [
+    {
+      "label": "Ideas · Bring Ideas Together",
+      "lesson": "HELP-CONCLUSION-BRING-TOGETHER",
+      "task": "Read the highlighted sentence with the earlier sections. Check that it connects those ideas as you intend, and adjust the wording in your own words if the connection is unclear.",
+      "excerpt": null
+    }
+  ],
+  "dom": {
+    "focus": "Ideas · Bring Ideas Together",
+    "evidenceHidden": false,
+    "evidenceText": "No passage could be verified in your current text, so nothing is marked. Read the ending with the earlier sections and check the connection.",
+    "whyHidden": false,
+    "taskHidden": false,
+    "taskText": "Read the highlighted sentence with the earlier sections. Check that it connects those ideas as you intend, and adjust the wording in your own words if the connection is unclear.",
+    "workingHidden": true,
+    "editorMarks": [],
+    "tutorMarks": [],
+    "stageTitle": "No Specific Writing Issue Detected",
+    "stageBadge": "NO_ISSUE",
+    "stageReviewHidden": true,
+    "feedbackText": "\n              Ideas · Bring Ideas Together\n              \n              What I noticedOne sentence combines words from more than one earlier section. The comparison does not prove the sentence brings the ideas together.\n              Look at your writingNo passage could be verified in your current text, so nothing is marked. Read the ending with the earlier sections and check the connection.\n              What's working\n              Why it mattersAn ending works when readers see what your points add up to. Combining ideas from earlier sections is one way to show that.\n              How to improveRead the highlighted sentence with the earlier sections. Check that it connects those ideas as you intend, and adjust the wording in your own words if the connection is unclear.\n              This check compares wording between sections. It cannot judge whether the combined meaning works.\n              \n                Show more feedback\n                \n                  What’s WorkingThese assignment words also appear in your Conclusion: schools, playgrounds, vegetable gardens, students, learning. Check that they return to your main idea.Some Conclusion words also appear in the Introduction. Check whether your ending returns to its main idea.Some Conclusion words also appear in the Body. Check whether your ending brings those points together.One sentence combines ideas from more than one earlier section. Check whether it brings those ideas together.Your ending has a final sentence or a closing phrase. Check whether it leaves the point you want.This phrase uses words that appeared earlier, though the full phrase is new here.\n                  Needs AttentionThese checks record structure and wording only; they cannot tell whether an idea is true or whether the ending works well.\n                \n              \n              Writing focus, not a score. Word comparisons cannot prove that ideas work together.\n            "
+  }
+}

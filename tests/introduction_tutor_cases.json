@@ -1,0 +1,12 @@
+{
+  "assignment_topic": "Should students be allowed to use smartphones during class?",
+  "focus_terms": ["smartphones", "students", "classroom", "learning", "distractions"],
+  "cases": {
+    "long_although": "Smartphones are common tools in the classroom. Students carry them to school and use them for many different activities. A phone can provide quick access to dictionaries, articles, and educational videos. Teachers sometimes ask learners to look up unfamiliar words or compare information from several sources. These activities can support a lesson when students have a clear purpose. However, phones can also distract students when messages arrive during class. Some students open games or social media instead of listening to their teacher. Schools therefore need simple rules that explain when phones are useful and when they should remain in a bag. Teachers can help students check whether information is reliable before using it in an assignment. Students should also learn to respect other people by asking permission before taking photographs. Parents and teachers can work together to encourage responsible habits. In my opinion, smartphones should be allowed for planned learning activities under teacher supervision. Students also need regular opportunities to discuss their ideas without looking at screens. Although students can find useful information using smartphones. Clear classroom expectations can help students focus on their work and use technology thoughtfully.",
+    "cafeteria_although": "The cafeteria serves warm meals every afternoon. Local workers prepare vegetables, rice, and fruit for lunch. Although the cafeteria offers several healthy meals. Families enjoy eating together in the dining hall.",
+    "keyword_list": "Smartphones and classroom learning. Digital dictionaries and educational videos. Students and mobile devices. Online information and school activities. Teacher supervision and classroom rules. Social media and distractions. Educational applications and student participation.",
+    "main_point": "Students use smartphones in the classroom.",
+    "cafeteria_complete": "The cafeteria serves warm meals every afternoon. Local workers prepare vegetables, rice, and fruit for lunch. Families enjoy eating together in the dining hall.",
+    "before_false_positive": "Local workers arrange vegetables, rice, and fruit before the doors open."
+  }
+}

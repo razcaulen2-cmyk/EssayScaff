@@ -1,0 +1,22 @@
+{
+  "browser_status": "PASS",
+  "protected_data_unchanged": true,
+  "protected_files_sha256": {
+    "instance\\essay_scaff_drafts.sqlite3": "d6ed740fb17ad30a2b1af7b5cbd71572617e2f465e32717489ad570159d83814",
+    "instance\\essay_scaff_drafts_pre_assignment_management.sqlite3": "452c8d651bc73bef2a1777d882054d5b1a5115eb30513232a4acab34a39f6b9f",
+    "instance\\essay_scaff_drafts_pre_phase6a.sqlite3": "aedaa6a0132fc5622d7063e04b0879c59fdf0d7fcfc78ee2ee8fdcf0064a12be",
+    "instance\\essay_scaff_drafts_pre_phase6b.sqlite3": "044eb7a741a81e36ce796609667b578f4c4a348043d31415177863242a0b26a5",
+    "instance\\essay_scaff_drafts_pre_phase6b1.sqlite3": "4c065f976a492060120c7c8dccb35f43bdbdc333a1a76c31c08d16b68c8dce64",
+    "instance\\essay_scaff_drafts_pre_phase6c.sqlite3": "114f0b9f8ada789ffda025c6ee0a1b550c77382fad675eb21df672ed5f5d5324",
+    "experiments\\semantic_feasibility\\ai_diagnostic_annotations.json": "153cc7422fb1ad113123f17eafcdfd232cdf9ae320051466f2ef24f5d3a70aa1",
+    "experiments\\semantic_feasibility\\diagnostic_analysis.json": "0aad0872b6fedd2466eb355ecb04684f9bc5776e24461ca662a99f5e0aaa22d5",
+    "experiments\\semantic_feasibility\\diagnostic_focus_terms.json": "78518c5ea8a4b32a3a330d3c609c6c1172e9799be787ac75eaf8a3a921a7514e",
+    "experiments\\semantic_feasibility\\encoder_results.json": "13492c4d9a3f612c0b84395bfb99c7abc443090fd4c72c3f75a50caf3db29349",
+    "experiments\\semantic_feasibility\\samples.json": "1bf00e86f9a23dd7f67f8df85a6b4d964ab3be65bf30d05e7ac836cb25678937"
+  },
+  "isolated_persistence_counts": {
+    "writing_sessions": 0,
+    "writing_revisions": 0,
+    "submissions": 0
+  }
+}

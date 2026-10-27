@@ -1,0 +1,736 @@
+{
+  "version": 6,
+  "availability": "AVAILABLE",
+  "authorship": "Prepared EssayScaff instructional content for review; no student-specific replacement writing is generated.",
+  "presentation": "Explanation-only guidance: What I noticed, Look at your writing, Why it matters, and How to improve (with its revision check). Up to three independently supported review focuses; no quizzes or mandatory lesson steps.",
+  "dimension_scope": "Ideas, Organization, Sentence Fluency, Word Choice, and Conventions are writing-trait review-focus labels modeled on the 6+1 Trait Writing Model. They name instructional focuses, not validated NLP assessments, scores, or grades.",
+  "educational_basis": [
+    "Education Northwest, 6+1 Trait Writing Model: Ideas, Organization, Voice, Word Choice, Sentence Fluency, Conventions (plus Presentation) as instructional focus labels.",
+    "Wood, Bruner, and Ross (1976): scaffolding as support for a learner's task.",
+    "Shute (2008): explanatory, actionable formative feedback.",
+    "van de Pol, Volman, and Beishuizen (2010): contingent support and eventual learner independence; this module does not implement automatic fading.",
+    "McNamara and colleagues (2013): related NLP-supported writing-tutoring research, not validation of these local rules or lessons."
+  ],
+  "lessons": [
+    {
+      "lesson_id": "HELP-INTRO-TOPIC-CONNECTION",
+      "feedback_purpose": "WORDING_REVIEW_TASK",
+      "title": "Reviewing a sentence's topic connection",
+      "inline_guidance": {
+        "goal": "Help readers follow your topic and the main point you want to explain.",
+        "question": "Check how this sentence connects to the sentences beside it.",
+        "explanation": "Different wording can still express a connected idea; missing word matches are only a reason to review.",
+        "next_step": "Read these sentences together and explain their connection in your own words if needed.",
+        "limitation": "Word comparisons cannot prove that a sentence is off topic."
+      },
+      "tutor": {
+        "noticed": "This sentence may not clearly connect to your topic.",
+        "why": "Each sentence should help explain your main idea.",
+        "task": "Read this sentence together with the others. Does it help explain your point about the assignment topic? If the connection is hard to see, explain it in your own words or leave this idea for another piece of writing.",
+        "limitation": "The checks found no wording link here, but different words can express connected ideas. Ask your teacher if you are unsure.",
+        "evidence_fallback": "No sentence could be verified for marking. Read your sentences together and check how each helps explain your point."
+      },
+      "limitation": "This is a local wording-gap review, not a judgment of relevance, logic, or grammatical correctness."
+    },
+    {
+      "lesson_id": "HELP-INTRO-TOPIC-INTRO",
+      "title": "Introducing one idea instead of listing words",
+      "inline_guidance": {
+        "goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "question": "Check whether this opening lists ideas instead of introducing one.",
+        "explanation": "A list of related words does not tell readers which idea you will explain.",
+        "next_step": "Choose one idea from the words you matched and write a sentence about it in your own words.",
+        "limitation": "A list-like sentence pattern is a recorded structure check, not a judgment of meaning."
+      },
+      "tutor": {
+        "noticed": "The checks recorded your matched assignment words as a short list of ideas and found no sentence connecting them into one thought yet.",
+        "why": "An introduction works when it tells readers which subject you will explain. Listing related words leaves readers waiting for the idea behind them.",
+        "task": "Choose one idea from your words and write one sentence about it in your own words. Then read your opening and check that it introduces that idea clearly.",
+        "limitation": "This is a recorded sentence-shape check. Planning notes and word lists can be useful while drafting; the checks do not judge meaning or writing quality.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Choose one idea from your words and write a sentence that introduces it."
+      },
+      "limitation": "The keyword-list finding uses sentence and grammar predictions. Notes and deliberate word lists may be useful while planning; the checks do not judge meaning or quality."
+    },
+    {
+      "lesson_id": "HELP-INTRO-COMPLETE-SENTENCE",
+      "feedback_purpose": "RECORDED_STRUCTURAL_CONCERN",
+      "title": "Completing a sentence that starts a thought",
+      "inline_guidance": {
+        "goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "question": "Check whether this sentence needs a complete main statement.",
+        "explanation": "A sentence part that starts a thought needs the main part of the sentence to finish it.",
+        "next_step": "Read the words after the starting word and finish the thought in your own words.",
+        "limitation": "A sentence-pattern check can flag a complete sentence by mistake; check the sentence yourself.",
+        "marker_question": "The words after '{marker}' may leave the thought unfinished."
+      },
+      "tutor": {
+        "noticed": "The sentence containing '{marker}' was flagged as possibly unfinished. Check whether that sentence part connects to a main statement.",
+        "why": "The starting word connects two parts of the sentence. Your reader expects a main statement that completes the thought.",
+        "marker_notes": {
+          "although": "'Although' introduces a contrasting idea. Your reader expects another statement explaining what happens despite that idea.",
+          "because": "'Because' introduces a reason. Your reader expects a main statement that gives the result or claim.",
+          "as": "'As' can introduce a reason or a time. Your reader expects a main statement that completes the thought.",
+          "before": "'Before' links a time clause to an action. Your reader expects a main statement for that action.",
+          "if": "'If' introduces a condition. Your reader expects a main statement giving the result of that condition.",
+          "once": "'Once' introduces a condition or a time. Your reader expects a main statement that completes the thought.",
+          "since": "'Since' can introduce a reason or a time. Your reader expects a main statement that completes the thought.",
+          "though": "'Though' introduces a contrasting idea. Your reader expects another statement explaining what happens despite that idea.",
+          "unless": "'Unless' introduces an exception or a condition. Your reader expects a main statement that completes the thought.",
+          "until": "'Until' links a time limit to an action. Your reader expects a main statement for that action.",
+          "when": "'When' introduces a time clause. Your reader expects a main statement describing what happens then.",
+          "whereas": "'Whereas' introduces a contrast. Your reader expects another statement that completes the comparison.",
+          "while": "'While' can introduce a time or a contrast. Your reader expects a main statement that completes the thought."
+        },
+        "task": "Ask yourself: {clause}, what do I want my reader to understand? Finish the thought in your own words, then read the whole sentence to check it is complete.",
+        "task_fallback": "Connect this sentence part to a main statement in your own words, then read the whole sentence to check it is complete.",
+        "limitation": "This is a possible sentence-structure concern based on grammar predictions, not a guaranteed judgment.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Find the sentence that starts a thought and complete it."
+      },
+      "limitation": "The rule uses a parser-based sentence-pattern check. It can flag a complete sentence by mistake; it cannot judge meaning or correctness."
+    },
+    {
+      "lesson_id": "HELP-INTRO-NAME-TOPIC",
+      "title": "Naming the assignment's specific subject",
+      "inline_guidance": {
+        "goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "question": "Check whether your opening names the assignment's specific subject.",
+        "explanation": "Broad words alone do not tell readers which specific subject you are writing about.",
+        "next_step": "Compare your opening with the assignment and name its specific subject where needed.",
+        "limitation": "Word matching compares wording only; different words may still express the same idea."
+      },
+      "tutor": {
+        "noticed": "The checks recorded broad words as the assignment matches so far, and no specific subject word yet.",
+        "why": "Broad words such as 'student' or 'use' could fit many assignments. Naming a specific subject helps readers see which topic you are addressing.",
+        "task": "Compare your opening with the assignment. Name the specific subject it asks about in your own words, then check that your opening tells readers what your essay is about.",
+        "limitation": "These checks compare wording. Reworded or differently spelled subject names can be missed.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Compare your opening with the assignment and name its specific subject."
+      },
+      "limitation": "This check compares wording against the assignment focus list. It cannot judge meaning, and reworded subjects can be missed."
+    },
+    {
+      "lesson_id": "HELP-TOPIC-MATCH",
+      "title": "Matching your writing to the assignment topic",
+      "inline_guidance": {
+        "goal": "Keep your writing close to the topic your assignment asks about.",
+        "question": "Check whether this section addresses the assignment topic.",
+        "explanation": "Assignment words help readers see which topic you are addressing; you still choose your own wording.",
+        "next_step": "Compare this section with the assignment; adjust your wording where a reader would need it.",
+        "limitation": "Word matching cannot judge meaning; reworded ideas can be missed."
+      },
+      "tutor": {
+        "noticed": "No assignment words were found in this section. Different wording may still express a relevant idea.",
+        "why": "Assignment wording helps readers recognize the subject you are addressing. Missing word matches are a reason to compare your writing with the assignment, not proof that your ideas are off topic.",
+        "task": "Read the assignment question and this section. Check that your writing addresses that question; add or adjust a word in your own words if a reader would need it. You do not need to insert every assignment word literally.",
+        "limitation": "This is a whole-section wording check. Different words may express the same idea.",
+        "evidence_fallback": "Your section has no specific passage to mark for a missed wording match. Compare this section with the assignment question as a whole."
+      },
+      "limitation": "This check compares wording against the assignment focus list. Reworded ideas can be missed; it cannot judge meaning."
+    },
+    {
+      "lesson_id": "HELP-INTRO-MAIN-POINT",
+      "title": "Making your main point easy to find",
+      "inline_guidance": {
+        "goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "question": "Check whether a reader can find your main point.",
+        "explanation": "Your main point tells readers what you believe about the topic.",
+        "next_step": "Reread your opening and clarify your answer to the assignment in your own words if needed.",
+        "limitation": "Sentence patterns do not prove a clear or valid point."
+      },
+      "tutor": {
+        "noticed": "The checks have limited main-statement evidence for your opening. A sentence can express your point without matching this pattern.",
+        "why": "Introducing the topic tells readers what you are discussing. Your main point gives your answer to the assignment question and gives the rest of the essay direction.",
+        "task": "Compare your opening with the assignment question. Decide whether it only names the situation or also states your answer. Clarify your point in your own words if a reader would need it, and check that a new reader can find it easily.",
+        "limitation": "A sentence pattern cannot prove that a main point is clear, true, or a good answer to the assignment.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Read the opening and check where a reader would find your main point."
+      },
+      "limitation": "EssayScaff checks sentence patterns and word overlap. It cannot decide whether your point is clear, true, or a good answer to the question."
+    },
+    {
+      "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+      "title": "Reviewing a recorded explanation part",
+      "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+      "inline_guidance": {
+        "goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "question": "Read your main statement with the part that may explain it.",
+        "explanation": "The checks recorded a sentence pattern, not whether the explanation makes sense or supports your point.",
+        "next_step": "Keep the explanation if it says what you intend; add a detail only if readers need one.",
+        "limitation": "Different words can express a connected idea; missing word matches do not prove a problem."
+      },
+      "tutor": {
+        "noticed": "Your sentence has a possible main statement and a 'because' part to review.",
+        "working": "The checks recorded a main-statement pattern and an explanation part.",
+        "why": "An explanation helps readers understand the point you want to make.",
+        "task": "Read the explanation with your main statement. Keep it if it says what you intend, or add a detail a reader would need.",
+        "limitation": "The mark shows sentence evidence, not an error. Word matches cannot tell whether the explanation is true or supports your point.",
+        "evidence_fallback": "No explanation span could be verified for marking. Read your main statement with the part you intend as an explanation."
+      },
+      "limitation": "A because subtree is structural evidence only. Missing assignment words do not prove irrelevance, and present words do not prove logical support."
+    },
+    {
+      "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+      "title": "Reviewing the details already in your opening",
+      "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+      "inline_guidance": {
+        "goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "question": "Choose one detail already in your opening to review.",
+        "explanation": "More sentence parts give you ideas to review, but their structure does not prove they support your point.",
+        "next_step": "Keep the detail if it helps readers follow your point, or add information if needed.",
+        "limitation": "You do not need to use 'because' or any fixed starting word."
+      },
+      "tutor": {
+        "noticed": "The checks recorded a possible main statement and additional sentence parts.",
+        "working": "More than one subject-and-verb pattern was recorded in your opening.",
+        "why": "Readers can follow your point when they can see how your details connect to it.",
+        "task": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it.",
+        "limitation": "You do not need to use 'because'. The mark shows recorded sentence evidence, not an error or proof that the ideas work together.",
+        "evidence_fallback": "No additional sentence span could be verified for marking. Choose one detail in your opening and read it with your main statement."
+      },
+      "limitation": "Additional sentence patterns are not proof of explanation quality or logical support; no conjunction is required."
+    },
+    {
+      "lesson_id": "HELP-INTRO-DEVELOP-POINT",
+      "title": "Developing a possible main point",
+      "feedback_purpose": "DEVELOPMENT_TASK",
+      "inline_guidance": {
+        "goal": "Introduce the topic, then help readers understand the point you plan to explain.",
+        "question": "Decide whether a reader needs more information about your point.",
+        "explanation": "The checks recorded a possible main statement, but may miss other ways of explaining an idea.",
+        "next_step": "Choose a reason, example, or explanation to add in your own words if needed.",
+        "limitation": "A sentence pattern does not prove the point is clear or correct."
+      },
+      "tutor": {
+        "noticed": "The checks recorded a possible main-point sentence, with no additional sentence parts under this check.",
+        "working": "A subject-and-verb pattern was recorded as a possible main statement.",
+        "why": "A reason, example, or explanation can help readers understand your point.",
+        "task": "Choose a reason, example, or explanation a reader would need. Add it in your own words if needed; no fixed starting word is required.",
+        "limitation": "This check can miss other kinds of development. The mark identifies your recorded statement, not an error or a judgment of its quality.",
+        "evidence_fallback": "No main-statement span could be verified for marking. Read your opening and decide where a reader might need more information."
+      },
+      "limitation": "A possible main-statement pattern and a limited development count do not establish meaning, clarity, completeness, or writing quality."
+    },
+    {
+      "lesson_id": "HELP-BODY-PARAGRAPH-SHAPE",
+      "feedback_purpose": "STRUCTURAL_REVIEW_TASK",
+      "title": "Organizing a paragraph around one idea",
+      "inline_guidance": {
+        "goal": "Focus each Body paragraph on one idea and develop it with details readers can follow.",
+        "question": "Check whether this paragraph lists ideas instead of explaining one.",
+        "explanation": "A paragraph works on one idea at a time; a list of words does not tell readers which idea you are developing.",
+        "next_step": "Choose one idea from this paragraph and explain it in a sentence of your own.",
+        "limitation": "A list-like sentence pattern is a recorded structure check, not a judgment of meaning."
+      },
+      "tutor": {
+        "noticed": "Paragraph {paragraph} was recorded as a list-like structure, with no supported connecting statement.",
+        "why": "A paragraph develops one idea at a time. Listing related words leaves readers waiting for the idea you will explain.",
+        "task": "Choose one idea from the highlighted paragraph and write a sentence about it in your own words. Then read the paragraph and check that it focuses on that idea.",
+        "task_fallback": "Choose one idea from a paragraph and write a sentence about it in your own words. Then read the paragraph and check that it focuses on that idea.",
+        "limitation": "This is a recorded sentence-shape check; planning notes can be useful while drafting. It does not judge meaning.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Choose one idea in the paragraph and explain it in a sentence."
+      },
+      "limitation": "The keyword-list finding uses sentence and grammar predictions; it does not classify meaning or generate replacement writing."
+    },
+    {
+      "lesson_id": "HELP-BODY-PARAGRAPH-LINK",
+      "feedback_purpose": "WORDING_REVIEW_TASK",
+      "title": "Helping readers follow your paragraphs",
+      "inline_guidance": {
+        "goal": "Focus each Body paragraph on one idea and show how the paragraphs connect.",
+        "question": "Check whether two neighboring paragraphs show how their ideas connect.",
+        "explanation": "Paragraphs connect when the second follows logically from the first; shared words and linking phrases are one way to show the connection.",
+        "next_step": "Read the paragraphs together and explain their relationship in your own words if needed.",
+        "limitation": "Shared words do not prove a logical connection; different words may connect."
+      },
+      "tutor": {
+        "noticed": "The wording check found no shared content words or listed linking phrase between Paragraphs {paragraph_pair}. Different wording can still express a connection.",
+        "why": "Readers need to know why the next paragraph follows the previous one. Word matches and linking phrases are one way the checks look for that connection.",
+        "task": "Read the neighboring paragraphs together. Explain their connection in your own words only if a reader would need it; no particular linking word is required.",
+        "limitation": "This is a wording-pattern check. Reworded or differently spelled connections can be missed.",
+        "evidence_fallback": "This wording comparison does not identify a precise error span, so nothing is marked. Read the neighboring paragraphs together; different wording may still express a connection."
+      },
+      "limitation": "Shared words and listed transitions are only wording signals. Their absence does not prove that paragraphs are disconnected, and their presence does not prove coherence."
+    },
+    {
+      "lesson_id": "HELP-BODY-DEVELOP-POINT",
+      "feedback_purpose": "DEVELOPMENT_TASK",
+      "title": "Developing a paragraph's idea with detail",
+      "inline_guidance": {
+        "goal": "Develop each Body paragraph's idea with detail readers need.",
+        "question": "Check whether a reader needs more explanation in this paragraph.",
+        "explanation": "Supporting details help readers understand an idea; adding sentences alone does not make support stronger.",
+        "next_step": "Choose one place to explain more clearly, using your own words.",
+        "limitation": "The checks cannot judge whether your details are useful or accurate."
+      },
+      "tutor": {
+        "noticed": "In Paragraph {paragraph}, the checks did not record another sentence part developing the possible statement. Other kinds of supporting ideas may still be present.",
+        "why": "Readers often need more explanation to understand the point of a Body paragraph.",
+        "task": "Think of an activity, example, or explanation that could help readers understand Paragraph {paragraph}. Write it in your own words if needed.",
+        "limitation": "These checks count sentence parts. They cannot judge whether a detail is useful, accurate, or convincing.",
+        "evidence_fallback": "No paragraph could be verified in your current text, so nothing is marked. Choose one place in the paragraph to explain more."
+      },
+      "limitation": "This feedback uses a count of qualifying sentence-part patterns. It can miss other forms of development and cannot judge whether a detail is accurate or convincing."
+    },
+    {
+      "lesson_id": "HELP-BODY-SENTENCE-BEGINNINGS",
+      "feedback_purpose": "WORDING_REVIEW_TASK",
+      "title": "Varying how your sentences begin",
+      "inline_guidance": {
+        "goal": "Help each sentence in a paragraph read clearly and smoothly.",
+        "question": "Check whether more than one sentence starts with the same words.",
+        "explanation": "Repeating an opening can sound awkward; variety can help readers follow each sentence.",
+        "next_step": "Choose one sentence and try a different opening in your own words if the repetition feels awkward.",
+        "limitation": "Repeated openings can also create rhythm; only you can decide whether the repetition works."
+      },
+      "tutor": {
+        "noticed": "More than one sentence in Paragraph {paragraph} begins with '{opening}'. Repetition can be intentional.",
+        "why": "Starting several sentences with the same words can sound repetitive. Variety in sentence beginnings can help your reader follow each sentence.",
+        "task": "Read the paragraph aloud. If one repeated opening sounds awkward, rewrite that sentence's beginning in your own words, then check that the paragraph still reads smoothly.",
+        "limitation": "This is a wording-pattern check. Repeated openings can also create rhythm; the checks cannot judge whether the repetition works.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Read the paragraph aloud and check the sentence beginnings."
+      },
+      "limitation": "This check finds repeated surface wording only. It cannot judge meaning, style quality, or whether the repetition is intentional and effective."
+    },
+    {
+      "lesson_id": "HELP-CONCLUSION-LIST-ENDING",
+      "title": "Gathering listed words into one ending",
+      "inline_guidance": {
+        "goal": "Return to your main idea and leave readers with one clear ending thought.",
+        "question": "Check whether this ending lists words instead of making one closing point.",
+        "explanation": "A list of words does not tell readers what you want them to take away.",
+        "next_step": "Choose your main closing idea and write a closing sentence about it in your own words.",
+        "limitation": "A list-like sentence pattern is a recorded structure check, not a judgment of meaning."
+      },
+      "tutor": {
+        "noticed": "The Conclusion reads as a list of words, and no recorded sentence gathers them into one ending.",
+        "why": "An ending works when it leaves readers with one clear point. Listing words keeps readers waiting for that point.",
+        "task": "Choose your main closing idea and write one closing sentence about it in your own words. Then read your ending and check that it tells readers what to take away.",
+        "limitation": "This is a recorded sentence-shape check. The checks do not judge meaning or quality.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Choose one closing idea and write a sentence about it."
+      },
+      "limitation": "This prepared lesson interprets a recorded keyword-list check; it does not classify meaning or generate replacement writing."
+    },
+    {
+      "lesson_id": "HELP-CONCLUSION-EXPLAIN-NEW-WORDS",
+      "title": "Explaining idea words that appear first in the ending",
+      "inline_guidance": {
+        "goal": "Return to your main idea and leave readers with one clear ending thought.",
+        "question": "Check whether earlier sections introduce these idea words.",
+        "explanation": "New idea words in the Conclusion may need an earlier explanation so readers can follow them.",
+        "next_step": "Add an explanation before the Conclusion if readers need one.",
+        "limitation": "The comparison can miss reworded ideas; only you can decide what readers need."
+      },
+      "tutor": {
+        "noticed": "Some idea words in your Conclusion do not appear in the earlier sections you supplied. Reworded ideas can be missed by the comparison.",
+        "why": "Readers follow a Conclusion better when its idea words have been explained earlier. New wording may simply be a different phrasing of an earlier idea.",
+        "task": "Decide whether readers need those ideas explained earlier. If so, add or expand an explanation in your own words, then check that the Conclusion now connects to what came before.",
+        "limitation": "The word comparison uses recorded forms of words; missed reworded ideas are possible.",
+        "evidence_fallback": "Your Conclusion has no specific passage to mark for a wording comparison. Decide whether earlier sections need to explain these ideas."
+      },
+      "limitation": "The word comparison compares recorded word forms only. Reworded ideas can be missed, and EssayScaff cannot judge whether the idea is well prepared."
+    },
+    {
+      "lesson_id": "HELP-CONCLUSION-BRING-TOGETHER",
+      "title": "Bringing earlier ideas together",
+      "inline_guidance": {
+        "goal": "Return to your main idea and leave readers with one clear ending thought.",
+        "question": "Check whether your ending brings earlier ideas together.",
+        "explanation": "Combining ideas from more than one earlier section can remind readers what your essay added up to.",
+        "next_step": "Read the Conclusion with the earlier sections and check the connection you want.",
+        "limitation": "Word comparisons cannot prove that ideas work together."
+      },
+      "tutor": {
+        "noticed": "One sentence combines words from more than one earlier section. The comparison does not prove the sentence brings the ideas together.",
+        "why": "An ending works when readers see what your points add up to. Combining ideas from earlier sections is one way to show that.",
+        "task": "Read the highlighted sentence with the earlier sections. Check that it connects those ideas as you intend, and adjust the wording in your own words if the connection is unclear.",
+        "task_fallback": "Read the ending with the earlier sections. Check that it connects those ideas as you intend, and adjust the wording in your own words if the connection is unclear.",
+        "limitation": "This check compares wording between sections. It cannot judge whether the combined meaning works.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Read the ending with the earlier sections and check the connection."
+      },
+      "limitation": "A recorded wording comparison does not prove successful synthesis or an effective ending. EssayScaff cannot judge that quality for you."
+    },
+    {
+      "lesson_id": "HELP-CONCLUSION-CLEAR-ENDING",
+      "title": "Choosing what your conclusion should do",
+      "inline_guidance": {
+        "goal": "Return to your main idea and leave readers with one clear ending thought.",
+        "question": "Check whether your ending leaves readers with the point you want.",
+        "explanation": "A final sentence or closing phrase is one signal of an ending; the ending works when it leaves readers with your point.",
+        "next_step": "Compare your ending with the earlier sections and decide what final thought fits.",
+        "limitation": "A closing phrase does not prove an effective ending."
+      },
+      "tutor": {
+        "noticed": "Your ending has a recorded final sentence or closing phrase. That is an ending signal, not proof that the ending works well.",
+        "why": "Your ending gives readers a final view of the essay. No fixed closing phrase is required.",
+        "task": "Read your ending with the whole essay. Decide what final thought you want readers to leave with, write or adjust it in your own words, then check that it returns to your main idea.",
+        "limitation": "A final sentence pattern or closing phrase does not prove that an ending works well.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Decide what final thought you want readers to leave with."
+      },
+      "limitation": "A final sentence pattern, closing phrase, or shared wording does not prove successful synthesis or an effective ending. EssayScaff cannot judge that quality for you."
+    },
+    {
+      "lesson_id": "HELP-CONCLUSION-RETURN-POINT",
+      "title": "Returning your ending to your main point",
+      "inline_guidance": {
+        "goal": "Return to your main idea and leave readers with one clear ending thought.",
+        "question": "Check whether your ending returns to your main point.",
+        "explanation": "Assignment words can point back to your main idea; an ending also needs a readable closing thought.",
+        "next_step": "Reread the Conclusion and decide the closing thought readers should leave with.",
+        "limitation": "Word matches do not prove the ending returns to your point."
+      },
+      "tutor": {
+        "noticed": "Assignment words appear in your Conclusion without a recorded closing sentence pattern.",
+        "why": "Your ending gives readers a final view of the ideas you chose to explain. Assignment words help, but the ending also needs a clear point.",
+        "task": "Read your ending and decide what final thought you want readers to take away. Write or adjust it in your own words, then check that it returns to your main idea.",
+        "limitation": "This check compares wording only. It cannot judge whether your ending returns to the point.",
+        "evidence_fallback": "No passage could be verified in your current text, so nothing is marked. Decide the closing thought readers should leave with."
+      },
+      "limitation": "This check compares wording against the assignment focus list. It cannot judge whether the ending returns to your point or works well."
+    },
+    {
+      "lesson_id": "HELP-INTRO-STATE-POSITION",
+      "title": "Stating your position on the question",
+      "feedback_purpose": "DEVELOPMENT_TASK",
+      "inline_guidance": {
+        "goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+        "question": "Does your opening say where you stand on the assignment question?",
+        "explanation": "The checks recorded your assignment words, but no modal cue such as 'should' and no first-person stance cue such as 'I support' appeared with them in a sentence.",
+        "next_step": "Consider stating whether you support or oppose the proposal, using your own words.",
+        "limitation": "The checks match fixed wording cues, so a position written in other words may already be in your opening."
+      },
+      "tutor": {
+        "noticed": "Your introduction discusses the topic, but I could not identify a clear position on the question.",
+        "working": "Your assignment words were recorded in your opening.",
+        "why": "When an assignment asks for your opinion, readers look for where you stand early in the introduction.",
+        "task": "Consider stating whether you support or oppose the proposal, using your own words.",
+        "limitation": "These checks match fixed cues such as 'should' or 'I support'. A position expressed in different words is not detected, and the checks cannot judge how clearly or well the position is argued.",
+        "evidence_fallback": "No sentence span could be verified for marking. Read your opening and decide whether it tells readers where you stand on the question."
+      },
+      "limitation": "Absence of a fixed position cue is not proof that no position is stated; paraphrased positions are not detected."
+    }
+  ],
+  "bindings": [
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_ideas_review_topic_connection",
+      "lesson_id": "HELP-INTRO-TOPIC-CONNECTION",
+      "dimension": "Ideas",
+      "skill": "Review Topic Connection",
+      "required_rule_ids": [
+        "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW"
+      ],
+      "noticed": "This sentence may not clearly connect to your topic.",
+      "mapping_basis": "A recorded verified sentence has no focus match or neighboring content-word link and no reference cue beside a focus-matched sentence. This supports cautious review, not an off-topic verdict."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_organization_topic_intro",
+      "lesson_id": "HELP-INTRO-TOPIC-INTRO",
+      "dimension": "Organization",
+      "skill": "Introduce Your Topic",
+      "required_rule_ids": [
+        "INTRO.TEXT.KEYWORD_LIST_CANDIDATE"
+      ],
+      "mapping_basis": "The selected backend branch asks the writer to introduce one idea when matched assignment words appear as a list with no connecting sentence. Organization · Introduce Your Topic names that instructional focus; the structure check does not judge meaning.",
+      "noticed": "The checks recorded your matched assignment words as a list of ideas with no connecting sentence."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_sentence_fluency_complete_sentence",
+      "lesson_id": "HELP-INTRO-COMPLETE-SENTENCE",
+      "dimension": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "mapping_basis": "The selected backend branch reviews an unfinished-sentence finding when a flagged starting sentence part is recorded and no main statement completes it. Sentence Fluency · Complete Your Sentence is the teaching focus; the pattern check can flag complete sentences.",
+      "noticed": "The checks recorded a sentence part that may leave the thought unfinished. Review whether it connects to a complete main statement; the pattern check can be wrong."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_word_choice_specific_subject",
+      "lesson_id": "HELP-INTRO-NAME-TOPIC",
+      "dimension": "Word Choice",
+      "skill": "Name Your Topic",
+      "required_rule_ids": [
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+      ],
+      "mapping_basis": "The selected backend branch requests naming the specific subject when only broad words matched the assignment. Word Choice · Name Your Topic names that instructional focus; wording matching is not a semantic relevance check.",
+      "noticed": "Only broad words matched the assignment so far. Name the assignment's specific subject in your opening."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_ideas_topic_match",
+      "lesson_id": "HELP-TOPIC-MATCH",
+      "dimension": "Ideas",
+      "skill": "Match Your Topic",
+      "required_rule_ids": [
+        "INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED"
+      ],
+      "mapping_basis": "The selected no-match branch and its emitted absence event support whole-Introduction topic review using existing recorded counts. Ideas · Match Your Topic names the instructional focus; no semantic irrelevance is inferred.",
+      "noticed": "No assignment words were found in the Introduction. Different wording may still express a relevant idea."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_ideas_main_point",
+      "lesson_id": "HELP-INTRO-MAIN-POINT",
+      "dimension": "Ideas",
+      "skill": "State Your Main Point",
+      "mapping_basis": "The selected backend fallback has limited subject-linked root-pattern evidence. State Your Main Point is an instructional task, not proof that the student expressed no meaningful point.",
+      "noticed": "The checks have limited main-statement evidence. Read your opening and decide whether it says what you want to explain."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_ideas_point_and_reason",
+      "lesson_id": "HELP-INTRO-EXPLAIN-POINT",
+      "dimension": "Ideas",
+      "skill": "Review Your Explanation",
+      "required_rule_ids": [
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+      ],
+      "required_any_rule_ids": [
+        "INTRO.REASON.CLAUSE_TOPIC_OVERLAP",
+        "INTRO.REASON.NO_CLAUSE_TOPIC_OVERLAP"
+      ],
+      "mapping_basis": "A main-statement pattern and a recorded because subtree support neutral explanation review. Word overlap or its absence does not determine validity or change the lesson.",
+      "noticed": "A possible main statement and an explanation part were recorded."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_ideas_review_details",
+      "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+      "dimension": "Ideas",
+      "skill": "Review Your Details",
+      "required_rule_ids": [
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+      ],
+      "mapping_basis": "Recorded main-statement and additional-clause patterns support reviewing details already present without requiring because or inferring logical support.",
+      "noticed": "A possible main statement and additional sentence parts were recorded."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_ideas_develop_main_point",
+      "lesson_id": "HELP-INTRO-DEVELOP-POINT",
+      "dimension": "Ideas",
+      "skill": "Develop Your Main Point",
+      "required_rule_ids": [
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE"
+      ],
+      "mapping_basis": "A recorded possible main statement with no additional qualifying clause pattern supports a next development task, not a claim that no point or explanation exists.",
+      "noticed": "A possible main-statement pattern was recorded for development review."
+    },
+    {
+      "stage_id": "BODY",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "body_organization_paragraph_shape",
+      "lesson_id": "HELP-BODY-PARAGRAPH-SHAPE",
+      "dimension": "Organization",
+      "skill": "Build Your Paragraph",
+      "mapping_basis": "The selected backend branch and fired paragraph-specific list event support Organization · Build Your Paragraph. The syntactic candidate is not semantic understanding or a reward for keyword matches.",
+      "noticed": "One Body paragraph reads as a list of ideas, and no recorded sentence connects them yet."
+    },
+    {
+      "stage_id": "BODY",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "body_organization_paragraph_link",
+      "lesson_id": "HELP-BODY-PARAGRAPH-LINK",
+      "dimension": "Organization",
+      "skill": "Review Paragraph Connections",
+      "required_rule_ids": [
+        "BODY.CONTINUITY.ADJACENT_PARAGRAPH_COMPARISON"
+      ],
+      "mapping_basis": "A returned adjacent-paragraph comparison lacks a shared content word and a listed transition phrase. The branch requests connection review; wording absence does not establish missing logical coherence.",
+      "noticed": "For one neighboring paragraph pair, the checks did not record shared key words or a listed transition expression. You may still have connected the ideas using different wording."
+    },
+    {
+      "stage_id": "BODY",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "body_ideas_develop_point",
+      "lesson_id": "HELP-BODY-DEVELOP-POINT",
+      "dimension": "Ideas",
+      "skill": "Develop Your Supporting Details",
+      "mapping_basis": "The selected paragraph has a recorded subject-linked statement, no additional qualifying development pattern, and its own fired absence event. Ideas · Develop Your Supporting Details is a structural review task, not a finding that no meaningful support exists.",
+      "noticed": "In one Body paragraph, the checks did not find the extra sentence-part patterns they use as possible development signals. This is not a finding that your paragraph has no useful detail."
+    },
+    {
+      "stage_id": "BODY",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "body_sentence_fluency_sentence_beginnings",
+      "lesson_id": "HELP-BODY-SENTENCE-BEGINNINGS",
+      "dimension": "Sentence Fluency",
+      "skill": "Review Repeated Sentence Openings",
+      "mapping_basis": "The selected backend branch and fired repeated-opening event support Sentence Fluency · Review Repeated Sentence Openings using exact direct spans. Repetition can be intentional, not an automatic error.",
+      "noticed": "The checks recorded more than one sentence in a paragraph starting with the same words. Review whether the repetition sounds awkward in your own reading."
+    },
+    {
+      "stage_id": "CONCLUSION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "conclusion_organization_bring_together",
+      "lesson_id": "HELP-CONCLUSION-LIST-ENDING",
+      "dimension": "Organization",
+      "skill": "Bring Ideas Together",
+      "required_rule_ids": [
+        "CONCLUSION.TEXT.KEYWORD_LIST_CANDIDATE"
+      ],
+      "mapping_basis": "The Conclusion reads as a list of words with no connecting sentence, so the backend requests gathering one main closing idea. Organization · Bring Ideas Together names the teaching focus; the structure check does not judge meaning.",
+      "noticed": "The Conclusion reads as a list of words, and no recorded sentence gathers them into one ending."
+    },
+    {
+      "stage_id": "CONCLUSION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "conclusion_ideas_new_words",
+      "lesson_id": "HELP-CONCLUSION-EXPLAIN-NEW-WORDS",
+      "dimension": "Ideas",
+      "skill": "Explain New Words",
+      "required_rule_ids": [
+        "CONCLUSION.NEW_MATERIAL.UNOBSERVED_CONCEPTS"
+      ],
+      "mapping_basis": "Recorded Conclusion idea words were not found in supplied earlier sections. Ideas · Explain New Words reviews whether readers need an earlier explanation; the word comparison can miss reworded ideas and judges no quality.",
+      "noticed": "Some idea words in the Conclusion were not found in the earlier sections; the comparison can miss reworded ideas."
+    },
+    {
+      "stage_id": "CONCLUSION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "conclusion_ideas_bring_together",
+      "lesson_id": "HELP-CONCLUSION-BRING-TOGETHER",
+      "dimension": "Ideas",
+      "skill": "Bring Ideas Together",
+      "required_rule_ids": [
+        "CONCLUSION.SYNTHESIS.STRUCTURE_CANDIDATE"
+      ],
+      "mapping_basis": "One Conclusion sentence contains words from at least two supplied earlier sections. Ideas · Bring Ideas Together supports a prepared review of how an ending gathers earlier material, not a claim of meaning or synthesis quality.",
+      "noticed": "One sentence combines words from more than one earlier section. This comparison does not prove that the sentence brings the ideas together."
+    },
+    {
+      "stage_id": "CONCLUSION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "conclusion_organization_clear_ending",
+      "lesson_id": "HELP-CONCLUSION-CLEAR-ENDING",
+      "dimension": "Organization",
+      "skill": "Clear Ending",
+      "required_rule_ids": [
+        "CONCLUSION.CLOSURE.STRUCTURE_CANDIDATE"
+      ],
+      "mapping_basis": "A final sentence pattern or closing expression supplies an ending-position signal. The teaching focus is the purpose of an ending, not a validated conclusion-quality judgment.",
+      "noticed": "The checks recorded a final sentence pattern or a closing expression. That is a possible ending signal, not proof that the ending works well."
+    },
+    {
+      "stage_id": "CONCLUSION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "conclusion_ideas_return_to_point",
+      "lesson_id": "HELP-CONCLUSION-RETURN-POINT",
+      "dimension": "Ideas",
+      "skill": "Return to Your Point",
+      "required_rule_ids": [
+        "CONCLUSION.TOPIC.FOCUS_MATCHES"
+      ],
+      "mapping_basis": "Focus words matched the Conclusion while no higher-priority ending-signal branch applied. Ideas · Return to Your Point reviews whether the ending returns to the main point; word matches alone do not establish that.",
+      "noticed": "Assignment words appear in your Conclusion without a recorded closing sentence pattern."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "feedback_field": "Primary Feedback",
+      "selection_branch": "intro_ideas_state_position",
+      "lesson_id": "HELP-INTRO-STATE-POSITION",
+      "dimension": "Ideas",
+      "skill": "State Your Position",
+      "required_rule_ids": [
+        "INTRO.POSITION.NO_RELEVANT_POSITION_OBSERVED",
+        "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+      ],
+      "working_rule_ids": [
+        "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+      ],
+      "mapping_basis": "An argumentativeness cue in the assignment wording plus recorded topic discussion without any recorded position cue supports asking the student to state their position in their own words.",
+      "noticed": "The topic is discussed, but no explicit position cue was recorded."
+    }
+  ],
+  "secondary_bindings": [
+    {
+      "stage_id": "INTRODUCTION",
+      "rule_id_pattern": "^INTRO\\.TOPIC\\.SENTENCE_CONNECTION_REVIEW$",
+      "lesson_id": "HELP-INTRO-TOPIC-CONNECTION",
+      "dimension": "Ideas",
+      "skill": "Review Topic Connection",
+      "mapping_basis": "The independently emitted sentence-connection event is linked to Needs Attention while a higher-priority concern is primary. Only one additional Introduction focus is displayed."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "rule_id_pattern": "^INTRO\\.CLAUSE\\.POSSIBLE_INCOMPLETE_SUBORDINATOR$",
+      "lesson_id": "HELP-INTRO-COMPLETE-SENTENCE",
+      "dimension": "Sentence Fluency",
+      "skill": "Complete Your Sentence",
+      "mapping_basis": "When this fired event appears under Needs Attention while another branch is primary, the same prepared sentence-completion lesson and Sentence Fluency focus apply. Only recorded fired events with paired provenance can select it."
+    },
+    {
+      "stage_id": "INTRODUCTION",
+      "rule_id_pattern": "^INTRO\\.TOPIC\\.NO_FOCUS_MATCH_OBSERVED$",
+      "lesson_id": "HELP-TOPIC-MATCH",
+      "dimension": "Ideas",
+      "skill": "Match Your Topic",
+      "mapping_basis": "When the no-focus event appears under Needs Attention while another branch is primary, the prepared topic-match lesson reviews assignment wording only; it does not claim semantic irrelevance."
+    },
+    {
+      "stage_id": "BODY",
+      "rule_id_pattern": "^BODY\\.P\\d+\\.PARAGRAPH\\.KEYWORD_LIST_CANDIDATE$",
+      "lesson_id": "HELP-BODY-PARAGRAPH-SHAPE",
+      "dimension": "Organization",
+      "skill": "Build Your Paragraph",
+      "mapping_basis": "A separate paragraph-specific list event cited by Needs Attention supports reviewing that paragraph's recorded list-like structure. Keyword presence is not semantic approval."
+    },
+    {
+      "stage_id": "BODY",
+      "rule_id_pattern": "^BODY\\.P\\d+\\.SUPPORTING_DETAIL\\.NOT_OBSERVED$",
+      "lesson_id": "HELP-BODY-DEVELOP-POINT",
+      "dimension": "Ideas",
+      "skill": "Develop Your Supporting Details",
+      "mapping_basis": "When a supporting-detail absence event appears under Needs Attention, the prepared development lesson reviews paragraph development only; sentence-part counts cannot judge support quality."
+    },
+    {
+      "stage_id": "BODY",
+      "rule_id_pattern": "^BODY\\.CONTINUITY\\.ADJACENT_PARAGRAPH_COMPARISON$",
+      "lesson_id": "HELP-BODY-PARAGRAPH-LINK",
+      "dimension": "Organization",
+      "skill": "Review Paragraph Connections",
+      "mapping_basis": "When the adjacent-paragraph comparison appears under Needs Attention while another branch is primary, the prepared paragraph-connection lesson applies; wording absence does not prove disconnection."
+    },
+    {
+      "stage_id": "BODY",
+      "rule_id_pattern": "^BODY\\.P\\d+\\.REPETITION\\.REPEATED_SENTENCE_OPENINGS$",
+      "lesson_id": "HELP-BODY-SENTENCE-BEGINNINGS",
+      "dimension": "Sentence Fluency",
+      "skill": "Review Repeated Sentence Openings",
+      "mapping_basis": "A separately cited paragraph-specific repeated-opening event supports optional readability review. Repetition is not automatically an error."
+    },
+    {
+      "stage_id": "CONCLUSION",
+      "rule_id_pattern": "^CONCLUSION\\.CONTINUITY\\.INTRODUCTION_LEXICAL_COMPARISON$",
+      "lesson_id": "HELP-CONCLUSION-BRING-TOGETHER",
+      "dimension": "Ideas",
+      "skill": "Bring Ideas Together",
+      "mapping_basis": "When the Introduction-to-Conclusion comparison appears under Needs Attention, the prepared bring-together lesson reviews how the ending connects to earlier material using recorded comparison evidence only."
+    },
+    {
+      "stage_id": "CONCLUSION",
+      "rule_id_pattern": "^CONCLUSION\\.CONTINUITY\\.BODY_LEXICAL_COMPARISON$",
+      "lesson_id": "HELP-CONCLUSION-BRING-TOGETHER",
+      "dimension": "Ideas",
+      "skill": "Bring Ideas Together",
+      "mapping_basis": "When the Body-to-Conclusion comparison appears under Needs Attention, the prepared bring-together lesson reviews how the ending connects to earlier material using recorded comparison evidence only."
+    },
+    {
+      "stage_id": "CONCLUSION",
+      "rule_id_pattern": "^CONCLUSION\\.TOPIC\\.NO_FOCUS_MATCH$",
+      "lesson_id": "HELP-TOPIC-MATCH",
+      "dimension": "Ideas",
+      "skill": "Match Your Topic",
+      "mapping_basis": "When the Conclusion no-focus event appears under Needs Attention, the prepared topic-match lesson reviews assignment wording only; it does not claim semantic irrelevance."
+    }
+  ]
+}

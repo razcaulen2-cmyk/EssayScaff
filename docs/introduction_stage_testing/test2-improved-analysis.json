@@ -1,0 +1,4017 @@
+{
+  "analysis": {
+    "assignment_topic": "Should schools turn part of their playgrounds into vegetable gardens?",
+    "central_direction_candidate": {
+      "candidates": [
+        {
+          "complement_evidence": [
+            {
+              "dependency": "dobj",
+              "end": 32,
+              "start": 28,
+              "text": "part"
+            }
+          ],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 19,
+            "pos": "VERB",
+            "start": 15,
+            "tag": "VB",
+            "text": "turn"
+          },
+          "sentence_end": 77,
+          "sentence_index": 0,
+          "sentence_start": 0,
+          "sentence_text": "Schools should turn a small part of their playgrounds into vegetable gardens.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 7,
+              "start": 0,
+              "text": "Schools"
+            }
+          ]
+        },
+        {
+          "complement_evidence": [
+            {
+              "dependency": "ccomp",
+              "end": 115,
+              "start": 110,
+              "text": "learn"
+            }
+          ],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 100,
+            "pos": "VERB",
+            "start": 96,
+            "tag": "VB",
+            "text": "help"
+          },
+          "sentence_end": 138,
+          "sentence_index": 1,
+          "sentence_start": 78,
+          "sentence_text": "These gardens can help students learn outside the classroom.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 91,
+              "start": 84,
+              "text": "gardens"
+            }
+          ]
+        },
+        {
+          "complement_evidence": [
+            {
+              "dependency": "dobj",
+              "end": 196,
+              "start": 190,
+              "text": "skills"
+            }
+          ],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 173,
+            "pos": "VERB",
+            "start": 168,
+            "tag": "VB",
+            "text": "teach"
+          },
+          "sentence_end": 197,
+          "sentence_index": 2,
+          "sentence_start": 139,
+          "sentence_text": "Planting vegetables can also teach students useful skills.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 158,
+              "start": 148,
+              "text": "vegetables"
+            }
+          ]
+        }
+      ],
+      "limitation": "A parser-labeled clause is not a validated thesis, meaningful proposition, or readiness decision.",
+      "status": "CANDIDATE_FOUND"
+    },
+    "development_evidence": {
+      "evidence": [
+        {
+          "dependency": "ROOT",
+          "end": 19,
+          "pos": "VERB",
+          "start": 15,
+          "tag": "VB",
+          "text": "turn"
+        },
+        {
+          "dependency": "ROOT",
+          "end": 100,
+          "pos": "VERB",
+          "start": 96,
+          "tag": "VB",
+          "text": "help"
+        },
+        {
+          "dependency": "ccomp",
+          "end": 115,
+          "pos": "VERB",
+          "start": 110,
+          "tag": "VB",
+          "text": "learn"
+        },
+        {
+          "dependency": "ROOT",
+          "end": 173,
+          "pos": "VERB",
+          "start": 168,
+          "tag": "VB",
+          "text": "teach"
+        }
+      ],
+      "evidence_type": "multiple_parser_labeled_clause_predicates",
+      "limitation": "Multiple clauses or sentences do not prove that the ideas are connected logically or soundly.",
+      "predicate_count": 4,
+      "status": "STRUCTURAL_ELABORATION_CANDIDATE"
+    },
+    "lexical_topic_evidence": {
+      "focus_source": "teacher_provided",
+      "focus_terms": [
+        "schools",
+        "playgrounds",
+        "vegetable gardens",
+        "students",
+        "learning"
+      ],
+      "limitation": "Lexical overlap is not proof of topic understanding or meaningful explanation.",
+      "matches": [
+        {
+          "end": 7,
+          "evidence_source": "student_text_span",
+          "focus_term": "schools",
+          "match_method": "direct",
+          "normalized_form": "school",
+          "observed_text": "Schools",
+          "pos": [
+            "NOUN"
+          ],
+          "source_token_indices": [
+            0
+          ],
+          "start": 0
+        },
+        {
+          "end": 53,
+          "evidence_source": "student_text_span",
+          "focus_term": "playgrounds",
+          "match_method": "direct",
+          "normalized_form": "playground",
+          "observed_text": "playgrounds",
+          "pos": [
+            "NOUN"
+          ],
+          "source_token_indices": [
+            8
+          ],
+          "start": 42
+        },
+        {
+          "end": 76,
+          "evidence_source": "student_text_span",
+          "focus_term": "vegetable gardens",
+          "match_method": "direct",
+          "normalized_form": "vegetable garden",
+          "observed_text": "vegetable gardens",
+          "pos": [
+            "NOUN",
+            "NOUN"
+          ],
+          "source_token_indices": [
+            10,
+            11
+          ],
+          "start": 59
+        },
+        {
+          "end": 109,
+          "evidence_source": "student_text_span",
+          "focus_term": "students",
+          "match_method": "direct",
+          "normalized_form": "student",
+          "observed_text": "students",
+          "pos": [
+            "NOUN"
+          ],
+          "source_token_indices": [
+            17
+          ],
+          "start": 101
+        },
+        {
+          "end": 182,
+          "evidence_source": "student_text_span",
+          "focus_term": "students",
+          "match_method": "direct",
+          "normalized_form": "student",
+          "observed_text": "students",
+          "pos": [
+            "NOUN"
+          ],
+          "source_token_indices": [
+            28
+          ],
+          "start": 174
+        },
+        {
+          "end": 115,
+          "evidence_source": "student_text_span",
+          "focus_term": "learning",
+          "match_method": "normalized",
+          "normalized_form": "learn",
+          "observed_text": "learn",
+          "pos": [
+            "VERB"
+          ],
+          "source_token_indices": [
+            18
+          ],
+          "start": 110
+        }
+      ],
+      "observed_focus_terms": [
+        "schools",
+        "playgrounds",
+        "vegetable gardens",
+        "students",
+        "learning"
+      ],
+      "observed_unique_focus_terms": 5,
+      "total_unique_focus_terms": 5,
+      "unobserved_focus_terms": []
+    },
+    "linguistic_observations": {
+      "counts": {
+        "alphabetic_word_count": 29,
+        "sentence_count": 3,
+        "token_count": 32
+      },
+      "noun_phrases": [
+        {
+          "end": 7,
+          "start": 0,
+          "text": "Schools"
+        },
+        {
+          "end": 32,
+          "start": 20,
+          "text": "a small part"
+        },
+        {
+          "end": 53,
+          "start": 36,
+          "text": "their playgrounds"
+        },
+        {
+          "end": 76,
+          "start": 59,
+          "text": "vegetable gardens"
+        },
+        {
+          "end": 91,
+          "start": 78,
+          "text": "These gardens"
+        },
+        {
+          "end": 109,
+          "start": 101,
+          "text": "students"
+        },
+        {
+          "end": 137,
+          "start": 124,
+          "text": "the classroom"
+        },
+        {
+          "end": 158,
+          "start": 139,
+          "text": "Planting vegetables"
+        },
+        {
+          "end": 182,
+          "start": 174,
+          "text": "students"
+        },
+        {
+          "end": 196,
+          "start": 183,
+          "text": "useful skills"
+        }
+      ],
+      "sentences": [
+        {
+          "dependencies": [
+            {
+              "dependency": "nsubj",
+              "end": 7,
+              "head": "turn",
+              "head_start": 15,
+              "start": 0,
+              "text": "Schools"
+            },
+            {
+              "dependency": "aux",
+              "end": 14,
+              "head": "turn",
+              "head_start": 15,
+              "start": 8,
+              "text": "should"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 19,
+              "head": "turn",
+              "head_start": 15,
+              "start": 15,
+              "text": "turn"
+            },
+            {
+              "dependency": "det",
+              "end": 21,
+              "head": "part",
+              "head_start": 28,
+              "start": 20,
+              "text": "a"
+            },
+            {
+              "dependency": "amod",
+              "end": 27,
+              "head": "part",
+              "head_start": 28,
+              "start": 22,
+              "text": "small"
+            },
+            {
+              "dependency": "dobj",
+              "end": 32,
+              "head": "turn",
+              "head_start": 15,
+              "start": 28,
+              "text": "part"
+            },
+            {
+              "dependency": "prep",
+              "end": 35,
+              "head": "part",
+              "head_start": 28,
+              "start": 33,
+              "text": "of"
+            },
+            {
+              "dependency": "poss",
+              "end": 41,
+              "head": "playgrounds",
+              "head_start": 42,
+              "start": 36,
+              "text": "their"
+            },
+            {
+              "dependency": "pobj",
+              "end": 53,
+              "head": "of",
+              "head_start": 33,
+              "start": 42,
+              "text": "playgrounds"
+            },
+            {
+              "dependency": "prep",
+              "end": 58,
+              "head": "turn",
+              "head_start": 15,
+              "start": 54,
+              "text": "into"
+            },
+            {
+              "dependency": "compound",
+              "end": 68,
+              "head": "gardens",
+              "head_start": 69,
+              "start": 59,
+              "text": "vegetable"
+            },
+            {
+              "dependency": "pobj",
+              "end": 76,
+              "head": "into",
+              "head_start": 54,
+              "start": 69,
+              "text": "gardens"
+            },
+            {
+              "dependency": "punct",
+              "end": 77,
+              "head": "turn",
+              "head_start": 15,
+              "start": 76,
+              "text": "."
+            }
+          ],
+          "end": 77,
+          "objects_or_complements": [
+            {
+              "dependency": "dobj",
+              "end": 32,
+              "head": "turn",
+              "start": 28,
+              "text": "part"
+            },
+            {
+              "dependency": "pobj",
+              "end": 53,
+              "head": "of",
+              "start": 42,
+              "text": "playgrounds"
+            },
+            {
+              "dependency": "pobj",
+              "end": 76,
+              "head": "into",
+              "start": 69,
+              "text": "gardens"
+            }
+          ],
+          "start": 0,
+          "subjects": [
+            {
+              "dependency": "nsubj",
+              "end": 7,
+              "head": "turn",
+              "start": 0,
+              "text": "Schools"
+            }
+          ],
+          "text": "Schools should turn a small part of their playgrounds into vegetable gardens.",
+          "tokens": [
+            {
+              "dependency": "nsubj",
+              "end": 7,
+              "head": "turn",
+              "index": 0,
+              "is_alpha": true,
+              "lemma": "school",
+              "pos": "NOUN",
+              "start": 0,
+              "tag": "NNS",
+              "text": "Schools"
+            },
+            {
+              "dependency": "aux",
+              "end": 14,
+              "head": "turn",
+              "index": 1,
+              "is_alpha": true,
+              "lemma": "should",
+              "pos": "AUX",
+              "start": 8,
+              "tag": "MD",
+              "text": "should"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 19,
+              "head": "turn",
+              "index": 2,
+              "is_alpha": true,
+              "lemma": "turn",
+              "pos": "VERB",
+              "start": 15,
+              "tag": "VB",
+              "text": "turn"
+            },
+            {
+              "dependency": "det",
+              "end": 21,
+              "head": "part",
+              "index": 3,
+              "is_alpha": true,
+              "lemma": "a",
+              "pos": "DET",
+              "start": 20,
+              "tag": "DT",
+              "text": "a"
+            },
+            {
+              "dependency": "amod",
+              "end": 27,
+              "head": "part",
+              "index": 4,
+              "is_alpha": true,
+              "lemma": "small",
+              "pos": "ADJ",
+              "start": 22,
+              "tag": "JJ",
+              "text": "small"
+            },
+            {
+              "dependency": "dobj",
+              "end": 32,
+              "head": "turn",
+              "index": 5,
+              "is_alpha": true,
+              "lemma": "part",
+              "pos": "NOUN",
+              "start": 28,
+              "tag": "NN",
+              "text": "part"
+            },
+            {
+              "dependency": "prep",
+              "end": 35,
+              "head": "part",
+              "index": 6,
+              "is_alpha": true,
+              "lemma": "of",
+              "pos": "ADP",
+              "start": 33,
+              "tag": "IN",
+              "text": "of"
+            },
+            {
+              "dependency": "poss",
+              "end": 41,
+              "head": "playgrounds",
+              "index": 7,
+              "is_alpha": true,
+              "lemma": "their",
+              "pos": "PRON",
+              "start": 36,
+              "tag": "PRP$",
+              "text": "their"
+            },
+            {
+              "dependency": "pobj",
+              "end": 53,
+              "head": "of",
+              "index": 8,
+              "is_alpha": true,
+              "lemma": "playground",
+              "pos": "NOUN",
+              "start": 42,
+              "tag": "NNS",
+              "text": "playgrounds"
+            },
+            {
+              "dependency": "prep",
+              "end": 58,
+              "head": "turn",
+              "index": 9,
+              "is_alpha": true,
+              "lemma": "into",
+              "pos": "ADP",
+              "start": 54,
+              "tag": "IN",
+              "text": "into"
+            },
+            {
+              "dependency": "compound",
+              "end": 68,
+              "head": "gardens",
+              "index": 10,
+              "is_alpha": true,
+              "lemma": "vegetable",
+              "pos": "NOUN",
+              "start": 59,
+              "tag": "NN",
+              "text": "vegetable"
+            },
+            {
+              "dependency": "pobj",
+              "end": 76,
+              "head": "into",
+              "index": 11,
+              "is_alpha": true,
+              "lemma": "garden",
+              "pos": "NOUN",
+              "start": 69,
+              "tag": "NNS",
+              "text": "gardens"
+            },
+            {
+              "dependency": "punct",
+              "end": 77,
+              "head": "turn",
+              "index": 12,
+              "is_alpha": false,
+              "lemma": ".",
+              "pos": "PUNCT",
+              "start": 76,
+              "tag": ".",
+              "text": "."
+            }
+          ]
+        },
+        {
+          "dependencies": [
+            {
+              "dependency": "det",
+              "end": 83,
+              "head": "gardens",
+              "head_start": 84,
+              "start": 78,
+              "text": "These"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 91,
+              "head": "help",
+              "head_start": 96,
+              "start": 84,
+              "text": "gardens"
+            },
+            {
+              "dependency": "aux",
+              "end": 95,
+              "head": "help",
+              "head_start": 96,
+              "start": 92,
+              "text": "can"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 100,
+              "head": "help",
+              "head_start": 96,
+              "start": 96,
+              "text": "help"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 109,
+              "head": "learn",
+              "head_start": 110,
+              "start": 101,
+              "text": "students"
+            },
+            {
+              "dependency": "ccomp",
+              "end": 115,
+              "head": "help",
+              "head_start": 96,
+              "start": 110,
+              "text": "learn"
+            },
+            {
+              "dependency": "prep",
+              "end": 123,
+              "head": "learn",
+              "head_start": 110,
+              "start": 116,
+              "text": "outside"
+            },
+            {
+              "dependency": "det",
+              "end": 127,
+              "head": "classroom",
+              "head_start": 128,
+              "start": 124,
+              "text": "the"
+            },
+            {
+              "dependency": "pobj",
+              "end": 137,
+              "head": "outside",
+              "head_start": 116,
+              "start": 128,
+              "text": "classroom"
+            },
+            {
+              "dependency": "punct",
+              "end": 138,
+              "head": "help",
+              "head_start": 96,
+              "start": 137,
+              "text": "."
+            }
+          ],
+          "end": 138,
+          "objects_or_complements": [
+            {
+              "dependency": "ccomp",
+              "end": 115,
+              "head": "help",
+              "start": 110,
+              "text": "learn"
+            },
+            {
+              "dependency": "pobj",
+              "end": 137,
+              "head": "outside",
+              "start": 128,
+              "text": "classroom"
+            }
+          ],
+          "start": 78,
+          "subjects": [
+            {
+              "dependency": "nsubj",
+              "end": 91,
+              "head": "help",
+              "start": 84,
+              "text": "gardens"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 109,
+              "head": "learn",
+              "start": 101,
+              "text": "students"
+            }
+          ],
+          "text": "These gardens can help students learn outside the classroom.",
+          "tokens": [
+            {
+              "dependency": "det",
+              "end": 83,
+              "head": "gardens",
+              "index": 13,
+              "is_alpha": true,
+              "lemma": "these",
+              "pos": "DET",
+              "start": 78,
+              "tag": "DT",
+              "text": "These"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 91,
+              "head": "help",
+              "index": 14,
+              "is_alpha": true,
+              "lemma": "garden",
+              "pos": "NOUN",
+              "start": 84,
+              "tag": "NNS",
+              "text": "gardens"
+            },
+            {
+              "dependency": "aux",
+              "end": 95,
+              "head": "help",
+              "index": 15,
+              "is_alpha": true,
+              "lemma": "can",
+              "pos": "AUX",
+              "start": 92,
+              "tag": "MD",
+              "text": "can"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 100,
+              "head": "help",
+              "index": 16,
+              "is_alpha": true,
+              "lemma": "help",
+              "pos": "VERB",
+              "start": 96,
+              "tag": "VB",
+              "text": "help"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 109,
+              "head": "learn",
+              "index": 17,
+              "is_alpha": true,
+              "lemma": "student",
+              "pos": "NOUN",
+              "start": 101,
+              "tag": "NNS",
+              "text": "students"
+            },
+            {
+              "dependency": "ccomp",
+              "end": 115,
+              "head": "help",
+              "index": 18,
+              "is_alpha": true,
+              "lemma": "learn",
+              "pos": "VERB",
+              "start": 110,
+              "tag": "VB",
+              "text": "learn"
+            },
+            {
+              "dependency": "prep",
+              "end": 123,
+              "head": "learn",
+              "index": 19,
+              "is_alpha": true,
+              "lemma": "outside",
+              "pos": "ADP",
+              "start": 116,
+              "tag": "IN",
+              "text": "outside"
+            },
+            {
+              "dependency": "det",
+              "end": 127,
+              "head": "classroom",
+              "index": 20,
+              "is_alpha": true,
+              "lemma": "the",
+              "pos": "DET",
+              "start": 124,
+              "tag": "DT",
+              "text": "the"
+            },
+            {
+              "dependency": "pobj",
+              "end": 137,
+              "head": "outside",
+              "index": 21,
+              "is_alpha": true,
+              "lemma": "classroom",
+              "pos": "NOUN",
+              "start": 128,
+              "tag": "NN",
+              "text": "classroom"
+            },
+            {
+              "dependency": "punct",
+              "end": 138,
+              "head": "help",
+              "index": 22,
+              "is_alpha": false,
+              "lemma": ".",
+              "pos": "PUNCT",
+              "start": 137,
+              "tag": ".",
+              "text": "."
+            }
+          ]
+        },
+        {
+          "dependencies": [
+            {
+              "dependency": "compound",
+              "end": 147,
+              "head": "vegetables",
+              "head_start": 148,
+              "start": 139,
+              "text": "Planting"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 158,
+              "head": "teach",
+              "head_start": 168,
+              "start": 148,
+              "text": "vegetables"
+            },
+            {
+              "dependency": "aux",
+              "end": 162,
+              "head": "teach",
+              "head_start": 168,
+              "start": 159,
+              "text": "can"
+            },
+            {
+              "dependency": "advmod",
+              "end": 167,
+              "head": "teach",
+              "head_start": 168,
+              "start": 163,
+              "text": "also"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 173,
+              "head": "teach",
+              "head_start": 168,
+              "start": 168,
+              "text": "teach"
+            },
+            {
+              "dependency": "dative",
+              "end": 182,
+              "head": "teach",
+              "head_start": 168,
+              "start": 174,
+              "text": "students"
+            },
+            {
+              "dependency": "amod",
+              "end": 189,
+              "head": "skills",
+              "head_start": 190,
+              "start": 183,
+              "text": "useful"
+            },
+            {
+              "dependency": "dobj",
+              "end": 196,
+              "head": "teach",
+              "head_start": 168,
+              "start": 190,
+              "text": "skills"
+            },
+            {
+              "dependency": "punct",
+              "end": 197,
+              "head": "teach",
+              "head_start": 168,
+              "start": 196,
+              "text": "."
+            }
+          ],
+          "end": 197,
+          "objects_or_complements": [
+            {
+              "dependency": "dobj",
+              "end": 196,
+              "head": "teach",
+              "start": 190,
+              "text": "skills"
+            }
+          ],
+          "start": 139,
+          "subjects": [
+            {
+              "dependency": "nsubj",
+              "end": 158,
+              "head": "teach",
+              "start": 148,
+              "text": "vegetables"
+            }
+          ],
+          "text": "Planting vegetables can also teach students useful skills.",
+          "tokens": [
+            {
+              "dependency": "compound",
+              "end": 147,
+              "head": "vegetables",
+              "index": 23,
+              "is_alpha": true,
+              "lemma": "planting",
+              "pos": "NOUN",
+              "start": 139,
+              "tag": "NN",
+              "text": "Planting"
+            },
+            {
+              "dependency": "nsubj",
+              "end": 158,
+              "head": "teach",
+              "index": 24,
+              "is_alpha": true,
+              "lemma": "vegetable",
+              "pos": "NOUN",
+              "start": 148,
+              "tag": "NNS",
+              "text": "vegetables"
+            },
+            {
+              "dependency": "aux",
+              "end": 162,
+              "head": "teach",
+              "index": 25,
+              "is_alpha": true,
+              "lemma": "can",
+              "pos": "AUX",
+              "start": 159,
+              "tag": "MD",
+              "text": "can"
+            },
+            {
+              "dependency": "advmod",
+              "end": 167,
+              "head": "teach",
+              "index": 26,
+              "is_alpha": true,
+              "lemma": "also",
+              "pos": "ADV",
+              "start": 163,
+              "tag": "RB",
+              "text": "also"
+            },
+            {
+              "dependency": "ROOT",
+              "end": 173,
+              "head": "teach",
+              "index": 27,
+              "is_alpha": true,
+              "lemma": "teach",
+              "pos": "VERB",
+              "start": 168,
+              "tag": "VB",
+              "text": "teach"
+            },
+            {
+              "dependency": "dative",
+              "end": 182,
+              "head": "teach",
+              "index": 28,
+              "is_alpha": true,
+              "lemma": "student",
+              "pos": "NOUN",
+              "start": 174,
+              "tag": "NNS",
+              "text": "students"
+            },
+            {
+              "dependency": "amod",
+              "end": 189,
+              "head": "skills",
+              "index": 29,
+              "is_alpha": true,
+              "lemma": "useful",
+              "pos": "ADJ",
+              "start": 183,
+              "tag": "JJ",
+              "text": "useful"
+            },
+            {
+              "dependency": "dobj",
+              "end": 196,
+              "head": "teach",
+              "index": 30,
+              "is_alpha": true,
+              "lemma": "skill",
+              "pos": "NOUN",
+              "start": 190,
+              "tag": "NNS",
+              "text": "skills"
+            },
+            {
+              "dependency": "punct",
+              "end": 197,
+              "head": "teach",
+              "index": 31,
+              "is_alpha": false,
+              "lemma": ".",
+              "pos": "PUNCT",
+              "start": 196,
+              "tag": ".",
+              "text": "."
+            }
+          ]
+        }
+      ],
+      "text": "Schools should turn a small part of their playgrounds into vegetable gardens. These gardens can help students learn outside the classroom. Planting vegetables can also teach students useful skills.",
+      "tokens": [
+        {
+          "dependency": "nsubj",
+          "end": 7,
+          "head": "turn",
+          "index": 0,
+          "is_alpha": true,
+          "lemma": "school",
+          "pos": "NOUN",
+          "start": 0,
+          "tag": "NNS",
+          "text": "Schools"
+        },
+        {
+          "dependency": "aux",
+          "end": 14,
+          "head": "turn",
+          "index": 1,
+          "is_alpha": true,
+          "lemma": "should",
+          "pos": "AUX",
+          "start": 8,
+          "tag": "MD",
+          "text": "should"
+        },
+        {
+          "dependency": "ROOT",
+          "end": 19,
+          "head": "turn",
+          "index": 2,
+          "is_alpha": true,
+          "lemma": "turn",
+          "pos": "VERB",
+          "start": 15,
+          "tag": "VB",
+          "text": "turn"
+        },
+        {
+          "dependency": "det",
+          "end": 21,
+          "head": "part",
+          "index": 3,
+          "is_alpha": true,
+          "lemma": "a",
+          "pos": "DET",
+          "start": 20,
+          "tag": "DT",
+          "text": "a"
+        },
+        {
+          "dependency": "amod",
+          "end": 27,
+          "head": "part",
+          "index": 4,
+          "is_alpha": true,
+          "lemma": "small",
+          "pos": "ADJ",
+          "start": 22,
+          "tag": "JJ",
+          "text": "small"
+        },
+        {
+          "dependency": "dobj",
+          "end": 32,
+          "head": "turn",
+          "index": 5,
+          "is_alpha": true,
+          "lemma": "part",
+          "pos": "NOUN",
+          "start": 28,
+          "tag": "NN",
+          "text": "part"
+        },
+        {
+          "dependency": "prep",
+          "end": 35,
+          "head": "part",
+          "index": 6,
+          "is_alpha": true,
+          "lemma": "of",
+          "pos": "ADP",
+          "start": 33,
+          "tag": "IN",
+          "text": "of"
+        },
+        {
+          "dependency": "poss",
+          "end": 41,
+          "head": "playgrounds",
+          "index": 7,
+          "is_alpha": true,
+          "lemma": "their",
+          "pos": "PRON",
+          "start": 36,
+          "tag": "PRP$",
+          "text": "their"
+        },
+        {
+          "dependency": "pobj",
+          "end": 53,
+          "head": "of",
+          "index": 8,
+          "is_alpha": true,
+          "lemma": "playground",
+          "pos": "NOUN",
+          "start": 42,
+          "tag": "NNS",
+          "text": "playgrounds"
+        },
+        {
+          "dependency": "prep",
+          "end": 58,
+          "head": "turn",
+          "index": 9,
+          "is_alpha": true,
+          "lemma": "into",
+          "pos": "ADP",
+          "start": 54,
+          "tag": "IN",
+          "text": "into"
+        },
+        {
+          "dependency": "compound",
+          "end": 68,
+          "head": "gardens",
+          "index": 10,
+          "is_alpha": true,
+          "lemma": "vegetable",
+          "pos": "NOUN",
+          "start": 59,
+          "tag": "NN",
+          "text": "vegetable"
+        },
+        {
+          "dependency": "pobj",
+          "end": 76,
+          "head": "into",
+          "index": 11,
+          "is_alpha": true,
+          "lemma": "garden",
+          "pos": "NOUN",
+          "start": 69,
+          "tag": "NNS",
+          "text": "gardens"
+        },
+        {
+          "dependency": "punct",
+          "end": 77,
+          "head": "turn",
+          "index": 12,
+          "is_alpha": false,
+          "lemma": ".",
+          "pos": "PUNCT",
+          "start": 76,
+          "tag": ".",
+          "text": "."
+        },
+        {
+          "dependency": "det",
+          "end": 83,
+          "head": "gardens",
+          "index": 13,
+          "is_alpha": true,
+          "lemma": "these",
+          "pos": "DET",
+          "start": 78,
+          "tag": "DT",
+          "text": "These"
+        },
+        {
+          "dependency": "nsubj",
+          "end": 91,
+          "head": "help",
+          "index": 14,
+          "is_alpha": true,
+          "lemma": "garden",
+          "pos": "NOUN",
+          "start": 84,
+          "tag": "NNS",
+          "text": "gardens"
+        },
+        {
+          "dependency": "aux",
+          "end": 95,
+          "head": "help",
+          "index": 15,
+          "is_alpha": true,
+          "lemma": "can",
+          "pos": "AUX",
+          "start": 92,
+          "tag": "MD",
+          "text": "can"
+        },
+        {
+          "dependency": "ROOT",
+          "end": 100,
+          "head": "help",
+          "index": 16,
+          "is_alpha": true,
+          "lemma": "help",
+          "pos": "VERB",
+          "start": 96,
+          "tag": "VB",
+          "text": "help"
+        },
+        {
+          "dependency": "nsubj",
+          "end": 109,
+          "head": "learn",
+          "index": 17,
+          "is_alpha": true,
+          "lemma": "student",
+          "pos": "NOUN",
+          "start": 101,
+          "tag": "NNS",
+          "text": "students"
+        },
+        {
+          "dependency": "ccomp",
+          "end": 115,
+          "head": "help",
+          "index": 18,
+          "is_alpha": true,
+          "lemma": "learn",
+          "pos": "VERB",
+          "start": 110,
+          "tag": "VB",
+          "text": "learn"
+        },
+        {
+          "dependency": "prep",
+          "end": 123,
+          "head": "learn",
+          "index": 19,
+          "is_alpha": true,
+          "lemma": "outside",
+          "pos": "ADP",
+          "start": 116,
+          "tag": "IN",
+          "text": "outside"
+        },
+        {
+          "dependency": "det",
+          "end": 127,
+          "head": "classroom",
+          "index": 20,
+          "is_alpha": true,
+          "lemma": "the",
+          "pos": "DET",
+          "start": 124,
+          "tag": "DT",
+          "text": "the"
+        },
+        {
+          "dependency": "pobj",
+          "end": 137,
+          "head": "outside",
+          "index": 21,
+          "is_alpha": true,
+          "lemma": "classroom",
+          "pos": "NOUN",
+          "start": 128,
+          "tag": "NN",
+          "text": "classroom"
+        },
+        {
+          "dependency": "punct",
+          "end": 138,
+          "head": "help",
+          "index": 22,
+          "is_alpha": false,
+          "lemma": ".",
+          "pos": "PUNCT",
+          "start": 137,
+          "tag": ".",
+          "text": "."
+        },
+        {
+          "dependency": "compound",
+          "end": 147,
+          "head": "vegetables",
+          "index": 23,
+          "is_alpha": true,
+          "lemma": "planting",
+          "pos": "NOUN",
+          "start": 139,
+          "tag": "NN",
+          "text": "Planting"
+        },
+        {
+          "dependency": "nsubj",
+          "end": 158,
+          "head": "teach",
+          "index": 24,
+          "is_alpha": true,
+          "lemma": "vegetable",
+          "pos": "NOUN",
+          "start": 148,
+          "tag": "NNS",
+          "text": "vegetables"
+        },
+        {
+          "dependency": "aux",
+          "end": 162,
+          "head": "teach",
+          "index": 25,
+          "is_alpha": true,
+          "lemma": "can",
+          "pos": "AUX",
+          "start": 159,
+          "tag": "MD",
+          "text": "can"
+        },
+        {
+          "dependency": "advmod",
+          "end": 167,
+          "head": "teach",
+          "index": 26,
+          "is_alpha": true,
+          "lemma": "also",
+          "pos": "ADV",
+          "start": 163,
+          "tag": "RB",
+          "text": "also"
+        },
+        {
+          "dependency": "ROOT",
+          "end": 173,
+          "head": "teach",
+          "index": 27,
+          "is_alpha": true,
+          "lemma": "teach",
+          "pos": "VERB",
+          "start": 168,
+          "tag": "VB",
+          "text": "teach"
+        },
+        {
+          "dependency": "dative",
+          "end": 182,
+          "head": "teach",
+          "index": 28,
+          "is_alpha": true,
+          "lemma": "student",
+          "pos": "NOUN",
+          "start": 174,
+          "tag": "NNS",
+          "text": "students"
+        },
+        {
+          "dependency": "amod",
+          "end": 189,
+          "head": "skills",
+          "index": 29,
+          "is_alpha": true,
+          "lemma": "useful",
+          "pos": "ADJ",
+          "start": 183,
+          "tag": "JJ",
+          "text": "useful"
+        },
+        {
+          "dependency": "dobj",
+          "end": 196,
+          "head": "teach",
+          "index": 30,
+          "is_alpha": true,
+          "lemma": "skill",
+          "pos": "NOUN",
+          "start": 190,
+          "tag": "NNS",
+          "text": "skills"
+        },
+        {
+          "dependency": "punct",
+          "end": 197,
+          "head": "teach",
+          "index": 31,
+          "is_alpha": false,
+          "lemma": ".",
+          "pos": "PUNCT",
+          "start": 196,
+          "tag": ".",
+          "text": "."
+        }
+      ]
+    },
+    "missing_observable_elements": [],
+    "observable_structure": {
+      "central_direction_candidates": [
+        {
+          "complement_evidence": [
+            {
+              "dependency": "dobj",
+              "end": 32,
+              "start": 28,
+              "text": "part"
+            }
+          ],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 19,
+            "pos": "VERB",
+            "start": 15,
+            "tag": "VB",
+            "text": "turn"
+          },
+          "sentence_end": 77,
+          "sentence_index": 0,
+          "sentence_start": 0,
+          "sentence_text": "Schools should turn a small part of their playgrounds into vegetable gardens.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 7,
+              "start": 0,
+              "text": "Schools"
+            }
+          ]
+        },
+        {
+          "complement_evidence": [
+            {
+              "dependency": "ccomp",
+              "end": 115,
+              "start": 110,
+              "text": "learn"
+            }
+          ],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 100,
+            "pos": "VERB",
+            "start": 96,
+            "tag": "VB",
+            "text": "help"
+          },
+          "sentence_end": 138,
+          "sentence_index": 1,
+          "sentence_start": 78,
+          "sentence_text": "These gardens can help students learn outside the classroom.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 91,
+              "start": 84,
+              "text": "gardens"
+            }
+          ]
+        },
+        {
+          "complement_evidence": [
+            {
+              "dependency": "dobj",
+              "end": 196,
+              "start": 190,
+              "text": "skills"
+            }
+          ],
+          "evidence_type": "spaCy_dependency_and_POS_heuristic",
+          "is_root_clause": true,
+          "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+          "predicate_evidence": {
+            "dependency": "ROOT",
+            "end": 173,
+            "pos": "VERB",
+            "start": 168,
+            "tag": "VB",
+            "text": "teach"
+          },
+          "sentence_end": 197,
+          "sentence_index": 2,
+          "sentence_start": 139,
+          "sentence_text": "Planting vegetables can also teach students useful skills.",
+          "subject_evidence": [
+            {
+              "dependency": "nsubj",
+              "end": 158,
+              "start": 148,
+              "text": "vegetables"
+            }
+          ]
+        }
+      ],
+      "incomplete_subordinator_candidates": [],
+      "introductory_context_candidates": [
+        {
+          "clause_candidate_evidence": {
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 19,
+              "pos": "VERB",
+              "start": 15,
+              "tag": "VB",
+              "text": "turn"
+            },
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 7,
+                "start": 0,
+                "text": "Schools"
+              }
+            ]
+          },
+          "end": 77,
+          "evidence_type": "lexical_match_plus_dependency_heuristic",
+          "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+          "sentence_text": "Schools should turn a small part of their playgrounds into vegetable gardens.",
+          "start": 0,
+          "topic_match_evidence": [
+            {
+              "end": 7,
+              "evidence_source": "student_text_span",
+              "focus_term": "schools",
+              "match_method": "direct",
+              "normalized_form": "school",
+              "observed_text": "Schools",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                0
+              ],
+              "start": 0
+            },
+            {
+              "end": 53,
+              "evidence_source": "student_text_span",
+              "focus_term": "playgrounds",
+              "match_method": "direct",
+              "normalized_form": "playground",
+              "observed_text": "playgrounds",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                8
+              ],
+              "start": 42
+            },
+            {
+              "end": 76,
+              "evidence_source": "student_text_span",
+              "focus_term": "vegetable gardens",
+              "match_method": "direct",
+              "normalized_form": "vegetable garden",
+              "observed_text": "vegetable gardens",
+              "pos": [
+                "NOUN",
+                "NOUN"
+              ],
+              "source_token_indices": [
+                10,
+                11
+              ],
+              "start": 59
+            }
+          ]
+        },
+        {
+          "clause_candidate_evidence": {
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 100,
+              "pos": "VERB",
+              "start": 96,
+              "tag": "VB",
+              "text": "help"
+            },
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 91,
+                "start": 84,
+                "text": "gardens"
+              }
+            ]
+          },
+          "end": 138,
+          "evidence_type": "lexical_match_plus_dependency_heuristic",
+          "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+          "sentence_text": "These gardens can help students learn outside the classroom.",
+          "start": 78,
+          "topic_match_evidence": [
+            {
+              "end": 109,
+              "evidence_source": "student_text_span",
+              "focus_term": "students",
+              "match_method": "direct",
+              "normalized_form": "student",
+              "observed_text": "students",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                17
+              ],
+              "start": 101
+            },
+            {
+              "end": 115,
+              "evidence_source": "student_text_span",
+              "focus_term": "learning",
+              "match_method": "normalized",
+              "normalized_form": "learn",
+              "observed_text": "learn",
+              "pos": [
+                "VERB"
+              ],
+              "source_token_indices": [
+                18
+              ],
+              "start": 110
+            }
+          ]
+        },
+        {
+          "clause_candidate_evidence": {
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 173,
+              "pos": "VERB",
+              "start": 168,
+              "tag": "VB",
+              "text": "teach"
+            },
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 158,
+                "start": 148,
+                "text": "vegetables"
+              }
+            ]
+          },
+          "end": 197,
+          "evidence_type": "lexical_match_plus_dependency_heuristic",
+          "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+          "sentence_text": "Planting vegetables can also teach students useful skills.",
+          "start": 139,
+          "topic_match_evidence": [
+            {
+              "end": 182,
+              "evidence_source": "student_text_span",
+              "focus_term": "students",
+              "match_method": "direct",
+              "normalized_form": "student",
+              "observed_text": "students",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                28
+              ],
+              "start": 174
+            }
+          ]
+        }
+      ],
+      "list_or_fragment_candidate": {
+        "evidence": [],
+        "evidence_type": "heuristic_based_on_sentence_and_POS_evidence",
+        "fragmentary_text_candidate": false,
+        "keyword_list_candidate": false,
+        "limitation": "Fragments can be deliberate; a possible list is not a judgment of meaning or quality.",
+        "noun_or_proper_noun_count": 12,
+        "sentence_count_without_root_subject_predicate": 0,
+        "sentence_count_without_subject_linked_finite_clause": 0,
+        "trigger_condition": "No parser-labeled finite clause with linked subject, plus at least three sentence spans without such a clause or at least four noun/proper-noun tokens."
+      },
+      "sentence_spans": [
+        {
+          "end": 77,
+          "start": 0,
+          "text": "Schools should turn a small part of their playgrounds into vegetable gardens."
+        },
+        {
+          "end": 138,
+          "start": 78,
+          "text": "These gardens can help students learn outside the classroom."
+        },
+        {
+          "end": 197,
+          "start": 139,
+          "text": "Planting vegetables can also teach students useful skills."
+        }
+      ],
+      "summary_status": "STRUCTURAL_CANDIDATE"
+    },
+    "prohibited_conclusions": [
+      "meaningful or nonsensical",
+      "academically good or poor",
+      "ready or not ready",
+      "stage unlocked"
+    ],
+    "reason_clause_evidence": {
+      "clauses": [],
+      "limitation": "No 'because' advcl clause was identified in this Introduction. Other reason structures are not detected.",
+      "status": "NO_BECAUSE_CLAUSE_IDENTIFIED"
+    },
+    "rule_evaluation_trace": [
+      {
+        "condition": "No finite root predicate with a parser-labeled subject was found.",
+        "configuration": "FINITE_TAGS={'VB','VBD','VBP','VBZ'}; Introduction also accepts a VBN/VBG predicate with a directly linked AUX tagged MD/VBD/VBP/VBZ and a linked subject. CLAUSE_DEPENDENCIES={'ROOT','conj','advcl','ccomp','xcomp','relcl'}; SUBJECT_DEPENDENCIES={'nsubj','nsubjpass','csubj','csubjpass'}. Development threshold: at least 2 supported clause candidates; not logical support.",
+        "decision_basis": "observable_structure.central_direction_candidates.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 270,
+          "file": "services\\introduction_rules.py",
+          "function": "_clause_candidates",
+          "start_line": 200
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No subject-predicate candidate",
+        "purpose": "No subject-predicate candidate",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.CLAUSE.NO_SUBJECT_PREDICATE_CANDIDATE",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "An SCONJ in the configured clause-subordinator list is flagged when any of: it is the sentence ROOT (unattached marker); it has a mark dependency but its head is not a parser-labeled clause predicate; it has a mark dependency and its head is the sentence's only finite ROOT clause predicate (suppressed when a separate finite subordinate-clause predicate with its own subject is also observed, indicating likely marker misattachment); it has a prep dependency with no pobj/obj complement; or it is 'because' attached as prep with only a nominal pobj and no later predicate.",
+        "configuration": "Gate: token POS is SCONJ and text in CLAUSE_SUBORDINATORS={'although','as','because','before','if','once','since','though','unless','until','when','whereas','while'}. Flag if any of five OR conditions: (1) dependency == 'ROOT'; (2) dependency == 'mark' and head_start not in predicate_starts (VERB/AUX with CLAUSE_DEPENDENCIES); (3) dependency == 'mark' and head_start is the sentence's only finite ROOT predicate (head_is_only_root_clause: VERB/AUX, tag in FINITE_TAGS={'VB','VBD','VBP','VBZ'}, dependency 'ROOT', sole such root); condition (3) is suppressed when the sentence also contains a separate finite subordinate-clause predicate (dependency in {'advcl','ccomp','xcomp'}, tag in FINITE_TAGS) with its own parser-labeled subject, indicating the marker's ROOT attachment is likely a parser misattachment and the two-clause structure is already observed; (4) dependency == 'prep' with no pobj/obj child and no prep child that itself has a pobj/obj; (5) marker == 'because', dependency == 'prep', pobj child (text != 'of') present, and no predicate starts after the marker's end. Parser attachment can be wrong; this is an observation, not proof.",
+        "decision_basis": "observable_structure.incomplete_subordinator_candidates.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 423,
+          "file": "services\\introduction_rules.py",
+          "function": "_incomplete_subordinator_evidence",
+          "start_line": 315
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Possible incomplete subordinator",
+        "purpose": "Possible incomplete subordinator",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.CLAUSE.POSSIBLE_INCOMPLETE_SUBORDINATOR",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "A finite root predicate has parser-labeled subject evidence attached to it.",
+        "configuration": "FINITE_TAGS={'VB','VBD','VBP','VBZ'}; Introduction also accepts a VBN/VBG predicate with a directly linked AUX tagged MD/VBD/VBP/VBZ and a linked subject. CLAUSE_DEPENDENCIES={'ROOT','conj','advcl','ccomp','xcomp','relcl'}; SUBJECT_DEPENDENCIES={'nsubj','nsubjpass','csubj','csubjpass'}. Development threshold: at least 2 supported clause candidates; not logical support.",
+        "decision_basis": "observable_structure.central_direction_candidates.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 270,
+          "file": "services\\introduction_rules.py",
+          "function": "_clause_candidates",
+          "start_line": 200
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Subject-linked finite root clause candidate",
+        "purpose": "Subject-linked finite root clause candidate",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "A central clause sentence span contains a focus-term match.",
+        "configuration": "A central root-clause sentence span must contain at least one direct or lemma-normalized configured focus match.",
+        "decision_basis": "observable_structure.introductory_context_candidates.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 515,
+          "file": "services\\introduction_rules.py",
+          "function": "_context_candidates",
+          "start_line": 485
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Topic and clause in one sentence",
+        "purpose": "Topic and clause in one sentence",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "At least two finite clause-predicate candidates remain after incomplete-subordinator sentence filtering.",
+        "configuration": "FINITE_TAGS={'VB','VBD','VBP','VBZ'}; Introduction also accepts a VBN/VBG predicate with a directly linked AUX tagged MD/VBD/VBP/VBZ and a linked subject. CLAUSE_DEPENDENCIES={'ROOT','conj','advcl','ccomp','xcomp','relcl'}; SUBJECT_DEPENDENCIES={'nsubj','nsubjpass','csubj','csubjpass'}. Development threshold: at least 2 supported clause candidates; not logical support.",
+        "decision_basis": "development_evidence.status and predicate_count.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 679,
+          "file": "services\\introduction_rules.py",
+          "function": "_development_finding",
+          "start_line": 648
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Multiple clause-predicate candidates",
+        "purpose": "Multiple clause-predicate candidates",
+        "reference_ids": [
+          "unc-paragraphs"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "Fewer than two supported finite clause-predicate candidates were observed.",
+        "configuration": "FINITE_TAGS={'VB','VBD','VBP','VBZ'}; Introduction also accepts a VBN/VBG predicate with a directly linked AUX tagged MD/VBD/VBP/VBZ and a linked subject. CLAUSE_DEPENDENCIES={'ROOT','conj','advcl','ccomp','xcomp','relcl'}; SUBJECT_DEPENDENCIES={'nsubj','nsubjpass','csubj','csubjpass'}. Development threshold: at least 2 supported clause candidates; not logical support.",
+        "decision_basis": "development_evidence.status and predicate_count.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 679,
+          "file": "services\\introduction_rules.py",
+          "function": "_development_finding",
+          "start_line": 648
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No additional clause candidate",
+        "purpose": "No additional clause candidate",
+        "reference_ids": [
+          "unc-paragraphs"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.DEVELOPMENT.NO_ADDITIONAL_CLAUSE_CANDIDATE",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "Always emitted for Introduction stage scope.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "The current Rule Base emitted this event and its evidence.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 851,
+          "file": "services\\introduction_rules.py",
+          "function": "_rule_events",
+          "start_line": 681
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Introduction guidance goal",
+        "purpose": "Introduction guidance goal",
+        "reference_ids": [
+          "hattie-timperley",
+          "knight-acawriter"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "Always emitted; meaning, logic, and facts are not validated.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "The current Rule Base emitted this event and its evidence.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 851,
+          "file": "services\\introduction_rules.py",
+          "function": "_rule_events",
+          "start_line": 681
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No semantic validation limitation",
+        "purpose": "No semantic validation limitation",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "No alphabetic token was observed in the student input.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "text_presence status and alphabetic_word_count.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 851,
+          "file": "services\\introduction_rules.py",
+          "function": "_rule_events",
+          "start_line": 681
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No alphabetic text",
+        "purpose": "No alphabetic text",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TEXT.EMPTY_OR_NONALPHABETIC",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "Alphabetic text exists but no finite root clause with parser-labeled subject was found; list threshold did not take precedence.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "observable_structure.list_or_fragment_candidate; keyword-list event takes precedence when both flags are true.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 313,
+          "file": "services\\introduction_rules.py",
+          "function": "_list_or_fragment_finding",
+          "start_line": 272
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Fragment candidate",
+        "purpose": "Fragment candidate",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TEXT.FRAGMENT_CANDIDATE",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "No root subject-predicate clause and at least three non-clausal sentence spans or four NOUN/PROPN tokens.",
+        "configuration": "No qualifying subject-linked finite root clause AND (at least 3 non-clausal sentence spans OR at least 4 NOUN/PROPN tokens).",
+        "decision_basis": "observable_structure.list_or_fragment_candidate.keyword_list_candidate.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 313,
+          "file": "services\\introduction_rules.py",
+          "function": "_list_or_fragment_finding",
+          "start_line": 272
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Keyword-list candidate",
+        "purpose": "Keyword-list candidate",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TEXT.KEYWORD_LIST_CANDIDATE",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "At least one alphabetic token was observed.",
+        "configuration": "No numeric threshold beyond the exact triggering condition shown above. Consult the source location for the implementation constants.",
+        "decision_basis": "text_presence status and alphabetic_word_count.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "IntroductionRuleBase",
+          "end_line": 851,
+          "file": "services\\introduction_rules.py",
+          "function": "_rule_events",
+          "start_line": 681
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Alphabetic text present",
+        "purpose": "Alphabetic text present",
+        "reference_ids": [],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TEXT.PRESENT",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "At least one configured focus phrase has direct or lemma-normalized lexical evidence.",
+        "configuration": "Direct case-folded surface match OR equal lemma sequence over consecutive alphabetic tokens; only whitespace/apostrophe/hyphen separator characters may occur between phrase tokens.",
+        "decision_basis": "lexical_topic_evidence.observed_focus_terms.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": true,
+        "implementation": {
+          "class": "TopicService",
+          "end_line": 359,
+          "file": "services\\topic_service.py",
+          "function": "_find_matches",
+          "start_line": 315
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Configured focus terms observed",
+        "purpose": "Configured focus terms observed",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "stage": "INTRO",
+        "status": "TRIGGERED"
+      },
+      {
+        "condition": "No configured focus phrase matched directly or by lemma normalization.",
+        "configuration": "Direct case-folded surface match OR equal lemma sequence over consecutive alphabetic tokens; only whitespace/apostrophe/hyphen separator characters may occur between phrase tokens.",
+        "decision_basis": "lexical_topic_evidence.observed_focus_terms.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "class": "TopicService",
+          "end_line": 359,
+          "file": "services\\topic_service.py",
+          "function": "_find_matches",
+          "start_line": 315
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "No configured focus match",
+        "purpose": "No configured focus match",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TOPIC.NO_FOCUS_MATCH_OBSERVED",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      },
+      {
+        "condition": "A verified sentence with a noun and ROOT verb/auxiliary beside a focus-matched sentence has no configured focus match, no shared neighboring content lemma and no third-person/demonstrative reference cue; explicit teacher focus is required. A review signal only, not irrelevance.",
+        "configuration": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue. Missing wording links suggest a review only, not irrelevance. Pronoun cues are not resolved references; shared words do not establish relevance, logic, or truth. Other reworded connections can be missed.",
+        "decision_basis": "sentence_topic_evidence.sentences retains exact spans, focus matches, concepts, neighboring shared lemmas, reference cues, status, condition and limitations for each sentence.",
+        "educational_rationale": "This is an observable revision signal, not a semantic validation or quality decision.",
+        "event_available": false,
+        "implementation": {
+          "end_line": 93,
+          "file": "services\\introduction_sentence_evidence.py",
+          "function": "sentence_topic_evidence",
+          "start_line": 22
+        },
+        "interpretation_limit": "A rule event does not establish meaning, correctness, coherence, relevance, quality, or readiness.",
+        "name": "Possible sentence topic-connection gap",
+        "purpose": "Possible sentence topic-connection gap",
+        "reference_ids": [
+          "unc-thesis"
+        ],
+        "required_evidence": "See the current event's actual_evidence/evidence and source spans.",
+        "rule_id": "INTRO.TOPIC.SENTENCE_CONNECTION_REVIEW",
+        "stage": "INTRO",
+        "status": "EVALUATED_NOT_TRIGGERED"
+      }
+    ],
+    "rule_evidence": [
+      {
+        "evidence": [
+          {
+            "end": 7,
+            "start": 0,
+            "text": "Schools"
+          },
+          {
+            "end": 14,
+            "start": 8,
+            "text": "should"
+          },
+          {
+            "end": 19,
+            "start": 15,
+            "text": "turn"
+          },
+          {
+            "end": 21,
+            "start": 20,
+            "text": "a"
+          },
+          {
+            "end": 27,
+            "start": 22,
+            "text": "small"
+          },
+          {
+            "end": 32,
+            "start": 28,
+            "text": "part"
+          },
+          {
+            "end": 35,
+            "start": 33,
+            "text": "of"
+          },
+          {
+            "end": 41,
+            "start": 36,
+            "text": "their"
+          },
+          {
+            "end": 53,
+            "start": 42,
+            "text": "playgrounds"
+          },
+          {
+            "end": 58,
+            "start": 54,
+            "text": "into"
+          },
+          {
+            "end": 68,
+            "start": 59,
+            "text": "vegetable"
+          },
+          {
+            "end": 76,
+            "start": 69,
+            "text": "gardens"
+          },
+          {
+            "end": 83,
+            "start": 78,
+            "text": "These"
+          },
+          {
+            "end": 91,
+            "start": 84,
+            "text": "gardens"
+          },
+          {
+            "end": 95,
+            "start": 92,
+            "text": "can"
+          },
+          {
+            "end": 100,
+            "start": 96,
+            "text": "help"
+          },
+          {
+            "end": 109,
+            "start": 101,
+            "text": "students"
+          },
+          {
+            "end": 115,
+            "start": 110,
+            "text": "learn"
+          },
+          {
+            "end": 123,
+            "start": 116,
+            "text": "outside"
+          },
+          {
+            "end": 127,
+            "start": 124,
+            "text": "the"
+          },
+          {
+            "end": 137,
+            "start": 128,
+            "text": "classroom"
+          },
+          {
+            "end": 147,
+            "start": 139,
+            "text": "Planting"
+          },
+          {
+            "end": 158,
+            "start": 148,
+            "text": "vegetables"
+          },
+          {
+            "end": 162,
+            "start": 159,
+            "text": "can"
+          },
+          {
+            "end": 167,
+            "start": 163,
+            "text": "also"
+          },
+          {
+            "end": 173,
+            "start": 168,
+            "text": "teach"
+          },
+          {
+            "end": 182,
+            "start": 174,
+            "text": "students"
+          },
+          {
+            "end": 189,
+            "start": 183,
+            "text": "useful"
+          },
+          {
+            "end": 196,
+            "start": 190,
+            "text": "skills"
+          }
+        ],
+        "evidence_type": "direct_text_observation",
+        "limitation": "Word presence does not establish sentence completeness or meaning.",
+        "rule_id": "INTRO.TEXT.PRESENT",
+        "triggered": true,
+        "triggering_condition": "At least one alphabetic student token was observed."
+      },
+      {
+        "evidence": [
+          {
+            "complement_evidence": [
+              {
+                "dependency": "dobj",
+                "end": 32,
+                "start": 28,
+                "text": "part"
+              }
+            ],
+            "evidence_type": "spaCy_dependency_and_POS_heuristic",
+            "is_root_clause": true,
+            "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 19,
+              "pos": "VERB",
+              "start": 15,
+              "tag": "VB",
+              "text": "turn"
+            },
+            "sentence_end": 77,
+            "sentence_index": 0,
+            "sentence_start": 0,
+            "sentence_text": "Schools should turn a small part of their playgrounds into vegetable gardens.",
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 7,
+                "start": 0,
+                "text": "Schools"
+              }
+            ]
+          },
+          {
+            "complement_evidence": [
+              {
+                "dependency": "ccomp",
+                "end": 115,
+                "start": 110,
+                "text": "learn"
+              }
+            ],
+            "evidence_type": "spaCy_dependency_and_POS_heuristic",
+            "is_root_clause": true,
+            "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 100,
+              "pos": "VERB",
+              "start": 96,
+              "tag": "VB",
+              "text": "help"
+            },
+            "sentence_end": 138,
+            "sentence_index": 1,
+            "sentence_start": 78,
+            "sentence_text": "These gardens can help students learn outside the classroom.",
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 91,
+                "start": 84,
+                "text": "gardens"
+              }
+            ]
+          },
+          {
+            "complement_evidence": [
+              {
+                "dependency": "dobj",
+                "end": 196,
+                "start": 190,
+                "text": "skills"
+              }
+            ],
+            "evidence_type": "spaCy_dependency_and_POS_heuristic",
+            "is_root_clause": true,
+            "limitation": "A subject-predicate parse does not verify the proposition's meaning or validity.",
+            "predicate_evidence": {
+              "dependency": "ROOT",
+              "end": 173,
+              "pos": "VERB",
+              "start": 168,
+              "tag": "VB",
+              "text": "teach"
+            },
+            "sentence_end": 197,
+            "sentence_index": 2,
+            "sentence_start": 139,
+            "sentence_text": "Planting vegetables can also teach students useful skills.",
+            "subject_evidence": [
+              {
+                "dependency": "nsubj",
+                "end": 158,
+                "start": 148,
+                "text": "vegetables"
+              }
+            ]
+          }
+        ],
+        "evidence_type": "spaCy_POS_and_dependency_observation",
+        "limitation": "These labels do not verify whether the proposition makes sense.",
+        "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+        "triggered": true,
+        "triggering_condition": "spaCy labeled a finite root predicate and a subject dependent on it."
+      },
+      {
+        "evidence": [
+          {
+            "end": 7,
+            "evidence_source": "student_text_span",
+            "focus_term": "schools",
+            "match_method": "direct",
+            "normalized_form": "school",
+            "observed_text": "Schools",
+            "pos": [
+              "NOUN"
+            ],
+            "source_token_indices": [
+              0
+            ],
+            "start": 0
+          },
+          {
+            "end": 53,
+            "evidence_source": "student_text_span",
+            "focus_term": "playgrounds",
+            "match_method": "direct",
+            "normalized_form": "playground",
+            "observed_text": "playgrounds",
+            "pos": [
+              "NOUN"
+            ],
+            "source_token_indices": [
+              8
+            ],
+            "start": 42
+          },
+          {
+            "end": 76,
+            "evidence_source": "student_text_span",
+            "focus_term": "vegetable gardens",
+            "match_method": "direct",
+            "normalized_form": "vegetable garden",
+            "observed_text": "vegetable gardens",
+            "pos": [
+              "NOUN",
+              "NOUN"
+            ],
+            "source_token_indices": [
+              10,
+              11
+            ],
+            "start": 59
+          },
+          {
+            "end": 109,
+            "evidence_source": "student_text_span",
+            "focus_term": "students",
+            "match_method": "direct",
+            "normalized_form": "student",
+            "observed_text": "students",
+            "pos": [
+              "NOUN"
+            ],
+            "source_token_indices": [
+              17
+            ],
+            "start": 101
+          },
+          {
+            "end": 182,
+            "evidence_source": "student_text_span",
+            "focus_term": "students",
+            "match_method": "direct",
+            "normalized_form": "student",
+            "observed_text": "students",
+            "pos": [
+              "NOUN"
+            ],
+            "source_token_indices": [
+              28
+            ],
+            "start": 174
+          },
+          {
+            "end": 115,
+            "evidence_source": "student_text_span",
+            "focus_term": "learning",
+            "match_method": "normalized",
+            "normalized_form": "learn",
+            "observed_text": "learn",
+            "pos": [
+              "VERB"
+            ],
+            "source_token_indices": [
+              18
+            ],
+            "start": 110
+          }
+        ],
+        "evidence_type": "direct_lexical_span_with_direct_or_lemma_match_method",
+        "limitation": "Focus-term overlap is not evidence of sound or meaningful explanation.",
+        "rule_id": "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+        "triggered": true,
+        "triggering_condition": "At least one teacher focus phrase has direct or lemma-normalized lexical evidence."
+      },
+      {
+        "evidence": [
+          {
+            "clause_candidate_evidence": {
+              "predicate_evidence": {
+                "dependency": "ROOT",
+                "end": 19,
+                "pos": "VERB",
+                "start": 15,
+                "tag": "VB",
+                "text": "turn"
+              },
+              "subject_evidence": [
+                {
+                  "dependency": "nsubj",
+                  "end": 7,
+                  "start": 0,
+                  "text": "Schools"
+                }
+              ]
+            },
+            "end": 77,
+            "evidence_type": "lexical_match_plus_dependency_heuristic",
+            "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+            "sentence_text": "Schools should turn a small part of their playgrounds into vegetable gardens.",
+            "start": 0,
+            "topic_match_evidence": [
+              {
+                "end": 7,
+                "evidence_source": "student_text_span",
+                "focus_term": "schools",
+                "match_method": "direct",
+                "normalized_form": "school",
+                "observed_text": "Schools",
+                "pos": [
+                  "NOUN"
+                ],
+                "source_token_indices": [
+                  0
+                ],
+                "start": 0
+              },
+              {
+                "end": 53,
+                "evidence_source": "student_text_span",
+                "focus_term": "playgrounds",
+                "match_method": "direct",
+                "normalized_form": "playground",
+                "observed_text": "playgrounds",
+                "pos": [
+                  "NOUN"
+                ],
+                "source_token_indices": [
+                  8
+                ],
+                "start": 42
+              },
+              {
+                "end": 76,
+                "evidence_source": "student_text_span",
+                "focus_term": "vegetable gardens",
+                "match_method": "direct",
+                "normalized_form": "vegetable garden",
+                "observed_text": "vegetable gardens",
+                "pos": [
+                  "NOUN",
+                  "NOUN"
+                ],
+                "source_token_indices": [
+                  10,
+                  11
+                ],
+                "start": 59
+              }
+            ]
+          },
+          {
+            "clause_candidate_evidence": {
+              "predicate_evidence": {
+                "dependency": "ROOT",
+                "end": 100,
+                "pos": "VERB",
+                "start": 96,
+                "tag": "VB",
+                "text": "help"
+              },
+              "subject_evidence": [
+                {
+                  "dependency": "nsubj",
+                  "end": 91,
+                  "start": 84,
+                  "text": "gardens"
+                }
+              ]
+            },
+            "end": 138,
+            "evidence_type": "lexical_match_plus_dependency_heuristic",
+            "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+            "sentence_text": "These gardens can help students learn outside the classroom.",
+            "start": 78,
+            "topic_match_evidence": [
+              {
+                "end": 109,
+                "evidence_source": "student_text_span",
+                "focus_term": "students",
+                "match_method": "direct",
+                "normalized_form": "student",
+                "observed_text": "students",
+                "pos": [
+                  "NOUN"
+                ],
+                "source_token_indices": [
+                  17
+                ],
+                "start": 101
+              },
+              {
+                "end": 115,
+                "evidence_source": "student_text_span",
+                "focus_term": "learning",
+                "match_method": "normalized",
+                "normalized_form": "learn",
+                "observed_text": "learn",
+                "pos": [
+                  "VERB"
+                ],
+                "source_token_indices": [
+                  18
+                ],
+                "start": 110
+              }
+            ]
+          },
+          {
+            "clause_candidate_evidence": {
+              "predicate_evidence": {
+                "dependency": "ROOT",
+                "end": 173,
+                "pos": "VERB",
+                "start": 168,
+                "tag": "VB",
+                "text": "teach"
+              },
+              "subject_evidence": [
+                {
+                  "dependency": "nsubj",
+                  "end": 158,
+                  "start": 148,
+                  "text": "vegetables"
+                }
+              ]
+            },
+            "end": 197,
+            "evidence_type": "lexical_match_plus_dependency_heuristic",
+            "limitation": "This is only a topic-term and clause-structure candidate, not verified context or relevance.",
+            "sentence_text": "Planting vegetables can also teach students useful skills.",
+            "start": 139,
+            "topic_match_evidence": [
+              {
+                "end": 182,
+                "evidence_source": "student_text_span",
+                "focus_term": "students",
+                "match_method": "direct",
+                "normalized_form": "student",
+                "observed_text": "students",
+                "pos": [
+                  "NOUN"
+                ],
+                "source_token_indices": [
+                  28
+                ],
+                "start": 174
+              }
+            ]
+          }
+        ],
+        "evidence_type": "lexical_and_syntactic_heuristic",
+        "limitation": "This does not establish that the sentence introduces the topic coherently.",
+        "rule_id": "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE",
+        "triggered": true,
+        "triggering_condition": "A sentence span contains both a topic-term match and a subject-predicate candidate."
+      },
+      {
+        "evidence": [
+          {
+            "dependency": "ROOT",
+            "end": 19,
+            "pos": "VERB",
+            "start": 15,
+            "tag": "VB",
+            "text": "turn"
+          },
+          {
+            "dependency": "ROOT",
+            "end": 100,
+            "pos": "VERB",
+            "start": 96,
+            "tag": "VB",
+            "text": "help"
+          },
+          {
+            "dependency": "ccomp",
+            "end": 115,
+            "pos": "VERB",
+            "start": 110,
+            "tag": "VB",
+            "text": "learn"
+          },
+          {
+            "dependency": "ROOT",
+            "end": 173,
+            "pos": "VERB",
+            "start": 168,
+            "tag": "VB",
+            "text": "teach"
+          }
+        ],
+        "evidence_type": "multiple_parser_labeled_clause_predicates",
+        "limitation": "Multiple clauses or sentences do not prove that the ideas are connected logically or soundly.",
+        "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+        "triggered": true,
+        "triggering_condition": "At least two finite clause-predicate candidates were observed."
+      },
+      {
+        "evidence": [],
+        "evidence_type": "stage_scope_configuration",
+        "limitation": "This is a guidance goal, not a stage-readiness decision.",
+        "rule_id": "INTRO.GOAL.OBSERVABLE_INTRODUCTION",
+        "triggered": true,
+        "triggering_condition": "The requested analysis stage is Introduction."
+      },
+      {
+        "evidence": [],
+        "evidence_type": "system_scope_limitation",
+        "limitation": "A parser or lexical observation does not establish meaning, coherence, relevance, factual truth, or academic quality.",
+        "rule_id": "INTRO.LIMITATION.NO_SEMANTIC_VALIDATION",
+        "triggered": true,
+        "triggering_condition": "Always applied: this Rule Base does not validate meaning, logic, or facts."
+      }
+    ],
+    "sentence_topic_evidence": {
+      "condition": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue.",
+      "limitation": "Missing wording links suggest a review only, not irrelevance. Pronoun cues are not resolved references; shared words do not establish relevance, logic, or truth. Other reworded connections can be missed.",
+      "review_candidates": [],
+      "sentences": [
+        {
+          "concepts": [
+            "school",
+            "a small part",
+            "their playground",
+            "vegetable garden",
+            "part",
+            "playground",
+            "vegetable",
+            "garden"
+          ],
+          "condition": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue.",
+          "content_lemmas": [
+            "garden",
+            "part",
+            "playground",
+            "school",
+            "small",
+            "turn",
+            "vegetable"
+          ],
+          "end": 77,
+          "focus_matches": [
+            {
+              "end": 7,
+              "evidence_source": "student_text_span",
+              "match_method": "direct",
+              "normalized_form": "school",
+              "observed_text": "Schools",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                0
+              ],
+              "start": 0
+            },
+            {
+              "end": 53,
+              "evidence_source": "student_text_span",
+              "match_method": "direct",
+              "normalized_form": "playground",
+              "observed_text": "playgrounds",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                8
+              ],
+              "start": 42
+            },
+            {
+              "end": 76,
+              "evidence_source": "student_text_span",
+              "match_method": "direct",
+              "normalized_form": "vegetable garden",
+              "observed_text": "vegetable gardens",
+              "pos": [
+                "NOUN",
+                "NOUN"
+              ],
+              "source_token_indices": [
+                10,
+                11
+              ],
+              "start": 59
+            }
+          ],
+          "has_noun": true,
+          "has_predicate": true,
+          "limitation": "Missing wording links suggest a review only, not irrelevance. Pronoun cues are not resolved references; shared words do not establish relevance, logic, or truth. Other reworded connections can be missed.",
+          "matched_focus_terms": [
+            "schools",
+            "playgrounds",
+            "vegetable gardens"
+          ],
+          "matched_neighbor_indices": [
+            1
+          ],
+          "neighbor_sentence_indices": [
+            1
+          ],
+          "reference_cues": [
+            "their"
+          ],
+          "review_signal": false,
+          "sentence_index": 0,
+          "shared_neighbor_lemmas": [
+            "garden"
+          ],
+          "span_verified": true,
+          "start": 0,
+          "status": "WORDING_MATCH_OBSERVED_NOT_RELEVANCE",
+          "text": "Schools should turn a small part of their playgrounds into vegetable gardens."
+        },
+        {
+          "concepts": [
+            "these garden",
+            "student",
+            "the classroom",
+            "garden",
+            "classroom"
+          ],
+          "condition": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue.",
+          "content_lemmas": [
+            "classroom",
+            "garden",
+            "help",
+            "learn",
+            "student"
+          ],
+          "end": 138,
+          "focus_matches": [
+            {
+              "end": 109,
+              "evidence_source": "student_text_span",
+              "match_method": "direct",
+              "normalized_form": "student",
+              "observed_text": "students",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                17
+              ],
+              "start": 101
+            },
+            {
+              "end": 115,
+              "evidence_source": "student_text_span",
+              "match_method": "normalized",
+              "normalized_form": "learn",
+              "observed_text": "learn",
+              "pos": [
+                "VERB"
+              ],
+              "source_token_indices": [
+                18
+              ],
+              "start": 110
+            }
+          ],
+          "has_noun": true,
+          "has_predicate": true,
+          "limitation": "Missing wording links suggest a review only, not irrelevance. Pronoun cues are not resolved references; shared words do not establish relevance, logic, or truth. Other reworded connections can be missed.",
+          "matched_focus_terms": [
+            "students",
+            "learning"
+          ],
+          "matched_neighbor_indices": [
+            0,
+            2
+          ],
+          "neighbor_sentence_indices": [
+            0,
+            2
+          ],
+          "reference_cues": [
+            "These"
+          ],
+          "review_signal": false,
+          "sentence_index": 1,
+          "shared_neighbor_lemmas": [
+            "garden",
+            "student"
+          ],
+          "span_verified": true,
+          "start": 78,
+          "status": "WORDING_MATCH_OBSERVED_NOT_RELEVANCE",
+          "text": "These gardens can help students learn outside the classroom."
+        },
+        {
+          "concepts": [
+            "student",
+            "planting vegetable",
+            "useful skill",
+            "vegetable",
+            "planting",
+            "skill"
+          ],
+          "condition": "Explicit teacher focus and a matched neighboring sentence are available; this verified noun-and-predicate sentence has no focus match, no shared neighboring content lemma, and no third-person or demonstrative reference cue.",
+          "content_lemmas": [
+            "planting",
+            "skill",
+            "student",
+            "teach",
+            "useful",
+            "vegetable"
+          ],
+          "end": 197,
+          "focus_matches": [
+            {
+              "end": 182,
+              "evidence_source": "student_text_span",
+              "match_method": "direct",
+              "normalized_form": "student",
+              "observed_text": "students",
+              "pos": [
+                "NOUN"
+              ],
+              "source_token_indices": [
+                28
+              ],
+              "start": 174
+            }
+          ],
+          "has_noun": true,
+          "has_predicate": true,
+          "limitation": "Missing wording links suggest a review only, not irrelevance. Pronoun cues are not resolved references; shared words do not establish relevance, logic, or truth. Other reworded connections can be missed.",
+          "matched_focus_terms": [
+            "students"
+          ],
+          "matched_neighbor_indices": [
+            1
+          ],
+          "neighbor_sentence_indices": [
+            1
+          ],
+          "reference_cues": [],
+          "review_signal": false,
+          "sentence_index": 2,
+          "shared_neighbor_lemmas": [
+            "student"
+          ],
+          "span_verified": true,
+          "start": 139,
+          "status": "WORDING_MATCH_OBSERVED_NOT_RELEVANCE",
+          "text": "Planting vegetables can also teach students useful skills."
+        }
+      ],
+      "source": "Existing TopicService focus spans, concepts, and spaCy sentence/token records; no additional NLP call."
+    },
+    "stage": "INTRODUCTION",
+    "text_presence": {
+      "alphabetic_word_count": 29,
+      "sentence_count": 3,
+      "status": "SENTENCE_STRUCTURE_OBSERVED",
+      "substantive_sentence_candidate_observed": true,
+      "token_count": 32
+    },
+    "uncertainty": [
+      "These rules use linguistic structure and lexical overlap only.",
+      "A grammatical clause can be semantically anomalous or contradictory.",
+      "No semantic intelligibility, logical coherence, or factual correctness judgment is made.",
+      "A central-direction candidate is not a validated thesis or a readiness decision."
+    ]
+  },
+  "availability": "ANALYZED",
+  "feedback": {
+    "Current Goal": "Introduce the topic, then tell readers the main point you plan to explain.",
+    "Feedback Provenance": [
+      {
+        "feedback_field": "Current Goal",
+        "rule_id": "INTRO.GOAL.OBSERVABLE_INTRODUCTION"
+      },
+      {
+        "feedback_field": "Primary Feedback",
+        "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+      },
+      {
+        "feedback_field": "Primary Feedback",
+        "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+      },
+      {
+        "feedback_field": "What's Working",
+        "rule_id": "INTRO.TOPIC.FOCUS_TERMS_OBSERVED"
+      },
+      {
+        "feedback_field": "What's Working",
+        "rule_id": "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE"
+      },
+      {
+        "feedback_field": "Next Step",
+        "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+      },
+      {
+        "feedback_field": "Next Step",
+        "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+      }
+    ],
+    "Needs Attention": [],
+    "Next Step": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it.",
+    "Primary Feedback": "The checks recorded a possible main statement and additional sentence parts. Choose one detail and review how it helps explain your point.",
+    "What's Working": [
+      "These assignment words also appear in your opening: schools, playgrounds, vegetable gardens, learning. Check that they support the point you want to make.",
+      "One sentence combines assignment words with a possible main point. Check that it answers the assignment question."
+    ],
+    "interpretation_limit": "These checks highlight sentence structure and topic-word matches; they do not determine whether the idea is correct or meaningful."
+  },
+  "interpretation_limit": "This combined result contains stage-specific linguistic and lexical observations. It does not establish semantic understanding, essay quality, factual correctness, readiness, or permission to advance.",
+  "related_topic_concept_evidence": {
+    "active_focus_concepts": [],
+    "affects_rules_or_feedback": false,
+    "approved_relationships": [],
+    "evidence": [],
+    "execution_status": "NOT_APPLICABLE",
+    "future_integration": "Potential future evidence for evaluated topic-feedback revisions only after review; not consumed by any current Rule Base or FeedbackService branch.",
+    "informational_only": true,
+    "limitation": "A configured relationship records a lexical mention only, not an exact synonym, topic understanding, environmental support, a complete statement, or a valid argument. Negation, word sense and the writer's stance are not evaluated. This informational evidence does not affect direct/lemma coverage, rules or feedback.",
+    "reason": "NO_APPROVED_FOCUS_CONCEPT: no complete active teacher focus matches a configured key.",
+    "resource": {
+      "configuration_version": "1.0",
+      "provenance": "developer_curated",
+      "schema_version": 1,
+      "sha256": "eb1f66701e6f8e9d72f3af54974cf370a43581f42f3b5b48c14f6041d6db1e33",
+      "source": "content/topic_concept_relations.json",
+      "status": "AVAILABLE"
+    },
+    "summary": {
+      "relationship_record_count": 0,
+      "teacher_focus_concepts_with_related_evidence": [],
+      "teacher_focus_terms_with_related_evidence": [],
+      "total_related_concept_occurrences": 0,
+      "unique_related_concepts_observed": 0
+    }
+  },
+  "research_trace": {
+    "analysis_service_lookup_ms": 0,
+    "analysis_service_total_ms": 0,
+    "api_authentication_and_csrf_timing": "NOT_INSTRUMENTED",
+    "json_response_serialization_timing": "NOT_INSTRUMENTED",
+    "limitations": [
+      "Timings cover the marked in-process Python calls; Flask authentication, network transfer, and browser rendering are separate.",
+      "Cross-stage WordNet comparisons run inside the relevant Rule Base timing and do not have a separate duration measurement.",
+      "The rule trace is built from existing stage outputs and emitted events; it does not rerun the Rule Base or spaCy."
+    ],
+    "request_validation_and_assignment_resolution_ms": 0,
+    "runtime": {
+      "analysis_service_initialization": {
+        "duration_ms": 290.536799991969,
+        "note": "Model/service construction is timed only when Flask creates the service lazily; injected preconstructed services are not timed here.",
+        "status": "EXECUTED"
+      },
+      "flask_version": "3.1.3",
+      "model": {
+        "language": "en",
+        "package_name": "core_web_sm",
+        "version": "3.7.1"
+      },
+      "nltk_version": "3.9.2",
+      "note": "Metadata is read from the already-loaded NLPService. This function does not parse text or query WordNet.",
+      "pipeline": {
+        "active_component_output_use": {
+          "attribute_ruler": "Runs in the pipeline; its attributes are available to later components but not separately reported by EssayScaff.",
+          "lemmatizer": "Token lemmas feed topic normalization and concept comparison.",
+          "ner": "Runs in the pipeline; named entities are not consumed by the active EssayScaff analysis output.",
+          "parser": "Dependency labels, heads, sentence boundaries, noun chunks, and subjects/complements feed the services.",
+          "tagger": "Token fine-grained tags are serialized; POS/tag values feed rule conditions.",
+          "tok2vec": "Runs as part of the configured pipeline; EssayScaff does not directly read its vectors."
+        },
+        "component_timings": "not instrumented individually; the recorded parse_ms measures the complete nlp(text) call.",
+        "disabled_components": [
+          "senter"
+        ],
+        "enabled_components": [
+          "tok2vec",
+          "tagger",
+          "parser",
+          "attribute_ruler",
+          "lemmatizer",
+          "ner"
+        ],
+        "tokenizer": {
+          "execution_status": "EXECUTED",
+          "listed_in_pipe_names": false,
+          "name": "tokenizer"
+        }
+      },
+      "python_version": "3.11.9",
+      "spacy_version": "3.7.5",
+      "sqlite_runtime_version": "3.45.1"
+    },
+    "selected_stage": "INTRODUCTION",
+    "stages": {
+      "INTRODUCTION": {
+        "execution_status": "EXECUTED",
+        "feedback_decisions": {
+          "fields": {
+            "Current Goal": {
+              "rule_ids": [
+                "INTRO.GOAL.OBSERVABLE_INTRODUCTION"
+              ],
+              "selected_message": "Introduce the topic, then tell readers the main point you plan to explain.",
+              "selection_branch": "stage_constant",
+              "skill": null,
+              "trait": null
+            },
+            "Needs Attention": {
+              "rule_ids": [],
+              "selected_message_count": 0,
+              "selection_branch": "independent_attention_checks",
+              "selection_condition": "Each caution is appended when its existing check identifies the corresponding condition.",
+              "skill": null,
+              "trait": null
+            },
+            "Next Step": {
+              "rule_ids": [
+                "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+              ],
+              "selected_message": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it.",
+              "selection_branch": "intro_ideas_review_details",
+              "selection_condition": "central_direction_candidates is nonempty; no recorded because-clause; development status is STRUCTURAL_ELABORATION_CANDIDATE; no logical relationship is inferred",
+              "skill": "Review Your Details",
+              "trait": "Ideas"
+            },
+            "Primary Feedback": {
+              "rule_ids": [
+                "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+              ],
+              "selected_message": "The checks recorded a possible main statement and additional sentence parts. Choose one detail and review how it helps explain your point.",
+              "selection_branch": "intro_ideas_review_details",
+              "selection_condition": "central_direction_candidates is nonempty; no recorded because-clause; development status is STRUCTURAL_ELABORATION_CANDIDATE; no logical relationship is inferred",
+              "skill": "Review Your Details",
+              "trait": "Ideas"
+            },
+            "What's Working": {
+              "rule_ids": [
+                "INTRO.TOPIC.FOCUS_TERMS_OBSERVED",
+                "INTRO.CONTEXT.TOPIC_AND_CLAUSE_CANDIDATE"
+              ],
+              "selected_message_count": 2,
+              "selection_branch": "independent_evidence_checks",
+              "selection_condition": "Each positive wording item is appended when its own existing evidence condition passes.",
+              "skill": null,
+              "trait": null
+            }
+          },
+          "instructional_feedback": {
+            "catalog_status": "AVAILABLE",
+            "coverage": [
+              {
+                "instructional_category_selected": true,
+                "scope": "Statement/development patterns and wording observations",
+                "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+                "trait": "Ideas",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+                "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+                "trait": "Organization",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "No Introduction trait check implemented",
+                "status": "NOT_EVALUATED",
+                "trait": "Voice",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "Existing list/broad-word review labels; no independent trait-quality assessment",
+                "status": "INSTRUCTIONAL_CATEGORY_ONLY",
+                "trait": "Word Choice",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "Possible incomplete-subordinator pattern only",
+                "status": "LIMITED_OBSERVATIONAL_CHECKS_RECORDED",
+                "trait": "Sentence Fluency",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "No Introduction trait check implemented",
+                "status": "NOT_EVALUATED",
+                "trait": "Conventions",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              },
+              {
+                "instructional_category_selected": false,
+                "scope": "No Introduction trait check implemented",
+                "status": "NOT_EVALUATED",
+                "trait": "Presentation",
+                "trait_quality_assessment": "NOT_PERFORMED"
+              }
+            ],
+            "framework": "6+1 Trait Writing Model",
+            "items": [
+              {
+                "catalog_reference": {
+                  "file": "content/lessons/feedback_help.json",
+                  "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+                  "version": 5
+                },
+                "evidence_reference": "analysis.rule_evidence; original evidence/evidence_type/condition/limitation retained in this same response",
+                "feedback_field": "Primary Feedback",
+                "feedback_purpose": "NEUTRAL_REVIEW_TASK",
+                "highlight_spans": [
+                  {
+                    "anchor": {
+                      "end": 100,
+                      "start": 96,
+                      "text": "help"
+                    },
+                    "anchor_end_field": "end",
+                    "anchor_path": [],
+                    "anchor_start_field": "start",
+                    "context": {
+                      "end": 138,
+                      "sentence_index": 1,
+                      "start": 78,
+                      "text": "These gardens can help students learn outside the classroom."
+                    },
+                    "end": 138,
+                    "evidence_index": 1,
+                    "interpretation": "Evidence location, not an error label or a quality judgment.",
+                    "kind": "development_pattern",
+                    "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES",
+                    "selection_reason": "First additional recorded predicate. Its sentence is shown alone; shared-sentence evidence marks only the extra predicate.",
+                    "start": 78,
+                    "text": "These gardens can help students learn outside the classroom."
+                  }
+                ],
+                "highlight_status": "VERIFIED_SOURCE_EVIDENCE",
+                "lesson_id": "HELP-INTRO-REVIEW-DETAILS",
+                "limitations": [
+                  "Lexical overlap is not semantic relevance.",
+                  "Clause structure is not proof of argument quality.",
+                  "Missing 'because' is not proof that an explanation is missing.",
+                  "Missing assignment keywords is not proof that a reason is unrelated.",
+                  "Demonstratives and pronouns are not resolved references.",
+                  "No automatic correctness or essay-quality certification is performed."
+                ],
+                "mapping_basis": "Recorded main-statement and additional-clause patterns support reviewing details already present without requiring because or inferring logical support.",
+                "observed_fields": {
+                  "central_candidate_count": 3,
+                  "development_status": "STRUCTURAL_ELABORATION_CANDIDATE",
+                  "observed_focus_terms": [
+                    "schools",
+                    "playgrounds",
+                    "vegetable gardens",
+                    "students",
+                    "learning"
+                  ],
+                  "reason_clause_count": 0,
+                  "reason_topic_status": "NO_BECAUSE_CLAUSE_IDENTIFIED",
+                  "sentence_count": 3,
+                  "supported_predicate_count": 4,
+                  "topic_matches": [
+                    {
+                      "end": 7,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "schools",
+                      "match_method": "direct",
+                      "normalized_form": "school",
+                      "observed_text": "Schools",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        0
+                      ],
+                      "start": 0
+                    },
+                    {
+                      "end": 53,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "playgrounds",
+                      "match_method": "direct",
+                      "normalized_form": "playground",
+                      "observed_text": "playgrounds",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        8
+                      ],
+                      "start": 42
+                    },
+                    {
+                      "end": 76,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "vegetable gardens",
+                      "match_method": "direct",
+                      "normalized_form": "vegetable garden",
+                      "observed_text": "vegetable gardens",
+                      "pos": [
+                        "NOUN",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        10,
+                        11
+                      ],
+                      "start": 59
+                    },
+                    {
+                      "end": 109,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "students",
+                      "match_method": "direct",
+                      "normalized_form": "student",
+                      "observed_text": "students",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        17
+                      ],
+                      "start": 101
+                    },
+                    {
+                      "end": 182,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "students",
+                      "match_method": "direct",
+                      "normalized_form": "student",
+                      "observed_text": "students",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        28
+                      ],
+                      "start": 174
+                    },
+                    {
+                      "end": 115,
+                      "evidence_source": "student_text_span",
+                      "focus_term": "learning",
+                      "match_method": "normalized",
+                      "normalized_form": "learn",
+                      "observed_text": "learn",
+                      "pos": [
+                        "VERB"
+                      ],
+                      "source_token_indices": [
+                        18
+                      ],
+                      "start": 110
+                    }
+                  ]
+                },
+                "prepared_guidance": {
+                  "limitation": "You do not need to use 'because'. The mark shows recorded sentence evidence, not an error or proof that the ideas work together.",
+                  "noticed": "The checks recorded a possible main statement and additional sentence parts.",
+                  "task": "Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it.",
+                  "why": "Readers can follow your point when they can see how your details connect to it.",
+                  "working": "More than one subject-and-verb pattern was recorded in your opening."
+                },
+                "rule_conditions": [
+                  {
+                    "condition": "spaCy labeled a finite root predicate and a subject dependent on it.",
+                    "rule_id": "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE"
+                  },
+                  {
+                    "condition": "At least two finite clause-predicate candidates were observed.",
+                    "rule_id": "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+                  }
+                ],
+                "rule_ids": [
+                  "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                  "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+                ],
+                "selection_branch": "intro_ideas_review_details",
+                "selection_condition": "central_direction_candidates is nonempty; no recorded because-clause; development status is STRUCTURAL_ELABORATION_CANDIDATE; no logical relationship is inferred",
+                "skill": "Review Your Details",
+                "trait": "Ideas",
+                "triggered_rule_ids": [
+                  "INTRO.CLAUSE.SUBJECT_PREDICATE_CANDIDATE",
+                  "INTRO.DEVELOPMENT.MULTIPLE_CLAUSE_PREDICATES"
+                ],
+                "working_text": "More than one subject-and-verb pattern was recorded in your opening."
+              }
+            ],
+            "limitations": [
+              "Lexical overlap is not semantic relevance.",
+              "Clause structure is not proof of argument quality.",
+              "Missing 'because' is not proof that an explanation is missing.",
+              "Missing assignment keywords is not proof that a reason is unrelated.",
+              "Demonstratives and pronouns are not resolved references.",
+              "No automatic correctness or essay-quality certification is performed."
+            ],
+            "source": "FeedbackService.generate completed decisions + existing prepared lesson bindings and emitted evidence; no rerun",
+            "stage": "INTRODUCTION"
+          },
+          "priority_order": [
+            "empty",
+            "whitespace-only",
+            "punctuation-only",
+            "keyword-list candidate",
+            "incomplete sentence",
+            "broad-word-only match",
+            "no assignment-word match",
+            "sentence topic-connection review",
+            "recorded main statement with because-part (neutral review)",
+            "recorded main statement with additional patterns (detail review)",
+            "recorded main statement without additional patterns (development task)",
+            "limited main-statement pattern evidence"
+          ],
+          "selection_source": "Branch labels and rule IDs follow the recorded evidence checks; student-facing messages use separate plain-language wording.",
+          "unselected_alternatives": "FeedbackService does not record unselected candidate messages or a hidden ranking."
+        },
+        "input_sections": {},
+        "output_counts": {
+          "feedback_provenance_items": 7,
+          "rule_events": 7
+        },
+        "timings_ms": {
+          "feedback_ms": 0.08,
+          "rule_base_ms": 0.219,
+          "topic_service_ms": 8.45
+        },
+        "topic_service": {
+          "execution_status": "EXECUTED",
+          "input": {
+            "assignment_topic": "Should schools turn part of their playgrounds into vegetable gardens?",
+            "focus_source": "teacher_provided",
+            "focus_terms": [
+              "schools",
+              "playgrounds",
+              "vegetable gardens",
+              "students",
+              "learning"
+            ],
+            "include_wordnet": false,
+            "text_characters": 197
+          },
+          "steps": [
+            {
+              "duration_ms": 7.095,
+              "execution_status": "EXECUTED",
+              "id": "spacy_document_processing",
+              "limitation": "spaCy annotations are statistical predictions; this does not validate meaning.",
+              "model_name": "core_web_sm",
+              "model_version": "3.7.1",
+              "observation_serialization_ms": 0.247,
+              "output_counts": {
+                "alphabetic_word_count": 29,
+                "sentence_count": 3,
+                "token_count": 32
+              },
+              "parse_ms": 6.848,
+              "pipeline_components": [
+                "tok2vec",
+                "tagger",
+                "parser",
+                "attribute_ruler",
+                "lemmatizer",
+                "ner"
+              ]
+            },
+            {
+              "candidate_count": 16,
+              "duration_ms": 0.241,
+              "execution_status": "EXECUTED",
+              "id": "concept_extraction",
+              "implementation": "TopicService._extract_concepts on the already parsed Doc.",
+              "output": [
+                {
+                  "extraction_methods": [
+                    "noun_phrase",
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "school",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 7,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        0
+                      ],
+                      "start": 0,
+                      "text": "Schools"
+                    }
+                  ],
+                  "text": "Schools"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "a small part",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 32,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "DET",
+                        "ADJ",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        3,
+                        4,
+                        5
+                      ],
+                      "start": 20,
+                      "text": "a small part"
+                    }
+                  ],
+                  "text": "a small part"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "their playground",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 53,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "PRON",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        7,
+                        8
+                      ],
+                      "start": 36,
+                      "text": "their playgrounds"
+                    }
+                  ],
+                  "text": "their playgrounds"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "vegetable garden",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 76,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "NOUN",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        10,
+                        11
+                      ],
+                      "start": 59,
+                      "text": "vegetable gardens"
+                    }
+                  ],
+                  "text": "vegetable gardens"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "these garden",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 91,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "DET",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        13,
+                        14
+                      ],
+                      "start": 78,
+                      "text": "These gardens"
+                    }
+                  ],
+                  "text": "These gardens"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase",
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "student",
+                  "occurrence_count": 2,
+                  "occurrences": [
+                    {
+                      "end": 109,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        17
+                      ],
+                      "start": 101,
+                      "text": "students"
+                    },
+                    {
+                      "end": 182,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        28
+                      ],
+                      "start": 174,
+                      "text": "students"
+                    }
+                  ],
+                  "text": "students"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "the classroom",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 137,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "DET",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        20,
+                        21
+                      ],
+                      "start": 124,
+                      "text": "the classroom"
+                    }
+                  ],
+                  "text": "the classroom"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "planting vegetable",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 158,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "NOUN",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        23,
+                        24
+                      ],
+                      "start": 139,
+                      "text": "Planting vegetables"
+                    }
+                  ],
+                  "text": "Planting vegetables"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_phrase"
+                  ],
+                  "normalized_form": "useful skill",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 196,
+                      "extraction_method": "noun_phrase",
+                      "pos": [
+                        "ADJ",
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        29,
+                        30
+                      ],
+                      "start": 183,
+                      "text": "useful skills"
+                    }
+                  ],
+                  "text": "useful skills"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "part",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 32,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        5
+                      ],
+                      "start": 28,
+                      "text": "part"
+                    }
+                  ],
+                  "text": "part"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "playground",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 53,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        8
+                      ],
+                      "start": 42,
+                      "text": "playgrounds"
+                    }
+                  ],
+                  "text": "playgrounds"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "vegetable",
+                  "occurrence_count": 2,
+                  "occurrences": [
+                    {
+                      "end": 68,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        10
+                      ],
+                      "start": 59,
+                      "text": "vegetable"
+                    },
+                    {
+                      "end": 158,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        24
+                      ],
+                      "start": 148,
+                      "text": "vegetables"
+                    }
+                  ],
+                  "text": "vegetable"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "garden",
+                  "occurrence_count": 2,
+                  "occurrences": [
+                    {
+                      "end": 76,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        11
+                      ],
+                      "start": 69,
+                      "text": "gardens"
+                    },
+                    {
+                      "end": 91,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        14
+                      ],
+                      "start": 84,
+                      "text": "gardens"
+                    }
+                  ],
+                  "text": "gardens"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "classroom",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 137,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        21
+                      ],
+                      "start": 128,
+                      "text": "classroom"
+                    }
+                  ],
+                  "text": "classroom"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "planting",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 147,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        23
+                      ],
+                      "start": 139,
+                      "text": "Planting"
+                    }
+                  ],
+                  "text": "Planting"
+                },
+                {
+                  "extraction_methods": [
+                    "noun_or_proper_noun"
+                  ],
+                  "normalized_form": "skill",
+                  "occurrence_count": 1,
+                  "occurrences": [
+                    {
+                      "end": 196,
+                      "extraction_method": "noun_or_proper_noun",
+                      "pos": [
+                        "NOUN"
+                      ],
+                      "source_token_indices": [
+                        30
+                      ],
+                      "start": 190,
+                      "text": "skills"
+                    }
+                  ],
+                  "text": "skills"
+                }
+              ]
+            },
+            {
+              "duration_ms": 0.672,
+              "execution_status": "EXECUTED",
+              "focus_term_count": 5,
+              "id": "topic_matching",
+              "observed_focus_term_count": 5
+            },
+            {
+              "duration_ms": 0.001,
+              "execution_status": "SKIPPED",
+              "id": "wordnet_direct_suggestions",
+              "limitation": "This status covers TopicService focus-term suggestions, not separate cross-stage WordNet comparisons.",
+              "lookup_pairs": [],
+              "output": [],
+              "resource_probe": null,
+              "status": "disabled",
+              "suggestion_count": 0,
+              "wordnet_version": null
+            }
+          ],
+          "total_ms": 8.422
+        }
+      }
+    },
+    "teacher_context": {
+      "assignment_topic": "Should schools turn part of their playgrounds into vegetable gardens?",
+      "automatically_derived_candidates": [],
+      "focus_source": "teacher_provided",
+      "focus_terms": [
+        {
+          "normalized_form": "school",
+          "normalized_words": [
+            "school"
+          ],
+          "surface_words": [
+            "schools"
+          ],
+          "term": "schools",
+          "wordnet_pos": [
+            "n"
+          ]
+        },
+        {
+          "normalized_form": "playground",
+          "normalized_words": [
+            "playground"
+          ],
+          "surface_words": [
+            "playgrounds"
+          ],
+          "term": "playgrounds",
+          "wordnet_pos": [
+            "n"
+          ]
+        },
+        {
+          "normalized_form": "vegetable garden",
+          "normalized_words": [
+            "vegetable",
+            "garden"
+          ],
+          "surface_words": [
+            "vegetable",
+            "gardens"
+          ],
+          "term": "vegetable gardens",
+          "wordnet_pos": [
+            "n"
+          ]
+        },
+        {
+          "normalized_form": "student",
+          "normalized_words": [
+            "student"
+          ],
+          "surface_words": [
+            "students"
+          ],
+          "term": "students",
+          "wordnet_pos": [
+            "n"
+          ]
+        },
+        {
+          "normalized_form": "learn",
+          "normalized_words": [
+            "learn"
+          ],
+          "surface_words": [
+            "learning"
+          ],
+          "term": "learning",
+          "wordnet_pos": [
+            "v"
+          ]
+        }
+      ]
+    },
+    "teacher_context_call_frequency": {
+      "basis": "prepare_teacher_context calls the model once for the topic when no focus list is supplied, then once for each term passed to _unique_focus_terms; explicit terms skip topic parsing.",
+      "execution_status": "EXECUTED",
+      "full_section_spacy_documents": 1,
+      "spacy_calls_for_assignment_topic": 0,
+      "spacy_calls_for_focus_phrase_normalization": 5,
+      "status": "SOURCE_DERIVED_CALL_COUNT_NOT_TIMED_SEPARATELY",
+      "teacher_context_spacy_calls_source_derived": 5,
+      "total_spacy_nlp_invocations_source_derived": 6
+    },
+    "teacher_context_preparation_ms": 15.819,
+    "trace_version": 1
+  },
+  "stage_id": "INTRODUCTION"
+}

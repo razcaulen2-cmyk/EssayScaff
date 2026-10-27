@@ -1,0 +1,74 @@
+[
+  {
+    "file": "before-B01-desktop.png",
+    "sha256": "1159ae4ac84014442796047c4475b51bd6bc76e1a3f3bcbd1ce0a76cceb1fd75"
+  },
+  {
+    "file": "before-B01-mobile.png",
+    "sha256": "c45944c57bd34567f8c67df98a3573ff574023a82fe6a779c9510ff808987c5d"
+  },
+  {
+    "file": "before-B02-desktop.png",
+    "sha256": "2c2e042ac9a8c3d7001cb9a455d9aacdb4db9c2864efd8ce93b6eefb82d693d1"
+  },
+  {
+    "file": "before-B03-desktop.png",
+    "sha256": "568c6ed5d04d1d62029151bcaa6c3c7d9403b53800de49347d8375bc0cd34f0c"
+  },
+  {
+    "file": "before-B04-desktop.png",
+    "sha256": "42e963370f489cbeb5b9d67621fe9b524a0c3833f4df5cc287bc24cf029ffd1b"
+  },
+  {
+    "file": "before-B05-desktop.png",
+    "sha256": "97d0ac321dbdf6a4e89b82dcef65b41f485a07a285c52e1083613491a92e7b7f"
+  },
+  {
+    "file": "before-B07-desktop.png",
+    "sha256": "f25b9c0ba1c7e3aa3b28b60f898545131de2cc2dd51bc18b81cfae501c858b26"
+  },
+  {
+    "file": "after-B01-desktop.png",
+    "sha256": "593e13cc3fdee5efef2008d2042d1604d8c3e8cc474cf36ddc8c4e4d0824c443"
+  },
+  {
+    "file": "after-B01-mobile.png",
+    "sha256": "7f820780f003f72819235fdb5b3e21f8d5a4994cafaeebb958dffdc75474d45a"
+  },
+  {
+    "file": "after-B02-desktop.png",
+    "sha256": "d9f2d8b21a811d593d2c0e07e6ec5b5cbd913291aa8b9b2a683f2aa7e1a7686f"
+  },
+  {
+    "file": "after-B03-desktop.png",
+    "sha256": "225706aa5ede6388fe1fdcb704254cb4a90cbcec1201ef8625515b953246ce67"
+  },
+  {
+    "file": "after-B04-desktop.png",
+    "sha256": "62bd24694d26d04933a2178c25538e1443e00b1217f2dea177ad4d023dc5ed30"
+  },
+  {
+    "file": "after-B05-desktop.png",
+    "sha256": "3d44c11880bac26d5fcf08892f0229b370b7c51458c72791391c0569980103aa"
+  },
+  {
+    "file": "after-B07-desktop.png",
+    "sha256": "c735ef20b6543e2b5effd4ed3d04738431c04ba8d3e848c7a956f574a95f209d"
+  },
+  {
+    "file": "after-professor-concern-trace.png",
+    "sha256": "d9a4523fcb133ee069b158deda6c63f2336a39886b7e7ea20799bb4668c3f312"
+  },
+  {
+    "file": "after-professor-highlight-provenance.png",
+    "sha256": "9a7684465bcaf10e11bbc3fb6aba98ae4b53c8fed3115a32bb59f3cb071116f2"
+  },
+  {
+    "file": "after-professor-neutral-trace.png",
+    "sha256": "10c3d26b2da97f2b00369df42a3273766fb24dcdad2577ae16f0f1618da00eb6"
+  },
+  {
+    "file": "after-student-body-trace.png",
+    "sha256": "3c274fffb92f691f6c8c6cee657251df0bfe6b25920753f41872655e6be1a9dd"
+  }
+]

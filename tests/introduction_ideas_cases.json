@@ -1,0 +1,19 @@
+{
+  "assignment_topic": "Should students be allowed to use smartphones during class?",
+  "focus_terms": ["smartphones", "students", "class", "classroom", "learning"],
+  "cases": {
+    "T01": "Schools should allow smartphones during class.",
+    "T02": "Schools should allow smartphones during class because students can research information for their lessons.",
+    "T03": "Students should be allowed to use smartphones in class. They can search for difficult words. This may help them understand their lessons.",
+    "T04": "Schools should allow smartphones during class because these devices provide quick access to online dictionaries.",
+    "T05": "Schools should allow smartphones during class because smartphones provide quick access to online dictionaries.",
+    "T06": "Because students can use smartphones during class.",
+    "T07": "Because students can use smartphones for learning, schools should allow them during class.",
+    "T08": "Although smartphones can distract students.",
+    "T09": "Although smartphones can distract students, teachers can use them for learning.",
+    "T10": "Smartphones are useful classroom tools. Students can read educational articles. These activities give them more ways to learn.",
+    "T11": "Schools should allow smartphones during class. We had a slumber party at my aunt's house.",
+    "T12": "Students can communicate with invisible dragons during class.",
+    "T13": "Schools should allow smartphones during class because smartphones control invisible dragons on Mars."
+  }
+}

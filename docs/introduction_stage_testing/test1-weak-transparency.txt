@@ -1,0 +1,73 @@
+CURRENT · Analyzed snapshot. Edits require a new analysis.
+
+Writing stage
+INTRODUCTION
+Assignment
+The School Garden Debate
+Words
+39
+Tokens
+43
+Sentences
+4
+Analyzed-text fingerprint
+INTRODUCTION · 251 characters · a16c3698
+Processing order and execution scope
+Analyzed text and input records
+Select an NLP process
+Teacher Focus-Term Preparation — Executed
+Tokenization — Executed
+Part-of-Speech Tagging — Executed
+Dependency Parsing — Executed
+Lemmatization — Executed
+Sentence and Paragraph Detection — Executed
+Noun Phrase Extraction — Executed
+Concept Candidate Extraction — Executed
+Teacher Focus-Term Matching — Executed
+Direct WordNet Suggestions — Skipped
+Related-Word Resource Evidence — Not applicable
+Introduction Sentence and Clause Checks — Executed
+Sentence Topic-Connection Review — Executed
+Earlier-Section Comparisons — Not applicable
+Rule Events and Evaluation Evidence — Executed
+Rule-Based Feedback Decision — Executed
+6+1 Trait and Lesson Mapping — Executed
+Highlight Evidence Selection — Executed
+Previous Process
+Next Process
+Rule-Based Feedback Decision
+Executed
+What does this process do?
+
+Inspect the exact feedback decision returned for this writing stage.
+
+How does EssayScaff perform it?
+
+FeedbackService uses the existing stage-specific conditions and priority. The cached decision records branch, condition, Rule IDs and five backend fields; Body also records candidate-check outcomes and an explicit neutral status.
+
+Actual Recorded Evidence
+Feedback field	Recorded value	Selected branch
+Current Goal	Introduce the topic, then tell readers the main point you plan to explain.	stage_constant
+Primary Feedback	The checks recorded a possible main statement and additional sentence parts. Choose one detail and review how it helps explain your point.	intro_ideas_review_details
+What's Working	These assignment words also appear in your opening: schools, playgrounds, vegetable gardens, learning. Check that they support the point you want to make.
+One sentence combines assignment words with a possible main point. Check that it answers the assignment question.	independent_evidence_checks
+Needs Attention	Recorded empty list	independent_attention_checks
+Next Step	Choose one detail already in your opening. Keep it if it helps explain your point, or add information if a reader needs it.	intro_ideas_review_details
+
+Execution basis: The completed stage-specific FeedbackService branch decisions are recorded. Individual helper timing is not recorded.
+
+Recorded timing: 0.091 ms. Only this recorded scope is claimed.
+
+Where does the output go next?
+
+The completed response supplies the Writing Tutor, this explorer and Copy Full Analysis. Selecting a process never calls FeedbackService again.
+
+This handoff follows the implementation. Per-record usage is claimed only where the retained comparison or provenance records it.
+
+Limitations
+
+A neutral Body result selects no trait, lesson, correction task or error span. Observational feedback is not an essay-quality grade.
+
+Developer Evidence
+Expand Developer Evidence
+Complete recorded inputs, outputs, source references and original technical sections

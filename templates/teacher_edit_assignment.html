@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>Edit Assignment — EssayScaff V2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('brand_logo') }}" type="image/png">
+</head>
+<body>
+  <header class="page-header">
+    <div class="header-inner">
+      <a class="brand" href="{{ url_for('teacher_dashboard') }}"><img class="brand-logo" src="{{ url_for('brand_logo') }}" alt=""><span class="brand-wordmark">EssayScaff <span>V2</span></span></a>
+      <p class="header-note">Edit assignment</p>
+      <div class="account-tools">
+        <span>Signed in as <strong>{{ username }}</strong></span>
+        <form action="{{ url_for('logout') }}" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button class="logout-button" type="submit">Log out</button>
+        </form>
+      </div>
+    </div>
+  </header>
+  <main class="page-shell">
+    <nav class="workspace-navigation" aria-label="Teacher navigation">
+      <a href="{{ url_for('teacher_dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('teacher_dashboard') }}#classrooms">My Classrooms</a>
+    </nav>
+    <section class="assignment-card" aria-labelledby="edit-assignment-heading">
+      <div class="section-heading">
+        <span class="step-label">ASSIGNMENT</span>
+        <h1 id="edit-assignment-heading">Edit Assignment</h1>
+        <p class="field-help">{{ assignment.title }}</p>
+      </div>
+      {% if error %}<p class="auth-error" role="alert">{{ error }}</p>{% endif %}
+      {% if assignment.has_student_work %}
+        <p class="assignment-lock-notice" role="note">Students already have saved writing, revisions, or submissions. Only the assignment title can be changed; topic, instructions, and focus terms are locked to preserve the original writing task.</p>
+      {% endif %}
+      <form action="{{ url_for('edit_assignment', assignment_id=assignment.assignment_id) }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label for="edit-assignment-title">Assignment Title</label>
+        <input id="edit-assignment-title" name="title" type="text" maxlength="120" value="{{ values.title }}" required>
+        <label for="edit-assignment-topic">Writing Topic</label>
+        <input id="edit-assignment-topic" name="topic" type="text" maxlength="500" value="{{ values.topic }}" {% if assignment.has_student_work %}readonly{% endif %} required>
+        <label for="edit-assignment-instructions">Instructions</label>
+        <textarea id="edit-assignment-instructions" name="instructions" maxlength="4000" {% if assignment.has_student_work %}readonly{% endif %} required>{{ values.instructions }}</textarea>
+        <label for="edit-assignment-focus-terms">Topic Focus Terms <span class="optional">Optional</span></label>
+        <input id="edit-assignment-focus-terms" name="focus_terms" type="text" maxlength="2400" value="{{ values.focus_terms }}" {% if assignment.has_student_work %}readonly{% endif %}>
+        <div class="editor-actions assignment-edit-actions">
+          <button type="submit">Save Changes</button>
+          <a class="cancel-edit-link" href="{{ url_for('teacher_dashboard') }}">Cancel</a>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

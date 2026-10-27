@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+instance/
+*.sqlite3
+instance/.flask_secret_key
+experiments/semantic_feasibility/annotations/
